@@ -62,10 +62,10 @@
   // ---------- v2: New since last visit / Closing soon ----------
   var NEWBASE = null; var ssn = null; try { ssn = window.sessionStorage; } catch (e) { ssn = null; }
   var lsx = null; try { lsx = window.localStorage; } catch (e) { lsx = null; }
-  S.digest = null; // null | 'new' | 'soon'
+  S.digest = null; // null | 'new' | 'soon' | 'changed'
   S.region = V2.loadRegion(lsx); // saved; default All US
   function latestAsOf() { return [DATA_P, DATA_W, DATA_R].reduce(function (a, d) { return d && d.asOfDate > a ? d.asOfDate : a; }, ''); }
-  function digestOf(list, kind) { var t = todayCentral(); return list.filter(function (r) { return kind === 'new' ? V2.isNew(r, NEWBASE) : V2.isClosingSoon(r, t); }); }
+  function digestOf(list, kind) { var t = todayCentral(); return list.filter(function (r) { return kind === 'new' ? V2.isNew(r, NEWBASE) : kind === 'changed' ? V4.isChanged(r, t) : V2.isClosingSoon(r, t); }); }
   function isConfirmedRec(r) { return S.mode === 'pse' ? (r.lens !== 'fee' || r.conf === 'confirmed') : r.bucket !== 'review'; } // pse: other lenses carry no Confirmed badge and are filtered by their own rules
   function post(list, skipDigest) {
     if (S.region !== 'all') list = list.filter(function (r) { return V2.inRegion(r, S.region); });
@@ -77,12 +77,13 @@
   function alsoHtml(r) { var c = DUPES[r.id]; if (!c || !c.dupes) return ''; var names = []; c.dupes.forEach(function (d) { var n = SRC_SHORT[d.src] || d.src; if (names.indexOf(n) < 0) names.push(n); }); return '<span class="tag also" title="Same opportunity found in other sources">Also listed in: ' + esc(names.join(', ')) + '</span>' + (c.amountsDiffer ? '<span class="tag rev" title="Sources state different amounts; the highest-confidence source is shown">Amounts differ</span>' : ''); }
   function alsoSheet(r) { var c = DUPES[r.id]; if (!c || !c.dupes) return ''; return '<h3>Also listed in</h3><ul>' + c.dupes.map(function (d) { return '<li>' + esc(SRC_SHORT[d.src] || d.src) + ': ' + (d.url ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.title) + '</a>' : esc(d.title)) + (d.amt !== null ? ' &middot; stated ' + esc(M.fmtMoneyFull(d.amt)) : ' &middot; no amount stated') + '</li>'; }).join('') + '</ul>' + (c.amountsDiffer ? '<p class="note">The sources state different amounts. The card shows the amount from the highest-confidence source; the others are listed above and were not combined.</p>' : ''); }
   function renderDigest() {
-    var base = post(scopedRaw(S.scope), true), nNew = digestOf(base, 'new').length, nSoon = digestOf(base, 'soon').length;
+    var base = post(scopedRaw(S.scope), true), nNew = digestOf(base, 'new').length, nSoon = digestOf(base, 'soon').length, nChg = digestOf(base, 'changed').length;
     $('digest').innerHTML = '<button type="button" class="chip dg' + (S.digest === 'new' ? ' on' : '') + '" data-digest="new" aria-pressed="' + (S.digest === 'new') + '">New since last visit <b class="badge' + (nNew ? ' hot' : '') + '">' + nNew + '</b></button>' +
       '<button type="button" class="chip dg' + (S.digest === 'soon' ? ' on' : '') + '" data-digest="soon" aria-pressed="' + (S.digest === 'soon') + '">Closing within ' + V2.SOON_DAYS + ' days <b class="badge' + (nSoon ? ' warn' : '') + '">' + nSoon + '</b></button>' +
+      '<button type="button" class="chip dg' + (S.digest === 'changed' ? ' on' : '') + '" data-digest="changed" aria-pressed="' + (S.digest === 'changed') + '">Changed (last ' + V4.CHANGED_DAYS + ' days) <b class="badge' + (nChg ? ' hot' : '') + '">' + nChg + '</b></button>' +
       (nNew || S.digest === 'new' ? '<button type="button" class="chip ghost" id="btnSeen">Mark all seen</button>' : '');
     var co = $('btnConfOnly'); co.setAttribute('aria-checked', String(CONF)); co.classList.toggle('on', CONF);
-    var pill = $('digestPill'), lbl = S.digest ? 'Showing: ' + (S.digest === 'new' ? 'New' : 'Closing soon') + ' &times;' : (nNew ? 'New ' + nNew : '') + (nNew && nSoon ? ' &middot; ' : '') + (nSoon ? 'Closing ' + nSoon : '');
+    var pill = $('digestPill'), lbl = S.digest ? 'Showing: ' + ({ 'new': 'New', soon: 'Closing soon', changed: 'Changed' })[S.digest] + ' &times;' : [nNew ? 'New ' + nNew : '', nSoon ? 'Closing ' + nSoon : '', nChg ? 'Changed ' + nChg : ''].filter(Boolean).join(' &middot; ');
     pill.hidden = !lbl; pill.innerHTML = lbl; pill.classList.toggle('hot', !!nNew || !!S.digest);
         var rg = $('regionSel'); if (rg && rg.value !== S.region) rg.value = S.region;
     $('txLink').hidden = S.region === 'all';
@@ -151,6 +152,15 @@
     else { h = '<span class="lbl">Project cost (not fee) · ' + esc(r.projectCost.field) + '</span><span class="big sm">' + esc(M.fmtMoneyFull(r.projectCost.v)) + '</span><span class="lbl">No fee is published for this project.</span>'; if (il) h += '<span class="estline">' + esc(il.label) + ': ' + esc(M.fmtMoney(il.low)) + ' to ' + esc(M.fmtMoney(il.high)) + ' (' + il.pct[0] + '% to ' + il.pct[1] + '% of stated cost; source below). Not a stated fee and not used by any filter.</span>'; }
     return h;
   }
+  function fmtD(x) { return M.fmtDate(x); }
+  function chgLine(r) { // v4.2: one change line instead of extra badges (cards keep max 2 badges)
+    var rc = V4.recentChanges(r, todayCentral()); if (!rc.length) return '';
+    var c = rc[rc.length - 1]; return '<span class="chg' + (c.k === 'status' ? ' st' : '') + '">&#9998; ' + esc(V4.changeText(c, fmtD, M.fmtMoney)) + (rc.length > 1 ? ' &middot; +' + (rc.length - 1) + ' more' : '') + '</span>';
+  }
+  function changesSheet(r) {
+    var h = r.history || []; if (!h.length) return '';
+    return '<h3>Changes since first seen</h3><ul class="chgl">' + h.slice().reverse().map(function (c) { return '<li><b>' + esc(M.fmtDate(c.t)) + '</b> &middot; ' + esc(V4.changeText(c, fmtD, M.fmtMoney)) + '</li>'; }).join('') + '</ul><p class="note">Detected by comparing daily snapshots of the source (up to ' + V4.HISTORY_CAP + ' changes kept).</p>';
+  }
   function cardHtml(r) {
     var h = cardHtmlBase(r);
     return S.scope === 'watch' && WATCH[r.id] ? h.replace(/<\/div>$/, capBlock(r.id) + '</div>') : h;
@@ -159,14 +169,14 @@
     var money;
     if (S.mode === 'pse') {
       var wherep = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
-      return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '">' + moneyPse(r) + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span></button></div>';
+      return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '">' + moneyPse(r) + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + '</button></div>';
     }
     if (r.amt) money = '<span class="lbl">' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     else money = '<span class="lbl">No fee stated by the source</span>' + (r.projectCost ? '<span class="big" style="font-size:16px">project cost (not fee): ' + esc(M.fmtMoney(r.projectCost.v)) + '</span><span class="lbl">' + esc(r.projectCost.field) + '</span>' : '');
     if (S.mode === 'road' && r.amt) money = '<span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> ' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     var where = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
     return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button>' +
-      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + (S.mode === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
+      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + (S.mode === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
   }
   function costBrief(r) {
     var c = r.cost; if (!c) return '';
@@ -575,6 +585,7 @@
     if (r.desc) h += '<h3>Description (from the source, shortened)</h3><p style="font-size:13px;overflow-wrap:anywhere">' + esc(r.desc) + '</p>';
     h += alsoSheet(r);
     if (r.also && r.also.length) h += '<h3>Same record also found as</h3><ul>' + r.also.map(function (x) { return '<li>' + (x.url ? '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc((SRC_SHORT[x.src] || x.src) + ' ' + (x.type || '') + ' ' + x.id) + '</a>' : esc(x.src + ' ' + x.id)) + '</li>'; }).join('') + '</ul>';
+    h += changesSheet(r);
     h += '<details class="rulesdet"><summary>Why it is listed (the exact rules)</summary>';
     h += '<h3>Why it is in this list (the exact rules)</h3><ul>' + (r.rules || []).map(function (x) { return '<li>' + esc(x.t) + '</li>'; }).join('') + '</ul>';
     if (S.mode === 'pse' && r.reasons && r.reasons.length) h += '<h3>Why it is Unconfirmed or flagged</h3><ul>' + r.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';

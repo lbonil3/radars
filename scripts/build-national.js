@@ -17,6 +17,7 @@ const CM = require('../national/cost.js');
 const PS = require('../national/pse.js');
 const ADV = require('../national/advance.js');
 const V2 = require('../national/v2.js');
+const V4 = require('../national/v4.js');
 
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'national', 'data', 'national.json');
@@ -656,7 +657,7 @@ async function main() {
   const rwCounts = { total: rwOrdered.length, beforeDedupe: rwKept.length, mergedDuplicates: rwMerged, byBucket: M.countBy(rwOrdered, (r) => r.bucket), byType: M.countBy(rwOrdered, (r) => r.rw + ':' + r.bucket), byStatus: M.countBy(rwOrdered, (r) => r.bucket + ':' + r.rw + ':' + r.status), byState: M.countBy(rwOrdered, (r) => r.state || '??'), byCost: M.countBy(rwOrdered, (r) => r.cost.status),
     drainOpen: rwOrdered.filter((r) => r.bucket === 'opp' && r.rw === 'drain').length, totalOpen: rwOrdered.filter((r) => r.bucket === 'opp' && r.rw === 'total').length, review: rwOrdered.filter((r) => r.bucket === 'review').length, awards: rwOrdered.filter((r) => r.bucket === 'award' || r.bucket === 'closed').length, recompete: rwOrdered.filter((r) => r.recompete).length };
   const rwOut = { generatedAt: new Date().toISOString(), asOfDate: AS_OF, generator: 'scripts/build-national.js', thresholds: { drain: R.DRAIN_MIN, total: R.TOTAL_MIN }, priceMeta: bid.meta, counts: rwCounts, sources: rwSources.concat(rwStatuses), tested: RW_TESTED, records: rwOrdered };
-  V2.carryFirstSeen(rwOrdered, prevRw, AS_OF); // first-seen dates carried across refreshes
+  V2.carryFirstSeen(rwOrdered, prevRw, AS_OF); console.log('road changes', JSON.stringify(V4.trackChanges(rwOrdered, prevRw, AS_OF))); // first-seen dates + change history carried across refreshes
   const rwSlim = JSON.stringify(rwOut, (k, v) => (v === null || v === undefined || (Array.isArray(v) && !v.length) ? undefined : v));
   if (!rwOut.sources.some((x) => x.status === 'ok')) { console.error('Roadway: nothing usable fetched; keeping the existing file.'); }
   else { fs.writeFileSync(OUT_RW, rwSlim); console.log('wrote', OUT_RW, rwOrdered.length, 'roadway records', (rwSlim.length / 1024).toFixed(0) + ' KB', JSON.stringify(rwCounts.byType), 'cost', JSON.stringify(rwCounts.byCost)); }
@@ -695,7 +696,7 @@ async function main() {
       advance: { total: advR.length, bySrc: PS_count(advR, (r) => r.src), byState: PS_count(advR, (r) => r.state || '??'), withStatedValue: advR.filter((r) => r.statedValue).length, byDomain: PS_count(advR, (r) => (r.domains[0] || 'none')) },
       excludedConstruction: Object.keys(pseStats).reduce((n, k) => n + ((pseStats[k].excl || {}).construction || 0), 0), excludedByReason: Object.keys(pseStats).reduce((o, k) => { Object.keys(pseStats[k].excl || {}).forEach((c) => { o[c] = (o[c] || 0) + pseStats[k].excl[c]; }); return o; }, {}) };
     const pseOut = { generatedAt: new Date().toISOString(), asOfDate: AS_OF, generator: 'scripts/build-national.js', thresholds: { feeFloor: PS.FEE_FLOOR, feeDefault: PS.DEFAULT_FEE, pipeFloor: PS.PIPE_FLOOR, pipeDefault: PS.PIPE_DEFAULT, illustrative: PS.ILLUSTRATIVE }, counts: pc, sources: mainPse.concat(rwPse, pseStatuses), tested: PSE_TESTED, records: pOrdered };
-    V2.carryFirstSeen(pOrdered, prevPse, AS_OF);
+    V2.carryFirstSeen(pOrdered, prevPse, AS_OF); console.log('pse changes', JSON.stringify(V4.trackChanges(pOrdered, prevPse, AS_OF)));
     const pSlim = JSON.stringify(pseOut, (k, v) => (v === null || v === undefined || (Array.isArray(v) && !v.length) ? undefined : v));
     if (!pseOut.sources.some((x) => x.status === 'ok') || !pOrdered.length) console.error('PS&E: nothing usable fetched; keeping the existing file.');
     else { fs.writeFileSync(OUT_PSE, pSlim); console.log('wrote', OUT_PSE, pOrdered.length, 'records', (pSlim.length / 1024).toFixed(0) + ' KB', JSON.stringify(pc.byLens), 'fee>5M strict', pc.fee.strictGt5, 'exact5', pc.fee.exact5); }
@@ -714,7 +715,7 @@ async function main() {
   if (!ordered.length || okc === 0) { console.error('Nothing usable fetched; keeping the existing file.'); process.exit(1); }
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   // drop empty values to keep the file small
-  V2.carryFirstSeen(ordered, prev, AS_OF);
+  V2.carryFirstSeen(ordered, prev, AS_OF); console.log('water changes', JSON.stringify(V4.trackChanges(ordered, prev, AS_OF)));
   const slim = JSON.stringify(out, (k, v) => (v === null || v === undefined || (Array.isArray(v) && !v.length) ? undefined : v));
   fs.writeFileSync(OUT, slim);
   console.log('wrote', OUT, ordered.length, 'records', (slim.length / 1024).toFixed(0) + ' KB', JSON.stringify(counts.byBucket), 'merged', merged, 'pinned', located);

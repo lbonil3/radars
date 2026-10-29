@@ -21,4 +21,28 @@ const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = 
   assert.ok(/retry-after/i.test(bo) && /HOST_GAP_MS/.test(bo) && /source-status\.js/.test(bo), 'Texas refresh: polite throttle, Retry-After, status file');
   assert.ok(/source-status\.js/.test(fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-national.js'), 'utf8')), 'National refresh writes status file');
 }
+// v4.2 change tracking
+{
+  const prev = { records: [
+    { id: 'a', title: 'Drainage design', status: 'open', noticeType: 'Solicitation', dates: { due: '2026-11-03' }, amt: { v: 6e6 }, fields: { 'Notices for this Sol# in the extract': '1' } },
+    { id: 'b', title: 'Old title', status: 'open', noticeType: 'Solicitation', dates: {}, history: [{ t: '2026-10-01', k: 'due', from: '2026-10-05', to: '2026-10-09' }] },
+    { id: 'c', title: 'Same', status: 'upcoming', noticeType: 'Sources Sought', dates: { due: '2026-12-01' } }] };
+  const recs = [
+    { id: 'a', title: 'Drainage design', status: 'open', noticeType: 'Solicitation', dates: { due: '2026-11-10' }, amt: { v: 7e6 }, fields: { 'Notices for this Sol# in the extract': '3' } },
+    { id: 'b', title: 'New title', status: 'awarded', noticeType: 'Award Notice', dates: {} },
+    { id: 'c', title: 'Same', status: 'upcoming', noticeType: 'Sources Sought', dates: { due: '2026-12-01' } },
+    { id: 'd', title: 'Brand new', status: 'open', dates: {} }];
+  const r = V4.trackChanges(recs, prev, '2026-10-29');
+  const a = recs[0].history.map((c) => c.k).sort(); assert.deepStrictEqual(a, ['addendum', 'due', 'value']);
+  assert.strictEqual(recs[0].history.find((c) => c.k === 'addendum').n, 2, 'addendum number from notice count');
+  assert.strictEqual(V4.changeText(recs[0].history.find((c) => c.k === 'due')), 'Due date moved 2026-11-03 \u2192 2026-11-10');
+  assert.deepStrictEqual(recs[1].history.map((c) => c.k), ['due', 'status', 'title'], 'history carried + status/title');
+  assert.ok(!recs[2].history && !recs[3].history, 'no change, no history; new records have none');
+  assert.strictEqual(r.changes, 5);
+  const many = { id: 'x', title: 't0', dates: {}, history: Array.from({ length: 8 }, (_, i) => ({ t: '2026-09-0' + (i + 1), k: 'title', from: 'a', to: 'b' })) };
+  const cur = [{ id: 'x', title: 't1', dates: {} }]; V4.trackChanges(cur, { records: [many] }, '2026-10-29'); assert.strictEqual(cur[0].history.length, V4.HISTORY_CAP, 'history capped');
+  assert.ok(V4.isChanged(recs[0], '2026-10-30') && !V4.isChanged(recs[1], '2026-12-30') && V4.recentChanges(recs[1], '2026-10-29').length === 2, 'recent window');
+  assert.ok(/chgLine\(r\)/.test(app) && /data-digest="changed"/.test(app) && /changesSheet\(r\)/.test(app), 'card change line, Changed filter, sheet list');
+  assert.strictEqual((fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-national.js'), 'utf8').match(/V4\.trackChanges/g) || []).length, 3, 'refresh tracks changes in all three lanes');
+}
 console.log('national v4 tests passed');
