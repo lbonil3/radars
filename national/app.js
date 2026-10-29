@@ -386,8 +386,16 @@
     $('dqNo').innerHTML = (DATA.tested || []).map(function (x) { return '<div class="card static" style="--c:#64748b"><div class="t">' + esc(x.name) + '</div><div class="m"><span>Reachable and readable: <b>' + (x.works ? 'yes' : 'no') + '</b></span><span>In the build: <b>no</b></span></div>' + (x.fields ? '<p class="note" style="margin:4px 0">Fields: ' + esc(x.fields) + '</p>' : '') + '<p class="note" style="margin:4px 0">' + esc(x.finding) + '</p>' + (x.url ? '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">Page</a>' : '') + '</div>'; }).join('');
     $('dqRules').innerHTML = '<ul>' + TXR.rules.map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul>';
   }
+  function renderHealth() { // v3: short summary first; the detailed tables stay below in expanders
+    var src = DATA.sources || [], ok = src.filter(function (x) { return x.status === 'ok'; }).length, bad = src.filter(function (x) { return x.status === 'failed' || x.status === 'stale'; }), off = src.filter(function (x) { return x.status === 'disabled' || x.status === 'skipped'; }).length;
+    var gen = new Date(DATA.generatedAt), age = Math.max(0, Math.floor((Date.now() - gen.getTime()) / 86400000));
+    $('dqHealth').innerHTML = '<p><span class="dot ' + (bad.length ? 'warn' : 'ok') + '"></span> <b>' + ok + ' of ' + src.length + ' sources OK</b>' + (off ? ' &middot; ' + off + ' turned off' : '') + (bad.length ? ' &middot; <b>' + bad.length + ' stale or failed</b> (' + esc(bad.map(function (x) { return SRC_SHORT[x.id] || x.name || x.id; }).join(', ')) + ')' : '') + '</p>' +
+      '<p>Data updated <b>' + esc(M.fmtDate(DATA.asOfDate)) + '</b> (' + (age < 1 ? 'today' : age + ' day' + (age === 1 ? '' : 's') + ' ago') + ') &middot; refreshed automatically every morning.</p>' +
+      '<p><b>' + (DATA.records || []).length + '</b> records in this lane. Open the sections below for per-source counts, exclusions and rules.</p>';
+  }
   function renderData() {
     if (!DATA) return;
+    renderHealth();
     if (S.mode === 'pse') { renderDataPse(); return; }
     if (S.mode === 'road') { renderDataRoad(); return; }
     var gen = new Date(DATA.generatedAt);
@@ -528,8 +536,6 @@
   function openSheet(id) {
     var r = RECS.filter(function (x) { return x.id === id; })[0]; if (!r) return;
     var h = '<h2>' + esc(r.title) + '</h2><div>' + tagsFor(r) + '</div>';
-    if (r.url) h += '<a class="srclink" href="' + esc(r.url) + '" target="_blank" rel="noopener">Open the source record</a>';
-    h += '<div id="capPanel"></div>';
     h += '<h3>Dollar figures</h3>';
     if (S.mode === 'pse') h += sheetMoneyPse(r);
     else if (S.mode === 'road' && r.amt) h += '<div class="money"><span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> · decides the fee rule</span><b>' + esc(M.fmtMoneyFull(r.amt.v)) + '</b><div>' + esc(moneyLabel(r.amt)) + '</div>' + (r.feeBasis === 'total' ? '<div class="hint">The source states only this total. How much of it is drainage is not stated, and no share is estimated here.</div>' : '') + (r.amt.ctx ? '<div class="hint">"…' + esc(r.amt.ctx) + '…"</div>' : '') + '</div>';
@@ -539,17 +545,21 @@
     if (S.mode !== 'pse') (r.amts || []).filter(function (a) { return a.kind !== 'project_cost' && !(r.amt && a.v === r.amt.v && a.kind === r.amt.kind); }).forEach(function (a) { h += '<div class="money"><span class="lbl">Other figure</span><b style="font-size:17px">' + esc(M.fmtMoneyFull(a.v)) + '</b><div>' + esc(moneyLabel(a)) + '</div>' + (a.ctx ? '<div class="hint">"…' + esc(a.ctx) + '…"</div>' : '') + '</div>'; });
     if (r.projectCost && S.mode !== 'pse') h += '<div class="money cost"><span class="lbl">Project cost (NOT a fee, never used for the fee rule)</span><b style="font-size:17px">' + esc(M.fmtMoneyFull(r.projectCost.v)) + '</b><div>' + esc(r.projectCost.field) + '</div>' + (r.projectCost.ctx ? '<div class="hint">"…' + esc(r.projectCost.ctx) + '…"</div>' : '') + '</div>';
     if (S.mode === 'road') h += costSectionHtml(r);
-    h += '<h3>Why it is in this list (the exact rules)</h3><ul>' + (r.rules || []).map(function (x) { return '<li>' + esc(x.t) + '</li>'; }).join('') + '</ul>';
-    if (S.mode === 'pse' && r.reasons && r.reasons.length) h += '<h3>Why it is Unconfirmed or flagged</h3><ul>' + r.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
-    if (S.mode === 'pse' && r.lens === 'db') h += '<h3>Your possible role (inferred, not stated by the owner)</h3><p style="font-size:13px;margin:0"><b>' + esc(r.dbRoleLabel) + '</b>. ' + esc(r.dbRoleWhy) + '</p>';
-    if (S.mode !== 'pse' && r.review && r.review.length) h += '<h3>Why it needs review</h3><ul>' + r.review.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
-    if (r.bucket === 'nofee') h += '<h3>Why it is under "Fee not stated"</h3><p class="note" style="margin:0">Engineering notice with a water-sector title that is open or upcoming, but the source states no fee. It is not counted as over $20M.</p>';
     h += '<h3>Details</h3><dl>' + [['Status', (STATUS_LABEL[r.status] || r.status) + ' · ' + (r.noticeLabel || r.noticeType || '')], ['Agency', [r.agency, r.subagency, r.office].filter(Boolean).join(' / ')], ['Place', [r.city, r.state].filter(Boolean).join(', ') || 'not stated'], ['Dates', dateText(r)], ['Awardee', r.awardee], ['Award #', r.awardNum], ['Solicitation #', r.solNum], ['NAICS / PSC', [r.naics, r.psc].filter(Boolean).join(' / ')], ['Sector (inferred)', (S.mode === 'pse' ? r.domains || [] : r.sectors || []).map(secLabel).join(', ')], ['Source', SRC_SHORT[r.src] || r.src], ['Snapshot as of', ASOF]].filter(function (x) { return x[1]; }).map(function (x) { return '<dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd>'; }).join('') + '</dl>';
+    if (r.url) h += '<a class="srclink" href="' + esc(r.url) + '" target="_blank" rel="noopener">Open the source record</a>';
+    h += '<details class="capdet" id="capDet"' + (CAP[r.id] && !CP.isEmpty(CAP[r.id]) ? ' open' : '') + '><summary>Capture file <span class="hint">(your notes on this device)</span></summary><div id="capPanel"></div></details>';
     var fk = Object.keys(r.fields || {}).filter(function (k) { return r.fields[k] !== '' && r.fields[k] !== null && r.fields[k] !== undefined; });
     if (fk.length) h += '<h3>All source fields</h3><dl>' + fk.map(function (k) { return '<dt>' + esc(k) + '</dt><dd>' + esc(r.fields[k]) + '</dd>'; }).join('') + '</dl>';
     if (r.desc) h += '<h3>Description (from the source, shortened)</h3><p style="font-size:13px;overflow-wrap:anywhere">' + esc(r.desc) + '</p>';
     h += alsoSheet(r);
     if (r.also && r.also.length) h += '<h3>Same record also found as</h3><ul>' + r.also.map(function (x) { return '<li>' + (x.url ? '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc((SRC_SHORT[x.src] || x.src) + ' ' + (x.type || '') + ' ' + x.id) + '</a>' : esc(x.src + ' ' + x.id)) + '</li>'; }).join('') + '</ul>';
+    h += '<details class="rulesdet"><summary>Why it is listed (the exact rules)</summary>';
+    h += '<h3>Why it is in this list (the exact rules)</h3><ul>' + (r.rules || []).map(function (x) { return '<li>' + esc(x.t) + '</li>'; }).join('') + '</ul>';
+    if (S.mode === 'pse' && r.reasons && r.reasons.length) h += '<h3>Why it is Unconfirmed or flagged</h3><ul>' + r.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (S.mode === 'pse' && r.lens === 'db') h += '<h3>Your possible role (inferred, not stated by the owner)</h3><p style="font-size:13px;margin:0"><b>' + esc(r.dbRoleLabel) + '</b>. ' + esc(r.dbRoleWhy) + '</p>';
+    if (S.mode !== 'pse' && r.review && r.review.length) h += '<h3>Why it needs review</h3><ul>' + r.review.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (r.bucket === 'nofee') h += '<h3>Why it is under "Fee not stated"</h3><p class="note" style="margin:0">Engineering notice with a water-sector title that is open or upcoming, but the source states no fee. It is not counted as over $20M.</p>';
+    h += '</details>';
     $('shBody').innerHTML = h; $('sheet').hidden = false; $('sheet').setAttribute('data-id', id); $('shStar').className = 'star big' + (WATCH[id] ? ' on' : ''); $('shStar').innerHTML = WATCH[id] ? '&#9733;' : '&#9734;';
     refreshCapPanel(id); document.body.style.overflow = 'hidden'; $('shClose').focus();
     if (S.mode === 'road') initWhatIf(r);

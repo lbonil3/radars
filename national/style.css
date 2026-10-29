@@ -252,3 +252,9 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .digest[hidden]{display:none}
 .kline{margin:0;padding:2px calc(14px + env(safe-area-inset-right)) 6px calc(14px + env(safe-area-inset-left));font-size:13.5px;color:var(--dim)}.kline b{color:var(--ink)}.kline .hint{display:block;font-size:12px}
 .kpis{display:block;padding:0;overflow:visible}
+
+/* v3 UI: sheet order, data health */
+.capdet,.rulesdet,.dqd{margin:10px 0;border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:0 12px}
+.capdet>summary,.rulesdet>summary,.dqd>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600}
+.dqd>summary h2{margin:0;font-size:16px}.dqd[open]{padding-bottom:10px}
+.health p{margin:6px 0}.health .dot{display:inline-block;vertical-align:middle}

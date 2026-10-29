@@ -42,5 +42,16 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   // P2: KPI strip trimmed to one line
   assert.ok(/class=\"kline\"/.test(app) && !/class=\"kpi\"/.test(app), 'one-line summary instead of KPI boxes');
 }
+// P2: detail sheet order (money, details, source, capture collapsed ... rules last); Data tab opens on a health summary
+{
+  const i = app.indexOf('  function openSheet(id) {'), seg = app.slice(i, app.indexOf("$('shBody').innerHTML = h;", i));
+  const pos = (k) => { const p = seg.indexOf(k); assert.ok(p > 0, 'sheet has ' + k); return p; };
+  assert.ok(pos('Dollar figures') < pos("'<h3>Details</h3>") && pos("'<h3>Details</h3>") < pos('Open the source record') && pos('Open the source record') < pos('class="capdet"') && pos('class="capdet"') < pos('class="rulesdet"'), 'sheet order');
+  ['Why it is in this list', 'Why it is Unconfirmed', 'Why it needs review'].forEach((k) => assert.ok(pos(k) > pos('class="rulesdet"'), k + ' is inside the rules section at the end'));
+  const d = html.slice(html.indexOf('<section id="v-data"'), html.indexOf('</section>', html.indexOf('<section id="v-data"')));
+  assert.ok(d.indexOf('id="dqHealth"') > 0 && d.indexOf('id="dqHealth"') < d.indexOf('<details'), 'Data tab opens on the health summary');
+  ['dqFresh', 'dqFunnel', 'dqExcl', 'dqMiss', 'dqSrc', 'dqNo', 'dqRules'].forEach((k) => assert.ok(/<details class="dqd">/.test(d) && d.includes('id="' + k + '"'), k + ' kept in an expander'));
+  assert.ok(/function renderHealth\(\)/.test(app) && /renderData\(\) \{\n    if \(!DATA\) return;\n    renderHealth\(\);/.test(app));
+}
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');

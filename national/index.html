@@ -152,13 +152,14 @@
     <div id="purList"></div>
   </section>
   <section id="v-data" class="view" hidden aria-label="Data quality and sources">
-    <h2 class="sec">Data freshness</h2><div id="dqFresh" class="panel"></div>
-    <h2 class="sec">Counts by source <span class="hint">how many rows survived each rule</span></h2><div id="dqFunnel" class="panel scrollx"></div>
-    <h2 class="sec">Why rows were excluded</h2><div id="dqExcl" class="panel"></div>
-    <h2 class="sec">Closest misses <span class="hint">excluded, but worth knowing about</span></h2><div id="dqMiss" class="cards"></div>
-    <h2 class="sec">Sources used</h2><div id="dqSrc" class="cards"></div>
-    <h2 class="sec">Sources tested, not used</h2><div id="dqNo" class="cards"></div>
-    <h2 class="sec">Rules</h2><div id="dqRules" class="panel"></div>
+    <h2 class="sec">Data health</h2><div id="dqHealth" class="panel health"></div>
+    <details class="dqd"><summary><h2 class="sec">Data freshness</h2></summary><div id="dqFresh" class="panel"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Counts by source <span class="hint">how many rows survived each rule</span></h2></summary><div id="dqFunnel" class="panel scrollx"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Why rows were excluded</h2></summary><div id="dqExcl" class="panel"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Closest misses <span class="hint">excluded, but worth knowing about</span></h2></summary><div id="dqMiss" class="cards"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Sources used</h2></summary><div id="dqSrc" class="cards"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Sources tested, not used</h2></summary><div id="dqNo" class="cards"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Rules</h2></summary><div id="dqRules" class="panel"></div></details>
   </section>
 </main>
 
