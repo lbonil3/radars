@@ -484,7 +484,7 @@
       '<span class="m"><span>' + esc([sn.agency, sn.state].filter(Boolean).join(' · ')) + '</span>' + (c.due ? '<span>Due ' + esc(M.fmtDate(c.due)) + '</span>' : '') + '</span>' +
       '<div class="purcap"><span class="cdec ' + c.decision.replace(/[^a-z]/gi, '').toLowerCase() + '">' + esc(c.decision) + '</span>' + flag + (c.next ? '<span class="cnext">Next: ' + esc(c.next) + '</span>' : '') + '</div>' +
       (c.notes ? '<p class="note purnotes">' + esc(c.notes.length > 240 ? c.notes.slice(0, 240) + '…' : c.notes) + '</p>' : '') +
-      (sn.url ? '<a class="srclink small" href="' + esc(sn.url) + '" target="_blank" rel="noopener">Source record</a>' : '') + '</div></div>';
+      (sn.url ? '<a class="purlink" href="' + esc(sn.url) + '" target="_blank" rel="noopener">Source record '<a class="srclink small" href="' + esc(sn.url) + '" target="_blank" rel="noopener">Source record</a>'rarr;</a>' : '') + '</div></div>';
   }
   function renderPursuits() {
     var rows = purRows(), wk = rows.filter(function (r) { return r.week; }), rest = rows.filter(function (r) { return !r.week; });
