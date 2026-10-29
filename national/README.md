@@ -74,3 +74,9 @@ A separate switch at the top. The water / drainage > $20M rules above are unchan
 ## Capture files (Watchlist)
 
 Star a record to start a capture file. Fields: Go / No-go (Go, No-go, Undecided) with a reason, proposal / SOQ due date, incumbent consultant, teaming partners / subs, key contact, next action, notes. Edit them under each card in the Watchlist tab or in the record's detail sheet. All of it is your own notes, saved in `localStorage` on the device (`nr.capture`; the old `nr.watch` star list is unchanged, so earlier watchlists keep working). Due dates within 14 days (US Central today) or already past are flagged. The Watchlist tab can be sorted by due date or Go / No-go. **Export capture CSV** covers every starred record in all lanes with its stated fee (only a source-stated consultant fee goes in that column; design-build values and project costs go in a separate "NOT a fee" column), status and source link. **Back up (JSON)** and **Restore** (merge: newer edit wins; or replace all) move the watchlist between phones. Unstarring a record that has notes asks first.
+
+## v2: New since last visit / Closing soon (`v2.js`)
+
+- Every record in `data/*.json` has `firstSeen` (US Central snapshot date). `scripts/build-national.js` carries it forward for ids already in the previous snapshot (also via merged "also listed" ids) and sets the snapshot date for new ids.
+- The app stores `nr.seenThrough` (newest snapshot date you opened) in localStorage. "New since last visit" = records with `firstSeen` later than the value at the start of this browser session (frozen in sessionStorage so reloads keep the list). **First-ever visit: nothing is marked new** (baseline = current snapshot); new records appear from the next daily refresh on. "Mark all seen" resets the baseline to the current snapshot.
+- "Closing within 14 days": due date between today and today + 14 (US Central), never awarded / closed records.

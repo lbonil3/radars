@@ -24,7 +24,7 @@ Vanilla JS, no build step, no dependencies. The landing page is `index.html`; ea
 `bid-cost/prices.json` is a copy of the TxDOT low-bid averages from hydraulics-tools, used for National Radar's roadway cost base.
 
 Daily refresh workflows are installed in `.github/workflows/` (refresh-national.yml, refresh-opportunities.yml; daily + manual). The original templates remain at:
-`national/workflow/refresh-national.yml` and `texas/workflow/refresh-opportunities.yml`. To enable one, copy it to
+`national/workflow/refresh-national.yml` and `texas/workflow/refresh-opportunities.yml`
 (kept for reference). Optional secret `SAM_API_KEY` for the SAM.gov API path.
 
 ## Tests

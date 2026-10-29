@@ -208,4 +208,5 @@ require('./test-roadway.js');
 require('./test-pse.js');
 require('./test-capture.js');
 require('./test-advance.js');
+require('./test-v2.js');
 console.log('national-radar tests passed');

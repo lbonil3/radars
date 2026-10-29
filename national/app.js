@@ -2,7 +2,7 @@
    Every record already carries the rule that included it, the source field of each dollar figure, and a source link. */
 (function () {
   'use strict';
-  var CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
+  var V2 = window.NRV2, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SRC_SHORT = { 'sam': 'SAM.gov', 'usaspending': 'USAspending', 'txdot-pcl': 'TxDOT projected contracts', 'nyc': 'NYC City Record', 'chicago': 'Chicago contracts', 'dhs-apfs': 'DHS forecast (APFS)', 'ag-forecast': 'Acquisition Gateway forecasts', 'caltrans-lar': 'Caltrans A&E look-ahead', 'caltrans-awards': 'Caltrans A&E awards', 'usaspending-rw': 'USAspending prime awards (roadway lane)', 'usaspending-sub': 'USAspending subawards', 'wsdot-proj': 'WSDOT projected design list', 'pse-usaspending': 'USAspending prime awards / IDVs (PS&E lens)', 'austin': 'City of Austin master agreements', 'txdot-pi': 'TxDOT Project Information', 'wssc': 'WSSC Water projected solicitations', 'cdot-sched': 'CDOT tentative advertisement schedule', 'la-dotd': 'Louisiana DOTD projected advertisements', 'dc-pass': 'DC OCP PASS forecast', 'sd-forecast': 'San Diego County procurement forecast' };
@@ -57,7 +57,21 @@
     if (scope === 'nofee') o.feeMin = null; else o.costMin = null;
     return o;
   }
-  function scoped(scope, skip) { return (S.mode === 'pse' ? PS.filterPse : S.mode === 'road' ? RW.filterRoadway : M.filterRecords)(RECS, filterFor(scope || S.scope, S.f, skip), WATCH); }
+  // ---------- v2: New since last visit / Closing soon ----------
+  var NEWBASE = null; var ssn = null; try { ssn = window.sessionStorage; } catch (e) { ssn = null; }
+  var lsx = null; try { lsx = window.localStorage; } catch (e) { lsx = null; }
+  S.digest = null; // null | 'new' | 'soon'
+  function latestAsOf() { return [DATA_P, DATA_W, DATA_R].reduce(function (a, d) { return d && d.asOfDate > a ? d.asOfDate : a; }, ''); }
+  function digestOf(list, kind) { var t = todayCentral(); return list.filter(function (r) { return kind === 'new' ? V2.isNew(r, NEWBASE) : V2.isClosingSoon(r, t); }); }
+  function post(list, skipDigest) { return (!skipDigest && S.digest) ? digestOf(list, S.digest) : list; }
+  function renderDigest() {
+    var base = post(scopedRaw(S.scope), true), nNew = digestOf(base, 'new').length, nSoon = digestOf(base, 'soon').length;
+    $('digest').innerHTML = '<button type="button" class="chip dg' + (S.digest === 'new' ? ' on' : '') + '" data-digest="new" aria-pressed="' + (S.digest === 'new') + '">New since last visit <b class="badge' + (nNew ? ' hot' : '') + '">' + nNew + '</b></button>' +
+      '<button type="button" class="chip dg' + (S.digest === 'soon' ? ' on' : '') + '" data-digest="soon" aria-pressed="' + (S.digest === 'soon') + '">Closing within ' + V2.SOON_DAYS + ' days <b class="badge' + (nSoon ? ' warn' : '') + '">' + nSoon + '</b></button>' +
+      (nNew || S.digest === 'new' ? '<button type="button" class="chip ghost" id="btnSeen">Mark all seen</button>' : '');
+  }
+  function scoped(scope, skip) { return post(scopedRaw(scope, skip)); }
+  function scopedRaw(scope, skip) { return (S.mode === 'pse' ? PS.filterPse : S.mode === 'road' ? RW.filterRoadway : M.filterRecords)(RECS, filterFor(scope || S.scope, S.f, skip), WATCH); }
   function fee(r) { return r.amt ? r.amt.v : S.mode === 'pse' ? (r.dbValue ? r.dbValue.v : r.projectCost ? r.projectCost.v : 0) : 0; }
   function sortFor(list, key) {
     if (key === 'due' || key === 'decision') { var byId = {}; list.forEach(function (r) { byId[r.id] = r; }); return CP.sortRows(list.map(function (r) { return { id: r.id, cap: CAP[r.id] || CP.blank() }; }), key).map(function (x) { return byId[x.id]; }); }
@@ -81,6 +95,7 @@
   var BADGE_CLS = { 'Confirmed': 'conf', 'Unconfirmed': 'unconf', 'Awarded': 'inf', 'Text-parsed': 'rev', 'Inferred sector': 'inf', 'Design-build': 'db', 'Exactly $5M': 'rev', 'Fee not published': 'plain', 'Project cost (not fee)': 'plain', 'Range lower bound': 'rev', 'Status unclear': 'rev', 'Closed': 'plain', 'Value not stated': 'plain', 'Forecast': 'inf', 'Drainage / H&H named': 'dir', 'Advance notice': 'dir', 'Fee not stated': 'plain', 'Stated value below $5M': 'plain', 'Engineering unclear': 'rev', 'Upcoming / open': 'inf' };
   function tagsPse(r) {
     var t = (r.badges || []).map(function (b) { return '<span class="tag ' + (BADGE_CLS[b] || '') + '">' + esc(b) + '</span>'; });
+    if (V2.isNew(r, NEWBASE)) t.unshift('<span class="tag new">New</span>');
     if (r.lens === 'db' && r.dbRoleLabel) t.push('<span class="tag est" title="' + esc(r.dbRoleWhy || '') + '">' + esc(r.dbRoleLabel) + '</span>');
     if (r.lens === 'db' && r.dbType && r.dbType !== 'Design-build') t.push('<span class="tag db">' + esc(r.dbType) + '</span>');
     if (r.recompete) t.push('<span class="tag inf">Recompete (inferred)</span>');
@@ -90,7 +105,7 @@
   }
   function tagsFor(r) {
     if (S.mode === 'pse') return tagsPse(r);
-    var t = [];
+    var t = []; if (V2.isNew(r, NEWBASE)) t.push('<span class="tag new">New</span>');
     t.push('<span class="tag ' + (r.bucket === 'review' ? 'rev' : 'dir') + '">' + esc(r.bucket === 'closed' ? 'Closed (deadline passed)' : r.bucket === 'review' ? 'Needs review' : r.bucket === 'nofee' ? 'Fee not stated' : STATUS_LABEL[r.status] || r.status) + '</span>');
     if (S.mode === 'road' && r.rw === 'drain') t.push('<span class="tag dir">Drainage-specific fee</span>');
     if (S.mode === 'road' && r.rw === 'total') t.push('<span class="tag rev">Total fee, drainage share unknown</span>');
@@ -565,7 +580,7 @@
   }
   function render() {
     var list = scoped();
-    renderModes(); renderScopes(); renderCapBar(); renderKpis(list); renderFilters();
+    renderModes(); renderScopes(); renderDigest(); renderCapBar(); renderKpis(list); renderFilters();
     if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') renderList(list); else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else renderData();
   }
   function setTab(t) {
@@ -606,6 +621,8 @@
 
   // ---------- events ----------
   document.addEventListener('click', function (e) {
+    if (e.target.closest('#btnSeen')) { NEWBASE = V2.markAllSeen(lsx, ssn, latestAsOf()); if (S.digest === 'new') S.digest = null; toast('Marked everything as seen.'); render(); return; }
+    var dg = e.target.closest('[data-digest]'); if (dg) { var dk = dg.getAttribute('data-digest'); S.digest = S.digest === dk ? null : dk; S.rows = 50; render(); return; }
     var t = e.target.closest('[data-mode],[data-scope],[data-star],[data-open],[data-f],[data-fee],[data-cost],[data-month],[data-st],[data-tab]'); if (!t) return;
     if (t.tagName === 'A') e.preventDefault();
     if (t.hasAttribute('data-mode')) { setMode(t.getAttribute('data-mode')); return; }
@@ -648,7 +665,7 @@
   // ---------- start ----------
   function loadJ(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
   Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; })]).then(function (x) {
-    DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch();
+    DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     if (DATA_P) setMode(location.hash === '#road' && DATA_R ? 'road' : location.hash === '#water' ? 'water' : 'pse');
     else { document.querySelector('#modes [data-mode="pse"]').hidden = true; setMode(location.hash === '#road' && DATA_R ? 'road' : 'water'); }
   }).catch(function (e) { $('freshTxt').textContent = 'Could not load data/national.json (' + e.message + '). Open the app once while online so it can be saved for offline use.'; $('freshDot').className = 'dot bad'; });
