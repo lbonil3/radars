@@ -460,7 +460,7 @@
     map.fit('tx'); renderLegend();
     if (map.reduced) { $('btnSweep').setAttribute('aria-pressed', 'false'); $('btnSweep').textContent = 'Sweep: off'; }
     document.addEventListener('visibilitychange', function () { map.setVisible(!document.hidden && state.tab === 'radar'); });
-    loadData().then(function (d) { ingest(d); apply(); if (state.f.consult) switchTab('list'); setTimeout(function () { map.resize(); map.fit('tx'); map.dirty = true; map._schedule(); }, 50); })
+    loadData().then(function (d) { ingest(d); apply(); switchTab('radar'); /* always open on the Radar map; other views are one tap away */ setTimeout(function () { map.resize(); map.fit('tx'); map.dirty = true; map._schedule(); }, 50); })
       .catch(function (e) { $('freshDot').className = 'dot bad'; $('freshTxt').textContent = 'Could not load data/opportunities.json (' + e.message + '). Nothing is shown; no sample data is substituted.'; });
   }
   M.MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

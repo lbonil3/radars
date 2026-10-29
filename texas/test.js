@@ -240,4 +240,13 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(CP.parseBackup(JSON.stringify(bk), CP.OPP_BACKUP_APP).ok);
   assert.strictEqual(CP.parseBackup(JSON.stringify(bk)).ok, false, 'National Radar rejects an Texas Opportunity backup');
 }
+// Radar map is the default view on every load (not the List)
+{
+  const appSrc = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
+  const ih = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  assert.ok(/tab: 'radar'/.test(appSrc), 'initial state.tab is radar');
+  assert.ok(/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('radar'\)/.test(appSrc), 'startup switches to the radar view');
+  assert.ok(!/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('list'\)/.test(appSrc), 'startup must not jump to the List view');
+  assert.ok(/<section id="v-radar" class="view"(?![^>]*hidden)/.test(ih) && /data-tab="radar" class="on"/.test(ih), 'radar view visible and its tab active in the HTML');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
