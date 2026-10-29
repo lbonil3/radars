@@ -26,6 +26,6 @@ Baseline tag `national-pre-ui`; finished state tag `national-v3-ui`. Data files,
 | P2a 4 bottom tabs + More, header New/Closing pill, one-line summary | 5868dd6 | `git revert 5868dd6` |
 | P2b sheet order (rules last), Data health summary | 282f4d7 | `git revert 282f4d7` |
 | P3 remember last view, closed menu fix | 2648c88 | `git revert 2648c88` |
-| docs + search placeholder | (this commit) | `git revert <commit>` |
+| docs + search placeholder | f0dc693 | `git revert f0dc693` |
 
 Whole UI change at once: `git revert --no-edit national-pre-ui..national-v3-ui` (skips nothing; github-actions data commits in that range are only data and can be re-applied by the next daily run).
