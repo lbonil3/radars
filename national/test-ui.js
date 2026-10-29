@@ -18,5 +18,13 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   assert.ok(/S\.region && S\.region !== 'all' \? 1 : 0/.test(app) && /f\.feeMin !== d\.feeMin/.test(app), 'badge counts region and a changed fee threshold');
   assert.ok(/function resetFilters\(\) \{ S\.f = freshF\(S\.mode\);[^\n]*S\.region = 'all'/.test(app) && /f\.hideUnconfirmed = CONF/.test(app), 'reset clears filters and region but keeps the saved Confirmed only');
 }
+// P1: max 2 badges per card, all badges in the detail sheet; source-field detail only in the sheet
+{
+  const i = app.indexOf('  function cardHtmlBase(r) {'), seg = app.slice(i, app.indexOf('  function costBrief', i));
+  assert.ok(!/tagsFor\(r\)|tagsPse\(r\)/.test(seg) && /cardTags\(r\)/.test(seg), 'cards use cardTags');
+  assert.ok(/return \[conf, st\]\.filter\(Boolean\)/.test(app), 'cardTags returns at most 2 badges');
+  assert.ok(/var h = '<h2>' \+ esc\(r\.title\) \+ '<\/h2><div>' \+ tagsFor\(r\)/.test(app) || /tagsFor\(r\)/.test(app.slice(app.indexOf('function openSheet'))), 'detail sheet keeps every badge');
+  assert.ok(!/source field/.test(seg), 'no source-field line on cards');
+}
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');

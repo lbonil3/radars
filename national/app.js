@@ -120,6 +120,15 @@
     if (r.also && r.also.length) t.push('<span class="tag">+' + r.also.length + ' same record</span>');
     return t.join('');
   }
+  // v3: cards show at most 2 badges (confidence + one status); the detail sheet keeps every badge (tagsFor)
+  function cardTags(r) {
+    var b = r.badges || [], conf, st = null, t = todayCentral();
+    if (S.mode === 'pse') conf = r.lens === 'fee' ? (b.indexOf('Confirmed') >= 0 ? ['conf', 'Confirmed'] : ['unconf', 'Unconfirmed']) : r.lens === 'db' ? ['db', 'Design-build'] : r.lens === 'advance' ? ['plain', 'Early notice'] : ['plain', 'No fee yet'];
+    else conf = r.bucket === 'review' ? ['rev', 'Needs review'] : r.bucket === 'nofee' ? ['plain', 'Fee not stated'] : ['dir', r.bucket === 'closed' ? 'Closed' : STATUS_LABEL[r.status] || r.status];
+    if (V2.isNew(r, NEWBASE)) st = ['new', 'New']; else if (V2.isClosingSoon(r, t)) st = ['inf', 'Closing soon']; else if (r.status === 'awarded' || r.stage === 'awarded') st = ['plain', 'Awarded']; else if (r.stage === 'forecast') st = ['plain', 'Forecast']; else if (r.stage === 'closed' || r.bucket === 'closed') st = ['plain', 'Closed'];
+    if (st && st[1] === conf[1]) st = null;
+    return [conf, st].filter(Boolean).map(function (x) { return '<span class="tag ' + x[0] + '">' + esc(x[1]) + '</span>'; }).join('');
+  }
   function tagsFor(r) {
     if (S.mode === 'pse') return tagsPse(r);
     var t = [alsoHtml(r)]; if (V2.isNew(r, NEWBASE)) t.push('<span class="tag new">New</span>');
@@ -134,8 +143,8 @@
   function colorOf(r) { if (S.mode === 'pse') return r.lens === 'db' ? '#c4b5fd' : r.lens === 'pipeline' ? '#94a3b8' : r.lens === 'advance' ? '#5eead4' : r.stage === 'awarded' || r.stage === 'closed' ? COLOR.award : r.stage === 'forecast' ? COLOR.review : COLOR.opp; return r.recompete && S.scope === 'recompete' ? COLOR.recompete : COLOR[r.bucket] || '#64748b'; }
   function moneyPse(r, full) {
     var il = r.illustrative, h = '';
-    if (r.lens === 'fee') h = '<span class="lbl">Consultant fee · ' + esc(r.amt.kind === 'design_fee' ? 'design fee stated in the notice text' : (M.AMOUNT_KINDS[r.amt.kind] || {}).label || r.amt.kind) + ' · source field: ' + esc(r.amt.field) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
-    else if (r.lens === 'db') { h = r.dbValue ? '<span class="lbl">Design-build contract value / estimated project cost. Includes construction. NOT a design fee · source field: ' + esc(r.dbValue.field) + '</span><span class="big sm">' + esc(M.fmtMoneyFull(r.dbValue.v)) + '</span>' : '<span class="lbl">Design-build value not stated by the source</span>'; if (r.designFee) h += '<span class="lbl">Design fee stated separately in the text (text-parsed): ' + esc(M.fmtMoneyFull(r.designFee.v)) + '</span>'; if (r.stipend) h += '<span class="lbl">Stipend (not a fee): ' + esc(M.fmtMoneyFull(r.stipend.v)) + '</span>'; }
+    if (r.lens === 'fee') h = '<span class="lbl">Consultant fee · ' + esc(r.amt.kind === 'design_fee' ? 'design fee stated in the notice text' : (M.AMOUNT_KINDS[r.amt.kind] || {}).label || r.amt.kind) + (full ? ' · source field: ' + esc(r.amt.field) : '') + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
+    else if (r.lens === 'db') { h = r.dbValue ? '<span class="lbl">Design-build contract value / estimated project cost. Includes construction. NOT a design fee' + (full ? ' · source field: ' + esc(r.dbValue.field) : '') + '</span><span class="big sm">' + esc(M.fmtMoneyFull(r.dbValue.v)) + '</span>' : '<span class="lbl">Design-build value not stated by the source</span>'; if (r.designFee) h += '<span class="lbl">Design fee stated separately in the text (text-parsed): ' + esc(M.fmtMoneyFull(r.designFee.v)) + '</span>'; if (r.stipend) h += '<span class="lbl">Stipend (not a fee): ' + esc(M.fmtMoneyFull(r.stipend.v)) + '</span>'; }
     else if (r.lens === 'advance') { h = '<span class="lbl">' + (r.statedValue ? 'Advance notice. The source states ' + esc(M.fmtMoneyFull(r.statedValue.v)) + ' (' + esc(r.statedValue.field) + '), below the $5M floor, so it is shown for information only.' : 'Advance notice. No fee stated by the source.') + '</span>'; }
     else { h = '<span class="lbl">Project cost (not fee) · ' + esc(r.projectCost.field) + '</span><span class="big sm">' + esc(M.fmtMoneyFull(r.projectCost.v)) + '</span><span class="lbl">No fee is published for this project.</span>'; if (il) h += '<span class="estline">' + esc(il.label) + ': ' + esc(M.fmtMoney(il.low)) + ' to ' + esc(M.fmtMoney(il.high)) + ' (' + il.pct[0] + '% to ' + il.pct[1] + '% of stated cost; source below). Not a stated fee and not used by any filter.</span>'; }
     return h;
@@ -148,14 +157,14 @@
     var money;
     if (S.mode === 'pse') {
       var wherep = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
-      return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '">' + moneyPse(r) + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + tagsFor(r) + '</span></button></div>';
+      return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '">' + moneyPse(r) + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span></button></div>';
     }
-    if (r.amt) money = '<span class="lbl">' + esc(moneyLabel(r.amt)) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
+    if (r.amt) money = '<span class="lbl">' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     else money = '<span class="lbl">No fee stated by the source</span>' + (r.projectCost ? '<span class="big" style="font-size:16px">project cost (not fee): ' + esc(M.fmtMoney(r.projectCost.v)) + '</span><span class="lbl">' + esc(r.projectCost.field) + '</span>' : '');
-    if (S.mode === 'road' && r.amt) money = '<span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> ' + esc(moneyLabel(r.amt)) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
+    if (S.mode === 'road' && r.amt) money = '<span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> ' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     var where = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
     return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button>' +
-      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + tagsFor(r) + '</span>' + (S.mode === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
+      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + (S.mode === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
   }
   function costBrief(r) {
     var c = r.cost; if (!c) return '';
@@ -200,7 +209,7 @@
   }
   var PRIMARY = { pse: ['all', 'open', 'forecast', 'awarded'], water: ['opp', 'review', 'nofee'], road: ['drain', 'total', 'review'] };
   var SHORT = { all: 'All', open: 'Open', forecast: 'Forecast', awarded: 'Awarded', opp: 'Open', review: 'Review', nofee: 'No fee', drain: 'Drainage', total: 'Roadway total' };
-  function scopeBtn(s0, cls) { var n = scoped(s0.id).length, due = s0.id === 'watch' ? capCounts().soon + capCounts().overdue : 0; return '<button type="button" class="' + cls + (S.scope === s0.id ? ' on' : '') + '" data-scope="' + s0.id + '" aria-pressed="' + (S.scope === s0.id) + '" title="' + esc(s0.sub) + '"><b>' + n + '</b><span>' + esc(s0.label) + '</span>' + (due ? '<i class="flagn">' + due + ' due soon</i>' : '') + '</button>'; }
+  function scopeBtn(s0, cls) { var n = scoped(s0.id).length, due = s0.id === 'watch' ? capCounts().soon + capCounts().overdue : 0; return '<button type="button" class="' + cls + (S.scope === s0.id ? ' on' : '') + '" data-scope="' + s0.id + '" aria-pressed="' + (S.scope === s0.id) + '" title="' + esc(s0.sub) + '"><b>' + n + '</b><span>' + esc(cls === 'scope' && SHORT[s0.id] ? SHORT[s0.id] : s0.label) + '</span>' + (due ? '<i class="flagn">' + due + ' due soon</i>' : '') + '</button>'; }
   function renderScopes() { // 3-4 primary scopes; the rest behind More (same scopes, same counts)
     var prim = PRIMARY[S.mode] || [], main = SCOPES.filter(function (x) { return prim.indexOf(x.id) >= 0; }), rest = SCOPES.filter(function (x) { return prim.indexOf(x.id) < 0; });
     var cur = rest.filter(function (x) { return x.id === S.scope; })[0];
