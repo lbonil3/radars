@@ -59,3 +59,14 @@ assert.ok(/localStorage\.setItem\('nr\.tab', t\)/.test(app) && /if \(S\.tab !== 
 assert.ok(css.includes('.scmore:not([open]) .scmenu{display:none}'));
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');
+// Theme: Day default, Night/Auto opt-in under a new key, applied before first paint
+{
+  const head = html.slice(0, html.indexOf('</head>'));
+  assert.ok(/<script>[\s\S]*nr\.theme[\s\S]*data-theme[\s\S]*<\/script>/.test(head) && head.indexOf('<script>') < head.indexOf('style.css'), 'theme applied in head before first paint');
+  assert.ok(/getItem\('nr\.theme'\)\|\|'day'/.test(head) && /\|\| 'day'/.test(app), 'Day is the default');
+  ['day', 'night', 'auto'].forEach((t) => assert.ok(html.includes('data-theme-set="' + t + '"'), 'theme option ' + t));
+  assert.ok(/html\[data-theme=day\]\{--bg:/.test(css), 'Day variables');
+  assert.ok(/^:root\{--bg:#0a1020/m.test(css), 'Night look unchanged');
+  assert.ok(html.includes('id="themeColor"') && /themeColor/.test(app), 'browser UI color follows the theme');
+  assert.ok(/\.tabs button\[data-tab\]/.test(app), 'tab highlighting does not touch theme buttons');
+}

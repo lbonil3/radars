@@ -259,3 +259,36 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .dqd>summary h2{margin:0;font-size:16px}.dqd[open]{padding-bottom:10px}
 .health p{margin:6px 0}.health .dot{display:inline-block;vertical-align:middle}
 .scmore:not([open]) .scmenu{display:none}
+/* ---- Day theme (default). Night = the original dark look above, via html[data-theme=night]. ---- */
+html[data-theme=day]{--bg:#f5f7fb;--panel:#ffffff;--panel2:#eef2f8;--line:#c9d3e3;--ink:#0f1a2e;--dim:#4a5875;--acc:#1d5fbf;--ok:#0f7a4a;--warn:#8a5a00;--bad:#b4233a}
+html[data-theme=day] .top{background:linear-gradient(180deg,#e6edf8,var(--bg))}
+html[data-theme=day] .top .homebtn,html[data-theme=day] .homebtn{background:rgba(29,95,191,.08);border-color:rgba(29,95,191,.35);color:var(--ink)}
+html[data-theme=day] .btn:active{background:#dbe4f2}
+html[data-theme=day] .scope.on,html[data-theme=day] .modes button.on,html[data-theme=day] .tabs .tabmore button.on{background:rgba(29,95,191,.1)}
+html[data-theme=day] .chip.on{background:rgba(29,95,191,.12);color:var(--ink)}
+html[data-theme=day] .mapwrap{background:#dfe8f3}
+html[data-theme=day] .st{fill:#ffffff;stroke:#8fa1bd}
+html[data-theme=day] .bub{fill:rgba(29,95,191,.22);stroke:#1d5fbf}
+html[data-theme=day] .bub.cnt{fill:rgba(217,119,6,.22);stroke:#b45309}
+html[data-theme=day] .bubt{fill:#0f1a2e;stroke:#ffffff}
+html[data-theme=day] .pin{fill:#d1304b;stroke:#fff}
+html[data-theme=day] .tabs{background:rgba(255,255,255,.97)}
+html[data-theme=day] .sheet-bg{background:rgba(15,26,46,.45)}
+html[data-theme=day] .srclink{background:var(--acc);color:#fff}
+html[data-theme=day] .toast{background:#0f1a2e;color:#fff;border-color:#0f1a2e}
+html[data-theme=day] .tag.db{border-color:#6d28d9;color:#6d28d9}
+html[data-theme=day] .tag.also{border-color:#6d28d9;color:#5b21b6}
+html[data-theme=day] .tag.est{background:rgba(217,119,6,.08)}
+html[data-theme=day] .tag.new{border-color:#1d5fbf;background:rgba(29,95,191,.1);color:#163f7a}
+html[data-theme=day] .chip .badge.warn{background:rgba(217,119,6,.15);color:#8a5a00}
+html[data-theme=day] .money.db{border-color:#6d28d9}html[data-theme=day] .money.pipe{border-color:#64748b}
+html[data-theme=day] #shBody .money.est{border-color:#b45309}
+html[data-theme=day] .switch.on .knob{background:rgba(15,122,74,.18)}
+html[data-theme=day] .fbadge{color:#fff}
+html[data-theme=day] .pill.hot{border-color:#1d5fbf;background:rgba(29,95,191,.12)}
+html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
+/* Theme picker (More menu) */
+.throw{display:flex;gap:4px;padding:6px 4px 2px;border-top:1px solid var(--line);margin-top:4px}
+.tabs .tabmore .throw button{flex:1;min-height:40px;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:0 6px}
+.tabs .tabmore .throw button.on{border-color:var(--acc);color:var(--acc);background:rgba(124,183,255,.16)}
+.thlbl{font-size:11px;color:var(--dim);padding:6px 6px 0}

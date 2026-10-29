@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" id="sbStyle">
   <meta name="apple-mobile-web-app-title" content="National Radar">
-  <meta name="theme-color" content="#0a1020">
+  <meta name="theme-color" content="#f5f7fb" id="themeColor">
+  <script>/* Theme before first paint: Day by default; Night or Auto only if picked (nr.theme). */
+  (function(){var p='day';try{p=localStorage.getItem('nr.theme')||'day'}catch(e){}
+  var t=p==='night'?'night':p==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t==='night'?'dark':'light';
+  var m=document.getElementById('themeColor');if(m)m.setAttribute('content',t==='night'?'#0a1020':'#f5f7fb');
+  var b=document.getElementById('sbStyle');if(b)b.setAttribute('content',t==='night'?'black-translucent':'default');})();</script>
   <meta name="format-detection" content="telephone=no">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" href="icon-192.png">
@@ -172,6 +178,8 @@
     <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
     <button type="button" data-tab="break" role="menuitem">Breakdown</button>
     <button type="button" data-tab="data" role="menuitem">Data &amp; sources</button>
+    <div class="thlbl" id="thLbl">Theme</div>
+    <div class="throw" role="group" aria-labelledby="thLbl"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
   </div>
 </nav>
 
