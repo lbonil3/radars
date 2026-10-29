@@ -214,7 +214,8 @@
   }
 
   // ---- City of Houston stormwater maintenance branch projects (SWMB_Projects) ----
-  var COH_SWMB_BASE = 'https://geoprocessor2.houstontx.gov/arcgis/rest/services/SWMB_Projects/FeatureServer/0';
+  // City of Houston PWE's public ArcGIS Online copy of the SWMB project layer (same schema). The old geoprocessor2 service now answers 499 Token Required.
+  var COH_SWMB_BASE = 'https://services1.arcgis.com/XpTq0H1nJ5DHgofs/arcgis/rest/services/AGOL_SWMB_Projects/FeatureServer/0';
   function normSwmb(a) {
     if (!a) return null;
     var status = str(a.STATUS); if (!status || !(status in SWMB_PHASE)) return null;

@@ -159,6 +159,7 @@
   </section>
   <section id="v-data" class="view" hidden aria-label="Data quality and sources">
     <h2 class="sec">Data health</h2><div id="dqHealth" class="panel health"></div>
+    <h2 class="sec" id="srcHealthH">Source health <span class="hint">every feed, last successful refresh, records and status</span></h2><div id="srcHealth" class="srch"></div>
     <details class="dqd"><summary><h2 class="sec">Data freshness</h2></summary><div id="dqFresh" class="panel"></div></details>
     <details class="dqd"><summary><h2 class="sec">Counts by source <span class="hint">how many rows survived each rule</span></h2></summary><div id="dqFunnel" class="panel scrollx"></div></details>
     <details class="dqd"><summary><h2 class="sec">Why rows were excluded</h2></summary><div id="dqExcl" class="panel"></div></details>
@@ -173,11 +174,11 @@
   <button type="button" data-tab="map" class="on">Map</button>
   <button type="button" data-tab="list">List</button>
   <button type="button" data-tab="pursuits">Pursuits <b class="tabbadge" id="purBadge" hidden></b></button>
-  <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More <span id="tabMoreLbl" class="tml"></span></button>
+  <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More <b class="hdot" id="healthDot" hidden></b><span id="tabMoreLbl" class="tml"></span></button>
   <div class="tabmore" id="tabMore" role="menu" hidden>
     <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
     <button type="button" data-tab="break" role="menuitem">Breakdown</button>
-    <button type="button" data-tab="data" role="menuitem">Data &amp; sources</button>
+    <button type="button" data-tab="data" role="menuitem">Data &amp; sources <b class="hwarn" id="healthWarn" hidden></b></button>
     <div class="thlbl" id="thLbl">Theme</div>
     <div class="throw" role="group" aria-labelledby="thLbl"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
   </div>
@@ -196,6 +197,7 @@
 <script src="us-geo.js"></script>
 <script src="capture.js"></script>
 <script src="v2.js"></script>
+<script src="v4.js"></script>
 <script src="model.js"></script>
 <script src="cost.js"></script>
 <script src="roadway.js"></script>

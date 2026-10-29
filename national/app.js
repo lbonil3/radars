@@ -2,7 +2,7 @@
    Every record already carries the rule that included it, the source field of each dollar figure, and a source link. */
 (function () {
   'use strict';
-  var V2 = window.NRV2, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
+  var V2 = window.NRV2, V4 = window.NRV4, HEALTH = null, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SRC_SHORT = { 'sam': 'SAM.gov', 'usaspending': 'USAspending', 'txdot-pcl': 'TxDOT projected contracts', 'nyc': 'NYC City Record', 'chicago': 'Chicago contracts', 'dhs-apfs': 'DHS forecast (APFS)', 'ag-forecast': 'Acquisition Gateway forecasts', 'caltrans-lar': 'Caltrans A&E look-ahead', 'caltrans-awards': 'Caltrans A&E awards', 'usaspending-rw': 'USAspending prime awards (roadway lane)', 'usaspending-sub': 'USAspending subawards', 'wsdot-proj': 'WSDOT projected design list', 'pse-usaspending': 'USAspending prime awards / IDVs (PS&E lens)', 'austin': 'City of Austin master agreements', 'txdot-pi': 'TxDOT Project Information', 'wssc': 'WSSC Water projected solicitations', 'cdot-sched': 'CDOT tentative advertisement schedule', 'la-dotd': 'Louisiana DOTD projected advertisements', 'dc-pass': 'DC OCP PASS forecast', 'sd-forecast': 'San Diego County procurement forecast' };
@@ -393,9 +393,31 @@
       '<p>Data updated <b>' + esc(M.fmtDate(DATA.asOfDate)) + '</b> (' + (age < 1 ? 'today' : age + ' day' + (age === 1 ? '' : 's') + ' ago') + ') &middot; refreshed automatically every morning.</p>' +
       '<p><b>' + (DATA.records || []).length + '</b> records in this lane. Open the sections below for per-source counts, exclusions and rules.</p>';
   }
+  function fmtWhen(iso) { if (!iso) return 'never'; var d = new Date(iso); return isNaN(d) ? 'unknown' : d.toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+  function renderHealthDot() {
+    var n = HEALTH ? HEALTH.bad.length : 0, t = n ? n + ' source' + (n === 1 ? ' is' : 's are') + ' stale or failing; see Data & sources' : '';
+    $('healthDot').hidden = !n; $('healthDot').title = t; $('healthWarn').hidden = !n; $('healthWarn').textContent = n ? n + ' stale' : '';
+    $('tabMoreBtn').setAttribute('aria-label', 'More' + (n ? ' (' + t + ')' : ''));
+  }
+  function renderSrcHealth() {
+    var el = $('srcHealth'); if (!el) return;
+    if (!HEALTH || !HEALTH.all.length) { el.innerHTML = '<p class="note">Source status is not available yet; it is written by the next daily refresh.</p>'; return; }
+    var order = { failing: 0, stale: 1, fresh: 2 }, lbl = { fresh: 'Fresh', stale: 'Stale', failing: 'Failing', disabled: 'Off', skipped: 'Off' };
+    var c = HEALTH.counts, h = '<p class="srcsum"><span class="hp fresh">' + c.fresh + ' fresh</span> <span class="hp stale">' + c.stale + ' stale</span> <span class="hp failing">' + c.failing + ' failing</span>' + (c.off ? ' <span class="hp off">' + c.off + ' off</span>' : '') + '</p>';
+    ['national', 'texas'].forEach(function (g) {
+      var rows = HEALTH.all.filter(function (s) { return s.group === g; }); if (!rows.length) return;
+      rows.sort(function (a, b) { return ((order[a.health] === undefined ? 3 : order[a.health]) - (order[b.health] === undefined ? 3 : order[b.health])) || (a.name < b.name ? -1 : 1); });
+      h += '<h3 class="srcg">' + esc(V4.GROUP_LABEL[g] || g) + '</h3><ul class="srcl">' + rows.map(function (s) {
+        return '<li class="srci ' + esc(s.health) + '"><div class="srcn"><span class="hp ' + esc(s.health) + '">' + esc(lbl[s.health] || s.health) + '</span> ' + esc(s.name) + '</div>' +
+          '<div class="srcm">Last successful refresh: <b>' + esc(fmtWhen(s.lastSuccess)) + '</b> &middot; ' + (s.records || 0) + ' records' + (s.failingSince ? ' &middot; failing since ' + esc(fmtWhen(s.failingSince)) : '') + '</div>' +
+          (s.error ? '<div class="srce">Reason: ' + esc(String(s.error).replace(/ for https?:\/\/\S+/g, '')) + '</div>' : '') + '</li>';
+      }).join('') + '</ul>';
+    });
+    el.innerHTML = h;
+  }
   function renderData() {
     if (!DATA) return;
-    renderHealth();
+    renderHealth(); renderSrcHealth();
     if (S.mode === 'pse') { renderDataPse(); return; }
     if (S.mode === 'road') { renderDataRoad(); return; }
     var gen = new Date(DATA.generatedAt);
@@ -760,7 +782,8 @@
 
   // ---------- start ----------
   function loadJ(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
-  Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; })]).then(function (x) {
+  Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; }), loadJ('data/source-status.json').catch(function () { return null; }), loadJ('../texas/data/source-status.json').catch(function () { return null; })]).then(function (x) {
+    HEALTH = V4.health([x[4], x[5]]); renderHealthDot();
     var lastTab = null; try { lastTab = localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab;
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     if (DATA_P) setMode(location.hash === '#road' && DATA_R ? 'road' : location.hash === '#water' ? 'water' : 'pse');

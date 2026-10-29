@@ -2,7 +2,7 @@
 // Data refresh workflows: installed, scheduled + manual, long timeout, contents: write, commit-only-when-changed, never force-push.
 const fs = require('fs'), path = require('path'), assert = require('assert');
 const W = path.join(__dirname, '..', '.github', 'workflows');
-for (const [f, build, data, min] of [['refresh-national.yml', 'scripts/build-national.js', 'national/data/', 45], ['refresh-opportunities.yml', 'scripts/build-opportunities.js', 'texas/data/opportunities.json', 15]]) {
+for (const [f, build, data, min] of [['refresh-national.yml', 'scripts/build-national.js', 'national/data/', 45], ['refresh-opportunities.yml', 'scripts/build-opportunities.js', 'texas/data/', 15]]) {
   const y = fs.readFileSync(path.join(W, f), 'utf8');
   assert.ok(/schedule:\s*\n\s*- cron: '\d+ \d+ \* \* \*'/.test(y), f + ' daily cron');
   assert.ok(/workflow_dispatch/.test(y), f + ' manual trigger');

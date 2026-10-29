@@ -26,12 +26,12 @@ jobs:
         run: node scripts/build-opportunities.js
       - name: Commit if changed
         run: |
-          if git diff --quiet -- texas/data/opportunities.json; then
+          if git diff --quiet -- texas/data/; then
             echo "No data changes."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add texas/data/opportunities.json
+            git add texas/data/*.json
             git commit -m "data(texas): daily snapshot refresh"
             git push
           fi

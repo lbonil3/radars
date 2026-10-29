@@ -35,7 +35,7 @@ jobs:
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add national/data/national.json national/data/roadway.json national/data/pse.json national/data/cost-prices.json
+            git add national/data/*.json
             git commit -m "data(national): daily snapshot refresh"
             git push
           fi

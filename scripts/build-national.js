@@ -700,6 +700,7 @@ async function main() {
     if (!pseOut.sources.some((x) => x.status === 'ok') || !pOrdered.length) console.error('PS&E: nothing usable fetched; keeping the existing file.');
     else { fs.writeFileSync(OUT_PSE, pSlim); console.log('wrote', OUT_PSE, pOrdered.length, 'records', (pSlim.length / 1024).toFixed(0) + ' KB', JSON.stringify(pc.byLens), 'fee>5M strict', pc.fee.strictGt5, 'exact5', pc.fee.exact5); }
   }
+  if (!SKIP.size) require('./source-status.js').write(path.join(path.dirname(OUT), 'source-status.json'), statuses.concat(rwStatuses, pseStatuses), 'national');
   if (SKIP.size) { console.log('NR_SKIP set: national.json NOT written.'); return; }
   // sector for forced TxDOT hydraulics discipline is already in the keyword rules via the title; nothing to add here.
   // dedupe across sources (award number, solicitation number, or identical title+agency+amount)

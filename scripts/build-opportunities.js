@@ -11,20 +11,37 @@ const M = require('../texas/model.js');
 
 const OUT = path.join(__dirname, '..', 'texas', 'data', 'opportunities.json');
 const GEO = path.join(__dirname, '..', 'texas', 'texas-geo.js');
-const UA = 'radars-opportunity (+https://github.com/lbonil3/radars)';
+const UA = 'Mozilla/5.0 (compatible; radars-opportunity/1.1; daily public-data refresh; +https://lbonil3.github.io/radars/)';
 
+// Polite fetching: requests are serialized (one at a time, sources run in order), hosts that rate-limit get a
+// jittered minimum gap between calls, and HTTP 429/503 are retried with backoff that honors Retry-After.
+const HOST_GAP_MS = { 'bonfirehub.com': 8000 }; // Bonfire answered HTTP 429 to back-to-back portal calls from shared runners
+const lastHit = {};
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const jitter = (ms) => Math.round(ms * (0.75 + Math.random() * 0.5));
+function hostKey(url) { const h = new URL(url).hostname; return Object.keys(HOST_GAP_MS).find((k) => h === k || h.endsWith('.' + k)) || null; }
+function retryAfterMs(v) { if (!v) return null; const n = Number(v); if (isFinite(n)) return n * 1000; const d = Date.parse(v); return isFinite(d) ? Math.max(0, d - Date.now()) : null; }
 async function get(url, opts) {
   opts = opts || {};
+  const hk = hostKey(url), tries = hk ? 5 : 3;
   let lastErr;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < tries; i++) {
+    if (hk) { const wait = (lastHit[hk] || 0) + jitter(HOST_GAP_MS[hk]) - Date.now(); if (wait > 0) await sleep(wait); lastHit[hk] = Date.now(); }
+    let retryMs = null;
     try {
       const ctl = new AbortController();
       const t = setTimeout(() => ctl.abort(), opts.timeout || 90000);
-      const res = await fetch(url, { headers: { 'user-agent': UA, accept: opts.accept || '*/*' }, signal: ctl.signal, redirect: 'follow' });
+      const res = await fetch(url, { headers: { 'user-agent': UA, accept: opts.accept || '*/*', 'accept-language': 'en-US,en;q=0.8' }, signal: ctl.signal, redirect: 'follow' });
       clearTimeout(t);
-      if (!res.ok) throw new Error('HTTP ' + res.status + ' for ' + url.slice(0, 120));
+      if (res.status === 429 || res.status === 503) retryMs = retryAfterMs(res.headers.get('retry-after'));
+      if (!res.ok) { const e = new Error('HTTP ' + res.status + ' for ' + url.slice(0, 120)); e.status = res.status; throw e; }
       return opts.binary ? Buffer.from(await res.arrayBuffer()) : await res.text();
-    } catch (e) { lastErr = e; await new Promise((r) => setTimeout(r, 1500 * (i + 1))); }
+    } catch (e) {
+      lastErr = e; if (e.status && e.status >= 400 && e.status < 500 && e.status !== 429 && e.status !== 408) break; // not retryable
+      if (i === tries - 1) break;
+      const back = retryMs !== null ? Math.min(retryMs, 180000) + jitter(2000) : jitter((e.status === 429 ? 20000 : 1500) * Math.pow(2, i));
+      console.log('  retry', i + 1, 'in', (back / 1000).toFixed(1) + 's', String(e.message).slice(0, 80)); await sleep(back);
+    }
   }
   throw lastErr;
 }
@@ -158,7 +175,7 @@ const SOURCES = [
       const recs = Object.keys(byKey).map((k) => { const r = byKey[k]; delete r._cip; delete r._layer; return r; });
       return { fetched, recs, note: 'Layers 7, 11, 65, 68 (stormwater/drainage) kept whole; layers 2 and 10 (street/traffic, interagency) kept only when the description matches drainage keywords. Same CIP number+stage across layers is merged. Completed (CP) projects dropped.' };
     } },
-  { id: 'coh-swmb', name: 'City of Houston stormwater maintenance (SWMB) project list (FeatureServer)', agency: 'City of Houston', type: 'Snapshot (ArcGIS REST)', page: 'https://geoprocessor2.houstontx.gov/arcgis/rest/services/SWMB_Projects/FeatureServer?f=pjson',
+  { id: 'coh-swmb', name: 'City of Houston stormwater maintenance (SWMB) project list (FeatureServer)', agency: 'City of Houston', type: 'Snapshot (ArcGIS REST)', page: 'https://services1.arcgis.com/XpTq0H1nJ5DHgofs/arcgis/rest/services/AGOL_SWMB_Projects/FeatureServer?f=pjson',
     run: async () => {
       const feats = await arcgisAll(M.COH_SWMB_BASE, { where: '1=1', outFields: '*', returnGeometry: false }, 1000);
       const recs = feats.map((f) => M.normSwmb(f.attributes)).filter(Boolean);
@@ -260,6 +277,7 @@ async function main() {
   if (!records.length || ok === 0) { console.error('Nothing usable fetched; keeping existing file.'); process.exit(1); }
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify(out));
+  require('./source-status.js').write(path.join(path.dirname(OUT), 'source-status.json'), statuses, 'texas');
   console.log('wrote', OUT, records.length, 'records,', (fs.statSync(OUT).size / 1024).toFixed(0) + ' KB,', ok + '/' + statuses.length, 'sources ok');
 }
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

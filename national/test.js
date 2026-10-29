@@ -209,5 +209,6 @@ require('./test-pse.js');
 require('./test-capture.js');
 require('./test-advance.js');
 require('./test-v2.js');
+require('./test-v4.js');
 require('./test-ui.js');
 console.log('national-radar tests passed');
