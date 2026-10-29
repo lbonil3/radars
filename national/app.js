@@ -61,15 +61,20 @@
   var NEWBASE = null; var ssn = null; try { ssn = window.sessionStorage; } catch (e) { ssn = null; }
   var lsx = null; try { lsx = window.localStorage; } catch (e) { lsx = null; }
   S.digest = null; // null | 'new' | 'soon'
+  S.region = V2.loadRegion(lsx); // saved; default All US
   function latestAsOf() { return [DATA_P, DATA_W, DATA_R].reduce(function (a, d) { return d && d.asOfDate > a ? d.asOfDate : a; }, ''); }
   function digestOf(list, kind) { var t = todayCentral(); return list.filter(function (r) { return kind === 'new' ? V2.isNew(r, NEWBASE) : V2.isClosingSoon(r, t); }); }
-  function post(list, skipDigest) { return (!skipDigest && S.digest) ? digestOf(list, S.digest) : list; }
+  function post(list, skipDigest) { if (S.region !== 'all') list = list.filter(function (r) { return V2.inRegion(r, S.region); }); return (!skipDigest && S.digest) ? digestOf(list, S.digest) : list; }
   function renderDigest() {
     var base = post(scopedRaw(S.scope), true), nNew = digestOf(base, 'new').length, nSoon = digestOf(base, 'soon').length;
     $('digest').innerHTML = '<button type="button" class="chip dg' + (S.digest === 'new' ? ' on' : '') + '" data-digest="new" aria-pressed="' + (S.digest === 'new') + '">New since last visit <b class="badge' + (nNew ? ' hot' : '') + '">' + nNew + '</b></button>' +
       '<button type="button" class="chip dg' + (S.digest === 'soon' ? ' on' : '') + '" data-digest="soon" aria-pressed="' + (S.digest === 'soon') + '">Closing within ' + V2.SOON_DAYS + ' days <b class="badge' + (nSoon ? ' warn' : '') + '">' + nSoon + '</b></button>' +
       (nNew || S.digest === 'new' ? '<button type="button" class="chip ghost" id="btnSeen">Mark all seen</button>' : '');
+    var rg = $('regionSel'); if (rg && rg.value !== S.region) rg.value = S.region;
+    $('txLink').hidden = S.region === 'all';
+    $('regionHint').hidden = !V2.showRegionHint(lsx);
   }
+  function setRegion(id) { S.region = V2.regionOf(id).id; V2.saveRegion(lsx, S.region); V2.dismissRegionHint(lsx); S.rows = 50; render(); }
   function scoped(scope, skip) { return post(scopedRaw(scope, skip)); }
   function scopedRaw(scope, skip) { return (S.mode === 'pse' ? PS.filterPse : S.mode === 'road' ? RW.filterRoadway : M.filterRecords)(RECS, filterFor(scope || S.scope, S.f, skip), WATCH); }
   function fee(r) { return r.amt ? r.amt.v : S.mode === 'pse' ? (r.dbValue ? r.dbValue.v : r.projectCost ? r.projectCost.v : 0) : 0; }
@@ -622,6 +627,7 @@
   // ---------- events ----------
   document.addEventListener('click', function (e) {
     if (e.target.closest('#btnSeen')) { NEWBASE = V2.markAllSeen(lsx, ssn, latestAsOf()); if (S.digest === 'new') S.digest = null; toast('Marked everything as seen.'); render(); return; }
+    var rh = e.target.closest('[data-region-hint]'); if (rh) { var rv = rh.getAttribute('data-region-hint'); if (rv === 'no') { V2.dismissRegionHint(lsx); render(); } else setRegion(rv); return; }
     var dg = e.target.closest('[data-digest]'); if (dg) { var dk = dg.getAttribute('data-digest'); S.digest = S.digest === dk ? null : dk; S.rows = 50; render(); return; }
     var t = e.target.closest('[data-mode],[data-scope],[data-star],[data-open],[data-f],[data-fee],[data-cost],[data-month],[data-st],[data-tab]'); if (!t) return;
     if (t.tagName === 'A') e.preventDefault();
@@ -648,6 +654,8 @@
   $('btnRestoreAll').addEventListener('click', function () { S.restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });
   $('restoreFile').addEventListener('change', function () { var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { restoreBackup(String(rd.result), S.restoreMode); }; rd.onerror = function () { toast('Could not read that file.'); }; rd.readAsText(f); });
   $('shBody').addEventListener('input', function (e) { if (!e.target.closest('#whatif')) return; if (e.target.hasAttribute('data-ovr')) runWhatIf(true); else runWhatIf(false); });
+  $('regionSel').innerHTML = V2.REGIONS.map(function (g) { return '<option value="' + g.id + '">' + esc(g.label) + '</option>'; }).join(''); $('regionSel').value = S.region;
+  $('regionSel').addEventListener('change', function () { setRegion(this.value); });
   $('q').addEventListener('input', function () { S.f.q = this.value.trim(); S.rows = 50; render(); });
   $('sort').addEventListener('change', function () { S.sort = this.value; render(); });
   $('btnMoreRows').addEventListener('click', function () { S.rows += 50; render(); });

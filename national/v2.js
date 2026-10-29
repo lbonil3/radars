@@ -32,5 +32,21 @@
     var a = dayNum(due), t = dayNum(today); if (a === null || t === null) return false;
     var n = a - t; return n >= 0 && n <= (days === undefined ? SOON_DAYS : days);
   }
-  return { NEW_KEY: NEW_KEY, SESSION_KEY: SESSION_KEY, SOON_DAYS: SOON_DAYS, carryFirstSeen: carryFirstSeen, baseline: baseline, markAllSeen: markAllSeen, isNew: isNew, isClosingSoon: isClosingSoon, dueOf: dueOf, dayNum: dayNum };
+  // ---- item 3: region focus ----
+  var REGION_KEY = 'nr.region', HINT_KEY = 'nr.regionHint';
+  var REGIONS = [
+    { id: 'all', label: 'All US', states: null },
+    { id: 'tx', label: 'Texas', states: ['TX'] },
+    { id: 'gulf', label: 'Texas + Gulf states', states: ['TX', 'LA', 'MS', 'AL', 'FL'] },
+    { id: 'near', label: 'Texas + neighbors', states: ['TX', 'NM', 'OK', 'AR', 'LA'] }
+  ];
+  function regionOf(id) { for (var i = 0; i < REGIONS.length; i++) if (REGIONS[i].id === id) return REGIONS[i]; return REGIONS[0]; }
+  // Records without a stated state are kept only in "All US" (a region filter never guesses a location).
+  function inRegion(r, id) { var g = regionOf(id); return !g.states || (!!r.state && g.states.indexOf(r.state) >= 0); }
+  function loadRegion(store) { var v = null; try { v = store && store.getItem(REGION_KEY); } catch (e) { v = null; } return regionOf(v).id; }
+  function saveRegion(store, id) { try { if (store) store.setItem(REGION_KEY, regionOf(id).id); } catch (e) { /* ignore */ } }
+  function showRegionHint(store) { try { return !!store && !store.getItem(REGION_KEY) && !store.getItem(HINT_KEY); } catch (e) { return false; } }
+  function dismissRegionHint(store) { try { if (store) store.setItem(HINT_KEY, '1'); } catch (e) { /* ignore */ } }
+  return { REGIONS: REGIONS, REGION_KEY: REGION_KEY, HINT_KEY: HINT_KEY, regionOf: regionOf, inRegion: inRegion, loadRegion: loadRegion, saveRegion: saveRegion, showRegionHint: showRegionHint, dismissRegionHint: dismissRegionHint,
+    NEW_KEY: NEW_KEY, SESSION_KEY: SESSION_KEY, SOON_DAYS: SOON_DAYS, carryFirstSeen: carryFirstSeen, baseline: baseline, markAllSeen: markAllSeen, isNew: isNew, isClosingSoon: isClosingSoon, dueOf: dueOf, dayNum: dayNum };
 });

@@ -80,3 +80,7 @@ Star a record to start a capture file. Fields: Go / No-go (Go, No-go, Undecided)
 - Every record in `data/*.json` has `firstSeen` (US Central snapshot date). `scripts/build-national.js` carries it forward for ids already in the previous snapshot (also via merged "also listed" ids) and sets the snapshot date for new ids.
 - The app stores `nr.seenThrough` (newest snapshot date you opened) in localStorage. "New since last visit" = records with `firstSeen` later than the value at the start of this browser session (frozen in sessionStorage so reloads keep the list). **First-ever visit: nothing is marked new** (baseline = current snapshot); new records appear from the next daily refresh on. "Mark all seen" resets the baseline to the current snapshot.
 - "Closing within 14 days": due date between today and today + 14 (US Central), never awarded / closed records.
+
+## v2: Region focus
+
+Region selector (All US / Texas / Texas + Gulf states LA MS AL FL / Texas + neighbors NM OK AR LA), saved in localStorage `nr.region`; it filters map, lists, tab counts and the New / Closing chips. Default is All US; a one-line "Focus on Texas?" hint appears until you pick a region or dismiss it (`nr.regionHint`). Records with no stated state appear only under All US. A non-All region shows a link to Texas Opportunity (`../texas/`).

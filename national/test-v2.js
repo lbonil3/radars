@@ -49,3 +49,18 @@ for (const f of ['national.json', 'pse.json', 'roadway.json']) {
   assert.ok(html.indexOf('v2.js') > 0 && html.indexOf('v2.js') < html.indexOf('app.js') && sw.includes("'./v2.js'") && html.includes('id="digest"'));
 }
 console.log('national v2 tests passed');
+// ---- item 3: region focus ----
+{
+  const ls = mem();
+  assert.strictEqual(V.loadRegion(ls), 'all', 'default is All US');
+  assert.ok(V.showRegionHint(ls), 'first visit shows the Focus on Texas hint');
+  V.dismissRegionHint(ls); assert.ok(!V.showRegionHint(ls), 'hint dismissed stays dismissed');
+  const ls2 = mem(); V.saveRegion(ls2, 'gulf'); assert.strictEqual(V.loadRegion(ls2), 'gulf'); assert.ok(!V.showRegionHint(ls2), 'no hint once a region was picked');
+  V.saveRegion(ls2, 'bogus'); assert.strictEqual(V.loadRegion(ls2), 'all', 'unknown region falls back to All US');
+  assert.ok(V.inRegion({ state: 'MS' }, 'gulf') && !V.inRegion({ state: 'MS' }, 'near') && V.inRegion({ state: 'NM' }, 'near') && !V.inRegion({ state: 'OK' }, 'tx'));
+  assert.ok(V.inRegion({}, 'all') && !V.inRegion({}, 'tx'), 'no stated state: only in All US');
+  assert.deepStrictEqual(V.regionOf('gulf').states, ['TX', 'LA', 'MS', 'AL', 'FL']); assert.deepStrictEqual(V.regionOf('near').states, ['TX', 'NM', 'OK', 'AR', 'LA']);
+  const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  assert.ok(html.includes('id="regionSel"') && html.includes('href="../texas/"') && html.includes('Focus on Texas?'));
+}
+console.log('national v2 region tests passed');
