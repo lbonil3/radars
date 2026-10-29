@@ -7,5 +7,16 @@ assert.ok(/<select id="modeSel"[^>]*>[\s\S]*value="pse"[\s\S]*value="water"[\s\S
 const prim = app.match(/var PRIMARY = (\{[^}]*\})/)[1].replace(/'/g, '"').replace(/(\w+):/g, '"$1":');
 Object.values(JSON.parse(prim)).forEach((l) => assert.ok(l.length >= 3 && l.length <= 4, 'primary scopes per lane: 3-4'));
 assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes behind More');
+// P1: single Filters drawer (fee threshold, region, include-exactly, text-parsed, exact-$5M note, chips, reset), badge, Confirmed only visible, no duplicate Hide unconfirmed
+{
+  const adv = html.slice(html.indexOf('<div id="adv"'), html.indexOf('<div class="active" id="activeNote"'));
+  ['id="regionSel"', 'id="feeIn"', 'id="btnIncl"', 'id="btnText"', 'id="feePre"', 'id="exactNote"', 'id="pcDb"', 'id="pcPipe"', 'id="fState"', 'id="fSource"', 'id="btnReset"', 'id="btnClear"', 'id="btnCsv"', 'id="btnLive"', 'href="../texas/"'].forEach((k) => assert.ok(adv.includes(k), 'drawer holds ' + k));
+  assert.ok(!html.includes('id="btnConf"'), 'duplicate Hide unconfirmed button removed');
+  const before = html.slice(0, html.indexOf('<div id="adv"'));
+  assert.ok(before.includes('id="btnConfOnly"') && before.includes('id="regionHint"'), 'Confirmed only and the region hint stay outside the drawer');
+  assert.ok(html.includes('class="fbadge" id="advCount"') && /function setBadge\(n\)/.test(app), 'active-filter badge');
+  assert.ok(/S\.region && S\.region !== 'all' \? 1 : 0/.test(app) && /f\.feeMin !== d\.feeMin/.test(app), 'badge counts region and a changed fee threshold');
+  assert.ok(/function resetFilters\(\) \{ S\.f = freshF\(S\.mode\);[^\n]*S\.region = 'all'/.test(app) && /f\.hideUnconfirmed = CONF/.test(app), 'reset clears filters and region but keeps the saved Confirmed only');
+}
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');

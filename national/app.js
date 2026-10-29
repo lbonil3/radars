@@ -186,7 +186,8 @@
     var base = { opp: '<b>0 confirmed upcoming or open records</b> in this snapshot. A record needs all of these: a consultant engineering notice, a drainage / water / wastewater sector, and a fee that the source itself states as strictly more than $20,000,000, while still upcoming or open. Most agencies do not publish a consultant fee before award. This is the true count, nothing has been added to fill it. Try <b>Needs review (' + counts.review + ')</b> and <b>Fee not stated (' + counts.nofee + ')</b>, or <b>Awards / competitors (' + counts.awards + ')</b>.', review: '<b>0 records need review</b> in this snapshot.', nofee: '<b>0 records</b>: no open or upcoming engineering notice in a water sector without a stated fee.', recompete: '<b>0 recompete candidates.</b> No awarded record with a stated fee over $20M has an end date within 18 months of the snapshot. Recompete dates are inferred.', awards: '<b>0 awards</b> in this snapshot.', watch: '<b>Your watchlist is empty.</b> Tap the star on any record to keep it here. It is saved on this device only.' };
     return '<div class="empty">' + base[S.scope] + '</div>';
   }
-  function activeCount() { var f = S.f; return (f.q ? 1 : 0) + f.states.length + f.agencies.length + f.statuses.length + f.sectors.length + f.sources.length + (S.mode === 'pse' ? ((f.hideUnconfirmed ? 1 : 0) + (f.noText ? 1 : 0) + (f.dbRoles || []).length + (f.dbTypes || []).length + (f.dbStages || []).length) : (f.feeMin !== null ? 1 : 0) + (f.costMin !== null ? 1 : 0)); }
+  function setBadge(n) { var b = $('advCount'); b.hidden = !n; b.textContent = n; $('btnMore').setAttribute('aria-label', 'Filters' + (n ? ', ' + n + ' active' : '')); }
+  function activeCount() { var f = S.f, d = freshF(S.mode); return (f.q ? 1 : 0) + f.states.length + f.agencies.length + f.statuses.length + f.sectors.length + f.sources.length + (S.region && S.region !== 'all' ? 1 : 0) + (S.mode === 'pse' ? ((f.noText ? 1 : 0) + (f.inclusive ? 1 : 0) + (f.feeMin !== d.feeMin ? 1 : 0) + (f.costMin !== d.costMin ? 1 : 0) + (f.dbMin !== d.dbMin && f.dbMin !== undefined ? 1 : 0) + (f.dbRoles || []).length + (f.dbTypes || []).length + (f.dbStages || []).length) : (f.feeMin !== d.feeMin ? 1 : 0) + (f.costMin !== d.costMin ? 1 : 0)); } // Confirmed only is not counted: it is its own visible switch
 
   // ---------- header, scopes, kpis ----------
   function renderFresh() {
@@ -232,12 +233,12 @@
     chipSet('fSector', 'sectors', itemsFor('sectors', function (r) { return r.sectors || []; }, function (k) { return secLabel(k); }), f.sectors);
     chipSet('fSource', 'sources', itemsFor('sources', function (r) { return r.src; }, function (k) { return SRC_SHORT[k] || k; }), f.sources);
     var fees = S.mode === 'road' ? [[null, 'Any'], [5e6, '> $5M'], [10e6, '> $10M'], [20e6, '> $20M'], [50e6, '> $50M'], [100e6, '> $100M']] : [[null, 'Any'], [20e6, '> $20M'], [50e6, '> $50M'], [100e6, '> $100M'], [250e6, '> $250M'], [500e6, '> $500M']];
-    if (S.mode === 'pse') { $('fFee').innerHTML = '<span class="hint">use the fee threshold control above the list</span>'; $('costBox').hidden = true; var n0 = activeCount() - (f.q ? 1 : 0); $('advCount').textContent = n0 ? '(' + n0 + ')' : ''; var a0 = $('activeNote'); a0.hidden = !activeCount(); a0.textContent = activeCount() ? activeCount() + ' filter' + (activeCount() === 1 ? '' : 's') + ' on. Counts above reflect them.' : ''; renderPseCtl(); return; }
+    if (S.mode === 'pse') { $('fFee').innerHTML = '<span class="hint">use the fee threshold control above the list</span>'; $('costBox').hidden = true; var n0 = activeCount() - (f.q ? 1 : 0); setBadge(n0); var a0 = $('activeNote'); a0.hidden = !activeCount(); a0.textContent = activeCount() ? activeCount() + ' filter' + (activeCount() === 1 ? '' : 's') + ' on. Counts above reflect them.' : ''; renderPseCtl(); return; }
     $('fFee').innerHTML = S.scope === 'nofee' ? '<span class="hint">not applicable: these records state no fee</span>' : fees.map(function (x) { return '<button type="button" class="chip' + (f.feeMin === x[0] ? ' on' : '') + '" data-fee="' + x[0] + '" aria-pressed="' + (f.feeMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
     $('costBox').hidden = S.scope !== 'nofee';
     var costs = [[null, 'Off'], [20e6, 'Project cost > $20M'], [50e6, 'Project cost > $50M'], [100e6, 'Project cost > $100M']];
     $('fCost').innerHTML = costs.map(function (x) { return '<button type="button" class="chip' + (f.costMin === x[0] ? ' on' : '') + '" data-cost="' + x[0] + '" aria-pressed="' + (f.costMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
-    var n = activeCount() - (f.q ? 1 : 0); $('advCount').textContent = n ? '(' + n + ')' : '';
+    var n = activeCount() - (f.q ? 1 : 0); setBadge(n);
     var a = $('activeNote'); a.hidden = !activeCount(); a.textContent = activeCount() ? activeCount() + ' filter' + (activeCount() === 1 ? '' : 's') + ' on. Counts above reflect them.' : '';
   }
 
@@ -251,7 +252,6 @@
     var fin = $('feeIn'); if (document.activeElement !== fin) fin.value = f.feeMin === null ? '' : +(f.feeMin / 1e6).toFixed(3);
     $('feeOp').innerHTML = f.inclusive ? '&ge;' : '&gt;';
     $('btnIncl').setAttribute('aria-pressed', String(!!f.inclusive)); $('btnIncl').classList.toggle('on', !!f.inclusive); $('btnIncl').textContent = f.inclusive ? '\u2265 on: exactly ' + M.fmtMoney(f.feeMin || 0) + ' included' : '\u2265 include exactly ' + M.fmtMoney(f.feeMin || 0);
-    $('btnConf').setAttribute('aria-pressed', String(!!f.hideUnconfirmed)); $('btnConf').classList.toggle('on', !!f.hideUnconfirmed);
     $('btnText').setAttribute('aria-pressed', String(!!f.noText)); $('btnText').classList.toggle('on', !!f.noText);
     var pre = [[5e6, '> $5M'], [10e6, '> $10M'], [20e6, '> $20M'], [50e6, '> $50M']];
     $('feePre').innerHTML = pre.map(function (x) { return '<button type="button" class="chip' + (f.feeMin === x[0] ? ' on' : '') + '" data-fee="' + x[0] + '" aria-pressed="' + (f.feeMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
@@ -707,13 +707,14 @@
   $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
-  $('btnClear').addEventListener('click', function () { S.f = freshF(S.mode); $('q').value = ''; render(); });
+  function resetFilters() { S.f = freshF(S.mode); $('q').value = ''; S.region = 'all'; V2.saveRegion(lsx, 'all'); S.rows = 50; render(); toast('Filters reset (Confirmed only and your watchlist are unchanged).'); }
+  $('btnClear').addEventListener('click', resetFilters); $('btnReset').addEventListener('click', resetFilters);
   $('feeIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.feeMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
   $('costIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.costMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
   $('dbIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.dbMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : null; S.rows = 50; render(); });
   $('btnIncl').addEventListener('click', function () { S.f.inclusive = !S.f.inclusive; render(); });
   function setConf(v) { CONF = !!v; S.f.hideUnconfirmed = CONF; try { localStorage.setItem('nr.confirmedOnly', CONF ? '1' : '0'); } catch (e) { /* ignore */ } S.rows = 50; render(); }
-  $('btnConf').addEventListener('click', function () { setConf(!CONF); }); $('btnConfOnly').addEventListener('click', function () { setConf(!CONF); });
+  $('btnConfOnly').addEventListener('click', function () { setConf(!CONF); });
   $('btnText').addEventListener('click', function () { S.f.noText = !S.f.noText; render(); });
 
   // ---------- start ----------

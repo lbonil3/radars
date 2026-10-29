@@ -227,3 +227,14 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .scmenu{position:absolute;right:0;top:calc(100% + 4px);z-index:30;min-width:240px;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .scmenu .scope{display:flex;align-items:center;gap:10px;width:100%}.scmenu .scope b{display:inline;min-width:2.2em}
 @media (max-width:520px){.scope b{font-size:16px}.scope span{font-size:11px}.scopes{gap:6px}}
+
+/* v3 UI: filters drawer */
+.filters .row{display:flex;gap:8px;align-items:center}
+.filters .row #q{flex:1 1 auto;min-width:0}
+.filters .switch{flex:none}
+.fbadge{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--acc);color:#0a1020;font-size:12px;line-height:20px;margin-left:4px}.fbadge[hidden]{display:none}
+.drawer{margin-top:8px;padding:8px 12px 12px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.drawhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.drawhead h3{margin:4px 0}
+.drawer .pse-ctl{margin:8px 0 0;padding:0;border:0;background:none}
+.filters .rhint{margin:6px 2px 0;font-size:13.5px;color:var(--dim)}.filters .rhint .linkbtn{min-height:32px;font-size:13.5px}.linkbtn.dim{color:var(--dim)}
+@media (max-width:520px){.filters .switch{padding:0 10px 0 6px;font-size:13px;gap:6px}.filters .switch .knob{width:32px}.filters .switch.on .knob::after{left:12px}}
