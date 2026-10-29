@@ -26,16 +26,20 @@
 </header>
 
 <section class="banner" id="banner" aria-label="Read this first">
-  <p id="bannerTxt"><b>Loading…</b></p>
-  <button type="button" class="linkbtn" id="btnHow" aria-expanded="false" aria-controls="how">What counts, and what does not</button>
-  <div id="how" hidden></div>
+  <div class="bline">
+    <label class="lane"><span class="vh">Lane</span><select id="modeSel" aria-label="Lane">
+      <option value="pse">PS&amp;E / H&amp;H, fee &gt; $5M</option><option value="water">Water, fee &gt; $20M</option><option value="road">Roadway + drainage</option>
+    </select></label>
+    <span id="bannerShort" class="bshort"></span>
+    <button type="button" class="linkbtn" id="btnBanner" aria-expanded="false" aria-controls="bannerMore">What counts &rsaquo;</button>
+  </div>
+  <div id="bannerMore" hidden>
+    <p id="bannerTxt"><b>Loading…</b></p>
+    <button type="button" class="linkbtn" id="btnHow" aria-expanded="false" aria-controls="how">What counts, and what does not</button>
+    <div id="how" hidden></div>
+  </div>
 </section>
 
-<nav class="modes" id="modes" aria-label="Which lane">
-  <button type="button" class="on" data-mode="pse" aria-pressed="true">PS&amp;E / H&amp;H, fee &gt; $5M</button>
-  <button type="button" data-mode="water" aria-pressed="false">Preset: water, fee &gt; $20M</button>
-  <button type="button" data-mode="road" aria-pressed="false">Preset: roadway + drainage</button>
-</nav>
 <nav class="scopes" id="scopes" aria-label="What to show"></nav>
 <div class="regionbar">
   <button type="button" class="switch" id="btnConfOnly" role="switch" aria-checked="false"><span class="knob" aria-hidden="true"></span>Confirmed only</button>

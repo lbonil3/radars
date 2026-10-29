@@ -210,3 +210,20 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .switch .knob::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--dim);transition:left .15s}
 .switch.on{border-color:var(--ok)}.switch.on .knob{background:rgba(52,211,153,.35);border-color:var(--ok)}.switch.on .knob::after{left:18px;background:var(--ok)}
 .tag.also{border-color:#a78bfa;color:#ddd6fe}
+
+/* v3 UI: one-line banner with lane dropdown, compact scopes + More */
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.banner{padding:4px 10px}
+.bline{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px}
+.bshort{font-size:13.5px;color:var(--dim);flex:1 1 220px}
+.lane select{min-height:40px;padding:0 10px;border-radius:12px;border:1px solid var(--acc);background:rgba(124,183,255,.14);color:var(--ink);font-weight:600;font-size:14px;max-width:100%}
+.banner .linkbtn{min-height:40px}
+#bannerMore p{margin:6px 0}
+.scopes{flex-wrap:nowrap;overflow:visible}
+.scopes .scope{flex:1 1 0;min-width:0;min-height:44px;padding:4px 10px}
+.scope span{overflow:hidden;text-overflow:ellipsis;display:block}
+.scmore{position:relative;flex:1 1 0;min-width:0}
+.scmore>summary{list-style:none;height:100%;box-sizing:border-box}.scmore>summary::-webkit-details-marker{display:none}
+.scmenu{position:absolute;right:0;top:calc(100% + 4px);z-index:30;min-width:240px;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.scmenu .scope{display:flex;align-items:center;gap:10px;width:100%}.scmenu .scope b{display:inline;min-width:2.2em}
+@media (max-width:520px){.scope b{font-size:16px}.scope span{font-size:11px}.scopes{gap:6px}}

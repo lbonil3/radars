@@ -26,8 +26,8 @@
     { id: 'open', label: 'Upcoming / open', sub: 'fee stated, not yet awarded' },
     { id: 'forecast', label: 'Forecast', sub: 'agency forecasts with a stated fee' },
     { id: 'awarded', label: 'Awarded', sub: 'recompete and competitor intel' },
-    { id: 'advance', label: 'Advance notices, fee not stated', sub: 'agency forecasts before the solicitation; no fee filter applies' },
-    { id: 'pipeline', label: 'Large projects, fee not published', sub: 'stated project cost, NOT a fee' },
+    { id: 'advance', label: 'Early notices (no fee yet)', sub: 'agency forecasts before the solicitation; no fee filter applies' },
+    { id: 'pipeline', label: 'Big projects (no fee yet)', sub: 'stated project cost, NOT a fee' },
     { id: 'db', label: 'Design-build', sub: 'DB value includes construction, NOT a fee' },
     { id: 'watch', label: 'Watchlist', sub: 'starred on this device' }
   ];
@@ -195,11 +195,17 @@
     var bad = DATA.sources.filter(function (s) { return s.status === 'failed' || s.status === 'stale'; });
     var cls = bad.length || age > 7 ? (age > 7 ? 'bad' : 'warn') : age > 2 ? 'warn' : 'ok';
     $('freshDot').className = 'dot ' + cls;
-    $('freshTxt').textContent = 'Data updated ' + M.fmtDate(DATA.asOfDate) + ' (built ' + gen.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) + ', ' + (age < 1 ? 'today' : Math.floor(age) + ' day' + (Math.floor(age) === 1 ? '' : 's') + ' old') + ')' + (bad.length ? '. ' + bad.length + ' source(s) stale or failed.' : '.') + (LIVE.at ? ' Live awards refreshed ' + LIVE.at + '.' : '') + (S.mode === 'pse' ? ' PS&E / H&H lens: consultant fee as stated by the source, threshold ' + (S.f.inclusive ? '&ge; ' : '> ') + M.fmtMoney(S.f.feeMin || 0) + ' (editable).' : S.mode === 'road' ? ' Roadway lane: drainage-specific fee strictly > $5M, or total fee strictly > $20M with drainage named; as stated by the source.' : ' Fee filter: strictly > $20M, as stated by the source.');
+    $('freshTxt').textContent = 'Data updated ' + M.fmtDate(DATA.asOfDate) + ' (built ' + gen.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) + ', ' + (age < 1 ? 'today' : Math.floor(age) + ' day' + (Math.floor(age) === 1 ? '' : 's') + ' old') + ')' + (bad.length ? '. ' + bad.length + ' source(s) stale or failed.' : '.') + (LIVE.at ? ' Live awards refreshed ' + LIVE.at + '.' : '');
   }
-  function renderScopes() {
-    $('scopes').innerHTML = SCOPES.map(function (s) { return '<button type="button" class="scope' + (S.scope === s.id ? ' on' : '') + '" data-scope="' + s.id + '" aria-pressed="' + (S.scope === s.id) + '"><b>' + scoped(s.id).length + '</b><span>' + esc(s.label) + '</span>' + (s.id === 'watch' && capCounts().soon + capCounts().overdue ? '<i class="flagn">' + (capCounts().soon + capCounts().overdue) + ' due soon</i>' : '') + '</button>'; }).join('');
+  var PRIMARY = { pse: ['all', 'open', 'forecast', 'awarded'], water: ['opp', 'review', 'nofee'], road: ['drain', 'total', 'review'] };
+  var SHORT = { all: 'All', open: 'Open', forecast: 'Forecast', awarded: 'Awarded', opp: 'Open', review: 'Review', nofee: 'No fee', drain: 'Drainage', total: 'Roadway total' };
+  function scopeBtn(s0, cls) { var n = scoped(s0.id).length, due = s0.id === 'watch' ? capCounts().soon + capCounts().overdue : 0; return '<button type="button" class="' + cls + (S.scope === s0.id ? ' on' : '') + '" data-scope="' + s0.id + '" aria-pressed="' + (S.scope === s0.id) + '" title="' + esc(s0.sub) + '"><b>' + n + '</b><span>' + esc(s0.label) + '</span>' + (due ? '<i class="flagn">' + due + ' due soon</i>' : '') + '</button>'; }
+  function renderScopes() { // 3-4 primary scopes; the rest behind More (same scopes, same counts)
+    var prim = PRIMARY[S.mode] || [], main = SCOPES.filter(function (x) { return prim.indexOf(x.id) >= 0; }), rest = SCOPES.filter(function (x) { return prim.indexOf(x.id) < 0; });
+    var cur = rest.filter(function (x) { return x.id === S.scope; })[0];
+    $('scopes').innerHTML = main.map(function (x) { return scopeBtn(x, 'scope'); }).join('') + (rest.length ? '<details class="scmore' + (cur ? ' on' : '') + '"><summary class="scope' + (cur ? ' on' : '') + '"><b>' + (cur ? scoped(cur.id).length : '&middot;&middot;&middot;') + '</b><span>' + (cur ? esc(cur.label) + ' &#9662;' : 'More &#9662;') + '</span></summary><div class="scmenu" role="menu">' + rest.map(function (x) { return scopeBtn(x, 'scope item'); }).join('') + '</div></details>' : '');
   }
+
   function renderKpis(list) {
     var states = {}, ag = {}; list.forEach(function (r) { if (r.state) states[r.state] = 1; ag[r.agency] = 1; });
     var scope = SCOPES.filter(function (s) { return s.id === S.scope; })[0];
@@ -606,7 +612,8 @@
 
   // ---------- master render ----------
   function renderModes() {
-    document.querySelectorAll('#modes [data-mode]').forEach(function (b) { var on = b.getAttribute('data-mode') === S.mode; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+    var ms = $('modeSel'); if (ms.value !== S.mode) ms.value = S.mode;
+    $('bannerShort').innerHTML = S.mode === 'pse' ? 'Consultant PS&amp;E / H&amp;H fees ' + (S.f.inclusive ? '&ge; ' : '&gt; ') + esc(M.fmtMoney(S.f.feeMin || 0)) + ', as stated by the source.' : S.mode === 'water' ? 'Water / wastewater / flood consultant fees &gt; $20M, as stated by the source.' : 'Roadway consultant work naming drainage, fee as stated by the source.';
     $('btnLive').hidden = S.mode !== 'water'; $('liveNote').hidden = S.mode !== 'water';
   }
   function setMode(m) {
@@ -696,6 +703,8 @@
   $('sort').addEventListener('change', function () { S.sort = this.value; render(); });
   $('btnMoreRows').addEventListener('click', function () { S.rows += 50; render(); });
   $('btnMore').addEventListener('click', function () { var o = $('adv').hidden; $('adv').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
+  $('modeSel').addEventListener('change', function () { setMode(this.value); });
+  $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
   $('btnClear').addEventListener('click', function () { S.f = freshF(S.mode); $('q').value = ''; render(); });
@@ -712,7 +721,7 @@
   Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; })]).then(function (x) {
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     if (DATA_P) setMode(location.hash === '#road' && DATA_R ? 'road' : location.hash === '#water' ? 'water' : 'pse');
-    else { document.querySelector('#modes [data-mode="pse"]').hidden = true; setMode(location.hash === '#road' && DATA_R ? 'road' : 'water'); }
+    else { var po = document.querySelector('#modeSel option[value="pse"]'); if (po) po.remove(); setMode(location.hash === '#road' && DATA_R ? 'road' : 'water'); }
   }).catch(function (e) { $('freshTxt').textContent = 'Could not load data/national.json (' + e.message + '). Open the app once while online so it can be saved for offline use.'; $('freshDot').className = 'dot bad'; });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
 })();
