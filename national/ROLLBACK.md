@@ -29,3 +29,13 @@ Baseline tag `national-pre-ui`; finished state tag `national-v3-ui`. Data files,
 | docs + search placeholder | f0dc693 | `git revert f0dc693` |
 
 Whole UI change at once: `git revert --no-edit national-pre-ui..national-v3-ui` (skips nothing; github-actions data commits in that range are only data and can be re-applied by the next daily run).
+
+## Day theme (default) with Night as a preference
+
+Baseline tag `national-pre-theme`; finished tag `national-v-theme`. Day is the default for everyone; Night (the original dark look, unchanged) or Auto (follows the device) is picked in the bottom **More** menu → Theme, saved as `nr.theme`. Service worker cache bumped to `radars-national-v13`. Landing page and Texas Opportunity not changed.
+
+| Change | Commit | Rollback |
+|---|---|---|
+| Day theme + Night/Auto preference, pre-paint script, theme-color, tests | adcb42c | `git revert adcb42c` |
+
+Whole theme change: `git revert --no-edit national-pre-theme..national-v-theme` (data-bot commits in the range only touch data and are re-applied by the next daily run). Reverting leaves a harmless unused `nr.theme` key in browsers.
