@@ -185,3 +185,19 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .region select{min-height:44px;padding:0 12px;border-radius:22px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:14px}
 .txlink{font-size:14px;color:var(--acc);min-height:44px;display:inline-flex;align-items:center}
 .rhint{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0;font-size:14px;color:var(--ink)}.rhint[hidden],.txlink[hidden]{display:none}
+
+/* v2: My pursuits */
+.purhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}.purhead h2{margin:8px 0;font-size:20px}
+.purbtns{display:flex;gap:8px;flex-wrap:wrap}
+.purcap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.purnotes{margin:6px 0 0;white-space:pre-wrap}
+.tabs button{position:relative}.tabbadge{position:absolute;top:6px;right:calc(50% - 40px);min-width:16px;padding:0 4px;border-radius:999px;background:#fbbf24;color:#111;font-size:10px;line-height:16px}.tabbadge[hidden]{display:none}
+.srclink.small{font-size:13px;margin-top:6px;display:inline-block}
+@media print{
+  body.print-pursuits{background:#fff!important;color:#000!important}
+  body.print-pursuits *{visibility:hidden}
+  body.print-pursuits #v-pursuits,body.print-pursuits #v-pursuits *{visibility:visible;color:#000!important;background:transparent!important;box-shadow:none!important}
+  body.print-pursuits #v-pursuits{position:absolute;left:0;top:0;width:100%;padding:0}
+  body.print-pursuits .purbtns,body.print-pursuits .srclink,body.print-pursuits .card.pur .star{display:none!important}
+  body.print-pursuits .card.pur{display:block!important;break-inside:avoid;border:1px solid #999!important;border-left:4px solid #000!important;margin:0 0 8px;padding:6px 8px}
+  body.print-pursuits .cdue.overdue{font-weight:700}
+}

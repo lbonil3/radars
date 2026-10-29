@@ -139,6 +139,12 @@
     <h2 class="sec">By source</h2><div id="bSource" class="bars"></div>
   </section>
 
+  <section id="v-pursuits" class="view" hidden aria-label="My pursuits">
+    <div class="purhead"><h2>My pursuits <span class="hint" id="purWeek"></span></h2>
+      <div class="purbtns"><button type="button" class="btn" id="btnPurPrint">Print weekly list</button><button type="button" class="btn" id="btnPurCsv">Export CSV</button></div></div>
+    <p class="note">Starred records and records with a capture file, all lanes, sorted by your due date. Go / No-go, due date, next action and notes are your notes on this device (shared capture model with Texas Opportunity).</p>
+    <div id="purList"></div>
+  </section>
   <section id="v-data" class="view" hidden aria-label="Data quality and sources">
     <h2 class="sec">Data freshness</h2><div id="dqFresh" class="panel"></div>
     <h2 class="sec">Counts by source <span class="hint">how many rows survived each rule</span></h2><div id="dqFunnel" class="panel scrollx"></div>
@@ -155,6 +161,7 @@
   <button type="button" data-tab="list">List</button>
   <button type="button" data-tab="timeline">Timeline</button>
   <button type="button" data-tab="break">Breakdown</button>
+  <button type="button" data-tab="pursuits">Pursuits <b class="tabbadge" id="purBadge" hidden></b></button>
   <button type="button" data-tab="data">Data</button>
 </nav>
 

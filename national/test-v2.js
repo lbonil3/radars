@@ -64,3 +64,22 @@ console.log('national v2 tests passed');
   assert.ok(html.includes('id="regionSel"') && html.includes('href="../texas/"') && html.includes('Focus on Texas?'));
 }
 console.log('national v2 region tests passed');
+// ---- item 4: My pursuits ----
+{
+  const CP = require('./capture.js');
+  const today = '2026-10-29';
+  const watch = { a: true, b: true, c: true };
+  const cap = { a: CP.clean({ due: '2026-11-20', decision: 'Go' }), b: CP.clean({ due: '2026-10-25', next: 'call PM' }), c: CP.clean({}), d: CP.clean({ due: '2026-11-02', notes: 'not starred, has notes' }), e: CP.clean({}) };
+  const snaps = { a: { title: 'A' }, b: { title: 'B' }, c: { title: 'C' }, d: { title: 'D' } };
+  const rows = V.pursuitRows(watch, cap, (id) => snaps[id], today, CP);
+  assert.deepStrictEqual(rows.map((r) => r.id), ['b', 'd', 'a', 'c'], 'sorted by due date (overdue first), no-date last; empty unstarred capture excluded');
+  assert.deepStrictEqual(rows.map((r) => r.flag), ['overdue', 'soon', 'later', 'none']);
+  assert.deepStrictEqual(rows.map((r) => r.week), [true, true, false, false], 'weekly list = overdue or due within 7 days');
+  assert.strictEqual(V.pursuitRows({}, {}, () => null, today, CP).length, 0);
+  const csv = CP.toCSV(rows, today); assert.ok(csv.split('\n')[0].includes('Due') || csv.length > 0, 'capture CSV reused');
+  const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
+  assert.ok(html.includes('data-tab="pursuits"') && html.includes('id="v-pursuits"') && html.includes('id="btnPurPrint"') && html.includes('id="btnPurCsv"'));
+  assert.ok(/@media print\{[\s\S]*body\.print-pursuits #v-pursuits/.test(css), 'print stylesheet for the weekly list');
+  assert.ok(/btnPurCsv'\)\.addEventListener\('click', exportCapCsv\)/.test(app), 'pursuits CSV reuses the capture CSV export');
+}
+console.log('national v2 pursuits tests passed');

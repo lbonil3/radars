@@ -473,6 +473,28 @@
     if (S.scope === 'watch') renderCapBar();
   }
 
+  // ---------- v2: My pursuits ----------
+  function purRows() { return V2.pursuitRows(WATCH, CAP, snapFor, todayCentral(), CP); }
+  function renderPurBadge() { var n = purRows().filter(function (r) { return r.flag === 'overdue' || r.flag === 'soon'; }).length, b = $('purBadge'); b.hidden = !n; b.textContent = n; }
+  function purItem(r) {
+    var c = r.cap, sn = r.snap || {}, t = todayCentral(), inLane = RECS.some(function (x) { return x.id === r.id; });
+    var flag = r.flag === 'overdue' ? '<span class="cdue overdue">&#9888; ' + esc(CP.dueText(c.due, t)) + '</span>' : r.flag === 'soon' ? '<span class="cdue soon">&#9873; ' + esc(CP.dueText(c.due, t)) + '</span>' : c.due ? '<span class="cdue">' + esc(CP.dueText(c.due, t)) + '</span>' : '<span class="cdue none">No due date</span>';
+    return '<div class="card pur ' + r.flag + '" style="--c:' + (r.flag === 'overdue' ? '#fb7185' : r.flag === 'soon' ? '#fbbf24' : '#7cb7ff') + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><div class="b">' +
+      '<div class="t">' + (inLane ? '<a href="#" data-open="' + esc(r.id) + '">' + esc(sn.title || r.id) + '</a>' : esc(sn.title || r.id)) + '</div>' +
+      '<span class="m"><span>' + esc([sn.agency, sn.state].filter(Boolean).join(' · ')) + '</span>' + (c.due ? '<span>Due ' + esc(M.fmtDate(c.due)) + '</span>' : '') + '</span>' +
+      '<div class="purcap"><span class="cdec ' + c.decision.replace(/[^a-z]/gi, '').toLowerCase() + '">' + esc(c.decision) + '</span>' + flag + (c.next ? '<span class="cnext">Next: ' + esc(c.next) + '</span>' : '') + '</div>' +
+      (c.notes ? '<p class="note purnotes">' + esc(c.notes.length > 240 ? c.notes.slice(0, 240) + '…' : c.notes) + '</p>' : '') +
+      (sn.url ? '<a class="srclink small" href="' + esc(sn.url) + '" target="_blank" rel="noopener">Source record</a>' : '') + '</div></div>';
+  }
+  function renderPursuits() {
+    var rows = purRows(), wk = rows.filter(function (r) { return r.week; }), rest = rows.filter(function (r) { return !r.week; });
+    $('purWeek').textContent = 'week of ' + M.fmtDate(todayCentral());
+    $('purList').innerHTML = rows.length ? (wk.length ? '<h3>This week: overdue or due within 7 days (' + wk.length + ')</h3>' + wk.map(purItem).join('') : '<p class="note">Nothing overdue or due in the next 7 days.</p>') + (rest.length ? '<h3>Later or no due date (' + rest.length + ')</h3>' + rest.map(purItem).join('') : '')
+      : '<p class="note empty">No pursuits yet. Star a record (&#9734;) in the List or Map to start a capture file; it shows up here with its due date, Go / No-go and next action.</p>';
+  }
+  function printPursuits() { if (S.tab !== 'pursuits') setTab('pursuits'); document.body.classList.add('print-pursuits'); setTimeout(function () { window.print(); }, 50); }
+  window.addEventListener('afterprint', function () { document.body.classList.remove('print-pursuits'); });
+
   // ---------- detail sheet ----------
   function openSheet(id) {
     var r = RECS.filter(function (x) { return x.id === id; })[0]; if (!r) return;
@@ -586,10 +608,11 @@
   function render() {
     var list = scoped();
     renderModes(); renderScopes(); renderDigest(); renderCapBar(); renderKpis(list); renderFilters();
-    if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') renderList(list); else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else renderData();
+    if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') renderList(list); else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else if (S.tab === 'pursuits') renderPursuits(); else renderData();
+    renderPurBadge();
   }
   function setTab(t) {
-    S.tab = t; ['map', 'list', 'timeline', 'break', 'data'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
+    S.tab = t; ['map', 'list', 'timeline', 'break', 'pursuits', 'data'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
     document.querySelectorAll('.tabs button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
     document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-tab') === t ? 'page' : 'false'); });
     render(); window.scrollTo(0, 0);
@@ -649,7 +672,7 @@
   document.addEventListener('input', onCapInput); document.addEventListener('change', onCapInput);
   document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.hasAttribute && d.hasAttribute('data-capopen')) { var id = d.getAttribute('data-capopen'); if (d.open) S.capOpen[id] = true; else delete S.capOpen[id]; } }, true);
   $('capSort').addEventListener('click', function (e) { var b = e.target.closest('[data-capsort]'); if (!b) return; S.sort = b.getAttribute('data-capsort'); $('sort').value = S.sort; render(); });
-  $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnBackup').addEventListener('click', exportBackup);
+  $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurPrint').addEventListener('click', printPursuits); $('btnBackup').addEventListener('click', exportBackup);
   $('btnRestore').addEventListener('click', function () { S.restoreMode = 'merge'; $('restoreFile').value = ''; $('restoreFile').click(); });
   $('btnRestoreAll').addEventListener('click', function () { S.restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });
   $('restoreFile').addEventListener('change', function () { var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { restoreBackup(String(rd.result), S.restoreMode); }; rd.onerror = function () { toast('Could not read that file.'); }; rd.readAsText(f); });

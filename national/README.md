@@ -84,3 +84,7 @@ Star a record to start a capture file. Fields: Go / No-go (Go, No-go, Undecided)
 ## v2: Region focus
 
 Region selector (All US / Texas / Texas + Gulf states LA MS AL FL / Texas + neighbors NM OK AR LA), saved in localStorage `nr.region`; it filters map, lists, tab counts and the New / Closing chips. Default is All US; a one-line "Focus on Texas?" hint appears until you pick a region or dismiss it (`nr.regionHint`). Records with no stated state appear only under All US. A non-All region shows a link to Texas Opportunity (`../texas/`).
+
+## v2: My pursuits tab
+
+Bottom tab "Pursuits": every starred record plus any record with a non-empty capture file (all three lanes), sorted by your due date (capture.js `sortRows('due')`), split into "This week" (overdue or due within 7 days) and "Later or no due date", with overdue / due-soon flags (capture.js `dueInfo`, 14-day soon window). The tab shows a badge with the overdue + due-soon count. "Print weekly list" prints only this view (print stylesheet); "Export CSV" is the existing capture CSV. Capture data is the same model Texas Opportunity uses.

@@ -47,6 +47,14 @@
   function saveRegion(store, id) { try { if (store) store.setItem(REGION_KEY, regionOf(id).id); } catch (e) { /* ignore */ } }
   function showRegionHint(store) { try { return !!store && !store.getItem(REGION_KEY) && !store.getItem(HINT_KEY); } catch (e) { return false; } }
   function dismissRegionHint(store) { try { if (store) store.setItem(HINT_KEY, '1'); } catch (e) { /* ignore */ } }
-  return { REGIONS: REGIONS, REGION_KEY: REGION_KEY, HINT_KEY: HINT_KEY, regionOf: regionOf, inRegion: inRegion, loadRegion: loadRegion, saveRegion: saveRegion, showRegionHint: showRegionHint, dismissRegionHint: dismissRegionHint,
+  // ---- item 4: My pursuits (shared capture model, capture.js) ----
+  // Rows = every starred record plus any record with a non-empty capture file; sorted by due date (CP.sortRows 'due').
+  function pursuitRows(watch, cap, snapFn, today, CP) {
+    var ids = {}; Object.keys(watch || {}).forEach(function (id) { ids[id] = 1; });
+    Object.keys(cap || {}).forEach(function (id) { if (cap[id] && !CP.isEmpty(cap[id])) ids[id] = 1; });
+    var rows = Object.keys(ids).map(function (id) { var c = (cap && cap[id]) || CP.blank(), sn = snapFn(id) || (c.snap) || { title: id }; var d = CP.dueInfo(c.due, today); return { id: id, cap: c, snap: sn, title: sn.title, flag: d.flag, days: d.days, week: d.flag === 'overdue' || (d.days !== null && d.days <= 7) }; });
+    return CP.sortRows(rows, 'due');
+  }
+  return { pursuitRows: pursuitRows, REGIONS: REGIONS, REGION_KEY: REGION_KEY, HINT_KEY: HINT_KEY, regionOf: regionOf, inRegion: inRegion, loadRegion: loadRegion, saveRegion: saveRegion, showRegionHint: showRegionHint, dismissRegionHint: dismissRegionHint,
     NEW_KEY: NEW_KEY, SESSION_KEY: SESSION_KEY, SOON_DAYS: SOON_DAYS, carryFirstSeen: carryFirstSeen, baseline: baseline, markAllSeen: markAllSeen, isNew: isNew, isClosingSoon: isClosingSoon, dueOf: dueOf, dayNum: dayNum };
 });
