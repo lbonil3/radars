@@ -53,5 +53,9 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   ['dqFresh', 'dqFunnel', 'dqExcl', 'dqMiss', 'dqSrc', 'dqNo', 'dqRules'].forEach((k) => assert.ok(/<details class="dqd">/.test(d) && d.includes('id="' + k + '"'), k + ' kept in an expander'));
   assert.ok(/function renderHealth\(\)/.test(app) && /renderData\(\) \{\n    if \(!DATA\) return;\n    renderHealth\(\);/.test(app));
 }
+// P3 (trivial ones): plainer scope wording, last view remembered; closed More menu takes no space
+assert.ok(app.includes("label: 'Early notices (no fee yet)'") && app.includes("label: 'Big projects (no fee yet)'"), 'plainer wording');
+assert.ok(/localStorage\.setItem\('nr\.tab', t\)/.test(app) && /if \(S\.tab !== 'map'\) setTab\(S\.tab\);/.test(app), 'last view remembered');
+assert.ok(css.includes('.scmore:not([open]) .scmenu{display:none}'));
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');
