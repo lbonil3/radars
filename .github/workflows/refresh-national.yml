@@ -1,0 +1,50 @@
+# Daily refresh of national/data/{national,roadway,pse,cost-prices}.json from public feeds.
+# Each source is isolated in scripts/build-national.js: a failed source keeps its previous records marked "stale".
+# Optional repository secret SAM_API_KEY (the public SAM.gov daily extract is used without it).
+name: Refresh National Radar data
+on:
+  schedule:
+    - cron: '41 10 * * *'   # 10:41 UTC daily = 5:41 AM CDT / 4:41 AM CST
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: refresh-data        # shared with the Texas refresh so the two never push at the same time
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45      # the SAM.gov extract alone can take ~16 min
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run tests
+        run: node test.js
+      - name: Update bid-cost/prices.json from hydraulics-tools (keep the copy if unreachable or invalid)
+        run: |
+          if curl -fsSL --max-time 60 -o /tmp/prices.json https://lbonil3.github.io/hydraulics-tools/bid-cost/prices.json \
+             && node -e "const j=require('/tmp/prices.json'); if(!Array.isArray(j.rows)||j.rows.length<100||!j.meta) process.exit(1)"; then
+            cp /tmp/prices.json bid-cost/prices.json; echo "prices.json updated from hydraulics-tools"
+          else
+            echo "::warning::hydraulics-tools prices.json unreachable or invalid; keeping the repo copy"
+          fi
+      - name: Build snapshot
+        env:
+          SAM_API_KEY: ${{ secrets.SAM_API_KEY }}
+        run: node scripts/build-national.js
+      - name: Re-run tests on the new data
+        run: node test.js
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- national/data/ bid-cost/prices.json; then
+            echo "No data changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add national/data/*.json bid-cost/prices.json
+            git commit -m "data(national): daily snapshot refresh"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

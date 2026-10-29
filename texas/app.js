@@ -266,7 +266,7 @@
       var ageH = (Date.now() - Date.parse(fresh)) / 3600000;
       $('freshDot').className = 'dot ' + (state.live ? 'ok' : ageH < 48 ? 'ok' : ageH < 24 * 7 ? 'warn' : 'bad');
       var bad = state.sources.filter(function (s) { return s.status !== 'ok'; }).length;
-      $('freshTxt').innerHTML = 'Snapshot ' + esc(fmtDT(fresh)) + ' (' + (ageH < 48 ? Math.round(ageH) + ' h old' : Math.round(ageH / 24) + ' days old') + ')' + (state.live ? ' · TxDOT live ' + esc(fmtDT(state.live.at)) : '') + ' · ' + state.recs.length.toLocaleString('en-US') + ' records from ' + (state.sources.length - bad) + '/' + state.sources.length + ' feeds' + (bad ? ' · <b>' + bad + ' feed(s) stale or failed (see Sources)</b>' : '') + (ageH > 24 * 7 ? ' · <b>snapshot is old: the daily refresh may not be running</b>' : '');
+      $('freshTxt').innerHTML = 'Data updated ' + esc(fmtDT(fresh)) + ' (' + (ageH < 48 ? Math.round(ageH) + ' h old' : Math.round(ageH / 24) + ' days old') + ')' + (state.live ? ' · TxDOT live ' + esc(fmtDT(state.live.at)) : '') + ' · ' + state.recs.length.toLocaleString('en-US') + ' records from ' + (state.sources.length - bad) + '/' + state.sources.length + ' feeds' + (bad ? ' · <b>' + bad + ' feed(s) stale or failed (see Sources)</b>' : '') + (ageH > 24 * 7 ? ' · <b>snapshot is old: the daily refresh may not be running</b>' : '');
     }
   }
 
