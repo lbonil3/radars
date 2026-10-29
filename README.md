@@ -5,6 +5,8 @@ Two static, phone-first, installable (PWA) pursuit radars built from public proc
 
 Live: https://lbonil3.github.io/radars/
 
+The live pages intentionally carry no links to this repository; data-source citations point only at the public agencies.
+
 | App | Path | What it is |
 |---|---|---|
 | National Radar | [`national/`](national/) | PS&E / H&H consultant opportunities over $5M, all states; roadway + drainage and water presets. See `national/README.md`. |

@@ -243,7 +243,7 @@
     var live = state.live ? '<p><b>TxDOT live refresh:</b> ' + esc(fmtDT(state.live.at)) + ' (' + state.live.rows.toLocaleString('en-US') + ' rows fetched straight from data.texas.gov in this browser).</p>' : '<p>No live refresh yet in this session. Tap "Refresh TxDOT live" at the top to pull TxDOT Project Information straight from data.texas.gov.</p>';
     $('srcFresh').innerHTML = '<p><b>Snapshot built:</b> ' + esc(fmtDT(d.generatedAt)) + ' (' + (ageH < 48 ? Math.round(ageH) + ' hours ago' : Math.round(ageH / 24) + ' days ago') + ').</p>' + live +
       '<p><b>Records in snapshot:</b> ' + state.recs.length.toLocaleString('en-US') + ' from ' + state.sources.filter(function (s) { return s.status === 'ok' || s.status === 'stale'; }).length + ' of ' + state.sources.length + ' feeds.</p>' +
-      '<p>The snapshot is rebuilt by <code>node scripts/build-opportunities.js</code>. The workflow in <code>texas/workflow/refresh-opportunities.yml</code> does this daily once it is installed under <code>.github/workflows/</code>. Until then the snapshot only updates when someone runs the script and commits the result.</p>';
+      '<p>The snapshot is rebuilt periodically from the public feeds above; the date at the top shows when it was built.</p>';
     $('srcList').innerHTML = state.sources.map(function (s) {
       var n = state.recs.filter(function (r) { return r.src === s.id; }).length;
       return '<div class="src" style="--c:' + M.agencyColor(s.agency) + '"><h3>' + esc(s.name) + '</h3><p><span class="st ' + esc(s.status) + '">' + esc((s.status || '').toUpperCase()) + '</span> · ' + esc(s.agency) + ' · ' + esc(s.type) + '</p>' +

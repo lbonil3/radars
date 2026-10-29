@@ -53,6 +53,6 @@ window.NATIONAL_PSE_TEXT = {
     '<b>Advance notices, fee not stated.</b> Consultant engineering / design solicitations that an agency has announced in a forecast or projected-advertisement list but not yet issued, with no stated fee (or a stated value under $5M). They are separate from the fee tabs so a fee filter can never include them. Sources: WSSC Water, Colorado DOT, Louisiana DOTD, DC OCP, County of San Diego. Each card links its source page.',
     '<b>Design-build.</b> Design-build, progressive design-build, CMGC / CM-at-risk and P3 / CDA procurements and awards with a civil, drainage or roadway scope. The amount is the contract value or project cost (includes construction), shown only in the Design-build tab. Role (prime or design subconsultant) is inferred.',
     '<b>Not included.</b> Construction contracts and supply purchases (counted on the Data tab as &ldquo;Excluded: construction&rdquo;), fees estimated from a percentage of cost (except the labeled illustrative range on Large projects cards), and anything outside the United States.',
-    '<b>As of.</b> Records are a snapshot built by scripts/build-national.js; deadlines are compared against the snapshot date. Every card and sheet links the source record.'
+    '<b>As of.</b> Records are a periodic snapshot of the feeds above; deadlines are compared against the snapshot date. Every card and sheet links the source record.'
   ]
 };

@@ -23,7 +23,7 @@
   var ASSUMED_NOTE = {
     trafficControlPct: 'Assumed. TxDOT guidance (PS&E manual 5.5, estimate input) states no fixed traffic-control percentage; TxDOT prices it by quantity.',
     mobilizationPct: 'Assumed. TxDOT pays mobilization as a lump-sum bid item (Item 500) and states no fixed percentage.',
-    contingencyBasePct: 'Assumed. TxDOT district estimating SOP describes letting contingency as a set percentage but this repo has no verified TxDOT value.',
+    contingencyBasePct: 'Assumed. TxDOT district estimating SOP describes letting contingency as a set percentage but no verified TxDOT value is available here.',
     priceLowPct: 'Assumed band around the bid-tab average (the data holds averages only).', escalationPct: 'User input, default 0. Bid-tab prices are low-bidder averages for lettings 2024-09 to 2026-10; no published index is applied.'
   };
 
