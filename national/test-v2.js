@@ -83,3 +83,26 @@ console.log('national v2 region tests passed');
   assert.ok(/btnPurCsv'\)\.addEventListener\('click', exportCapCsv\)/.test(app), 'pursuits CSV reuses the capture CSV export');
 }
 console.log('national v2 pursuits tests passed');
+// ---- item 5: dedupe fixtures (false-positive guards) + Confirmed-only switch ----
+{
+  const fx = JSON.parse(fs.readFileSync(path.join(__dirname, 'test-fixtures', 'dedupe.json'), 'utf8'));
+  const cards = V.groupDupes(fx.records);
+  const groups = cards.filter((c) => c.dupes).map((c) => [c.id].concat(c.dupes.map((d) => d.id)).sort());
+  assert.deepStrictEqual(groups.sort(), fx.expect.map((g) => g.slice().sort()).sort(), 'only the expected duplicate groups merge');
+  assert.strictEqual(cards.length, fx.records.length - 2);
+  const bb = cards.find((c) => c.dupes && c.dupes.some((d) => d.id === 'sam:1'));
+  assert.strictEqual(bb.id, 'ag:9', 'highest-confidence source (Confirmed) is the card');
+  assert.strictEqual(bb.amt.v, 12000000, 'card shows the chosen source amount, never a blend');
+  assert.ok(bb.amountsDiffer && bb.dupes[0].amt === 9000000 && bb.dupes[0].url === 'https://sam.example/1', 'other amount and its source link kept');
+  const ids = cards.find((c) => c.id === 'usa:A' || c.id === 'sam:A2'); assert.ok(ids.dupes && !ids.amountsDiffer, 'same notice number merges across sources');
+  for (const [a, b, why] of [['sam:1', 'sam:2', 'same title, years apart (no date overlap)'], ['sam:1', 'sam:3', 'same title, different state'], ['usa:A', 'usa:B', 'different award numbers'], ['sam:1', 'db:1', 'different PS&E lens'], ['short:1', 'short:2', 'title too short to trust'], ['nodate:1', 'nodate:2', 'no dates to compare']]) {
+    assert.ok(!V.sameOpp(fx.records.find((r) => r.id === a), fx.records.find((r) => r.id === b)), 'must not merge: ' + why);
+  }
+  assert.ok(fx.records.every((r) => !('dupes' in r)), 'input records are not mutated');
+  for (const f of ['pse.json', 'national.json', 'roadway.json']) { const d = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', f), 'utf8')); const g = V.groupDupes(d.records); assert.ok(g.length <= d.records.length && g.every((c) => c.id)); }
+  const app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  assert.ok(html.includes('id="btnConfOnly"') && html.includes('role="switch"'), 'prominent Confirmed only switch');
+  assert.ok(/localStorage\.getItem\('nr\.confirmedOnly'\) === '1'/.test(app) && /localStorage\.setItem\('nr\.confirmedOnly'/.test(app), 'Confirmed only is persisted');
+  assert.ok(/f\.hideUnconfirmed = CONF/.test(app), 'switch survives mode changes and Clear filters');
+}
+console.log('national v2 dedupe tests passed');

@@ -41,6 +41,8 @@
   var WATCH = {}; try { WATCH = JSON.parse(localStorage.getItem('nr.watch') || '{}') || {}; } catch (e) { WATCH = {}; }
   var CAP = {}; try { CAP = JSON.parse(localStorage.getItem('nr.capture') || '{}') || {}; } catch (e) { CAP = {}; } Object.keys(CAP).forEach(function (k) { CAP[k] = CP.clean(CAP[k]); });
   var freshF = function (mode) { var f = { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null }; if (mode === 'pse') Object.assign(f, { feeMin: PS.DEFAULT_FEE, costMin: PS.PIPE_DEFAULT, inclusive: false, hideUnconfirmed: false, noText: false, dbMin: null, dbRoles: [], dbTypes: [], dbStages: [] }); return f; };
+  var CONF = false; try { CONF = localStorage.getItem('nr.confirmedOnly') === '1'; } catch (e) { CONF = false; } // item 5: saved Confirmed-only switch
+  var freshF0 = freshF; freshF = function (mode) { var f = freshF0(mode); f.hideUnconfirmed = CONF; return f; };
   var S = { mode: 'pse', scope: 'all', tab: 'map', sort: 'conf', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('pse') };
   var SYNTH = { sectors: M.SECTORS.map(function (s) { return s.id; }) };
 
@@ -64,12 +66,22 @@
   S.region = V2.loadRegion(lsx); // saved; default All US
   function latestAsOf() { return [DATA_P, DATA_W, DATA_R].reduce(function (a, d) { return d && d.asOfDate > a ? d.asOfDate : a; }, ''); }
   function digestOf(list, kind) { var t = todayCentral(); return list.filter(function (r) { return kind === 'new' ? V2.isNew(r, NEWBASE) : V2.isClosingSoon(r, t); }); }
-  function post(list, skipDigest) { if (S.region !== 'all') list = list.filter(function (r) { return V2.inRegion(r, S.region); }); return (!skipDigest && S.digest) ? digestOf(list, S.digest) : list; }
+  function isConfirmedRec(r) { return S.mode === 'pse' ? (r.lens !== 'fee' || r.conf === 'confirmed') : r.bucket !== 'review'; } // pse: other lenses carry no Confirmed badge and are filtered by their own rules
+  function post(list, skipDigest) {
+    if (S.region !== 'all') list = list.filter(function (r) { return V2.inRegion(r, S.region); });
+    if (CONF) list = list.filter(isConfirmedRec);
+    list = V2.groupDupes(list); list.forEach(function (c) { if (c.dupes) DUPES[c.id] = c; });
+    return (!skipDigest && S.digest) ? digestOf(list, S.digest) : list;
+  }
+  var DUPES = {};
+  function alsoHtml(r) { var c = DUPES[r.id]; if (!c || !c.dupes) return ''; var names = []; c.dupes.forEach(function (d) { var n = SRC_SHORT[d.src] || d.src; if (names.indexOf(n) < 0) names.push(n); }); return '<span class="tag also" title="Same opportunity found in other sources">Also listed in: ' + esc(names.join(', ')) + '</span>' + (c.amountsDiffer ? '<span class="tag rev" title="Sources state different amounts; the highest-confidence source is shown">Amounts differ</span>' : ''); }
+  function alsoSheet(r) { var c = DUPES[r.id]; if (!c || !c.dupes) return ''; return '<h3>Also listed in</h3><ul>' + c.dupes.map(function (d) { return '<li>' + esc(SRC_SHORT[d.src] || d.src) + ': ' + (d.url ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.title) + '</a>' : esc(d.title)) + (d.amt !== null ? ' &middot; stated ' + esc(M.fmtMoneyFull(d.amt)) : ' &middot; no amount stated') + '</li>'; }).join('') + '</ul>' + (c.amountsDiffer ? '<p class="note">The sources state different amounts. The card shows the amount from the highest-confidence source; the others are listed above and were not combined.</p>' : ''); }
   function renderDigest() {
     var base = post(scopedRaw(S.scope), true), nNew = digestOf(base, 'new').length, nSoon = digestOf(base, 'soon').length;
     $('digest').innerHTML = '<button type="button" class="chip dg' + (S.digest === 'new' ? ' on' : '') + '" data-digest="new" aria-pressed="' + (S.digest === 'new') + '">New since last visit <b class="badge' + (nNew ? ' hot' : '') + '">' + nNew + '</b></button>' +
       '<button type="button" class="chip dg' + (S.digest === 'soon' ? ' on' : '') + '" data-digest="soon" aria-pressed="' + (S.digest === 'soon') + '">Closing within ' + V2.SOON_DAYS + ' days <b class="badge' + (nSoon ? ' warn' : '') + '">' + nSoon + '</b></button>' +
       (nNew || S.digest === 'new' ? '<button type="button" class="chip ghost" id="btnSeen">Mark all seen</button>' : '');
+    var co = $('btnConfOnly'); co.setAttribute('aria-checked', String(CONF)); co.classList.toggle('on', CONF);
     var rg = $('regionSel'); if (rg && rg.value !== S.region) rg.value = S.region;
     $('txLink').hidden = S.region === 'all';
     $('regionHint').hidden = !V2.showRegionHint(lsx);
@@ -100,7 +112,7 @@
   var BADGE_CLS = { 'Confirmed': 'conf', 'Unconfirmed': 'unconf', 'Awarded': 'inf', 'Text-parsed': 'rev', 'Inferred sector': 'inf', 'Design-build': 'db', 'Exactly $5M': 'rev', 'Fee not published': 'plain', 'Project cost (not fee)': 'plain', 'Range lower bound': 'rev', 'Status unclear': 'rev', 'Closed': 'plain', 'Value not stated': 'plain', 'Forecast': 'inf', 'Drainage / H&H named': 'dir', 'Advance notice': 'dir', 'Fee not stated': 'plain', 'Stated value below $5M': 'plain', 'Engineering unclear': 'rev', 'Upcoming / open': 'inf' };
   function tagsPse(r) {
     var t = (r.badges || []).map(function (b) { return '<span class="tag ' + (BADGE_CLS[b] || '') + '">' + esc(b) + '</span>'; });
-    if (V2.isNew(r, NEWBASE)) t.unshift('<span class="tag new">New</span>');
+    if (V2.isNew(r, NEWBASE)) t.unshift('<span class="tag new">New</span>'); t.push(alsoHtml(r));
     if (r.lens === 'db' && r.dbRoleLabel) t.push('<span class="tag est" title="' + esc(r.dbRoleWhy || '') + '">' + esc(r.dbRoleLabel) + '</span>');
     if (r.lens === 'db' && r.dbType && r.dbType !== 'Design-build') t.push('<span class="tag db">' + esc(r.dbType) + '</span>');
     if (r.recompete) t.push('<span class="tag inf">Recompete (inferred)</span>');
@@ -110,7 +122,7 @@
   }
   function tagsFor(r) {
     if (S.mode === 'pse') return tagsPse(r);
-    var t = []; if (V2.isNew(r, NEWBASE)) t.push('<span class="tag new">New</span>');
+    var t = [alsoHtml(r)]; if (V2.isNew(r, NEWBASE)) t.push('<span class="tag new">New</span>');
     t.push('<span class="tag ' + (r.bucket === 'review' ? 'rev' : 'dir') + '">' + esc(r.bucket === 'closed' ? 'Closed (deadline passed)' : r.bucket === 'review' ? 'Needs review' : r.bucket === 'nofee' ? 'Fee not stated' : STATUS_LABEL[r.status] || r.status) + '</span>');
     if (S.mode === 'road' && r.rw === 'drain') t.push('<span class="tag dir">Drainage-specific fee</span>');
     if (S.mode === 'road' && r.rw === 'total') t.push('<span class="tag rev">Total fee, drainage share unknown</span>');
@@ -519,6 +531,7 @@
     var fk = Object.keys(r.fields || {}).filter(function (k) { return r.fields[k] !== '' && r.fields[k] !== null && r.fields[k] !== undefined; });
     if (fk.length) h += '<h3>All source fields</h3><dl>' + fk.map(function (k) { return '<dt>' + esc(k) + '</dt><dd>' + esc(r.fields[k]) + '</dd>'; }).join('') + '</dl>';
     if (r.desc) h += '<h3>Description (from the source, shortened)</h3><p style="font-size:13px;overflow-wrap:anywhere">' + esc(r.desc) + '</p>';
+    h += alsoSheet(r);
     if (r.also && r.also.length) h += '<h3>Same record also found as</h3><ul>' + r.also.map(function (x) { return '<li>' + (x.url ? '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc((SRC_SHORT[x.src] || x.src) + ' ' + (x.type || '') + ' ' + x.id) + '</a>' : esc(x.src + ' ' + x.id)) + '</li>'; }).join('') + '</ul>';
     $('shBody').innerHTML = h; $('sheet').hidden = false; $('sheet').setAttribute('data-id', id); $('shStar').className = 'star big' + (WATCH[id] ? ' on' : ''); $('shStar').innerHTML = WATCH[id] ? '&#9733;' : '&#9734;';
     refreshCapPanel(id); document.body.style.overflow = 'hidden'; $('shClose').focus();
@@ -690,7 +703,8 @@
   $('costIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.costMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
   $('dbIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.dbMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : null; S.rows = 50; render(); });
   $('btnIncl').addEventListener('click', function () { S.f.inclusive = !S.f.inclusive; render(); });
-  $('btnConf').addEventListener('click', function () { S.f.hideUnconfirmed = !S.f.hideUnconfirmed; render(); });
+  function setConf(v) { CONF = !!v; S.f.hideUnconfirmed = CONF; try { localStorage.setItem('nr.confirmedOnly', CONF ? '1' : '0'); } catch (e) { /* ignore */ } S.rows = 50; render(); }
+  $('btnConf').addEventListener('click', function () { setConf(!CONF); }); $('btnConfOnly').addEventListener('click', function () { setConf(!CONF); });
   $('btnText').addEventListener('click', function () { S.f.noText = !S.f.noText; render(); });
 
   // ---------- start ----------

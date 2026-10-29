@@ -1,0 +1,18 @@
+{
+  "note": "Cross-source duplicate fixtures for national/v2.js groupDupes. 'expect' = groups of ids that must end up on one card.",
+  "records": [
+    { "id": "sam:1", "src": "sam", "srcId": "1", "lens": "fee", "conf": "unconfirmed", "title": "Drainage Design Services for the Buffalo Bayou Watershed", "agency": "DEPT OF DEFENSE", "state": "TX", "amt": { "v": 9000000 }, "dates": { "posted": "2026-10-01", "due": "2026-11-05" }, "url": "https://sam.example/1" },
+    { "id": "ag:9", "src": "ag-forecast", "srcId": "9", "lens": "fee", "conf": "confirmed", "title": "DRAINAGE DESIGN SERVICES FOR THE BUFFALO BAYOU WATERSHED", "agency": "Department of Defense", "state": "TX", "amt": { "v": 12000000 }, "dates": { "posted": "2026-09-20", "due": "2026-10-15" }, "url": "https://ag.example/9" },
+    { "id": "sam:2", "src": "sam", "srcId": "2", "lens": "fee", "conf": "confirmed", "title": "Drainage Design Services for the Buffalo Bayou Watershed", "agency": "DEPT OF DEFENSE", "state": "TX", "amt": { "v": 9000000 }, "dates": { "posted": "2025-03-01", "due": "2025-04-01" }, "url": "https://sam.example/2" },
+    { "id": "sam:3", "src": "sam", "srcId": "3", "lens": "fee", "conf": "confirmed", "title": "Drainage Design Services for the Buffalo Bayou Watershed", "agency": "DEPT OF DEFENSE", "state": "LA", "amt": { "v": 9000000 }, "dates": { "posted": "2026-10-02" }, "url": "https://sam.example/3" },
+    { "id": "usa:A", "src": "usaspending", "srcId": "A", "lens": "fee", "title": "A-E IDIQ hydraulic design task order", "agency": "USACE", "state": "TX", "awardNum": "W912HY-20-F-0041", "amt": { "v": 7000000 }, "dates": { "award": "2026-01-10" }, "url": "https://usa.example/A" },
+    { "id": "sam:A2", "src": "sam", "srcId": "A2", "lens": "fee", "title": "Award notice: hydraulic design", "agency": "Dept of the Army", "state": "TX", "solNum": "W912HY20F0041", "amt": { "v": 7000000 }, "dates": { "posted": "2026-01-12" }, "url": "https://sam.example/A2" },
+    { "id": "usa:B", "src": "usaspending", "srcId": "B", "lens": "fee", "title": "A-E IDIQ hydraulic design task order", "agency": "USACE", "state": "TX", "awardNum": "W912HY-20-F-0099", "amt": { "v": 7000000 }, "dates": { "award": "2026-01-10" }, "url": "https://usa.example/B" },
+    { "id": "db:1", "src": "txdot-pi", "srcId": "d1", "lens": "db", "title": "Drainage Design Services for the Buffalo Bayou Watershed", "agency": "DEPT OF DEFENSE", "state": "TX", "dates": { "posted": "2026-10-01" }, "url": "https://tx.example/d1" },
+    { "id": "short:1", "src": "sam", "srcId": "s1", "lens": "fee", "title": "Drainage design", "agency": "City", "state": "TX", "dates": { "posted": "2026-10-01" } },
+    { "id": "short:2", "src": "chicago", "srcId": "s2", "lens": "fee", "title": "Drainage design", "agency": "City", "state": "TX", "dates": { "posted": "2026-10-01" } },
+    { "id": "nodate:1", "src": "sam", "srcId": "n1", "lens": "fee", "title": "Stormwater master plan engineering for Harris County", "agency": "Harris County", "state": "TX" },
+    { "id": "nodate:2", "src": "nyc", "srcId": "n2", "lens": "fee", "title": "Stormwater master plan engineering for Harris County", "agency": "Harris County", "state": "TX" }
+  ],
+  "expect": [["sam:1", "ag:9"], ["usa:A", "sam:A2"]]
+}

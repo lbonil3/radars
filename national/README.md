@@ -88,3 +88,8 @@ Region selector (All US / Texas / Texas + Gulf states LA MS AL FL / Texas + neig
 ## v2: My pursuits tab
 
 Bottom tab "Pursuits": every starred record plus any record with a non-empty capture file (all three lanes), sorted by your due date (capture.js `sortRows('due')`), split into "This week" (overdue or due within 7 days) and "Later or no due date", with overdue / due-soon flags (capture.js `dueInfo`, 14-day soon window). The tab shows a badge with the overdue + due-soon count. "Print weekly list" prints only this view (print stylesheet); "Export CSV" is the existing capture CSV. Capture data is the same model Texas Opportunity uses.
+
+## v2: Confirmed only + duplicate cards
+
+- **Confirmed only** switch (top of the page, saved in localStorage `nr.confirmedOnly`, survives lane changes and Clear). PS&E lane: hides fee records that are not `Confirmed` (same rule as the old "Hide unconfirmed" button, which now mirrors the switch); design-build / pipeline / advance records carry no Confirmed badge and keep their own rules. Water and roadway presets: hides "Needs review" records.
+- **One card per opportunity across sources** (`v2.js` `groupDupes`, applied on screen after the build's own `M.dedupe`). Records merge only when they share a solicitation / award number, or have the identical normalized title (20+ chars) + same agency or stated state + overlapping posted/due/award dates, and no contradicting notice numbers; PS&E lenses never merge with each other. The card is the highest-confidence record and shows its amount; the others are listed under "Also listed in" with their own links and amounts, and an "Amounts differ" tag appears when they disagree (nothing is averaged or combined). Fixtures: `test-fixtures/dedupe.json`.
