@@ -82,7 +82,9 @@
       '<button type="button" class="chip dg' + (S.digest === 'soon' ? ' on' : '') + '" data-digest="soon" aria-pressed="' + (S.digest === 'soon') + '">Closing within ' + V2.SOON_DAYS + ' days <b class="badge' + (nSoon ? ' warn' : '') + '">' + nSoon + '</b></button>' +
       (nNew || S.digest === 'new' ? '<button type="button" class="chip ghost" id="btnSeen">Mark all seen</button>' : '');
     var co = $('btnConfOnly'); co.setAttribute('aria-checked', String(CONF)); co.classList.toggle('on', CONF);
-    var rg = $('regionSel'); if (rg && rg.value !== S.region) rg.value = S.region;
+    var pill = $('digestPill'), lbl = S.digest ? 'Showing: ' + (S.digest === 'new' ? 'New' : 'Closing soon') + ' &times;' : (nNew ? 'New ' + nNew : '') + (nNew && nSoon ? ' &middot; ' : '') + (nSoon ? 'Closing ' + nSoon : '');
+    pill.hidden = !lbl; pill.innerHTML = lbl; pill.classList.toggle('hot', !!nNew || !!S.digest);
+        var rg = $('regionSel'); if (rg && rg.value !== S.region) rg.value = S.region;
     $('txLink').hidden = S.region === 'all';
     $('regionHint').hidden = !V2.showRegionHint(lsx);
   }
@@ -222,7 +224,7 @@
     var total = sum(list), withFee = list.filter(function (r) { return r.amt; }).length;
     var withV = S.mode === 'pse' ? list.filter(function (r) { return fee(r); }).length : withFee, sumLbl = S.mode === 'pse' ? (S.scope === 'db' ? 'sum of DB values, NOT fees (' : S.scope === 'pipeline' ? 'sum of project costs, NOT fees (' : 'sum of stated fees (') : 'sum of stated values (';
     var k = [[list.length, 'records · ' + scope.sub], S.mode === 'pse' && S.scope === 'advance' ? ['n/a', 'no fee is stated or used in this tab'] : [withV ? M.fmtMoney(total) : 'n/a', sumLbl + withV + ')'], [Object.keys(states).length, 'states'], [Object.keys(ag).length, 'agencies']];
-    $('kpis').innerHTML = k.map(function (x) { return '<div class="kpi"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('');
+    $('kpis').innerHTML = '<p class="kline"><b>' + list.length + '</b> records &middot; ' + (S.mode === 'pse' && S.scope === 'advance' ? 'no fee is stated or used here' : '<b>' + esc(withV ? M.fmtMoney(total) : 'n/a') + '</b> ' + esc(sumLbl.replace(/ \($/, '').replace(/\($/, '')) + ' (' + withV + ')') + ' <span class="hint">' + esc(scope.sub) + '</span></p>'; // v3: one line; states / agencies live in Breakdown
   }
 
   // ---------- filter chips ----------
@@ -644,6 +646,7 @@
     S.tab = t; ['map', 'list', 'timeline', 'break', 'pursuits', 'data'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
     document.querySelectorAll('.tabs button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
     document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-tab') === t ? 'page' : 'false'); });
+    var inMore = ['timeline', 'break', 'data'].indexOf(t) >= 0; $('tabMoreBtn').classList.toggle('on', inMore); $('tabMoreLbl').textContent = inMore ? ({ timeline: 'Timeline', break: 'Breakdown', data: 'Data' })[t] : ''; $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false');
     render(); window.scrollTo(0, 0);
   }
   function toggle(arr, k) { var i = arr.indexOf(k); if (i >= 0) arr.splice(i, 1); else arr.push(k); }
@@ -680,7 +683,7 @@
   document.addEventListener('click', function (e) {
     if (e.target.closest('#btnSeen')) { NEWBASE = V2.markAllSeen(lsx, ssn, latestAsOf()); if (S.digest === 'new') S.digest = null; toast('Marked everything as seen.'); render(); return; }
     var rh = e.target.closest('[data-region-hint]'); if (rh) { var rv = rh.getAttribute('data-region-hint'); if (rv === 'no') { V2.dismissRegionHint(lsx); render(); } else setRegion(rv); return; }
-    var dg = e.target.closest('[data-digest]'); if (dg) { var dk = dg.getAttribute('data-digest'); S.digest = S.digest === dk ? null : dk; S.rows = 50; render(); return; }
+    var dg = e.target.closest('[data-digest]'); if (dg) { var dk = dg.getAttribute('data-digest'); S.digest = S.digest === dk ? null : dk; S.rows = 50; $('digest').hidden = true; $('digestPill').setAttribute('aria-expanded', 'false'); render(); return; }
     var t = e.target.closest('[data-mode],[data-scope],[data-star],[data-open],[data-f],[data-fee],[data-cost],[data-month],[data-st],[data-tab]'); if (!t) return;
     if (t.tagName === 'A') e.preventDefault();
     if (t.hasAttribute('data-mode')) { setMode(t.getAttribute('data-mode')); return; }
@@ -712,6 +715,12 @@
   $('sort').addEventListener('change', function () { S.sort = this.value; render(); });
   $('btnMoreRows').addEventListener('click', function () { S.rows += 50; render(); });
   $('btnMore').addEventListener('click', function () { var o = $('adv').hidden; $('adv').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
+  $('digestPill').addEventListener('click', function (e) { e.stopPropagation(); if (S.digest) { S.digest = null; $('digest').hidden = true; this.setAttribute('aria-expanded', 'false'); render(); return; } var o = $('digest').hidden; $('digest').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
+  $('tabMoreBtn').addEventListener('click', function (e) { e.stopPropagation(); var o = $('tabMore').hidden; $('tabMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
+  document.addEventListener('click', function (e) { // close popovers on outside click
+    if (!e.target.closest('#tabMore,#tabMoreBtn')) { $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false'); }
+    document.querySelectorAll('details.scmore[open]').forEach(function (d) { if (!d.contains(e.target)) d.open = false; });
+  }, true);
   $('modeSel').addEventListener('change', function () { setMode(this.value); });
   $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });

@@ -22,7 +22,7 @@
     <a class="homebtn" href="../" aria-label="Back to Radars home">&#8592; Home</a>
     <h1>National Radar</h1>
   </div>
-  <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span></div>
+  <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span><button type="button" class="pill" id="digestPill" aria-expanded="false" aria-controls="digest" hidden></button></div>
 </header>
 
 <section class="banner" id="banner" aria-label="Read this first">
@@ -41,7 +41,7 @@
 </section>
 
 <nav class="scopes" id="scopes" aria-label="What to show"></nav>
-<nav class="digest" id="digest" aria-label="What changed"></nav>
+<nav class="digest" id="digest" aria-label="What changed" hidden></nav>
 <section class="capbar" id="capBar" aria-label="Capture files" hidden>
   <p class="capstat" id="capStat"></p>
   <div class="chips" id="capSort" role="group" aria-label="Sort the watchlist"><span class="hint">Sort</span><button type="button" class="chip" data-capsort="due" aria-pressed="false">Due date</button><button type="button" class="chip" data-capsort="decision" aria-pressed="false">Go / No-go</button></div>
@@ -165,10 +165,13 @@
 <nav class="tabs" aria-label="Views">
   <button type="button" data-tab="map" class="on">Map</button>
   <button type="button" data-tab="list">List</button>
-  <button type="button" data-tab="timeline">Timeline</button>
-  <button type="button" data-tab="break">Breakdown</button>
   <button type="button" data-tab="pursuits">Pursuits <b class="tabbadge" id="purBadge" hidden></b></button>
-  <button type="button" data-tab="data">Data</button>
+  <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More <span id="tabMoreLbl" class="tml"></span></button>
+  <div class="tabmore" id="tabMore" role="menu" hidden>
+    <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
+    <button type="button" data-tab="break" role="menuitem">Breakdown</button>
+    <button type="button" data-tab="data" role="menuitem">Data &amp; sources</button>
+  </div>
 </nav>
 
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shTitle">

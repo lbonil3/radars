@@ -26,5 +26,21 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   assert.ok(/var h = '<h2>' \+ esc\(r\.title\) \+ '<\/h2><div>' \+ tagsFor\(r\)/.test(app) || /tagsFor\(r\)/.test(app.slice(app.indexOf('function openSheet'))), 'detail sheet keeps every badge');
   assert.ok(!/source field/.test(seg), 'no source-field line on cards');
 }
+// P2: 4 bottom tabs (Map, List, Pursuits, More); Timeline / Breakdown / Data stay reachable in the More menu
+{
+  const nav = html.slice(html.indexOf('<nav class="tabs"'), html.indexOf('</nav>', html.indexOf('<nav class="tabs"')));
+  const top = nav.replace(/<div class="tabmore"[\s\S]*?<\/div>/, '');
+  assert.deepStrictEqual((top.match(/data-tab="(\w+)"/g) || []).map((x) => x.slice(10, -1)), ['map', 'list', 'pursuits'], '3 direct tabs');
+  assert.ok(top.includes('id="tabMoreBtn"'), '4th tab is More');
+  const menu = nav.slice(nav.indexOf('<div class="tabmore"'));
+  ['timeline', 'break', 'data'].forEach((t) => assert.ok(menu.includes('data-tab="' + t + '"'), t + ' in More'));
+  ['v-map', 'v-list', 'v-timeline', 'v-break', 'v-pursuits', 'v-data'].forEach((v) => assert.ok(html.includes('id="' + v + '"'), v + ' view kept'));
+  // P2: New / Closing as one header pill; digest chips open from it
+  const header = html.slice(html.indexOf('<header'), html.indexOf('</header>'));
+  assert.ok(header.includes('id="digestPill"') && /id="digest"[^>]*hidden/.test(html), 'New / Closing pill in the header');
+  assert.ok(/pill\.hidden = !lbl/.test(app), 'pill hidden when nothing is new or closing');
+  // P2: KPI strip trimmed to one line
+  assert.ok(/class=\"kline\"/.test(app) && !/class=\"kpi\"/.test(app), 'one-line summary instead of KPI boxes');
+}
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');
