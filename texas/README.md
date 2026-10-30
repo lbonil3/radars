@@ -37,4 +37,23 @@ The Intel tab is a feed of public news and planning signals: CIP and budget item
   - Legistar returned 0 matches: San Antonio, Fort Worth. Legistar not configured: Houston, Arlington, Brownsville.
   - Google News RSS: terms of use.
   - Houston Chronicle: paywall.
+- **Houston-area HTML pages (intel2).** These sites have no feed, so their list pages are parsed by `parseTxdotList`, `parseDrupalViews` and `parseHoustonCip` in `texas/intel.js`. robots.txt is checked first, and if a page layout changes and no items are found, that source shows as failing.
+  - Pages read: TxDOT Houston District newsroom, TxDOT statewide newsroom (only items mentioning drainage, flood, storm, bridge, Houston-area counties, the UTP or funding), Fort Bend County news, and the City of Houston CIP page (newest adopted/proposed plan).
+  - Legistar agendas added: Galveston County Commissioners Court, Brazoria County Commissioners Court, City of League City.
+  - Tested, not used:
+    - Content is built in the browser by scripts, so the server HTML has no list: HCFCD News Room, TWDB press releases, Houston Mayor's press page, METRO news releases.
+    - No list on the page: Houston Public Works news, Houston Permitting Center news, Harris County Engineering.
+    - Houston City Council agenda (Novus): an ASP.NET postback app, not scraped.
+    - City Secretary agenda page: script-only.
+    - 403: H-GAC, Brazoria County site, Galveston County site.
+    - robots.txt disallows all: Montgomery County.
+    - Port Houston: news URLs return 404 or empty pages.
+    - Not on Legistar: Fort Bend, Montgomery, Pearland, Sugar Land, Missouri City, Conroe, Friendswood, HCFCD, Port Houston. The `metro` Legistar client is LA Metro, not Houston METRO.
+- **Weekly newsletter** (`texas/newsletter.js`, pure and deterministic, with unit tests in `texas/test.js`).
+  - The collector writes `texas/data/newsletters/YYYY-Www.json` for the current ISO week and the 11 before it, plus `index.json`. Older issues are deleted.
+  - An item belongs to the ISO week of its own date. Items without a date, or with a future date such as a meeting, use the week they were first collected.
+  - Each issue puts Houston-region items first (top 15 by score), then the rest of Texas and federal items (top 6 per topic). Both are grouped in this order: Budget/CIP, Bond, Grant/funding, Flood/drainage, Water/wastewater, Roadway/TxDOT, New program/policy, Council action.
+  - "Deadlines & dates to watch" lists dates found in item text that fall on or after the week start and follow a cue word (closes, election, hearing, through, end date…).
+  - The current week is a draft, rebuilt every run. The first run after a week ends (the Monday run) marks it final, and it is never rewritten. Weeks that were first built after they ended are marked "built from items collected later".
+  - The Intel tab has Feed / Weekly newsletter views: a week picker, Copy as text, Copy as email HTML, Print / PDF (prints only the issue), Download .html / .txt, and Share where the browser supports it. Nothing is emailed.
 - Run locally with `node scripts/build-intel.js`. To run some sources only: `INTEL_ONLY=hpw,glo node scripts/build-intel.js`. Tests: `node texas/test.js`.

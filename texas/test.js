@@ -367,4 +367,14 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(ix.weeks.length <= 12 && ix.weeks.every((w) => fs.existsSync(path.join(dir, 'data', 'newsletters', w.week + '.json'))));
   assert.ok(fs.readdirSync(path.join(dir, 'data', 'newsletters')).filter((f) => /W\d\d\.json$/.test(f)).length <= 12, 'kept 12 weeks');
 }
+
+// Newsletter view wiring
+{
+  const ih = fs.readFileSync(path.join(dir, 'index.html'), 'utf8'), ui = fs.readFileSync(path.join(dir, 'intel-ui.js'), 'utf8');
+  assert.ok(/data-imode="news"/.test(ih) && /id="nlWeek"/.test(ih) && /id="nlPaper"/.test(ih));
+  ['copytext', 'copyhtml', 'print', 'html', 'txt', 'share'].forEach((a) => assert.ok(ih.indexOf('data-nl="' + a + '"') > 0, a));
+  assert.ok(ih.indexOf('src="newsletter.js"') > ih.indexOf('src="intel.js"') && ih.indexOf('src="newsletter.js"') < ih.indexOf('src="intel-ui.js"'));
+  assert.ok(/fetch\('data\/newsletters\/index\.json'/.test(ui) && !/fetch\(\s*['"]https?:/.test(ui));
+  assert.ok(!/mailto:|sendMail/i.test(ui), 'no email sending');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
