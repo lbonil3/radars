@@ -138,3 +138,18 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .iempty{margin:0}
 @media (min-width:900px){.irow .seg{flex:0 1 320px}}
 @media (max-width:899px){#inTopics{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 calc(-14px - env(safe-area-inset-right)) 0 calc(-14px - env(safe-area-inset-left));padding:0 14px}#inTopics::-webkit-scrollbar{display:none}.idisc{font-size:12.5px}}
+/* Intel weekly newsletter */
+.imode{margin:6px calc(14px + env(safe-area-inset-right)) 4px calc(14px + env(safe-area-inset-left))}
+.nlst{font-size:12.5px;color:var(--dim);flex:1 1 200px}
+.nlact{gap:6px}
+.nlpaper{margin:6px calc(14px + env(safe-area-inset-right)) 8px calc(14px + env(safe-area-inset-left));background:#fff;color:#111827;border-radius:12px;padding:16px 14px;overflow-wrap:anywhere}
+.nlpaper a{color:#0f766e}
+@media print{
+  body.nlprint{background:#fff;color:#111;padding:0;max-width:none}
+  body.nlprint > *:not(main), body.nlprint main > section:not(#v-intel), body.nlprint #v-intel > *:not(#inNews), body.nlprint #inNews > *:not(#nlPaper){display:none!important}
+  body.nlprint #nlPaper{margin:0;padding:0;border-radius:0}
+  body.nlprint #nlPaper a{color:#0f766e;text-decoration:underline}
+}
+.ifil{grid-template-columns:minmax(0,1fr)}
+.nlst{flex:1 1 100%}
+@media (min-width:900px){.nlst{flex:1 1 200px}}

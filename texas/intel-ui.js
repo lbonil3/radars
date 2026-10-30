@@ -89,6 +89,8 @@
     var v = $('v-intel'); if (!v) return;
     v.addEventListener('click', function (e) {
       var t = e.target, el;
+      if ((el = t.closest('[data-imode]'))) { setMode(el.getAttribute('data-imode')); return; }
+      if ((el = t.closest('[data-nl]'))) { nlAction(el.getAttribute('data-nl')); return; }
       if ((el = t.closest('[data-istar]'))) { var id = el.getAttribute('data-istar'); if (S.star[id]) delete S.star[id]; else S.star[id] = 1; save(K_STAR, S.star); render(); return; }
       if ((el = t.closest('[data-iread]'))) { var r = el.getAttribute('data-iread'); markRead(r, !S.read[r]); render(); return; }
       if ((el = t.closest('[data-iopen]'))) { markRead(el.getAttribute('data-iopen'), true); setTimeout(render, 0); return; }
@@ -100,6 +102,8 @@
       if (t.closest('#inMore')) { S.rows += 60; render(); return; }
       if (t.closest('#inCsv')) { exportCsv(); return; }
     });
+    $('nlWeek').addEventListener('change', function () { loadWeek(this.value); });
+    if (navigator.share) $('nlShare').hidden = false;
     $('inPlace').addEventListener('change', function () { S.f.place = this.value; S.rows = 60; render(); });
     $('inSort').addEventListener('change', function () { S.sort = this.value; render(); });
     $('inQ').addEventListener('input', function () { clearTimeout(init._t); var q = this.value; init._t = setTimeout(function () { S.f.q = q.trim(); render(); }, 200); });
@@ -107,6 +111,47 @@
       .then(function (d) { S.data = d; S.items = (d.items || []).filter(function (it) { return it && it.id && /^https?:\/\//.test(it.link); }); computeNew(); badge(); render(); renderSourceHealth(); if (window.RadarApp && window.RadarApp.tab === 'intel') onShow(); })
       .catch(function (e) { S.err = e.message; render(); renderSourceHealth(); });
   }
-  window.TXIntelUI = { onShow: onShow, render: render, renderSourceHealth: renderSourceHealth, state: S };
+  // ---------- weekly newsletter ----------
+  var NL = { index: null, cur: null, cache: {}, mode: 'feed' };
+  var Nw = window.TXNewsletter;
+  function toast(m) { var t = $('toast'); if (!t) return; t.textContent = m; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 3000); }
+  function setMode(m) {
+    NL.mode = m; $('inFeed').hidden = m !== 'feed'; $('inNews').hidden = m !== 'news';
+    Array.prototype.forEach.call(document.querySelectorAll('#inMode button'), function (b) { var on = b.getAttribute('data-imode') === m; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    if (m === 'news') loadIndex();
+  }
+  function loadIndex() {
+    if (NL.index) return;
+    $('nlStatus').textContent = 'Loading…';
+    fetch('data/newsletters/index.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (ix) {
+      NL.index = ix; var w = (ix.weeks || []);
+      if (!w.length) { $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p>No newsletter issues yet. The first one is built on the next daily collection.</p>'; return; }
+      $('nlWeek').innerHTML = w.map(function (x) { return '<option value="' + esc(x.week) + '">' + esc(x.week + ' · ' + fmtD(x.start + 'T12:00:00Z') + ' to ' + fmtD(x.end + 'T12:00:00Z')) + (x.final ? '' : ' · in progress') + ' (' + x.items + ')</option>'; }).join('');
+      var first = w.filter(function (x) { return x.final && x.items; })[0] || w.filter(function (x) { return x.items; })[0] || w[0]; /* open on the latest finished issue */ $('nlWeek').value = first.week; loadWeek(first.week);
+    }).catch(function (e) { $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p><b>Newsletter could not be loaded</b> (' + esc(e.message) + ').</p>'; });
+  }
+  function loadWeek(wk) {
+    var show = function (n) { NL.cur = n; $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true }); $('nlStatus').textContent = Nw.status(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
+    if (NL.cache[wk]) return show(NL.cache[wk]);
+    $('nlStatus').textContent = 'Loading…';
+    fetch('data/newsletters/' + encodeURIComponent(wk) + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (n) { NL.cache[wk] = n; show(n); })
+      .catch(function (e) { NL.cur = null; $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p><b>This issue could not be loaded</b> (' + esc(e.message) + ').</p>'; });
+  }
+  function download(name, type, body) { var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([body], { type: type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+  function copyText(t) { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t); return Promise.reject(new Error('clipboard unavailable')); }
+  function nlAction(act) {
+    var n = NL.cur; if (!n) { toast('Pick a week first.'); return; }
+    var base = 'texas-intel-' + n.week;
+    if (act === 'copytext') copyText(Nw.toText(n)).then(function () { toast('Newsletter copied as text.'); }, function () { toast('Copy is blocked in this browser. Use Download .txt.'); });
+    else if (act === 'copyhtml') {
+      var html = Nw.toHtml(n, { fragment: true });
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) navigator.clipboard.write([new window.ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([Nw.toText(n)], { type: 'text/plain' }) })]).then(function () { toast('Copied. Paste into a new email.'); }, function () { copyText(html).then(function () { toast('Copied the HTML source.'); }, function () { toast('Copy is blocked here. Use Download .html.'); }); });
+      else copyText(html).then(function () { toast('Copied the HTML source.'); }, function () { toast('Copy is blocked here. Use Download .html.'); });
+    } else if (act === 'print') { document.body.classList.add('nlprint'); var done = function () { document.body.classList.remove('nlprint'); window.removeEventListener('afterprint', done); }; window.addEventListener('afterprint', done); setTimeout(function () { window.print(); setTimeout(done, 1500); }, 30); }
+    else if (act === 'html') download(base + '.html', 'text/html', Nw.toHtml(n));
+    else if (act === 'txt') download(base + '.txt', 'text/plain', Nw.toText(n));
+    else if (act === 'share' && navigator.share) navigator.share({ title: n.title, text: Nw.toText(n) }).catch(function () { /* cancelled */ });
+  }
+  window.TXIntelUI = { onShow: onShow, setMode: setMode, nl: NL, render: render, renderSourceHealth: renderSourceHealth, state: S };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

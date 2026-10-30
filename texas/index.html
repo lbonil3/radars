@@ -102,6 +102,8 @@
 
   <section id="v-intel" class="view" hidden aria-label="Intel: news and planning signals">
     <div class="idisc" role="note"><b>News and planning signals, not solicitations.</b> Items are collected automatically from public news feeds and agenda systems and tagged by keyword. They are not verified and may be incomplete; check the original source before acting.</div>
+    <div class="seg imode" id="inMode" role="group" aria-label="Intel view"><button type="button" data-imode="feed" class="on">Feed</button><button type="button" data-imode="news">Weekly newsletter</button></div>
+    <div id="inFeed">
     <div class="ifil">
       <div class="row"><input id="inQ" type="search" inputmode="search" enterkeyhint="search" placeholder="Search headlines, places, sources…" aria-label="Search Intel" autocomplete="off"></div>
       <div class="chips" id="inTopics" aria-label="Topic"></div>
@@ -117,6 +119,18 @@
     <p class="icount" id="inCount" role="status" aria-live="polite"></p>
     <div id="inList" class="cards"></div>
     <button type="button" class="btn wide" id="inMore" hidden>Show 60 more</button>
+    </div>
+    <div id="inNews" hidden>
+      <div class="ifil">
+        <div class="irow"><label class="isel"><span>Week</span><select id="nlWeek" aria-label="Newsletter week"></select></label><span class="nlst" id="nlStatus" role="status" aria-live="polite"></span></div>
+        <div class="chips nlact">
+          <button type="button" class="chip" data-nl="copytext">Copy as text</button><button type="button" class="chip" data-nl="copyhtml">Copy as email HTML</button>
+          <button type="button" class="chip" data-nl="print">Print / PDF</button><button type="button" class="chip" data-nl="html">Download .html</button><button type="button" class="chip" data-nl="txt">Download .txt</button>
+          <button type="button" class="chip" data-nl="share" id="nlShare" hidden>Share</button>
+        </div>
+      </div>
+      <div id="nlPaper" class="nlpaper" aria-live="polite"></div>
+    </div>
   </section>
 
   <section id="v-sources" class="view" hidden aria-label="Sources and freshness">
@@ -152,6 +166,7 @@
 <script src="map.js"></script>
 <script src="app.js"></script>
 <script src="intel.js"></script>
+<script src="newsletter.js"></script>
 <script src="intel-ui.js"></script>
 </body>
 </html>
