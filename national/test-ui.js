@@ -62,6 +62,8 @@ assert.ok(/localStorage\.setItem\('nr\.tab', t\)/.test(app) && /\n    setTab\(S\
 assert.ok(/id="usmini"/.test(html) && /data-tab="map">Expand map/.test(html) && /function markersHtml/.test(app) && /function renderMapV5/.test(app), 'v6.1: small map with Expand map, count markers, v5 bubbles kept dormant');
 assert.ok(css.includes('.scmore:not([open]) .scmenu{display:none}'));
 module.exports = { html, app, css };
+// v6.3: card order: title, agency/state, date line with Positionable, then the amount (smaller)
+{ const i = app.indexOf("function cardHtmlBase"), seg = app.slice(i, i + 3000); const t = seg.indexOf('<span class="t">'), d = seg.indexOf('class="m dline"'), mo = seg.indexOf('class="cmoney"'); assert.ok(t > 0 && t < d && d < mo, 'v6.3 card order'); assert.ok(/<!--POS-->/.test(seg) && /replace\('<!--POS-->'/.test(app), 'Positionable on the date line'); }
 console.log('national ui (P1 header) tests passed');
 // Theme: Day default, Night/Auto opt-in under a new key, applied before first paint
 {

@@ -402,3 +402,13 @@ html[data-theme=day] .miniwrap{background:#dfe8f3}
 }
 #listCount{display:none}
 @media (max-width:520px){.top .fresh .upd{display:none}}
+
+/* ===== v6.3: cards lead with name, agency/state, due date, Positionable; amount smaller ===== */
+.card .t{font-size:15.5px;margin:2px 0 2px}
+.card .dline{align-items:center;gap:4px 8px;flex-wrap:wrap}.card .dline .dt{color:var(--ink);font-weight:600}
+.card .dline .posr{margin:0}
+.card .cmoney{display:block;margin:4px 0 2px;padding:4px 8px;border-radius:8px;background:var(--panel2)}
+.card .cmoney .lbl{font-size:11px;margin:0}
+.card .cmoney .big{font-size:14px;font-weight:600}
+.card .m.src{font-size:11.5px}
+.card.pos{box-shadow:none}

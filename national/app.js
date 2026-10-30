@@ -164,7 +164,7 @@
   }
   function cardHtml(r) {
     var h = cardHtmlBase(r), st = C.stageOf(r);
-    if (C.isPositionable(r, todayCentral())) h = h.replace('<div class="card"', '<div class="card pos"').replace(/(<button type="button" class="b"[^>]*>)/, '$1<span class="posr">Positionable</span>');
+    if (C.isPositionable(r, todayCentral())) h = h.replace('<div class="card"', '<div class="card pos"').replace('<!--POS-->', '<span class="posr">Positionable</span>'); // v6: tag sits on the date line
     else if (st === 'awarded' || st === 'closed') h = h.replace('<div class="card"', '<div class="card past"');
     return S.scope === 'watch' && WATCH[r.id] ? h.replace(/<\/div>$/, capBlock(r.id) + '</div>') : h;
   }
@@ -172,14 +172,14 @@
     var money;
     if (r._ln === 'pse') {
       var wherep = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
-      return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '">' + moneyPse(r) + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + '</button></div>';
+      return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '"><span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m dline"><span class="dt">' + esc(dateText(r)) + '</span><!--POS--></span><span class="cmoney">' + moneyPse(r) + '</span><span class="m src"><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + '</button></div>';
     }
     if (r.amt) money = '<span class="lbl">' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     else money = '<span class="lbl">No fee stated by the source</span>' + (r.projectCost ? '<span class="big" style="font-size:16px">project cost (not fee): ' + esc(M.fmtMoney(r.projectCost.v)) + '</span><span class="lbl">' + esc(r.projectCost.field) + '</span>' : '');
     if (r._ln === 'road' && r.amt) money = '<span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> ' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     var where = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
     return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button>' +
-      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + (r._ln === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
+      '<button type="button" class="b" data-open="' + esc(r.id) + '"><span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m dline"><span class="dt">' + esc(dateText(r)) + '</span><!--POS--></span><span class="cmoney">' + money + '</span><span class="m src"><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + (r._ln === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
   }
   function costBrief(r) {
     var c = r.cost; if (!c) return '';
