@@ -10,23 +10,12 @@ const ev = (c) => PS.evaluatePse(c, { asOf: AS_OF });
 const rec = (c) => { const e = ev(c); return e.lens ? PS.toRecordPse(c, e, AS_OF) : null; };
 const amt = (v, kind, field) => [{ v, kind: kind || 'maxvalue', field: field || 'Test fee field' }];
 
-// ---- strict > semantics, data floor, >= toggle
-assert.strictEqual(PS.DEFAULT_FEE, 5000000);
-assert.strictEqual(ev(cand({ amounts: amt(4999999.99) })).lens, null, 'below the $5M floor is not kept');
-assert.ok(ev(cand({ amounts: amt(4999999.99) })).excl.indexOf('fee-below-5m') >= 0);
-const e5 = ev(cand({ amounts: amt(5000000) })); assert.strictEqual(e5.lens, 'fee'); assert.strictEqual(e5.flags.exact5, true); assert.ok(e5.badges.indexOf('Exactly $5M') >= 0);
-const R5 = rec(cand({ srcId: 'a', amounts: amt(5000000) })), R5b = rec(cand({ srcId: 'b', amounts: amt(5000000.01) })), R9 = rec(cand({ srcId: 'c', amounts: amt(9000000) }));
-const all = [R5, R5b, R9];
-const ids = (f) => PS.filterPse(all, f, {}).map((r) => r.srcId).sort().join(',');
-assert.strictEqual(ids({}), 'b,c', 'default: strictly > $5,000,000, exactly $5M is out');
-assert.strictEqual(ids({ feeMin: 5000000 }), 'b,c');
-assert.strictEqual(ids({ feeMin: 5000000, inclusive: true }), 'a,b,c', '>= toggle brings exactly $5M in');
-assert.strictEqual(ids({ feeMin: 9000000 }), '', 'strict at the editable threshold too');
-assert.strictEqual(ids({ feeMin: 9000000, inclusive: true }), 'c');
-assert.strictEqual(ids({ feeMin: 20000000 }), '');
-assert.strictEqual(PS.exactAtThreshold(all, {}, {}).length, 1, 'exact-$5M note finds the $5M row');
-assert.strictEqual(PS.exactAtThreshold(all, { feeMin: 9000000 }, {})[0].srcId, 'c', 'note follows the editable threshold');
-assert.strictEqual(PS.exactAtThreshold(all, { inclusive: true }, {}).length, 0, 'no note when >= is on');
+// ---- v5: no value floor; amounts are never invented
+assert.strictEqual(PS.FEE_FLOOR, 0);
+const small = rec(cand({ srcId: 's', amounts: amt(250000) })); assert.ok(small && small.lens === 'fee', 'a $250K fee is kept');
+const nofee = rec(cand({ srcId: 'n', amounts: [] })); assert.ok(nofee && nofee.badges.indexOf('Fee/amount not stated') >= 0 && nofee.amt == null, 'no amount => kept, labelled, no invented value');
+assert.strictEqual(ev(cand({ srcId: 'r', title: 'Roadway PS&E design services, IH 10', amounts: [] })).lens, null, 'non-water scope with no amount stays out');
+assert.strictEqual(ev(cand({ srcId: 'aw', amounts: [], status: 'awarded', dates: { award: '2026-03-01' } })).lens, null, 'awarded with no amount stays out');
 
 // ---- badges: Confirmed vs Unconfirmed; they are badges, not gates
 const conf = rec(cand({}));
@@ -83,9 +72,9 @@ assert.strictEqual(PS.filterPse([pr, prEdge], { tab: 'pipeline', costMin: 500000
 assert.strictEqual(PS.filterPse([pr, prEdge], { tab: 'pipeline', costMin: 20000000 }, {}).length, 2);
 assert.strictEqual(PS.PIPE_DEFAULT, 50000000);
 assert.strictEqual(ev(pc({ title: 'IH 10 resurfacing', desc: 'overlay' })).lens, null, 'no drainage / H&H words => not in the pipeline');
-assert.strictEqual(ev(pc({ amounts: [{ v: 10000000, kind: 'project_cost', field: 'f' }] })).lens, null, 'below the pipeline data floor');
+{ const e = ev(pc({ amounts: [{ v: 10000000, kind: 'project_cost', field: 'f' }] })); assert.ok(e.lens !== 'pipeline' && !e.amt, 'below the pipeline floor: kept only as fee-not-stated'); }
 // a notice with only a project cost (no fee) never becomes a fee record
-assert.notStrictEqual(ev(cand({ amounts: [{ v: 90000000, kind: 'project_cost', field: 'construction cost' }] })).lens, 'fee');
+assert.ok(!ev(cand({ amounts: [{ v: 90000000, kind: 'project_cost', field: 'construction cost' }] })).amt, 'project cost is never shown as a fee');
 
 // ---- design-build lens
 const dbc = (over) => cand(Object.assign({ src: 'sam', srcId: 'db1', title: 'Design-Build, Drainage and Roadway Improvements, SH 6', desc: 'The design-build contract value is estimated at $240,000,000. Stipend of $1,500,000 will be paid.', naics: '237310', psc: 'Y1JZ', engOverride: undefined, amounts: [{ v: 240000000, kind: 'estvalue', field: 'Description text' }] }, over || {}));
@@ -109,7 +98,6 @@ const dfr = PS.designFeeRecord(dfc, dfe, AS_OF); assert.strictEqual(dfr.lens, 'f
 assert.ok(dfr.id.endsWith(':design-fee') && dfr.id !== PS.toRecordPse(dfc, dfe, AS_OF).id);
 assert.strictEqual(PS.filterPse([dfr], {}, {}).length, 1, 'a stated design fee over $5M counts');
 assert.strictEqual(PS.filterPse([dfr], { feeMin: 12000000 }, {}).length, 0);
-assert.strictEqual(PS.designFeeRecord(dbc({ desc: 'Design portion is $3,000,000.' }), { designFee: { v: 3000000, ctx: 'x' } }, AS_OF), null, 'design fee below $5M makes no fee record');
 assert.strictEqual(PS.extractDesignFee('The total project is $300,000,000.'), null, 'a total is not a design fee');
 assert.strictEqual(PS.dbTypeOf('Progressive Design-Build for the plant'), 'Progressive design-build');
 assert.ok(/CMGC/.test(PS.dbTypeOf('CMGC services')));
@@ -130,11 +118,11 @@ if (fs.existsSync(fp)) {
   assert.strictEqual(D.counts.total, D.records.length);
   const seen = {}; D.records.forEach((r) => { assert.ok(!seen[r.id], 'unique ids: ' + r.id); seen[r.id] = 1; assert.ok(r.url && /^https?:\/\//.test(r.url), 'source link on every record: ' + r.id); assert.ok(r.title && r.badges && r.stage && r.lens); });
   D.records.forEach((r) => {
-    if (r.lens === 'fee') { assert.ok(r.amt && r.amt.v >= 5000000 && r.amt.field, 'fee record has a labeled amount >= $5M: ' + r.id); assert.ok(r.badges.indexOf('Confirmed') >= 0 || r.badges.indexOf('Unconfirmed') >= 0); assert.ok(['project_cost', 'db_value'].indexOf(r.amt.kind) < 0, 'fee amount is never a cost or DB value: ' + r.id); }
+    if (r.lens === 'fee') { assert.ok(r.amt ? (r.amt.v > 0 && r.amt.field) : r.badges.indexOf('Fee/amount not stated') >= 0, 'fee record: labeled amount, or labelled Fee/amount not stated: ' + r.id); assert.ok(r.badges.indexOf('Confirmed') >= 0 || r.badges.indexOf('Unconfirmed') >= 0); assert.ok(!r.amt || ['project_cost', 'db_value'].indexOf(r.amt.kind) < 0, 'fee amount is never a cost or DB value: ' + r.id); }
     if (r.lens === 'db') { assert.ok(!r.amt); assert.ok(!r.projectCost); assert.ok(r.dbRoleLabel && /inferred/i.test(r.dbRoleLabel)); if (r.dbValue) assert.ok(r.dbValue.field); }
     if (r.lens === 'pipeline') { assert.ok(!r.amt); assert.ok(r.projectCost && r.projectCost.v >= PS.PIPE_FLOOR && r.projectCost.field); assert.ok(r.illustrative && /Estimate/.test(r.illustrative.label)); }
   });
-  const gt = D.records.filter((r) => r.lens === 'fee' && r.amt.v > 5000000).length; assert.strictEqual(D.counts.fee.strictGt5, gt);
+  const gt = D.records.filter((r) => r.lens === 'fee' && r.amt && r.amt.v > 5000000).length; assert.strictEqual(D.counts.fee.strictGt5, gt);
   // the strict filter over the built data equals the stored count, and default tabs never contain DB or pipeline rows
   assert.strictEqual(PS.filterPse(D.records, {}, {}).length, gt);
   assert.strictEqual(PS.filterPse(D.records, {}, {}).filter((r) => r.lens !== 'fee').length, 0);

@@ -211,4 +211,5 @@ require('./test-advance.js');
 require('./test-v2.js');
 require('./test-v4.js');
 require('./test-ui.js');
+require('./test-v5.js');
 console.log('national-radar tests passed');

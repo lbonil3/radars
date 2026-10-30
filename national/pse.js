@@ -10,7 +10,8 @@
   'use strict';
   var M = typeof require !== 'undefined' ? require('./model.js') : root.NationalModel;
   var R = typeof require !== 'undefined' ? require('./roadway.js') : root.NationalRoadway;
-  var FEE_FLOOR = 5000000;          // lowest fee kept in the data
+  var WATER_SECT = ['drainage', 'flood', 'coastal', 'water', 'wastewater'];
+  var FEE_FLOOR = 0;                // v5: no value floor; any stated fee is kept (was $5M)
   var DEFAULT_FEE = 5000000;        // default visible threshold
   var PIPE_FLOOR = 25000000;        // lowest stated project cost kept in the data for the pipeline lens
   var PIPE_DEFAULT = 50000000;      // default cost threshold: $5M / 10% (top of the cited 6% to 10% range)
@@ -114,7 +115,7 @@
     else if (/software|call center|\bbilling\b|help ?desk|cyber|\bESPC\b|energy savings/i.test(title)) excl.push('not-design-services');
     else if (NOT_DESIGN_RE.test(title) && !tDesign) excl.push('not-design-services');
     else if (CM_RE.test(title) && !tDesign) excl.push('not-design-services');
-    else if (TITLE_CONSTR_RE.test(title) && !tDesign && !/engineer|architect|\bA[-\/]E\b/i.test(title)) excl.push('construction');
+    else if (TITLE_CONSTR_RE.test(title) && !tDesign && !cand.designStated && !/engineer|architect|\bA[-\/]E\b/i.test(title)) excl.push('construction');
     else if (!DESIGN_WORD_RE.test(t600) && !/engineer|\bA[-\/]E\b/i.test(t600) && !cand.projectList) excl.push('not-design-services');
     if (eng.level === 'construction') excl.push('construction'); else if (eng.level === 'none' && !cand.projectList) excl.push('not-engineering');
     if (sc.blocked && sc.level !== 'title') excl.push('non-civil-context');
@@ -126,32 +127,32 @@
     if (best && best.v < FEE_FLOOR) { var alt = fees.filter(function (a) { return a.v >= FEE_FLOOR; })[0]; if (alt) { best = alt; why.push('Fee figures differ between fields; the larger one is shown (' + alt.field + ')'); } }
     var hardNonFee = excl.length;
     // advance notices (agency forecasts / projected advertisements) with no stated fee, or a stated value below the $5M data floor, go to their own lens. They never reach a fee filter.
-    if (cand.advance && !hardNonFee && (!best || best.v < FEE_FLOOR) && (stage === 'forecast' || stage === 'open')) return advanceResult(cand, sc, eng, stage, best, rules, why);
-    if (!best) { if (bestCost && !hardNonFee && bestCost.v >= PIPE_FLOOR && sc.hh && (stage === 'open' || stage === 'forecast')) return pipelineResult(cand, sc, eng, stage, bestCost, rules); excl.push(bestCost ? 'project-cost-only' : 'no-stated-fee'); }
+    if (cand.advance && !hardNonFee && (!best || best.v < 5000000) && (stage === 'forecast' || stage === 'open')) return advanceResult(cand, sc, eng, stage, best, rules, why);
+    var waterScope = !!(sc.hh || sc.sec.ids.some(function (i) { return WATER_SECT.indexOf(i) >= 0; }));
+    if (!best) { if (bestCost && !hardNonFee && bestCost.v >= PIPE_FLOOR && sc.hh && (stage === 'open' || stage === 'forecast')) return pipelineResult(cand, sc, eng, stage, bestCost, rules); if (!(waterScope && !hardNonFee && (stage === 'open' || stage === 'forecast'))) excl.push(bestCost ? 'project-cost-only' : 'no-stated-fee'); }
     else if (best.v < FEE_FLOOR) excl.push('fee-below-5m');
     if (excl.length) return { lens: null, excl: excl, stage: stage, flags: flags, scope: sc, eng: eng, amt: best || null };
 
-    var textParsed = best.field === 'Description text' || /notice text|description text/i.test(best.field || ''); if (best.kind === 'range') flags.range = true;
-    flags.exact5 = best.v === FEE_FLOOR; flags.textParsed = textParsed;
+    var textParsed = !!best && (best.field === 'Description text' || /notice text|description text/i.test(best.field || '')); if (best && best.kind === 'range') flags.range = true;
+    flags.exact5 = false; flags.textParsed = textParsed; if (!best) { flags.noAmount = true; badges.push('Fee/amount not stated'); }
     if (textParsed) { badges.push('Text-parsed'); why.push('The fee comes from free text in the notice, not a structured field'); }
     if (eng.level === 'weak') why.push('Engineering status is unclear: ' + eng.why);
     if (sc.level !== 'title') { badges.push('Inferred sector'); why.push('Scope keywords appear only in the description (' + (sc.hh || sc.pse || 'sector words') + '), not the title'); }
-    if (best.kind === 'range') { badges.push('Range lower bound'); why.push('The figure is the lower bound of a forecast dollar range'); }
+    if (best && best.kind === 'range') { badges.push('Range lower bound'); why.push('The figure is the lower bound of a forecast dollar range'); }
     if (stage === 'unclear') { badges.push('Status unclear'); why.push('The source status is not open, upcoming or awarded'); }
     if (stage === 'closed') { badges.push('Closed'); why.push('Response date already passed'); }
     if (cand.drainScope && cand.drainScope.program) why.push(cand.drainScope.program);
     else if (PROGRAM_RE.test(title) && !/design|engineering/i.test(title)) why.push('Title reads like a program / permit-support contract rather than design work');
     if (stage === 'awarded') badges.push('Awarded'); if (stage === 'forecast') badges.push('Forecast');
-    if (flags.exact5) badges.push('Exactly $5M');
-    var conf = (eng.level === 'strong' && sc.level === 'title' && !textParsed && best.kind !== 'range' && (stage === 'open' || stage === 'forecast' || stage === 'awarded') && !why.length) ? 'confirmed' : 'unconfirmed';
+    var conf = (eng.level === 'strong' && sc.level === 'title' && !textParsed && (!best || best.kind !== 'range') && (stage === 'open' || stage === 'forecast' || stage === 'awarded') && !why.length) ? 'confirmed' : 'unconfirmed';
     badges.unshift(conf === 'confirmed' ? 'Confirmed' : 'Unconfirmed');
     rules.push({ k: 'eng', t: 'Engineering services: ' + eng.why });
     rules.push({ k: 'scope', t: 'Scope: ' + [sc.pse ? 'PS&E / design wording "' + sc.pse + '"' : null, sc.hh ? 'H&H wording "' + sc.hh + '"' : null, sc.sec.ids.length ? 'sector ' + sc.sec.ids.join(', ') : null].filter(Boolean).join('; ') + ' (' + (sc.level === 'title' ? 'in the title' : 'description only') + '; keyword match, inferred)' });
-    rules.push({ k: 'fee', t: M.AMOUNT_KINDS[best.kind].label + ' = ' + fmt(best.v) + ' (source field: ' + best.field + '); data floor $5,000,000 (>=), visible threshold applied separately' });
+    rules.push({ k: 'fee', t: best ? M.AMOUNT_KINDS[best.kind].label + ' = ' + fmt(best.v) + ' (source field: ' + best.field + '); no value floor' : 'Fee/amount not stated by the source. Kept because it is an open or forecast water / wastewater / stormwater / flood engineering notice; nothing is estimated.' });
     return { lens: 'fee', excl: [], stage: stage, rules: rules, badges: badges, why: why, conf: conf, flags: flags, scope: sc, eng: eng, amt: best, projectCost: bestCost };
   }
   function advanceResult(cand, sc, eng, stage, val, rules, why) {
-    var badges = ['Advance notice', val ? 'Stated value below $5M' : 'Fee not stated'], reasons = (why || []).slice();
+    var badges = ['Advance notice', val ? 'Stated value below $5M' : 'Fee/amount not stated'], reasons = (why || []).slice();
     if (sc.level !== 'title') { badges.push('Inferred sector'); reasons.push('Scope keywords appear only in the description (' + (sc.hh || sc.pse || 'sector words') + '), not the title'); }
     if (eng.level === 'weak') { badges.push('Engineering unclear'); reasons.push('Engineering status is unclear: ' + eng.why); }
     badges.push(stage === 'forecast' ? 'Forecast' : 'Upcoming / open');

@@ -16,6 +16,7 @@ const R = require('../national/roadway.js');
 const CM = require('../national/cost.js');
 const PS = require('../national/pse.js');
 const ADV = require('../national/advance.js');
+const SRF = require('../national/srf.js');
 const V2 = require('../national/v2.js');
 const V4 = require('../national/v4.js');
 
@@ -559,6 +560,17 @@ PSE_SOURCES.push({
 });
 
 // ---------- enrichment: city centroids for pins (Census Gazetteer; only for records whose source names a city AND state) ----------
+// ---------- EPA State Revolving Fund public portal (all states + DC + PR). Funded water / wastewater projects whose borrowers procure design next.
+['cw', 'dw'].forEach((kind) => PSE_SOURCES.push({
+  id: 'srf-' + kind, name: 'EPA ' + (kind === 'cw' ? 'Clean Water' : 'Drinking Water') + ' SRF public portal: funded projects (agreements since 2025, not yet finished)', agency: 'US EPA (state SRF programs)', page: SRF.PAGE, type: 'ArcGIS REST, no key (public portal layer)',
+  async run(ctx) {
+    const rows = []; const w = SRF.where('2025-01-01', AS_OF);
+    for (let off = 0; off < 20000; off += 1000) { const j = await getJson(SRF.LAYERS[kind] + '/query?' + qs({ where: w, outFields: '*', returnGeometry: 'false', orderByFields: 'OBJECTID', resultOffset: off, resultRecordCount: 1000, f: 'json' }), { gap: 1000 }); if (j.error) throw new Error('ArcGIS error ' + JSON.stringify(j.error).slice(0, 200)); const f = (j.features || []).map((x) => x.attributes); f.forEach((a) => rows.push(a)); if (f.length < 1000) break; }
+    const cands = rows.map((a) => SRF.normSrf(a, kind, AS_OF)).filter(Boolean); runAdvance('srf-' + kind, cands, ctx);
+    return { fetched: rows.length, note: rows.length + ' SRF projects with an agreement since 2025-01-01 and no past end date; ' + cands.length + ' name planning / design / engineering work or have not started yet. The agreement amount is SRF financing to the borrower, shown as a field and never as a fee. Records go to Advance notices, fee/amount not stated.' };
+  }
+}));
+
 async function cityCentroids(recs) {
   const want = recs.filter((r) => r.city && r.state && !r.lat);
   if (!want.length) return 0;
@@ -597,6 +609,11 @@ const PSE_TESTED = [
   { name: 'Maryland state procurement forecast grid', result: 'tested, not used: an interactive grid page with no open download or documented API.' },
   { name: 'City of Philadelphia procurement forecast CSV', result: 'tested, not used: the file URL changes with each release and has no stable index page, and its engineering rows are all below $5M.' },
   { name: 'Commercial bid aggregators (BidNet, GovSpend, Onvia and similar)', result: 'not used: commercial aggregators, not agency sources; this tool uses agency sources only.' },
+  { name: 'EPA Clean Water and Drinking Water SRF public portal project layers (all states, DC, PR)', result: 'USED (v5): public ArcGIS layers, no key. Funded projects whose borrowers still procure planning / design; the SRF agreement amount is financing, never shown as a fee.' },
+  { name: 'EPA SRF public portal report download (APEX)', result: 'tested, not used: the download needs an interactive browser session, not an open endpoint.' },
+  { name: 'State SRF Intended Use Plans / Project Priority Lists', result: 'tested, not used as a feed: published as PDFs or spreadsheets with changing URLs per state; the EPA SRF layers above carry the same funded projects in one open API.' },
+  { name: 'Socrata open-data catalog search for SRF / CIP / water procurement forecasts', result: 'tested, not used: no state IUP datasets; the city CIP tables found (Norfolk, Pierce County, Ramsey County) carry budgets, not procurement dates. Listed as a gap.' },
+  { name: 'SAM.gov opportunities API', result: 'not used: needs an API key; federal notices come from the public SAM bulk extract instead.' },
   { name: 'Texas LBB contracts database', result: 'NOT integrated in this version (not tested). Listed as a gap.' },
   { name: 'USACE / FEMA / TWDB / state flood programs with stated project costs', result: 'NOT integrated as a separate feed. Federal awards and IDIQ ceilings come through USAspending and SAM; state flood-program project lists are a gap.' },
   { name: 'TxDOT PEPS selected-consultant announcements', result: 'NOT integrated in this version (not tested for fee amounts). Listed as a gap.' }
@@ -690,7 +707,7 @@ async function main() {
     try { await cityCentroids(pOrdered); } catch (e) { console.warn('pse city centroids skipped:', e.message); }
     const advR = pOrdered.filter((r) => r.lens === 'advance'); const feeR = pOrdered.filter((r) => r.lens === 'fee'), dbR = pOrdered.filter((r) => r.lens === 'db'), plR = pOrdered.filter((r) => r.lens === 'pipeline');
     const pc = { total: pOrdered.length, beforeDedupe: pseKept.length, mergedDuplicates: pMerged, byLens: PS_count(pOrdered, (r) => r.lens),
-      fee: { total: feeR.length, byStage: PS_count(feeR, (r) => r.stage), byConf: PS_count(feeR, (r) => r.conf), byState: PS_count(feeR, (r) => r.state || '??'), bySrc: PS_count(feeR, (r) => r.src), byDomain: PS_count(feeR, (r) => (r.domains[0] || 'none')), strictGt5: feeR.filter((r) => r.amt.v > 5000000).length, exact5: feeR.filter((r) => r.amt.v === 5000000).length, textParsed: feeR.filter((r) => r.textParsed).length, confirmedGt5: feeR.filter((r) => r.conf === 'confirmed' && r.amt.v > 5000000).length, gt20: feeR.filter((r) => r.amt.v > 20000000).length },
+      fee: { total: feeR.length, byStage: PS_count(feeR, (r) => r.stage), byConf: PS_count(feeR, (r) => r.conf), byState: PS_count(feeR, (r) => r.state || '??'), bySrc: PS_count(feeR, (r) => r.src), byDomain: PS_count(feeR, (r) => (r.domains[0] || 'none')), noAmount: feeR.filter((r) => !r.amt).length, strictGt5: feeR.filter((r) => (r.amt ? r.amt.v : 0) > 5000000).length, exact5: feeR.filter((r) => (r.amt ? r.amt.v : 0) === 5000000).length, textParsed: feeR.filter((r) => r.textParsed).length, confirmedGt5: feeR.filter((r) => r.conf === 'confirmed' && (r.amt ? r.amt.v : 0) > 5000000).length, gt20: feeR.filter((r) => (r.amt ? r.amt.v : 0) > 20000000).length },
       db: { total: dbR.length, byStage: PS_count(dbR, (r) => r.stage), byRole: PS_count(dbR, (r) => r.dbRole), byType: PS_count(dbR, (r) => r.dbType), byState: PS_count(dbR, (r) => r.state || '??'), bySrc: PS_count(dbR, (r) => r.src), withValue: dbR.filter((r) => r.dbValue).length, withDesignFee: dbR.filter((r) => r.designFee).length },
       pipeline: { total: plR.length, byState: PS_count(plR, (r) => r.state || '??'), bySrc: PS_count(plR, (r) => r.src), gt50: plR.filter((r) => r.projectCost.v > 50000000).length, gt100: plR.filter((r) => r.projectCost.v > 100000000).length },
       advance: { total: advR.length, bySrc: PS_count(advR, (r) => r.src), byState: PS_count(advR, (r) => r.state || '??'), withStatedValue: advR.filter((r) => r.statedValue).length, byDomain: PS_count(advR, (r) => (r.domains[0] || 'none')) },

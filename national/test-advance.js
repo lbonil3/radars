@@ -47,7 +47,7 @@ assert.strictEqual(c.cands[3].dates.est, null, 'TBD stays unknown'); assert.stri
 assert.strictEqual(ev(c.cands[0]).lens, null, 'CM, CI & MT (construction management / inspection / testing) is not design');
 const des = byTitle(c.cands, 'R4 PS I-25 Segment 3B');
 const rd = rec(des); assert.ok(rd && rd.lens === 'advance' && rd.amt === null && rd.statedValue === null, 'design engineering row -> Advance notice, no figure');
-assert.ok(rd.badges.indexOf('Fee not stated') >= 0 && rd.badges.indexOf('Advance notice') >= 0); assert.strictEqual(rd.stage, 'forecast');
+assert.ok(rd.badges.indexOf('Fee/amount not stated') >= 0 && rd.badges.indexOf('Advance notice') >= 0); assert.strictEqual(rd.stage, 'forecast');
 assert.ok(rd.rules.some((r) => r.k === 'advance' && /no fee/i.test(r.t)));
 
 // ---- Louisiana DOTD: quarter text only; CE&I rows are non-design
