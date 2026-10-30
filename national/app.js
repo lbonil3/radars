@@ -2,7 +2,7 @@
    Every record already carries the rule that included it, the source field of each dollar figure, and a source link. */
 (function () {
   'use strict';
-  var C = window.NRC, V2 = window.NRV2, V4 = window.NRV4, HEALTH = null, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
+  var V6 = window.NRV6, FS = [], C = window.NRC, V2 = window.NRV2, V4 = window.NRV4, HEALTH = null, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SRC_SHORT = { 'srf-cw': 'EPA Clean Water SRF', 'srf-dw': 'EPA Drinking Water SRF', 'sam': 'SAM.gov', 'usaspending': 'USAspending', 'txdot-pcl': 'TxDOT projected contracts', 'nyc': 'NYC City Record', 'chicago': 'Chicago contracts', 'dhs-apfs': 'DHS forecast (APFS)', 'ag-forecast': 'Acquisition Gateway forecasts', 'caltrans-lar': 'Caltrans A&E look-ahead', 'caltrans-awards': 'Caltrans A&E awards', 'usaspending-rw': 'USAspending prime awards (roadway lane)', 'usaspending-sub': 'USAspending subawards', 'wsdot-proj': 'WSDOT projected design list', 'pse-usaspending': 'USAspending prime awards / IDVs (PS&E lens)', 'austin': 'City of Austin master agreements', 'txdot-pi': 'TxDOT Project Information', 'wssc': 'WSSC Water projected solicitations', 'cdot-sched': 'CDOT tentative advertisement schedule', 'la-dotd': 'Louisiana DOTD projected advertisements', 'dc-pass': 'DC OCP PASS forecast', 'sd-forecast': 'San Diego County procurement forecast' };
@@ -40,7 +40,8 @@
   var secLabel = function (k) { return k === 'roadway' ? 'Roadway' : k === 'drainage' ? 'Drainage named in the title' : M.sectorLabel(k); };
   var WATCH = {}; try { WATCH = JSON.parse(localStorage.getItem('nr.watch') || '{}') || {}; } catch (e) { WATCH = {}; }
   var CAP = {}; try { CAP = JSON.parse(localStorage.getItem('nr.capture') || '{}') || {}; } catch (e) { CAP = {}; } Object.keys(CAP).forEach(function (k) { CAP[k] = CP.clean(CAP[k]); });
-  var freshF = function () { return { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null }; }; // v4.5: no threshold by default
+  var freshF = function () { return { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null, work: [], dueWithin: null }; }; // v4.5: no threshold by default
+  try { FS = V6.load(window.localStorage); } catch (e) { FS = []; }
   var CONF = false; try { CONF = localStorage.getItem('nr.confirmedOnly') === '1'; } catch (e) { CONF = false; } // item 5: saved Confirmed-only switch
   var freshF0 = freshF; freshF = function (mode) { var f = freshF0(mode); f.hideUnconfirmed = CONF; return f; };
   var S = { mode: 'all', scope: 'upcoming', tab: 'list', sort: 'soon', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('all') };
@@ -91,7 +92,7 @@
   }
   function setRegion(id) { S.region = V2.regionOf(id).id; V2.saveRegion(lsx, S.region); V2.dismissRegionHint(lsx); S.rows = 50; render(); }
   function scoped(scope, skip) { return post(scopedRaw(scope, skip)); }
-  function scopedRaw(scope, skip) { var o = Object.assign({}, S.f); (skip || []).forEach(function (k) { o[k] = Array.isArray(o[k]) ? [] : null; }); return C.filter(RECS, o, scope || S.scope, WATCH); }
+  function scopedRaw(scope, skip) { var o = Object.assign({}, S.f); (skip || []).forEach(function (k) { o[k] = Array.isArray(o[k]) ? [] : null; }); return V6.extra(C.filter(RECS, o, scope || S.scope, WATCH), o, todayCentral(), C.sectorsOf); }
   function fee(r) { return C.valueOf(r); }
   function sortFor(list, key) {
     if (key === 'due' || key === 'decision') { var byId = {}; list.forEach(function (r) { byId[r.id] = r; }); return CP.sortRows(list.map(function (r) { return { id: r.id, cap: CAP[r.id] || CP.blank() }; }), key).map(function (x) { return byId[x.id]; }); }
@@ -196,7 +197,7 @@
     return '<div class="empty"><b>No records in this view.</b> Try All, or check Data &amp; sources for feeds that are stale.</div>';
   }
   function setBadge(n) { var b = $('advCount'); b.hidden = !n; b.textContent = n; $('btnMore').setAttribute('aria-label', 'Filters' + (n ? ', ' + n + ' active' : '')); }
-  function activeCount() { var f = S.f; return (f.q ? 1 : 0) + f.states.length + f.agencies.length + f.statuses.length + f.sectors.length + f.sources.length + (S.region && S.region !== 'all' ? 1 : 0) + (f.feeMin !== null && f.feeMin !== undefined ? 1 : 0); }
+  function activeCount() { var f = S.f; return (f.q ? 1 : 0) + f.states.length + f.agencies.length + f.statuses.length + f.sectors.length + f.sources.length + (S.region && S.region !== 'all' ? 1 : 0) + (f.feeMin !== null && f.feeMin !== undefined ? 1 : 0) + (f.work ? f.work.length : 0) + (f.dueWithin ? 1 : 0); }
 
   // ---------- header, scopes, kpis ----------
   function renderFresh() {
@@ -241,9 +242,44 @@
     var fees = [[null, 'Any (default)'], [1e6, '$1M+'], [5e6, '$5M+'], [20e6, '$20M+'], [50e6, '$50M+'], [100e6, '$100M+']];
     $('fFee').innerHTML = fees.map(function (x) { return '<button type="button" class="chip' + (f.feeMin === x[0] ? ' on' : '') + '" data-fee="' + x[0] + '" aria-pressed="' + (f.feeMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
     $('costBox').hidden = true; $('pseCtl').hidden = true;
-    var n = activeCount() - (f.q ? 1 : 0); setBadge(n);
+    var n = activeCount() - (f.q ? 1 : 0); setBadge(n); var nRes = scoped().length; $('fLbl').innerHTML = 'Filters' + (n ? ' (' + n + ')' : '') + ' <span class="fres">&middot; ' + nRes + '<span class="fresw"> results</span></span>'; $('advCount').hidden = true; renderQuick(); renderTags(); renderSets();
     var a = $('activeNote'); a.hidden = !activeCount(); a.textContent = activeCount() ? activeCount() + ' filter' + (activeCount() === 1 ? '' : 's') + ' on. Counts above reflect them.' : '';
   }
+
+  // ---------- v6: quick filters, active tags, saved filter sets ----------
+  function qSum(id, base, sel) { var el = $(id); el.textContent = base + (sel.length ? ': ' + sel[0] + (sel.length > 1 ? ' +' + (sel.length - 1) : '') : ''); el.classList.toggle('on', !!sel.length); }
+  function renderQuick() {
+    var f = S.f, st = itemsFor('states', function (r) { return r.state || '??'; }, function (k) { return k === '??' ? 'No state' : k; });
+    $('qpState').innerHTML = '<div class="chips">' + st.map(function (it) { var on = f.states.indexOf(it.k) >= 0; return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-f="states" data-k="' + esc(it.k) + '" aria-pressed="' + on + '" title="' + esc(M.STATE_NAMES[it.k] || it.k) + '">' + esc(it.label) + ' <small>' + it.n + '</small></button>'; }).join('') + '</div>';
+    qSum('qsState', 'State', f.states.map(function (k) { return k === '??' ? 'No state' : k; }));
+    var wbase = scoped(S.scope, ['work']);
+    $('qpWork').innerHTML = '<div class="chips">' + V6.WORK.map(function (w) { var on = f.work.indexOf(w.id) >= 0, n = V6.extra(wbase, { work: [w.id] }, todayCentral(), C.sectorsOf).length; return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-wt="' + w.id + '" aria-pressed="' + on + '">' + esc(w.label) + ' <small>' + n + '</small></button>'; }).join('') + '</div><p class="hint">Inferred from words in the notice.</p>';
+    qSum('qsWork', 'Work type', f.work.map(V6.workLabel));
+    var dbase = scoped(S.scope, ['dueWithin']);
+    $('qDueChips').innerHTML = [{ d: null, label: 'Any date' }].concat(V6.DUE).map(function (x) { var on = (f.dueWithin || null) === x.d, n = x.d ? V6.extra(dbase, { dueWithin: x.d }, todayCentral(), C.sectorsOf).length : dbase.length; return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-due="' + (x.d || '') + '" aria-pressed="' + on + '">' + esc(x.label) + ' <small>' + n + '</small></button>'; }).join('');
+    qSum('qsDue', 'Due date', f.dueWithin ? [f.dueWithin + ' days'] : []);
+  }
+  function renderTags() {
+    var tags = V6.activeTags(S.f, { stateName: function (k) { return M.STATE_NAMES[k] || k; }, stageLabel: C.STAGE_LABEL, secLabel: secLabel, srcLabel: SRC_SHORT, money: M.fmtMoney, region: S.region, regionLabel: V2.regionOf(S.region).label });
+    var el = $('ftags'); el.hidden = !tags.length;
+    el.innerHTML = tags.map(function (t) { return '<button type="button" class="ftag" data-tag-k="' + esc(t.k) + '" data-tag-v="' + esc(t.v) + '" aria-label="Remove filter ' + esc(t.label) + '">' + esc(t.label) + ' <span aria-hidden="true">&times;</span></button>'; }).join('') + (tags.length ? '<button type="button" class="linkbtn ftclear" id="ftClear">Clear all</button>' : '');
+  }
+  function renderSets() {
+    $('fsets').innerHTML = FS.length ? FS.map(function (x) { return '<span class="fset"><button type="button" class="chip" data-fs-apply="' + esc(x.name) + '">' + esc(x.name) + '</button><button type="button" class="fsdel" data-fs-del="' + esc(x.name) + '" aria-label="Delete filter set ' + esc(x.name) + '">&times;</button></span>'; }).join('') : '<span class="hint">None yet. Set filters, name them and tap Save.</span>';
+  }
+  function removeTagK(k, v) {
+    if (k === 'region') { setRegion('all'); return; } if (k === 'hideUnconfirmed') { setConf(false); return; }
+    V6.removeTag(S.f, k, v); if (k === 'q') $('q').value = ''; S.rows = 50; render();
+  }
+  function saveSet() {
+    var name = $('fsName').value.trim(); if (!name) { toast('Type a name for this filter set first.'); $('fsName').focus(); return; }
+    FS = V6.upsert(FS, V6.snapshot(name, S.f, S.scope, S.region)); V6.save(window.localStorage, FS); $('fsName').value = ''; renderSets(); toast('Saved filter set "' + name + '" on this device.');
+  }
+  function applySet(name) {
+    var set = FS.filter(function (x) { return x.name === name; })[0]; if (!set) return;
+    S.f = V6.applyTo(freshF(), set); $('q').value = S.f.q || ''; S.scope = set.scope || S.scope; S.region = V2.regionOf(set.region).id; V2.saveRegion(lsx, S.region); S.rows = 50; render(); toast('Applied "' + name + '".');
+  }
+  function deleteSet(name) { FS = V6.remove(FS, name); V6.save(window.localStorage, FS); renderSets(); toast('Deleted filter set "' + name + '".'); }
 
   // ---------- PS&E controls ----------
   var DB_ROLES = [['prime', 'DB prime opportunity (inferred)'], ['sub', 'Design-subconsultant to DB team (inferred)']];
@@ -313,10 +349,10 @@
   var miniBuilt = false;
   function renderMini(list) {
     if (!G) { $('mini').hidden = true; return; }
-    if (!miniBuilt) { miniBuilt = true; var h = '<g class="gSt">'; Object.keys(G.states).forEach(function (k) { h += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"><title>' + esc(G.states[k].n) + '</title></path>'; }); $('usmini').innerHTML = h + '</g><g class="gMk"></g>'; if (!WIDE.matches) $('miniDet').open = false; }
+    if (!miniBuilt) { miniBuilt = true; var h = '<g class="gSt">'; Object.keys(G.states).forEach(function (k) { h += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"><title>' + esc(G.states[k].n) + '</title></path>'; }); $('usmini').innerHTML = h + '</g><g class="gMk"></g>'; }
     var by = stateTotals(list); $('usmini').querySelectorAll('.st').forEach(function (p) { var k = p.getAttribute('data-st'); p.classList.toggle('sel', S.f.states.indexOf(k) >= 0); p.classList.toggle('has', !!by[k]); });
     $('usmini').querySelector('.gMk').innerHTML = markersHtml(by, true);
-    var sel = S.f.states; $('miniSel').textContent = sel.length ? 'showing ' + sel.join(', ') + ' (tap again to remove)' : 'tap a state to filter the list';
+    var sel = S.f.states; $('miniSel').textContent = sel.length ? 'showing ' + sel.join(', ') + ' (tap again to remove)' : 'tap a state to filter the list'; $('miniSel2').textContent = $('miniSel').textContent; if (WIDE.matches) $('miniDet').open = true;
     var nost = list.filter(function (r) { return !r.state; }).length; $('miniNote').textContent = Object.keys(by).length + ' states' + (nost ? ' · ' + nost + ' with no state' : '');
   }
   function renderMap(list) {
@@ -605,12 +641,14 @@
     download('national-radar-capture-' + todayCentral() + '.csv', 'text/csv;charset=utf-8', CP.toCSV(rows, todayCentral()), true); toast('Exported ' + rows.length + ' capture file(s).');
   }
   function exportBackup() {
-    if (!Object.keys(WATCH).length) { toast('The watchlist is empty, nothing to back up.'); return; }
-    download('national-radar-capture-backup-' + todayCentral() + '.json', 'application/json', JSON.stringify(CP.makeBackup(WATCH, CAP, new Date().toISOString()), null, 1), false); toast('Backup saved to your downloads.');
+    if (!Object.keys(WATCH).length && !FS.length) { toast('The watchlist is empty, nothing to back up.'); return; }
+    var bk = CP.makeBackup(WATCH, CAP, new Date().toISOString()); bk.filtersets = FS; // v6: saved filter sets travel with the backup
+    download('national-radar-capture-backup-' + todayCentral() + '.json', 'application/json', JSON.stringify(bk, null, 1), false); toast('Backup saved to your downloads.');
   }
   function restoreBackup(text, mode) {
     var p = CP.parseBackup(text); if (!p.ok) { toast(p.error); return; }
     if (mode === 'replace' && !window.confirm('Replace the whole watchlist and every capture file on this device with the backup?')) return;
+    try { var j6 = JSON.parse(text); if (j6 && Array.isArray(j6.filtersets)) { FS = mode === 'replace' ? V6.clean(j6.filtersets) : V6.merge(FS, j6.filtersets); V6.save(window.localStorage, FS); } } catch (e) { /* parseBackup already validated */ }
     var out = CP.applyBackup({ watch: WATCH, capture: CAP }, p, mode); WATCH = out.watch; CAP = out.capture; saveWatch(); saveCap(); migrateWatch();
     toast('Restored ' + Object.keys(p.watch).length + ' watchlist record(s) (' + (mode === 'replace' ? 'replaced' : 'merged') + ').' + (p.skipped ? ' ' + p.skipped + ' invalid entr' + (p.skipped === 1 ? 'y' : 'ies') + ' skipped.' : '')); render();
   }
@@ -833,6 +871,17 @@
   document.addEventListener('click', function (e) {
     if (e.target.closest('#btnSeen')) { NEWBASE = V2.markAllSeen(lsx, ssn, latestAsOf()); if (S.digest === 'new') S.digest = null; toast('Marked everything as seen.'); render(); return; }
     var rh = e.target.closest('[data-region-hint]'); if (rh) { var rv = rh.getAttribute('data-region-hint'); if (rv === 'no') { V2.dismissRegionHint(lsx); render(); } else setRegion(rv); return; }
+    var q6 = e.target.closest('[data-wt],[data-due],[data-tag-k],[data-fs-apply],[data-fs-del],#ftClear,#tmWhat');
+    if (q6) {
+      if (q6.id === 'ftClear') { resetFilters(); return; }
+      if (q6.id === 'tmWhat') { $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false'); if ($('bannerMore').hidden) $('btnBanner').click(); $('banner').scrollIntoView({ block: 'start' }); return; }
+      if (q6.hasAttribute('data-wt')) { toggle(S.f.work, q6.getAttribute('data-wt')); S.rows = 50; render(); return; }
+      if (q6.hasAttribute('data-due')) { var dv = q6.getAttribute('data-due'); S.f.dueWithin = dv ? +dv : null; S.rows = 50; render(); return; }
+      if (q6.hasAttribute('data-tag-k')) { removeTagK(q6.getAttribute('data-tag-k'), q6.getAttribute('data-tag-v')); return; }
+      if (q6.hasAttribute('data-fs-apply')) { applySet(q6.getAttribute('data-fs-apply')); return; }
+      if (q6.hasAttribute('data-fs-del')) { deleteSet(q6.getAttribute('data-fs-del')); return; }
+    }
+    if (!e.target.closest('.qf')) document.querySelectorAll('.qf[open]').forEach(function (d) { d.open = false; });
     var dg = e.target.closest('[data-digest]'); if (dg) { var dk = dg.getAttribute('data-digest'); S.digest = S.digest === dk ? null : dk; S.rows = 50; $('digest').hidden = true; $('digestPill').setAttribute('aria-expanded', 'false'); render(); return; }
     var t = e.target.closest('[data-mode],[data-scope],[data-star],[data-open],[data-f],[data-fee],[data-cost],[data-month],[data-st],[data-tab]'); if (!t) return;
     if (t.tagName === 'A') e.preventDefault();
@@ -891,6 +940,8 @@
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
   function resetFilters() { S.f = freshF(); $('q').value = ''; S.region = 'all'; V2.saveRegion(lsx, 'all'); S.rows = 50; render(); toast('Filters reset (Confirmed only and your watchlist are unchanged).'); }
+  $('fsSave').addEventListener('click', saveSet); $('fsName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); saveSet(); } });
+  document.querySelectorAll('.qf').forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) document.querySelectorAll('.qf[open]').forEach(function (o) { if (o !== d) o.open = false; }); }); });
   $('btnClear').addEventListener('click', resetFilters); $('btnReset').addEventListener('click', resetFilters);
   $('feeIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.feeMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
   $('costIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.costMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });

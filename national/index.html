@@ -62,6 +62,9 @@
   </div>
   <div id="adv" class="drawer" hidden>
     <div class="drawhead"><h3>Filters</h3><button type="button" class="btn small" id="btnReset">Reset filters</button></div>
+    <h3>Saved filter sets <span class="hint">on this device; included in the capture backup</span></h3>
+    <div class="fsets" id="fsets"></div>
+    <div class="fsrow"><input id="fsName" type="text" maxlength="60" placeholder="Name the current filters" aria-label="Name for this filter set" autocomplete="off"><button type="button" class="btn small" id="fsSave">Save</button></div>
   <p class="rhint" id="regionHint" hidden>Focus on Texas? <button type="button" class="linkbtn" data-region-hint="gulf">Texas + Gulf</button> &middot; <button type="button" class="linkbtn" data-region-hint="tx">Texas only</button> &middot; <button type="button" class="linkbtn dim" data-region-hint="no">No thanks</button></p>
     <h3>Region</h3>
     <div class="regionbar">
@@ -126,15 +129,20 @@
 
   <section id="v-list" class="view" aria-label="List">
     <div class="lgrid"><aside class="mini" id="mini" aria-label="Small map">
-      <details id="miniDet" open><summary class="minisum"><span>Map</span> <span class="hint" id="miniSel">tap a state to filter the list</span></summary>
+      <details id="miniDet"><summary class="minisum"><span>Map</span> <span class="hint" id="miniSel">tap a state to filter the list</span></summary>
+        <div class="minihead"><b>Map</b> <span class="hint" id="miniSel2">tap a state to filter the list</span></div>
         <div class="miniwrap"><svg id="usmini" viewBox="0 0 975 610" role="img" aria-label="Small US map. Numbers are record counts per state. Tap a state to filter the list."></svg></div>
         <div class="minibar"><span class="hint" id="miniNote"></span><button type="button" class="linkbtn" data-tab="map">Expand map &rsaquo;</button></div>
       </details></aside>
     <div class="lmain">
-    <div class="listbar">
-      <label class="sortl">Sort <select id="sort"><option value="soon" selected>Upcoming first, soonest date</option><option value="conf">Confirmed first, then value</option><option value="fee">Stated value, high to low</option><option value="date">Date, soonest first</option><option value="agency">Agency</option><option value="due">My due date (watchlist)</option><option value="decision">My Go / No-go (watchlist)</option></select></label>
+    <div class="qrow" id="qrow" aria-label="Quick filters">
+      <details class="qf" id="qfState"><summary class="qchip" id="qsState">State</summary><div class="qpop" id="qpState"></div></details>
+      <details class="qf" id="qfWork"><summary class="qchip" id="qsWork">Work type</summary><div class="qpop" id="qpWork"></div></details>
+      <details class="qf" id="qfDue"><summary class="qchip" id="qsDue">Due date</summary><div class="qpop" id="qpDue"><div class="chips" id="qDueChips"></div>
+        <label class="sortl">Sort <select id="sort"><option value="soon" selected>Upcoming first, soonest date</option><option value="conf">Confirmed first, then value</option><option value="fee">Stated value, high to low</option><option value="date">Date, soonest first</option><option value="agency">Agency</option><option value="due">My due date (watchlist)</option><option value="decision">My Go / No-go (watchlist)</option></select></label></div></details>
       <span id="listCount" class="hint"></span>
     </div>
+    <div class="ftags" id="ftags" aria-label="Active filters" hidden></div>
     <div id="list" class="cards"></div>
     <button type="button" class="btn wide" id="btnMoreRows" hidden>Show 50 more</button>
     </div></div>
@@ -178,6 +186,7 @@
   <button type="button" data-tab="pursuits">Pursuits <b class="tabbadge" id="purBadge" hidden></b></button>
   <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More <b class="hdot" id="healthDot" hidden></b><span id="tabMoreLbl" class="tml"></span></button>
   <div class="tabmore" id="tabMore" role="menu" hidden>
+    <button type="button" id="tmWhat" class="tmwhat" role="menuitem">What counts</button>
     <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
     <button type="button" data-tab="break" role="menuitem">Breakdown</button>
     <button type="button" data-tab="data" role="menuitem">Data &amp; sources <b class="hwarn" id="healthWarn" hidden></b></button>
@@ -213,6 +222,7 @@
 <script src="pse.js"></script>
 <script src="sources.js"></script>
 <script src="weekly.js"></script>
+<script src="v6.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
