@@ -1,0 +1,126 @@
+{
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "keepWeeks": 12,
+ "weeks": [
+  {
+   "week": "2026-W44",
+   "start": "2026-10-26",
+   "end": "2026-11-01",
+   "final": false,
+   "backfilled": false,
+   "items": 6,
+   "houston": 1,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W43",
+   "start": "2026-10-19",
+   "end": "2026-10-25",
+   "final": true,
+   "backfilled": true,
+   "items": 14,
+   "houston": 8,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W42",
+   "start": "2026-10-12",
+   "end": "2026-10-18",
+   "final": true,
+   "backfilled": true,
+   "items": 45,
+   "houston": 30,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W41",
+   "start": "2026-10-05",
+   "end": "2026-10-11",
+   "final": true,
+   "backfilled": true,
+   "items": 27,
+   "houston": 19,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W40",
+   "start": "2026-09-28",
+   "end": "2026-10-04",
+   "final": true,
+   "backfilled": true,
+   "items": 18,
+   "houston": 3,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W39",
+   "start": "2026-09-21",
+   "end": "2026-09-27",
+   "final": true,
+   "backfilled": true,
+   "items": 12,
+   "houston": 5,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W38",
+   "start": "2026-09-14",
+   "end": "2026-09-20",
+   "final": true,
+   "backfilled": true,
+   "items": 20,
+   "houston": 9,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W37",
+   "start": "2026-09-07",
+   "end": "2026-09-13",
+   "final": true,
+   "backfilled": true,
+   "items": 18,
+   "houston": 11,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W36",
+   "start": "2026-08-31",
+   "end": "2026-09-06",
+   "final": true,
+   "backfilled": true,
+   "items": 36,
+   "houston": 6,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W35",
+   "start": "2026-08-24",
+   "end": "2026-08-30",
+   "final": true,
+   "backfilled": true,
+   "items": 11,
+   "houston": 3,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W34",
+   "start": "2026-08-17",
+   "end": "2026-08-23",
+   "final": true,
+   "backfilled": true,
+   "items": 11,
+   "houston": 2,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  },
+  {
+   "week": "2026-W33",
+   "start": "2026-08-10",
+   "end": "2026-08-16",
+   "final": true,
+   "backfilled": true,
+   "items": 5,
+   "houston": 2,
+   "generatedAt": "2026-10-30T20:13:17.939Z"
+  }
+ ]
+}

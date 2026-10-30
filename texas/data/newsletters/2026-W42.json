@@ -1,0 +1,457 @@
+{
+ "week": "2026-W42",
+ "start": "2026-10-12",
+ "end": "2026-10-18",
+ "title": "Texas Intel weekly, 2026-W42 (Oct 12, 2026 to Oct 18, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 45,
+  "houston": 30,
+  "other": 15
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 5,
+   "items": [
+    {
+     "id": "i1841b4f",
+     "title": "27-09-1026-A Engineering- Request to set up initial project budget for 4th Street Outfall Rehabilitation-Santa Fe within the Limited Tax Flood Control Bonds Series 2017 Fund, relating to 2025…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94784&GUID=5EEA297A-DAFD-46F6-B742-AFC670068897",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-14",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “drainage”, “flood control”, “engineering”, “bond program”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 32
+    },
+    {
+     "id": "ifbirjw",
+     "title": "27-12-1026-D Engineering- Request to set up initial project budget for 2nd Street Road Improvement-Santa Fe within the Unlimited Tax Road Bonds 2019 Fund, relating to 2025 Mobility & Drainage Bond…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94791&GUID=CDC750AD-B4DD-4F05-B66C-1DC240EBAC1C",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-14",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “drainage”, “engineering”, “bond program”, “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 22
+    },
+    {
+     "id": "i1y252i7",
+     "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency to extend the grant end date to September 30, 2028, and…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49064&GUID=6A2D024C-B06C-4433-BB6E-563A8B1297D6",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “flood control”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 16
+    },
+    {
+     "id": "ieszo2f",
+     "title": "Request by the Flood Control District for approval to submit an application to the Federal Emergency Management Agency for grant funds in the amount of $500,000, with no required match, for the FY26…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49057&GUID=C7D3135E-3C16-4441-A91E-0751177E947A",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “flood control”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 14
+    },
+    {
+     "id": "iskenjb",
+     "title": "Request for approval of authorized budget appropriation transfers for the Flood Control District and certain county departments.",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49051&GUID=E6FB248F-7CFE-49F8-8434-54670737F6C3",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “flood control”, “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 14
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 6,
+   "items": [
+    {
+     "id": "i1lawoym",
+     "title": "27-10-1026-B Engineering- Request transfer within the Limited Tax Flood Control Bonds Series 2017 Fund, relating to 2025 Mobility & Drainage Bond Program, to fund Reppert Drainage Improvements project",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94786&GUID=A95C897D-EF54-472A-AB4A-1707093F7C86",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-14",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “drainage”, “flood control”, “engineering”, “bond program”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 30
+    },
+    {
+     "id": "i1jcp65o",
+     "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency/Texas Division of Emergency Management to extend the period of…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49059&GUID=C01261CD-A91E-41BC-97E8-FAEF7687195F",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood control”, “bayou”, “watershed”, “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 26
+    },
+    {
+     "id": "i1tshx7q",
+     "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the U.S. Department of Agriculture/Natural Resources Conservation Service to extend the grant end date…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49062&GUID=FB23B986-2E9B-416C-BB20-B3E5042D5130",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood control”, “bayou”, “watershed”, “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 26
+    },
+    {
+     "id": "i1kbz2x8",
+     "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Texas Division of Emergency Management to extend the grant end date to April 1, 2027, for the FEMA…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49060&GUID=4DC3938E-2243-49DB-9787-941575116671",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood control”, “watershed”, “bond”, “grant”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 22
+    },
+    {
+     "id": "i16w4e7d",
+     "title": "27-11-1026-C Engineering- Request transfer within the Unlimited Tax Road Bonds 2019 Fund, relating to 2025 Mobility & Drainage Bond Program, to fund South Kemah Drive-Kemah project",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94790&GUID=85A32DF4-F782-41A0-A918-B955F68634FE",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-14",
+     "place": "Kemah",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “drainage”, “engineering”, “bond program”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 20
+    },
+    {
+     "id": "i1oc7t1u",
+     "title": "Request for approval of an award on the basis of low bid to Hassell Construction Group, LLC in the amount of $3,668,105 for extension of Birnam Wood Boulevard from Hickorygate Drive to south of…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49126&GUID=F6068384-7ECF-4EFA-B771-3F084981E66B",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-16",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “harris county flood control”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 18
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 2,
+   "items": [
+    {
+     "id": "i9nxcgz",
+     "title": "Request for approval of six Community Development Block Grant Entitlement (CDBG-EN) funded agreements between Harris County and 1) Harris County Precinct 2 total allocation of $1,155,000.00 for…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49174&GUID=F6AF1E53-106B-4648-8549-5E74A07E30AF",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-16",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "grant",
+     "why": "Mentions “grant”, “cdbg”, “wastewater”, “water line”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 20
+    },
+    {
+     "id": "i1b1dgzc",
+     "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the United States Department of Agriculture/Natural Resources Conservation Service to extend the grant…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49061&GUID=E738B1C2-9169-4E81-8E4D-8E7FF38FC21E",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-13",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "grant",
+     "why": "Mentions “flood control”, “watershed”, “grant”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 18
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1cmew2g",
+     "title": "Request that the County Judge execute an amendment to an agreement with Resalire Infrastructure Solutions LLC in the additional amount of $250,000 for additional professional…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49127&GUID=182AFC2D-FDF7-4E79-B091-D651211F4048",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-16",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “flood control”, “bayou”, “watershed”, “engineering”.",
+     "hint": "Planning study: follow-on design phases often go to consultants.",
+     "score": 22
+    },
+    {
+     "id": "i818c5t",
+     "title": "Transmittal by the Office of the Purchasing Agent of a project scheduled for advertisement for general watershed repairs to channels (E) White Oak Bayou, (W) Buffalo Bayou, (H) Hunting Bayou, and…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49130&GUID=3E39C932-6F5F-47E3-8558-18861463FB86",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-16",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “flood control”, “channel”, “bayou”, “watershed”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 22
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 8,
+   "items": [
+    {
+     "id": "i1hpsi4j",
+     "title": "(26-3301A) Authorize (1) a professional services contract with Halff Associates, Inc. to provide engineering design services for the McKinney Ave/Cole Avenue Two-way Conversion project (also known…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26531&GUID=71212DDE-1B60-476F-BC27-D08FCAD556D5",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "McKinney",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “professional services”, “design services”, “engineering”, “capital improvement”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 28
+    },
+    {
+     "id": "info9e3",
+     "title": "(26-2770A) Authorize a professional services contract with Ardurra Group, Inc. to provide engineering services for the design of four local streets, 3000 Marideen Avenue from Tangle Terrace to…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26541&GUID=CF5B381C-8D7D-4452-BC46-F99E86BE5E13",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “design”, “capital improvement”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 28
+    },
+    {
+     "id": "i1aqr4se",
+     "title": "(26-2996A) Authorize a professional engineering services contract with AECOM Technical Services, Inc., to provide planning and engineering services for the Dallas Streetcar project that connects the…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26529&GUID=5378EFF1-1E5F-467D-8D7D-28DD732184A3",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “master plan”.",
+     "hint": "Planning study: follow-on design phases often go to consultants.",
+     "score": 12
+    },
+    {
+     "id": "ibdt64m",
+     "title": "Resolution amending a portion of TIRZ #2 Capital Improvement Projects (CIP) to fully fund the North Padre Island Seawall CIP Project, including transferring $1,408,621.00 from the Sand Dollar CIP…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26680&GUID=2E29A763-09B8-49F6-94BB-C183715075E0",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-10-13",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “cip”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    },
+    {
+     "id": "i1exs1ct",
+     "title": "Approve an ordinance authorizing the issuance and sale of City of Austin, Texas Electric Utility System Revenue Refunding and/or Improvement Bonds, in one or more series with an aggregate par amount…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29317&GUID=5851630B-959A-4131-BFEE-629196B4E86F",
+     "source": "City of Austin agenda items",
+     "date": "2026-10-12",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “bond”, “budget”, “utility”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 8
+    },
+    {
+     "id": "i11czud4",
+     "title": "(26-3203A) Authorize a three-year Interlocal Agreement with ASC ENVIRONMENTAL SERVICES, INC. through North Texas Municipal Water District for water and wastewater processing facility cleaning…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26534&GUID=5421C7CD-65CD-421C-A4D8-BD606D5F841E",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “wastewater”, “interlocal”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 2,
+   "items": [
+    {
+     "id": "ibu70ry",
+     "title": "Approve a resolution that directs the City Manager to update the City’s Strategic Housing Blueprint to address updated housing production and preservation goals, include a data analysis,…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29356&GUID=522C563E-C42C-40F9-A8BF-6EB94A290B67",
+     "source": "City of Austin agenda items",
+     "date": "2026-10-15",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "bond",
+     "why": "Mentions “bond program”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 10
+    },
+    {
+     "id": "i12pnck6",
+     "title": "(26-966A) Authorize an amendment to Resolution No. 25-1445, previously approved on September 10, 2025, for an Advance Funding Agreement (AFA) with the Texas Department of Transportation (TxDOT) for…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26544&GUID=2644CCCB-2F9B-4E08-A915-25A85B306688",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”, “grant”, “txdot”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 10
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 4,
+   "items": [
+    {
+     "id": "ipcp5d4",
+     "title": "(26-3198A) Authorize a three-year master agreement for the purchase of laboratory equipment and supplies for the Dallas Water Utilities Department - Taylor Distribution Group, LLC dba TDG Scientific…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26533&GUID=0A03CA40-01CA-414D-AEB2-09874BDF47AD",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “drainage”, “stormwater”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 12
+    },
+    {
+     "id": "ihj5ejh",
+     "title": "(26-2675A) Authorize an engineering services contract with Garver, LLC to provide design and construction administration services, construction alternatives, implement aircraft communications…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26519&GUID=45B7AB4B-7547-45A9-9763-754ACFC2CE74",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “engineering services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "i1rk27ko",
+     "title": "(26-2728A) Authorize a three-year engineering services contract in an amount not to exceed $1,077,650.00, with two one-year renewal options in an amount not to exceed $TBD to provide professional…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26540&GUID=3FB661FE-B4FA-4A06-A9C4-441A0303FC81",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 8
+    },
+    {
+     "id": "i1iotyip",
+     "title": "Conduct a public hearing and consider an ordinance granting floodplain variances for the property located at 1213 Fort Branch Boulevard from certain floodplain regulations prescribed by City Code…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29323&GUID=DE18C2C0-74C2-42E1-8DFC-0C106644CF7E",
+     "source": "City of Austin agenda items",
+     "date": "2026-10-12",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "grant",
+     "why": "Mentions “flood”, “grant”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "i4rkwff",
+     "title": "(26-2840A) Authorize a professional services contract with Gresham Smith to provide engineering services for the design of Elsie Faye Heggins TOD Connections “2nd to Scyene” - Not to exceed $____ -…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26542&GUID=8C49A73A-114B-44E5-81BE-72A927594E57",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-13",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”, “professional services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 14
+    }
+   ]
+  }
+ ],
+ "deadlines": [
+  {
+   "date": "2027-04-01",
+   "what": "y Management to extend the grant end date to April 1, 2027",
+   "id": "i1kbz2x8",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Texas Division of Emergency Management to extend the grant end date to April 1, 2027, for the FEMA…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49060&GUID=4DC3938E-2243-49DB-9787-941575116671",
+   "source": "Harris County Commissioners Court agenda items"
+  },
+  {
+   "date": "2028-09-30",
+   "what": "ement Agency to extend the grant end date to September 30, 2028",
+   "id": "i1y252i7",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency to extend the grant end date to September 30, 2028, and…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49064&GUID=6A2D024C-B06C-4433-BB6E-563A8B1297D6",
+   "source": "Harris County Commissioners Court agenda items"
+  }
+ ],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

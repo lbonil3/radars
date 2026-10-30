@@ -1,0 +1,338 @@
+{
+ "week": "2026-W38",
+ "start": "2026-09-14",
+ "end": "2026-09-20",
+ "title": "Texas Intel weekly, 2026-W38 (Sep 14, 2026 to Sep 20, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 20,
+  "houston": 9,
+  "other": 11
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 2,
+   "items": [
+    {
+     "id": "ilr8tzx",
+     "title": "Consideration of approval to submit a Budget Revision Request for the FEMA Flood Mitigation Assistance (FMA) FY 2019 Residential Structure Elevation Project, TWDB Contract No. 1900012535, and…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94692&GUID=A7A4C2CC-6546-447C-BBE5-73B1632ADA6A",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-18",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “flood mitigation”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 16
+    },
+    {
+     "id": "i1pxrxir",
+     "title": "Adopted Budget 2027",
+     "link": "https://www.fortbendcountytx.gov/your-county/news/adopted-budget-2027",
+     "source": "Fort Bend County news",
+     "date": "2026-09-17",
+     "place": "Fort Bend",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1p7azxo",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Cobb, Fendley & Associates, Inc for the Reppert Street Drainage Improvements project submitted by the County…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94669&GUID=B555FC62-CD87-46B8-AF34-8F4175753E0E",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-17",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “engineering”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 10
+    }
+   ]
+  },
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 3,
+   "items": [
+    {
+     "id": "i139hg21",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Compass Environmental Solutions, LLC for the 9th Street Bridge Replacement project submitted by the County…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94657&GUID=D8F74D69-BFF3-4574-B5F1-F0D19217778C",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-17",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering”, “bridge”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 6
+    },
+    {
+     "id": "iwodxs7",
+     "title": "New bridge to honor Houston teen",
+     "link": "https://www.txdot.gov/about/newsroom/local/houston/new-bridge-to-honor-houston-teen.html",
+     "source": "TxDOT Houston District news",
+     "date": "2026-09-17",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “bridge”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 4
+    },
+    {
+     "id": "i1999zjc",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Thompson Engineering, Inc. for the Prairie Street project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94630&GUID=19629CDD-B4A9-4F95-91F8-3257817A1B22",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-14",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 3,
+   "items": [
+    {
+     "id": "i1cnteiq",
+     "title": "Consider and take action on a resolution authorizing Amendment 2 to the Professional Services Agreement with Halff Associates, Inc. for the Lobit Park Phase 2 Project (PK2206) for additional…",
+     "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=13905&GUID=DFBEFD6E-6F64-4C65-8F75-61AA301A34A8",
+     "source": "City of League City agenda items",
+     "date": "2026-09-18",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “professional services”, “design services”, “engineering”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 16
+    },
+    {
+     "id": "ic4k8by",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Compass Environmental Solutions, LLC. for the Friendswood Parkway Extension project submitted by the County…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94693&GUID=6D311D8E-D2F8-4BA5-A007-9583FAE4C7D2",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-18",
+     "place": "Friendswood",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 4
+    },
+    {
+     "id": "i1kvlm9u",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Edminster, Hinshaw, Russ & Associates Inc. for the Friendswood Parkway Extension project submitted by the…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94666&GUID=F3D24721-9E50-480C-9A7C-E37D70F20212",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-17",
+     "place": "Friendswood",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 4
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 6,
+   "items": [
+    {
+     "id": "ieetpd4",
+     "title": "Authorize 16 contracts for engineering services for the 2026 Small Scale General Civil Engineering Services Rotation List for various departments with Huitt-Zollars, Inc.; Lockwood, Andrews &…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29145&GUID=5B68715B-7530-4087-A62D-CBB7D10977DE",
+     "source": "City of Austin agenda items",
+     "date": "2026-09-14",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “design”, “budget”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 12
+    },
+    {
+     "id": "ih16sch",
+     "title": "Authorize a three-year service price agreement for the period October 14, 2026 through October 13, 2029, with two, one-year renewal options for median and right-of-way grounds maintenance services…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26242&GUID=B46EB351-8AE2-4C5F-B843-F55EC366A769",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-15",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “bond program”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    },
+    {
+     "id": "i1hph24k",
+     "title": "Authorize a contract for engineering services for the 2026 Reservoir Improvement Program Contract for Austin Water with Freese and Nichols, Inc., in an amount not to exceed $10,000,000. Funding:…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29144&GUID=809CD50D-2A0C-418C-A851-C2949C24EE1E",
+     "source": "City of Austin agenda items",
+     "date": "2026-09-14",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “budget”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "i9z0wgo",
+     "title": "Discussion and action on a Resolution that the City Council hereby accepts the State Infrastructure Bank (SIB) loan agreement in its substantially final form in order to secure receipt of funds in…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16316&GUID=4F3B788D-408E-413F-BB26-B2192BE8EDD2",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-14",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “engineering”, “design”, “budget”, “utility”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 8
+    },
+    {
+     "id": "i1bnrbok",
+     "title": "Authorize amendments to existing contracts with the Austin Area Urban League, Austin Habitat for Humanity, Inc., Easterseals Central Texas, Inc., Interfaith Action of Central Texas, Meals on Wheels…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29153&GUID=E49345C8-00D2-468A-8046-0EDEBADFED00",
+     "source": "City of Austin agenda items",
+     "date": "2026-09-14",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “bond”, “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1rh4r3",
+     "title": "FY 2025-26 Quarterly Report on Remaining Unencumbered General Obligation Bond Funds for Period 3: April 1, 2026 - June 30, 2026. [Office of Bond & Construction Management]",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26241&GUID=B042685F-55B0-427A-B602-09E552E73B8F",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-14",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “bond”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 4,
+   "items": [
+    {
+     "id": "i1lql46i",
+     "title": "PZRZ26-00016: A portion of Tract 32A, and all of Tracts 32C, 32D, and 32E, Block 5, Upper Valley Surveys, City of El Paso, El Paso County, Texas Location: 250 Lindbergh Ave. Zoning: R-1…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16361&GUID=A815EB8E-D473-4C75-8A48-D7FE73F8D6D8",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-18",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "bond",
+     "why": "Mentions “engineering”, “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 6
+    },
+    {
+     "id": "i1ryxs5m",
+     "title": "2024 Bond CECAP Resolution Annual Status Update for 2026 [Angela Hodges Gott, Director, Office of Environmental Quality and Sustainability]",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26260&GUID=70740B2B-0AEF-4130-81BC-6824D654EAB5",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-17",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    },
+    {
+     "id": "i15rg3ri",
+     "title": "Discussion and action on an update of the 2012 Quality of Life, 2019 Public Safety and 2022 Community Progress Bond Projects",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16327&GUID=5E3E4985-B655-4423-8DFD-D205ECC7E255",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-14",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    },
+    {
+     "id": "i7hk2oy",
+     "title": "Presentation - Update on All Abilities Playground, 2022 Community Progress Bond",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16328&GUID=CE4F72D8-D02B-4EE6-9A97-05DC8E1C65B9",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-14",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "i15x2emr",
+     "title": "Notice of Final Federal Agency Actions on Proposed Highway Projects in Texas",
+     "link": "https://www.federalregister.gov/documents/2026/09/17/2026-19085/notice-of-final-federal-agency-actions-on-proposed-highway-projects-in-texas",
+     "source": "Federal Register (Texas flood / water notices)",
+     "date": "2026-09-17",
+     "place": "Federal / national",
+     "region": "Federal / national",
+     "topic": "grant",
+     "why": "Mentions “grant”, “txdot”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 3
+    }
+   ]
+  }
+ ],
+ "deadlines": [
+  {
+   "date": "2029-10-13",
+   "what": "ment for the period October 14, 2026 through October 13, 2029",
+   "id": "ih16sch",
+   "title": "Authorize a three-year service price agreement for the period October 14, 2026 through October 13, 2029, with two, one-year renewal options for median and right-of-way grounds maintenance services…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26242&GUID=B46EB351-8AE2-4C5F-B843-F55EC366A769",
+   "source": "City of Dallas agenda items"
+  }
+ ],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

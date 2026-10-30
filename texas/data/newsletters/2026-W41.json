@@ -1,0 +1,382 @@
+{
+ "week": "2026-W41",
+ "start": "2026-10-05",
+ "end": "2026-10-11",
+ "title": "Texas Intel weekly, 2026-W41 (Oct 5, 2026 to Oct 11, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 27,
+  "houston": 19,
+  "other": 8
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 1,
+   "items": [
+    {
+     "id": "if6a25f",
+     "title": "Request by the Office of Management and Budget for approval of commercial paper funding for Engineering for the Miscellaneous Building Cost project in the additional amount of $4,370,000 for a total…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49014&GUID=42CD5AA8-B78E-4ABE-8F51-DFA7D2BFC6D5",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “engineering”, “budget”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 6,
+   "items": [
+    {
+     "id": "ipeq0pf",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $15,000,000, to fund the Helms Stormwater Detention Basin and Channel…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49024&GUID=B77DA1D3-D626-4339-B208-C1F5B635FD13",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “stormwater”, “flood control”, “detention”, “channel”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 38
+    },
+    {
+     "id": "i1jxu9ha",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board in the amount of $2,500,000, to address flood risk mitigation through a combination of…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49025&GUID=1F98C6CF-5BCC-486D-87A4-BE8C80343113",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “stormwater”, “flood control”, “detention”, “channel”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 34
+    },
+    {
+     "id": "i11bgs9",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $11,000,000, to fund the Cloverleaf Area Drainage Improvements in the…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49023&GUID=72254683-2652-497E-B995-1899C944FE38",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “drainage”, “flood control”, “bayou”, “watershed”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 32
+    },
+    {
+     "id": "ibnjqbm",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $6,500,000, to fund the West Little York Stormwater Detention Basin in…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49019&GUID=F29CF01E-1512-443D-9C0F-D48328D80D98",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “stormwater”, “flood control”, “detention”, “watershed”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 32
+    },
+    {
+     "id": "i1day0ax",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $10,000,000, to fund the South Mayde Creek Bypass Channel in the Addicks…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49022&GUID=7EFA5CC0-261F-445C-B493-C8FC4319A8B0",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood control”, “channel”, “watershed”, “bond”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 24
+    },
+    {
+     "id": "inkq17q",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $5,000,000, to fund the Kingwood Diversion Ditch Improvements in the San…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49018&GUID=F5A38A24-1FF2-464F-8214-772BDBC236F0",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood control”, “watershed”, “bond”, “grant”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 22
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1eb6tuw",
+     "title": "Request by the Flood Control District for approval of a grant agreement with the Texas Water Development Board, in the amount of $2,500,000, to fund the Halls Aldine Westfield South Stormwater…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49021&GUID=7D45882C-D264-41D8-90C0-7778818123D5",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "grant",
+     "why": "Mentions “stormwater”, “flood control”, “detention”, “channel”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 34
+    },
+    {
+     "id": "i1nj1qpv",
+     "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $22,500,000, to fund repairs needed due to erosion and sediment deposits…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49020&GUID=5F3DE0C5-A48E-45CF-81E9-8635CD2A37AF",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "grant",
+     "why": "Mentions “flood control”, “watershed”, “grant”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "score": 18
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 2,
+   "items": [
+    {
+     "id": "iy5pvuk",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Geoscience Engineering & Testing Inc. for the Reppert Street Drainage Improvements project submitted by the…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94754&GUID=C33096CA-BFE2-4DB4-A596-0646AA6A45A7",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “engineering”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 10
+    },
+    {
+     "id": "i1h6zuc9",
+     "title": "Consideration of authorizing the County Judge to execute amendment no. 1 to the engineering agreement with Weisser Engineering & Surveying for the Dickinson Bayou Desnagging project submitted by the…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94758&GUID=E7BA9B9B-AE05-48A0-B537-5A9D795DC795",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-08",
+     "place": "Dickinson",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “bayou”, “engineering”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 8
+    }
+   ]
+  },
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 3,
+   "items": [
+    {
+     "id": "i1shytmt",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Gratia Geomatics, LLC for the 2nd Street Pavement Rehabilitation project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94769&GUID=D13BAC48-D7FD-4DB3-9CFE-A92BAE136974",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-09",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 4
+    },
+    {
+     "id": "im2zj5f",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with AIG Technical Services, LLC for the 2nd Street Pavement Rehabilitation project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94765&GUID=BED3B8D6-7090-491E-8816-3134C4A57910",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-09",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 4
+    },
+    {
+     "id": "indu2wh",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Geoscience Engineering & Testing Inc. for the 2nd Street Pavement Rehabilitation project submitted by the…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94768&GUID=0DFFBF24-BAF5-49FE-917D-5EAD7608013E",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-10-09",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1pra318",
+     "title": "Request by the Office of the Purchasing Agent for approval of a ratification of a renewal option with Kimley-Horn and Associates, Inc.*, at a cost of $200,000; and Quiddity Engineering, LLC,…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=48993&GUID=842906EF-E30F-4C3A-A657-E548631ADF1E",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-07",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 4,
+   "items": [
+    {
+     "id": "iviljqx",
+     "title": "One-Reading ordinance authorizing the acceptance of a grant from the Department of Homeland Security, Federal Emergency Management Agency under the Hazard Mitigation Grant Program, DR-4332 Hurricane…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26648&GUID=F73C069A-9E12-4FB5-8502-229C0ED93A47",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-10-07",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “drainage”, “storm water”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 22
+    },
+    {
+     "id": "icwlpza",
+     "title": "An ordinance authorizing the issuance and sale of City of Dallas, Texas Waterworks and Sewer System Revenue Bonds, Series 2026C, in the amount of $34,000,000 to the Texas Water Development Board;…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26403&GUID=CAF85B01-80DF-43ED-AB6A-D16F84E50E7B",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-05",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “wastewater”, “sewer”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 14
+    },
+    {
+     "id": "ir85dyt",
+     "title": "Discussion and action on the award of Solicitation 2026-0448 GA Ramp Rehabilitation Stage 2 & 3 to CI Constructors, Inc. for a total estimated amount of $12,096,647.50. Department: Capital…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16506&GUID=4BC5F27B-257E-4927-BBE3-2CE037555CF0",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-08",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    },
+    {
+     "id": "i1fa0lc7",
+     "title": "Capital Improvement Report",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26658&GUID=005B113A-AA4B-4762-9E1B-CC8B389CACD0",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-10-07",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1th4kfu",
+     "title": "City Hosting Open House: Conrads Lane and South Kowald Lane Improvement Projects",
+     "link": "https://www.newbraunfels.gov/CivicAlerts.aspx?aid=4154",
+     "source": "City of New Braunfels",
+     "date": "2026-10-08",
+     "place": "New Braunfels",
+     "region": "Central Texas",
+     "topic": "bond",
+     "why": "Mentions “bond program”, “roadway”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 6
+    },
+    {
+     "id": "i1au8mxc",
+     "title": "An ordinance authorizing (1) the issuance and sale of City of Dallas, Texas, General Obligation Refunding and Improvement Bonds, Series 2026, in an aggregate principal amount not to exceed…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26405&GUID=69BEE8E0-240F-490F-AFED-96BA18CAD3B1",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-05",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1i255pz",
+     "title": "Engineering Services Type A Quarterly Project Report",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26660&GUID=575E5B4A-8F78-49A5-8063-311309390EE3",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-10-08",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 8
+    },
+    {
+     "id": "i1uwdlow",
+     "title": "Engineering Services Quarterly Project Update for Type B",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26643&GUID=4C67C176-F19F-4825-B26E-D04B8012186C",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-10-06",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 8
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

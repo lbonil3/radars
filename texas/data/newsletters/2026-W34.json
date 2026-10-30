@@ -1,0 +1,198 @@
+{
+ "week": "2026-W34",
+ "start": "2026-08-17",
+ "end": "2026-08-23",
+ "title": "Texas Intel weekly, 2026-W34 (Aug 17, 2026 to Aug 23, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 11,
+  "houston": 2,
+  "other": 9
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 1,
+   "items": [
+    {
+     "id": "i15umszt",
+     "title": "Consider and take action on an ordinance authorizing the issuance of City of League City, Texas General Obligation Improvement Bonds, Series 2026; levying an ad valorem tax in payment thereof;…",
+     "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=13852&GUID=86A0C479-4EC5-46AD-972A-0BA84D033B0F",
+     "source": "City of League City agenda items",
+     "date": "2026-08-17",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 3
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1r60err",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Compass Environmental Solutions, LLC. for the Ave B Drainage Improvements, Reppert Street Drainage Improvements…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94467&GUID=D1C5BFF8-157F-4974-865E-2E8D2C8CBBA9",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-08-17",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “engineering”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 10
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 6,
+   "items": [
+    {
+     "id": "i10rmhff",
+     "title": "Discussion and action on the award of Solicitation 2026-0374 Montwood Extension to International Eagle Enterprises, Inc. for a total estimated amount of $18,172,452.74. Department: Capital…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16132&GUID=C4836147-2C73-48BD-9175-DF0ED5E9C283",
+     "source": "City of El Paso agenda items",
+     "date": "2026-08-18",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “bond”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 14
+    },
+    {
+     "id": "im4xt2h",
+     "title": "Discussion and action on the award of Solicitation 2026-0429 Resler Drive Extension to International Eagle Enterprises, Inc. for a total estimated amount of $12,598,962.57. Department: Capital…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16128&GUID=884571A2-3961-4746-9944-80AD99B3EA6C",
+     "source": "City of El Paso agenda items",
+     "date": "2026-08-18",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “bond”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 14
+    },
+    {
+     "id": "ilm6gb2",
+     "title": "Approve a resolution authorizing the filing of eminent domain proceedings and payment to acquire the property interests needed waterline easement and temporary working easement needed to support of…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28983&GUID=58582DCF-8EA4-48AE-8A64-255F12EB73F5",
+     "source": "City of Austin agenda items",
+     "date": "2026-08-20",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “budget”, “wastewater”, “water line”, “roadway”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 12
+    },
+    {
+     "id": "ib4441r",
+     "title": "Approve a resolution declaring the City's official intent to reimburse itself from proceeds of tax-exempt obligations in an aggregate maximum principal amount of $525,000,000 for expenditures…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28976&GUID=10ED44D2-A7B4-4FF4-A2F9-FFDE377F38AB",
+     "source": "City of Austin agenda items",
+     "date": "2026-08-19",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “budget”, “wastewater”.",
+     "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+     "score": 12
+    },
+    {
+     "id": "i7d01nx",
+     "title": "Discussion and action on the award of Solicitation 2026-0372 ELP Terminal Ramp Reconstruction Stage 1 & 2 to Dan Williams Company for a total estimated amount of $21,295,295.00. Department: Capital…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16127&GUID=8F8A0FD3-AB5F-4D65-B9A1-B40E861FAF1F",
+     "source": "City of El Paso agenda items",
+     "date": "2026-08-18",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “budget”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    },
+    {
+     "id": "i1n500la",
+     "title": "Discussion: Presentation on All Abilities Playground Update, Capital Improvement Department.",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16119&GUID=F71BB11E-AC52-47BE-8ACA-FDD7F9B5D6C9",
+     "source": "City of El Paso agenda items",
+     "date": "2026-08-17",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 2,
+   "items": [
+    {
+     "id": "i525x0p",
+     "title": "An Ordinance amending Title 18 (Building and Construction), Chapter 18.60 (Flood Damage Prevention, Article IV (Administration), Subsection 18.60.140 (Designation of the Floodplain Administrator) to…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16135&GUID=B52671CC-5A6C-4687-B5EF-00B427BF8FD8",
+     "source": "City of El Paso agenda items",
+     "date": "2026-08-18",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "flood",
+     "why": "Mentions “flood”, “design”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 6
+    },
+    {
+     "id": "i1d4cahn",
+     "title": "An Ordinance amending Title 19 (Subdivisions), Article 3 (Authority of Decision Makers), Section 19.31 (Responsible Officials), Subsection 19.31.080 (Floodplain Administrator) to amend the…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16137&GUID=2961E05D-2581-4387-AF70-401C6B671C48",
+     "source": "City of El Paso agenda items",
+     "date": "2026-08-18",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "flood",
+     "why": "Mentions “flood”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1c0tba3",
+     "title": "Resolution establishing an ad hoc committee to review the City's procurement of professional services, including architectural and engineering services, and recommend improvements to City processes…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26419&GUID=159096AF-FF83-46FF-9ED5-6A58FAF8CA7C",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-19",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”, “professional services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 12
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

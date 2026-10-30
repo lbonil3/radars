@@ -1,0 +1,113 @@
+{
+ "week": "2026-W33",
+ "start": "2026-08-10",
+ "end": "2026-08-16",
+ "title": "Texas Intel weekly, 2026-W33 (Aug 10, 2026 to Aug 16, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 5,
+  "houston": 2,
+  "other": 3
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1sb59au",
+     "title": "Consider and take action on appointments to the Capital Improvement Advisory Committee (Mayor Long)",
+     "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=13847&GUID=980367E5-D091-4AC8-AF51-6533AEE7A6ED",
+     "source": "City of League City agenda items",
+     "date": "2026-08-13",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 8
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "ibu63uy",
+     "title": "Award ITB #26-56 Hastings Phase II Roadways and Drainage Improvements Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5046&GUID=F7722DFF-E230-4D6D-9E56-F5D3CCD1B7F2",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-08-12",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “roadway”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 10
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1fcdqaa",
+     "title": "Planning Commission recommendation of the Proposed FY 2027 Capital Improvement Program (CIP) Budget",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26364&GUID=988EAD72-6E1A-4B60-8038-6E85C70E7FC1",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-11",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “cip”, “budget”.",
+     "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+     "score": 12
+    },
+    {
+     "id": "i1qsmu2z",
+     "title": "Motion authorizing a one-year supply agreement with one additional one-year option period with Southern Ionics Incorporated of West Point, Mississippi, for sodium bisulfite, for Corpus Christi Water…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26387&GUID=6051F99C-F392-4D8D-9812-685A9BCC59EF",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-13",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "iohriqp",
+     "title": "Approve a resolution adopting the City of Austin Hazard Mitigation Action Plan Update to include new and updated mitigation actions for hazards including cyber security threats, severe weather, and…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28952&GUID=F83EA1CC-6F95-418C-A3C1-992EFC274B24",
+     "source": "City of Austin agenda items",
+     "date": "2026-08-14",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "grant",
+     "why": "Mentions “flood”, “hazard mitigation”.",
+     "hint": "Planning study: follow-on design phases often go to consultants.",
+     "score": 10
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

@@ -1,0 +1,119 @@
+{
+ "week": "2026-W44",
+ "start": "2026-10-26",
+ "end": "2026-11-01",
+ "title": "Texas Intel weekly, 2026-W44 (Oct 26, 2026 to Nov 1, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": false,
+ "backfilled": false,
+ "counts": {
+  "items": 6,
+  "houston": 1,
+  "other": 5
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 1,
+   "items": [
+    {
+     "id": "iop88ms",
+     "title": "City of Houston 2027-2031 Adopted Capital Improvement Plan (CIP) posted",
+     "link": "https://www.houstontx.gov/cip/27cipadopt/index.html",
+     "source": "City of Houston CIP page",
+     "date": null,
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “cip”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 12
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 4,
+   "items": [
+    {
+     "id": "i1rhl3xm",
+     "title": "Discussion and action that the El Paso City Council hereby approves the list of projects on Exhibit “A” attached to the Resolution, totaling $72,550,000, which establishes: 1) the “Comprehensive…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16632&GUID=7FE7A191-EC58-42DA-AC81-A21CBEF5C4E3",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-28",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “bridge”.",
+     "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+     "score": 8
+    },
+    {
+     "id": "i7psvdf",
+     "title": "Discussion and action that the City Manager be authorized to sign a Mutual Cooperation Agreement between the CITY OF EL PASO and the PASO DEL NORTE COMMUNITY FOUNDATION, a non-profit 501(c)(3)…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16638&GUID=550921D8-A869-4239-A38B-CCDD99AF85E4",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-28",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “bridge”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 8
+    },
+    {
+     "id": "i1rbsn85",
+     "title": "The award of Solicitation 2025-0283 El Paso Electric Company Paved Trails to Horizone Construction 1, LTD for a total estimated amount of $1,339,456.23. Department: Capital Improvement Award to:…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16605&GUID=939B7928-5E25-4115-B8FC-FA76D1DB2C9A",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-26",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 8
+    },
+    {
+     "id": "iazijzz",
+     "title": "Discussion and Action: Filing of semi-annual reports as required under Chapter 395 of the Texas Local Government Code with respect to the progress of the capital improvements plan and report to the…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16644&GUID=1DC9CBD5-28C1-4BFC-B1F4-DDAB37F7BFC4",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-29",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "icewm5v",
+     "title": "TxDOT awarded $756 million for rail grade separation projects",
+     "link": "https://www.txdot.gov/about/newsroom/statewide/txdot-awarded-755-million-for-rail-grade-separation-projects.html",
+     "source": "TxDOT statewide news (drainage / flood / Houston only)",
+     "date": null,
+     "place": "Statewide",
+     "region": "Statewide",
+     "topic": "grant",
+     "why": "Mentions “txdot”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 4
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

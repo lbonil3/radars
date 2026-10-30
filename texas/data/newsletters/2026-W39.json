@@ -1,0 +1,211 @@
+{
+ "week": "2026-W39",
+ "start": "2026-09-21",
+ "end": "2026-09-27",
+ "title": "Texas Intel weekly, 2026-W39 (Sep 21, 2026 to Sep 27, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 12,
+  "houston": 5,
+  "other": 7
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1v5pxe5",
+     "title": "Motion authorizing execution of a one-year supply agreement, with two one-year options, with ACT Pipe and Supply, Inc., headquartered in Houston, Texas, for the purchase of manhole covers, risers,…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26574&GUID=B86AE2F3-F18D-4163-80DC-3256B704C43B",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-09-22",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1pfi592",
+     "title": "Consider and take action on a resolution authorizing a Consent to Encroach Agreement with CenterPoint Energy to install storm sewer pipes, boxes, as well as manholes within/across CenterPoint Energy…",
+     "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=13917&GUID=211ACD7A-37F8-4AE8-B00E-078D24C80AA9",
+     "source": "City of League City agenda items",
+     "date": "2026-09-25",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “storm sewer”, “detention”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 22
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 3,
+   "items": [
+    {
+     "id": "ibg7fc8",
+     "title": "Consider and take action on a resolution authorizing Amendment 3 to the professional services agreement with WSP USA, Inc. for the North Extension of Landing Blvd Project (ST1914) for additional…",
+     "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=13909&GUID=C760759C-244E-429F-B077-07E84B339E58",
+     "source": "City of League City agenda items",
+     "date": "2026-09-21",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “professional services”, “design services”, “engineering”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 16
+    },
+    {
+     "id": "i1t2zfd7",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Terracon Consultants, Inc. for the Friendswood Parkway project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94704&GUID=87D2A1F4-5937-4FAF-A10A-2FCC8DBB9B0A",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-24",
+     "place": "Friendswood",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 4
+    },
+    {
+     "id": "igyvm0j",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with KCI Technologies for the Friendswood Parkway Extension project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94699&GUID=56D94A6C-18DB-4A4E-AB86-064EA80D26D0",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-22",
+     "place": "Friendswood",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 4
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 6,
+   "items": [
+    {
+     "id": "idpq282",
+     "title": "Motion awarding a construction contract to Bridges Specialties, Inc., of Robstown, Texas, for the Citywide Storm Water Infrastructure Cured-In-Place Pipe (CIPP) Indefinite Delivery Indefinite…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26590&GUID=9C5D470F-58E1-4A69-A0B9-8161A66D3A6C",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-09-25",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “storm water”, “bridge”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 8
+    },
+    {
+     "id": "ig5ktz6",
+     "title": "Authorize a contract for construction services for the West Congress (Radam/St. Elmo) Water and Wastewater Pipeline Renewal Project for Austin Water with Facilities Rehabilitation Inc., in the…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29192&GUID=B56B432A-7727-4C46-B167-2D895FD6D9D6",
+     "source": "City of Austin agenda items",
+     "date": "2026-09-25",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “budget”, “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1daff2t",
+     "title": "Resolution authorizing the submission of a grant application to the Office of the Governor, Texas Military Preparedness Commission, for the FY 2027 Defense Economic Adjustment Assistant Grant…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26577&GUID=80830EAE-6C79-47C9-AC3A-EFF99F17BF7A",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-09-23",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “grant”, “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "ie50f3x",
+     "title": "Information and Discussion: Completion of the Bear Ridge Trail Contact: Gilbert Guerrero, Capital Improvement Department, guerreogx@elpasotexas.gov",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16398&GUID=08C678A3-3B97-4C15-A12B-12524E185E7F",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-22",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1nbozra",
+     "title": "Information and Discussion: Update on the Mountain to River project Contact: Gilbert Guerrero, Capital Improvement Department, guerrerogx@elpasotexas.gov",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16394&GUID=A7238DA8-CDA8-42BC-86C7-F990C55A2043",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-21",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1sff58a",
+     "title": "Scott Winton to the Capital Improvements Advisory Committee by Mayor Renard U. Johnson.",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16392&GUID=3666B4FC-4E5B-46AC-9CCE-07D3ED21CEA2",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-21",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "iupruw2",
+     "title": "Information and Discussion: El Paso Water (EP Water) Quarterly financial report on the 10% annual drainage utility fee revenue and expenses Contact: Jonathan Persall, El Paso Water,…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16370&GUID=DBE2E43F-BCB5-485B-9223-0C33F9C6F9D6",
+     "source": "City of El Paso agenda items",
+     "date": "2026-09-21",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “utility”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 8
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

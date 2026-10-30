@@ -1,0 +1,310 @@
+{
+ "week": "2026-W37",
+ "start": "2026-09-07",
+ "end": "2026-09-13",
+ "title": "Texas Intel weekly, 2026-W37 (Sep 7, 2026 to Sep 13, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 18,
+  "houston": 11,
+  "other": 7
+ },
+ "houston": [
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 2,
+   "items": [
+    {
+     "id": "i15a26v7",
+     "title": "26-192-0928-B Engineering- Request transfer within the Unlimited Tax Road Bonds 2019 Fund, relating to 2025 Mobility & Drainage Bond Program, to fund Prairie Street-Hitchcock project",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94610&GUID=DC474A18-38E3-4441-9C26-E164E771B619",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-09",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “drainage”, “engineering”, “bond program”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 20
+    },
+    {
+     "id": "i1uauqnp",
+     "title": "26-191-0928-A Engineering- Request transfer within the Unlimited Tax Road Bonds 2019 Fund, relating to 2025 Mobility & Drainage Bond Program, to fund South Kemah Drive-Kemah project",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94609&GUID=B3483BBC-A682-453B-9414-D7C758247A63",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-09",
+     "place": "Kemah",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “drainage”, “engineering”, “bond program”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 20
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "ilgp5lh",
+     "title": "Engineering Services for the Wild Peach Village Drainage Improvements",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5204&GUID=468CD4D9-ADA4-4DA8-BC45-907B8838BBB3",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-11",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 16
+    }
+   ]
+  },
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 6,
+   "items": [
+    {
+     "id": "i1ectxih",
+     "title": "Engineering Services for the County Road 171 Bridge Replacement Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5172&GUID=302EF0C7-1AB0-4F14-B89B-6D346648F6F8",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-09",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”, “bridge”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 12
+    },
+    {
+     "id": "i1j7ferg",
+     "title": "Engineering Services for the County Road 94 Repairs Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5208&GUID=A245553C-2BA0-4714-B039-AF361B2AF63F",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-11",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "i1l6w8ls",
+     "title": "Engineering Services for the County Road 89 Repairs Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5209&GUID=33FA4BFA-CE1F-4E08-8B60-BBD71BA67F46",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-11",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "i16bvabl",
+     "title": "Engineering Services for the County Road 44 at FM 521 Intersection Improvements Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5173&GUID=905488F8-B4A3-4726-AF84-900729A6A1AB",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-09",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "ixlq7sx",
+     "title": "Engineering Services for the County Road 400 Relocation Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5174&GUID=87B4FB50-20D5-40C9-977C-51522ABFE2F3",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-09",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "i1l8nfx2",
+     "title": "Engineering Services for the County Road 99 Repairs Project (Precinct 2)",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5157&GUID=6F8A6ECF-C98A-4A67-B6AF-1F6A8A947A53",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-08",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1aheacv",
+     "title": "Consideration to award RFQ 26-109, Texas General Land Office (GLO) Coastal Management Program (CMP) Engineering Services",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94605&GUID=A06152EA-5E94-48B9-858A-8725409C22D6",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-08",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”, “rfq”.",
+     "hint": "Mentions an RFQ / RFP: check the agency procurement page for the formal notice.",
+     "score": 16
+    },
+    {
+     "id": "i19mv647",
+     "title": "Engineering Services for the Airport Ditch Improvements Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5170&GUID=B5026066-767E-4338-9C06-A9B1D7F9FB55",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-09-09",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 2,
+   "items": [
+    {
+     "id": "iuhq1pi",
+     "title": "Discussion and possible action regarding the selection and approval of an attorney or law firm to serve as General Counsel for the Corpus Christi B Corporation and possible action to amend and…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26552&GUID=5EB4753E-BAB8-411C-98CB-C88C54D1D3E3",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-09-11",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “flood control”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    },
+    {
+     "id": "i592m3t",
+     "title": "Authorize a contract for the ATX Floods application, the City’s public flood monitoring and low water crossing alert platform, for Austin Watershed Protection with The Sanborn Map Company, Inc., for…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29116&GUID=C3784336-BC07-414A-AC27-8833E6209C21",
+     "source": "City of Austin agenda items",
+     "date": "2026-09-09",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "budget",
+     "why": "Mentions “flood”, “watershed”, “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 2,
+   "items": [
+    {
+     "id": "ilf63rr",
+     "title": "Dallas Police Department Law Enforcement Training Center at University of North Texas at Dallas Update - October 2026 [Jennifer Nicewander, Director, Office of Bond and Construction Management,…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26187&GUID=F4524D3B-A9E4-4872-8888-4E1DCE27E177",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-09",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    },
+    {
+     "id": "ifbh1ve",
+     "title": "Upcoming Agenda Items: October 14, 2026, Dallas City Council Agenda Items #26-2927A and 26-3041A: Authorize Resolution of No Objection (RONO) and TEFRA Hearing Approval for one application to the…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26144&GUID=458FB4DC-972C-4D8A-9B55-E1B3FE4B5398",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-08",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "water",
+   "label": "Water / wastewater",
+   "total": 2,
+   "items": [
+    {
+     "id": "ih2r42o",
+     "title": "To approve an increase to the current awarded agreement amount of $99,000 by $91,000 for a total contract amount of $190,000 for On-Call Wastewater Modeling Services (2026), Project No.…",
+     "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1902&GUID=28C922A4-E52B-429E-AAF3-FFE31417E099",
+     "source": "City of Plano agenda items",
+     "date": "2026-09-08",
+     "place": "Plano",
+     "region": "Dallas–Fort Worth",
+     "topic": "water",
+     "why": "Mentions “engineering”, “wastewater”.",
+     "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+     "score": 6
+    },
+    {
+     "id": "i10e0vis",
+     "title": "Dallas experiences increase in water main breaks and leaks due to extreme heat and high water demands",
+     "link": "https://www.dallascitynews.net/dwu_0910",
+     "source": "Dallas City News",
+     "date": "2026-09-10",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "water",
+     "why": "Mentions “water main”.",
+     "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "it62zbz",
+     "title": "To approve an expenditure for engineering professional services for Erosion Control Improvements - Various Locations, Project No. ENG-D-00016, in the amount of $270,487.50 from Walter P. Moore and…",
+     "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1908&GUID=F55EA4BB-1E74-4CC0-BA0B-F26BD9D1A050",
+     "source": "City of Plano agenda items",
+     "date": "2026-09-09",
+     "place": "Plano",
+     "region": "Dallas–Fort Worth",
+     "topic": "agenda",
+     "why": "Mentions “professional services”, “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 6
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

@@ -54,12 +54,12 @@
       return { title: text(a[2]), link: absUrl(a[1], base), date: d ? longDate(d[1]) : null, desc: desc };
     }).filter(function (x) { return x && x.title && x.link; });
   }
-  // City of Houston CIP page: the adopted / proposed plan links (newest two)
+  // City of Houston CIP page: the newest adopted / proposed plan link
   function parseHoustonCip(html, base) {
     var re = /<a [^>]*href="([^"]+)"[^>]*>([^<]*\b(20\d\d)\s*-\s*(20\d\d)\b[^<]*(Adopted|Proposed)[^<]*Capital Improvement Plan[^<]*)<\/a>/gi, m, out = [];
-    while ((m = re.exec(String(html || '')))) out.push({ y: +m[3], title: 'City of Houston ' + text(m[2]) + ' (CIP) posted', link: absUrl(m[1], base), date: null, desc: 'The City of Houston publishes its ' + text(m[2]) + ' on the CIP page, with project lists by department, including Public Works drainage and storm water.' });
+    while ((m = re.exec(String(html || '')))) out.push({ y: +m[3], title: 'City of Houston ' + text(m[2]) + ' (CIP) posted', link: absUrl(m[1], base), date: null, desc: 'Posted on the City of Houston Capital Improvement Plan page.' });
     out.sort(function (a, b) { return b.y - a.y; });
-    return out.slice(0, 2).map(function (x) { return { title: x.title, link: x.link, date: x.date, desc: x.desc }; });
+    return out.slice(0, 1).map(function (x) { return { title: x.title, link: x.link, date: x.date, desc: x.desc }; });
   }
   // ---- deterministic classification
   var TOPICS = [

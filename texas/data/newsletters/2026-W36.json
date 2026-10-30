@@ -1,0 +1,382 @@
+{
+ "week": "2026-W36",
+ "start": "2026-08-31",
+ "end": "2026-09-06",
+ "title": "Texas Intel weekly, 2026-W36 (Aug 31, 2026 to Sep 6, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 36,
+  "houston": 6,
+  "other": 30
+ },
+ "houston": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1dobx1o",
+     "title": "Motion awarding a construction contract to PM Construction & Rehab, LLC, of Pasadena, Texas, for the Citywide Wastewater Indefinite Delivery Indefinite Quantity (IDIQ) FY2026 project in an amount up…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26490&GUID=E7A13432-2BA4-41C4-A2AE-36562C85A353",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-31",
+     "place": "Pasadena",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1dm33xv",
+     "title": "Proposed Budget 2027",
+     "link": "https://www.fortbendcountytx.gov/your-county/news/proposed-budget-2027",
+     "source": "Fort Bend County news",
+     "date": "2026-08-31",
+     "place": "Fort Bend",
+     "region": "Houston region",
+     "topic": "budget",
+     "why": "Mentions “budget”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "i157oc7r",
+     "title": "Consideration of authorization to execute a Professional Services Agreement with Comal Design Group, LLC in connection with RFQ 25-082 for engineering services for the Flood Mitigation Assistance…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94542&GUID=AB2D398E-FA40-457A-8A5E-4DBF142AB839",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-08-31",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "grant",
+     "why": "Mentions “flood mitigation”, “engineering services”, “professional services”, “design”.",
+     "hint": "Mentions an RFQ / RFP: check the agency procurement page for the formal notice.",
+     "score": 34
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1izxkq5",
+     "title": "Consider and take action on a resolution authorizing an agreement with King Solution Services, LLC for the urgent replacement of 24-inch, 72-inch, and 30-inch corrugated metal pipe (CMP) at three…",
+     "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=13880&GUID=FD1EFB89-06B3-43B6-A48F-4900209836EF",
+     "source": "City of League City agenda items",
+     "date": "2026-09-03",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “stormwater”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 8
+    }
+   ]
+  },
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 1,
+   "items": [
+    {
+     "id": "ie9ejgy",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Agha Engineering, LLC for the Prairie Street project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94600&GUID=5B5D0B2D-A232-47A4-8514-DF123F4E0A0F",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-03",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering”.",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1ljdzdh",
+     "title": "Consideration of authorizing the County Judge to execute an engineering agreement with Sander Engineering Corporation for the South Kemah Drive project submitted by the County Engineer",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94601&GUID=6169C62E-A551-4AE5-9BB0-1E01D3A8B444",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-09-03",
+     "place": "Kemah",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 4
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 18,
+   "items": [
+    {
+     "id": "ivd9e89",
+     "title": "Authorize a professional services contract with Halff Associates, Inc. to provide engineering services for the design of Jefferson Complete Street from Hampton Road to Polk Street - Not to exceed…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26118&GUID=6DB924F0-A30E-45DB-B295-779CBF50D1F0",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “design”, “capital improvement”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 28
+    },
+    {
+     "id": "izfv79i",
+     "title": "Authorize a professional services contract with GEI Consultants, Inc. to provide engineering services for the design of three local streets as part of Street Project Group 24-1201 (list attached to…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26125&GUID=1EEF3D83-9B35-440F-A5FC-E076B9982F41",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “design”, “capital improvement”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 28
+    },
+    {
+     "id": "iqr9wll",
+     "title": "Authorize a professional services contract with Wade Trim, Inc. to provide engineering services associated with the Lift Station and Diversion Structure Improvements Project - Not to exceed…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26112&GUID=65214EA9-8A2B-4B15-B407-8242B8520289",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “capital improvement”, “wastewater”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 26
+    },
+    {
+     "id": "i11sn1gf",
+     "title": "Authorize a professional services contract with T. M. Kilduff Consulting, Inc. dba Kilduff Underground Engineering to provide engineering services associated with the East Bank Interceptor Project -…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26111&GUID=DBB28419-B090-4420-A298-F6238BCE8A3B",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “capital improvement”, “wastewater”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 22
+    },
+    {
+     "id": "i1mw5sdm",
+     "title": "An ordinance amending Chapters 2, 7, 7A, 8A, 12B, 15D, 16, 17, 18, 20A, 27, 38A, 42, 43A, 48B, 49, 50, 51A, and 52 of the Dallas City Code and Section 1 of Ordinance 19860 as passed by the city…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26073&GUID=F0726BF1-5B10-4E98-9AE5-910954BD07E3",
+     "source": "City of Dallas agenda items",
+     "date": "2026-08-31",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “drainage”, “stormwater”, “budget”, “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 21
+    },
+    {
+     "id": "i66d9h3",
+     "title": "Authorize a three-year Joint Funding Agreement with the United States Geological Survey to continue the operation of stream flow and water quality gauging stations in the Trinity River Basin for…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26110&GUID=4E05A674-ADD9-459A-9D00-A42191807FB5",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “drainage”, “stormwater”, “watershed”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 16
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 7,
+   "items": [
+    {
+     "id": "iwww4pu",
+     "title": "Authorize professional services contracts with four consulting firms to provide engineering services for flood management, erosion control and storm drainage improvements at 19 locations (list…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26113&GUID=8F95FBD1-1907-4319-AAC9-29CD57FAB710",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “drainage”, “flood”, “engineering services”, “professional services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 26
+    },
+    {
+     "id": "i1xgaln0",
+     "title": "Conduct a public hearing and consider a resolution related to an application by Verbena Flats LP, or an affiliated entity, for federal 4% non-competitive housing tax credits for the construction of…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29058&GUID=44F7D54F-5E21-4F2A-ACDF-8FA96A2C585D",
+     "source": "City of Austin agenda items",
+     "date": "2026-08-31",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "bond",
+     "why": "Mentions “bond program”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 10
+    },
+    {
+     "id": "i1xsra1y",
+     "title": "Authorize a construction services contract for the 2026 On-Call Paving Contract - Grey Sky Construction, lowest responsible bidder of two - Not to exceed $42,136,372.00 - Financing: ARPA…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26119&GUID=40DA7F80-C8CF-4611-9C04-B8F9BF970751",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”, “sewer”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 8
+    },
+    {
+     "id": "ixlgupd",
+     "title": "Authorize Change Order No. 1 to decrease the construction services contract with EAR Telecommunications, LLC DBA: EARTC, to de-scope (remove) all traffic signal work associated with the intersection…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26122&GUID=5B5B9ABB-ECC1-4F55-A7EB-440DE51421C2",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    },
+    {
+     "id": "i14li02i",
+     "title": "Authorize a construction services contract for the Bond Traffic Signal Construction - Group 7 Project to construct two new traffic signals at the intersections of Illinois Avenue at Western Park and…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26097&GUID=4F9EDD74-6BDC-4B59-842D-2270691D6C38",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-01",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    },
+    {
+     "id": "i62rumh",
+     "title": "Authorize acquisition of three single-family dwellings and two vacant lots, containing a total of approximately 28,178 square feet of land located near the intersection of McGowan and Nolen Streets…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26088&GUID=BB8C38FE-1449-4352-BFE0-12046D82548B",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-01",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 4,
+   "items": [
+    {
+     "id": "i19ch1yt",
+     "title": "Authorize an engineering services contract with Garver, LLC to (1) provide design and construction administration services and construction alternatives; (2) extend the existing Taxiway Echo from…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26121&GUID=C8A2AEE8-1E3B-46E8-85F7-C58E7727EB20",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “drainage”, “storm water”, “engineering services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 24
+    },
+    {
+     "id": "i16ihgji",
+     "title": "Authorize Supplemental Agreement No. 3 to the professional services contract with Black & Veatch Corporation to provide additional engineering and construction management services required for the…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26120&GUID=3EDB3CDD-B480-4E39-9495-7F55759888BB",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “drainage”, “flood”, “professional services”, “engineering”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 16
+    },
+    {
+     "id": "i1qfvrjv",
+     "title": "Conduct a public hearing and consider an ordinance granting variances for property located at 1120 Denfield Street from certain floodplain regulations prescribed by City Code for the conversion of…",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29073&GUID=E953E16C-5482-48FC-A8F5-AF9EA32417CA",
+     "source": "City of Austin agenda items",
+     "date": "2026-09-01",
+     "place": "Austin",
+     "region": "Central Texas",
+     "topic": "grant",
+     "why": "Mentions “flood”, “grant”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 6
+    },
+    {
+     "id": "i115pu3r",
+     "title": "FEMA major disaster declaration DR-4935 (Texas): SEVERE STORMS, STRAIGHT-LINE WINDS, TORNADOES, AND FLOODING",
+     "link": "https://www.fema.gov/disaster/4935",
+     "source": "FEMA disaster declarations (Texas)",
+     "date": "2026-09-01",
+     "place": "Statewide",
+     "region": "Statewide",
+     "topic": "grant",
+     "why": "Mentions “flood”, “design”.",
+     "hint": "Disaster declaration: HMGP mitigation funding typically opens 6–12 months later.",
+     "score": 5
+    }
+   ]
+  },
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 1,
+   "items": [
+    {
+     "id": "i17wv42e",
+     "title": "Authorize a professional services contract with to provide engineering services for the design of four local streets as Ardurra Group, Inc. part of Project Group 24-3002 (list attached to the Agenda…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26126&GUID=70027DB6-F748-45D1-A8A7-35ECD1477DF4",
+     "source": "City of Dallas agenda items",
+     "date": "2026-09-03",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "road",
+     "why": "Mentions “engineering services”, “professional services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 14
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

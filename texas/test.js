@@ -335,7 +335,36 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.strictEqual(dr.length, 2); assert.strictEqual(dr[0].date, '2026-09-24T12:00:00.000Z'); assert.strictEqual(dr[0].desc, '', '"Download ..." is not an excerpt'); assert.ok(/channel/.test(dr[1].desc));
   assert.ok(I.build(dr[0], { id: 'fb', name: 'FB', minScore: 1, place: 'Fort Bend', region: I.HOU }, '2026-10-28T00:00:00Z'), 'county adopted budget kept');
   const cip = I.parseHoustonCip(fx('intel-houcip.html'), 'https://www.houstontx.gov/cip/');
-  assert.strictEqual(cip.length, 2); assert.ok(/2027-2031/.test(cip[0].title)); assert.strictEqual(cip[0].link, 'https://www.houstontx.gov/cip/27cipadopt/index.html'); assert.strictEqual(cip[0].date, null, 'no date invented');
+  assert.strictEqual(cip.length, 1); assert.ok(/2027-2031/.test(cip[0].title)); assert.strictEqual(cip[0].link, 'https://www.houstontx.gov/cip/27cipadopt/index.html'); assert.strictEqual(cip[0].date, null, 'no date invented');
   assert.strictEqual(I.build({ title: 'Receive and file September Personal Bond/Collections Monthly Report', link: 'https://x', desc: '' }, { id: 'g', name: 'g', minScore: 0 }, '2026-10-28T00:00:00Z'), null, 'bail bonds are not bond programs');
+}
+
+// Weekly newsletter (deterministic)
+{
+  const N = require('./newsletter.js');
+  assert.strictEqual(N.isoWeek('2026-10-30T12:00:00Z'), '2026-W44'); assert.strictEqual(N.weekStart('2026-W44'), '2026-10-26T00:00:00.000Z');
+  assert.strictEqual(N.isoWeek('2027-01-01T00:00:00Z'), '2026-W53', 'ISO year boundary'); assert.strictEqual(N.isoWeek('2021-01-03T00:00:00Z'), '2020-W53'); assert.strictEqual(N.addWeeks('2026-W01', -1), '2025-W52');
+  const mk = (id, o) => Object.assign({ id, srcId: 's', source: 'Src ' + id, title: 'Item ' + id, link: 'https://example.org/' + id, date: '2026-10-27T12:00:00.000Z', firstSeen: '2026-10-28T00:00:00.000Z', desc: '', topics: ['flood'], place: null, region: 'Statewide', score: 5, why: ['drainage'], hint: 'h' }, o);
+  const items = [
+    mk('a', { region: 'Houston region', place: 'Pasadena', topics: ['bond', 'flood'], score: 9 }), mk('b', { region: 'Houston region', topics: ['agenda'], score: 3 }),
+    mk('c', { region: 'Dallas–Fort Worth', topics: ['grant'], score: 7, desc: 'FEMA · posted · closes 02/26/2027' }), mk('d', { topics: ['road'], score: 2, desc: 'Bond Election to be held on November 3, 2026, for streets; period ended 9/1/2025' }),
+    mk('old', { date: '2026-10-10T12:00:00.000Z', firstSeen: '2026-10-10T12:00:00.000Z' }), mk('fut', { date: '2026-12-01T00:00:00.000Z', firstSeen: '2026-10-29T00:00:00.000Z' })
+  ];
+  const n = N.build(items, '2026-W44', { generatedAt: '2026-10-30T12:00:00.000Z', final: false });
+  assert.deepStrictEqual(n.counts, { items: 5, houston: 2, other: 3 }, 'old week excluded; a future meeting date uses first-seen week');
+  assert.strictEqual(n.houston[0].topic, 'bond', 'Houston first, grouped in the fixed topic order (bond before council action)'); assert.strictEqual(n.houston[0].items[0].id, 'a');
+  assert.deepStrictEqual(n.texas.map((g) => g.topic), ['grant', 'flood', 'road']);
+  assert.deepStrictEqual(n.deadlines.map((d) => d.date), ['2026-11-03', '2027-02-26'], 'only future dates with a cue word');
+  assert.ok(/closes 02\/26\/2027/.test(n.deadlines[1].what));
+  assert.deepStrictEqual(N.build(items, '2026-W44', { generatedAt: '2026-10-30T12:00:00.000Z' }), N.build(items.slice().reverse(), '2026-W44', { generatedAt: '2026-10-30T12:00:00.000Z' }), 'order of input does not matter');
+  const txt = N.toText(n), html = N.toHtml(n);
+  assert.ok(txt.indexOf('== Houston region ==') < txt.indexOf('== Rest of Texas') && /Deadlines & dates to watch/.test(txt) && txt.indexOf('https://example.org/a') > 0);
+  assert.ok(/^<!doctype html>/.test(html) && !/<script|<img|class=/.test(html) && html.indexOf('href="https://example.org/a"') > 0, 'email HTML: inline styles, no scripts or images');
+  const allLinks = (txt.match(/https:\/\/\S+/g) || []).every((u) => items.some((i) => i.link === u)); assert.ok(allLinks, 'no links that are not collected items');
+  const empty = N.build(items, '2026-W30', {}); assert.strictEqual(empty.counts.items, 0); assert.ok(/No items were collected/.test(N.toText(empty)));
+  const pl = N.plan('2026-11-02T10:17:00.000Z'); assert.strictEqual(pl.length, 12); assert.deepStrictEqual(pl.slice(0, 2), [{ week: '2026-W45', final: false }, { week: '2026-W44', final: true }], 'the Monday run finalizes last week');
+  const ix = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'newsletters', 'index.json'), 'utf8'));
+  assert.ok(ix.weeks.length <= 12 && ix.weeks.every((w) => fs.existsSync(path.join(dir, 'data', 'newsletters', w.week + '.json'))));
+  assert.ok(fs.readdirSync(path.join(dir, 'data', 'newsletters')).filter((f) => /W\d\d\.json$/.test(f)).length <= 12, 'kept 12 weeks');
 }
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');

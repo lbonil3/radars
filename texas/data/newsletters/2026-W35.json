@@ -1,0 +1,198 @@
+{
+ "week": "2026-W35",
+ "start": "2026-08-24",
+ "end": "2026-08-30",
+ "title": "Texas Intel weekly, 2026-W35 (Aug 24, 2026 to Aug 30, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 11,
+  "houston": 3,
+  "other": 8
+ },
+ "houston": [
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1r23gbu",
+     "title": "Consideration of approval to authorize the County Judge to sign Interlocal Agreement to Partially Fund Improvements to City Streets within the Village Limits of Tiki Island for road bond project…",
+     "link": "https://galvestoncountytx.legistar.com/LegislationDetail.aspx?ID=94537&GUID=72B5F798-6836-445D-B523-B6EF6D082792",
+     "source": "Galveston County Commissioners Court agenda items",
+     "date": "2026-08-28",
+     "place": "Galveston",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “bond”, “interlocal”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 8
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 2,
+   "items": [
+    {
+     "id": "i1g45bjb",
+     "title": "Engineering Services for the San Bernard River Dredging Project",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5107&GUID=73D792BD-F236-443C-80F3-140B59A51EB7",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-08-26",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 10
+    },
+    {
+     "id": "it6jdt2",
+     "title": "Engineering Department Development Fees",
+     "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=5098&GUID=768BFBC4-70D9-4FAD-8954-0ED85E7CEA26",
+     "source": "Brazoria County Commissioners Court agenda items",
+     "date": "2026-08-25",
+     "place": "Brazoria",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "score": 4
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 6,
+   "items": [
+    {
+     "id": "ivi50us",
+     "title": "Public Hearing on the Capital Improvement Projects for Coastal Parks, North Beach, North Padre Island & Downtown Seawall Systems Analysis & Master Plan; Floodwall Upgrades at the Science Museum;…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26486&GUID=D3CED242-85D4-4B3E-8BF3-B00B1773B98B",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-28",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “flood”, “capital improvement”, “master plan”.",
+     "hint": "Planning study: follow-on design phases often go to consultants.",
+     "score": 14
+    },
+    {
+     "id": "i1gwhk8k",
+     "title": "Authorize the (1) acceptance of a grant from the U.S. Department of Transportation, Federal Aviation Administration (FAA) Airport Improvement Program for the federal share of the eligible capital…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26031&GUID=A6A0A07E-F8A3-4C5B-983B-5C7CEF4C1C59",
+     "source": "City of Dallas agenda items",
+     "date": "2026-08-26",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “grant”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 8
+    },
+    {
+     "id": "iesdb95",
+     "title": "Motion authorizing the execution of an amendment to the Interlocal Agreement with the Port of Corpus Christi Authority of Nueces County, Texas (PCCA) to include utility construction on City-owned…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26449&GUID=EB9F81B7-D8A4-46DA-BA5D-A2AFF5153BD1",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-25",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “wastewater”, “utility”, “interlocal”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 8
+    },
+    {
+     "id": "i1j0rprf",
+     "title": "Public Hearing on the Capital Improvement Projects for Hilliard Center Structural Repairs & Life Safety Improvements; Art Museum HVAC System Improvements; Harbor Playhouse Building & HVAC System…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26485&GUID=28470080-6A8B-41C4-B286-51C4CECB2D69",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-28",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1yh9uk9",
+     "title": "Public Hearing on the Capital Improvement Projects for Alameda Street (Texan Trail to Doddridge Street) and Sam Rankin Street (Port Avenue to IH-37)",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26484&GUID=A47EF368-75E3-4CF8-B8FD-473EB103066A",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-08-28",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "iyamxrq",
+     "title": "Upcoming Dallas City Council Agenda Item #26-2798A: Authorize (1) Supplemental Agreement No. 1 to increase the Construction Manager at Risk Agreement with Linbeck Group, LLC, to provide…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=25958&GUID=AD46DE53-1298-42FF-B9EF-571221FEB2F8",
+     "source": "City of Dallas agenda items",
+     "date": "2026-08-24",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “bond”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1hji5j8",
+     "title": "Upcoming Council Agenda Item #26-2409: Bath House Cultural Center and South Dallas Cultural Center - Roof Replacement and Water Infiltration Mitigation [Benjamin Espino, Infrastructure Performance…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=25977&GUID=9495DE2B-A8DB-4A36-9FD4-C073BD9652BB",
+     "source": "City of Dallas agenda items",
+     "date": "2026-08-25",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "i2yjzi9",
+     "title": "To approve an expenditure for engineering professional services for Drainage Improvements - Various Locations, Project No. ENG-D-00017, in the amount of $537,700 from Teague Nall and Perkins, Inc.…",
+     "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1875&GUID=915918EC-81DB-4043-9E32-3A045AC7B67E",
+     "source": "City of Plano agenda items",
+     "date": "2026-08-25",
+     "place": "Plano",
+     "region": "Dallas–Fort Worth",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “professional services”, “engineering”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 12
+    }
+   ]
+  }
+ ],
+ "deadlines": [],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}

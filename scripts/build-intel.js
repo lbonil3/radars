@@ -116,6 +116,22 @@ async function collect(src) {
   }
   throw new Error('unknown source kind ' + src.kind);
 }
+// Weekly newsletter issues: texas/data/newsletters/YYYY-Www.json plus index.json, last 12 weeks. The current week is a draft rebuilt
+// every run; a week becomes final on the first run after it ends (the Monday run) and is then never rewritten.
+function writeNewsletters(items, nowIso) {
+  const N = require('../texas/newsletter.js'), dir = path.join(path.dirname(OUT), 'newsletters');
+  fs.mkdirSync(dir, { recursive: true });
+  const plan = N.plan(nowIso), keep = {}, index = [];
+  plan.forEach((p) => {
+    const f = path.join(dir, p.week + '.json'); keep[p.week + '.json'] = 1; let prev = null; try { prev = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { /* new week */ }
+    let issue = prev && prev.final ? prev : N.build(items, p.week, { generatedAt: nowIso, final: p.final, backfilled: p.final && !prev });
+    if (!(prev && prev.final)) fs.writeFileSync(f, JSON.stringify(issue, null, 1));
+    index.push({ week: issue.week, start: issue.start, end: issue.end, final: issue.final, backfilled: issue.backfilled, items: issue.counts.items, houston: issue.counts.houston, generatedAt: issue.generatedAt });
+  });
+  fs.readdirSync(dir).forEach((f) => { if (/^\d{4}-W\d\d\.json$/.test(f) && !keep[f]) fs.unlinkSync(path.join(dir, f)); });
+  fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify({ generatedAt: nowIso, keepWeeks: N.KEEP_WEEKS, weeks: index }, null, 1));
+  console.log('newsletters', index.map((w) => w.week + (w.final ? '' : '*') + ':' + w.items).join(' '));
+}
 async function main() {
   const nowIso = new Date().toISOString();
   let prev = null; try { prev = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch (e) { /* first run */ }
@@ -136,6 +152,7 @@ async function main() {
   st.sources.forEach((s) => { s.records = merged.filter((m) => m.srcId === s.id).length; });
   const out = { generatedAt: nowIso, keepDays: I.KEEP_DAYS, note: 'Public news and planning signals, not solicitations. Verify with the original source.', count: merged.length, sources: st, items: merged };
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
+  writeNewsletters(merged, nowIso);
   console.log('wrote', OUT, merged.length, 'items;', JSON.stringify(st.counts));
 }
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

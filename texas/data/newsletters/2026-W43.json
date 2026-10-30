@@ -1,0 +1,267 @@
+{
+ "week": "2026-W43",
+ "start": "2026-10-19",
+ "end": "2026-10-25",
+ "title": "Texas Intel weekly, 2026-W43 (Oct 19, 2026 to Oct 25, 2026)",
+ "generatedAt": "2026-10-30T20:13:17.939Z",
+ "final": true,
+ "backfilled": true,
+ "counts": {
+  "items": 14,
+  "houston": 8,
+  "other": 6
+ },
+ "houston": [
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 3,
+   "items": [
+    {
+     "id": "imhlflb",
+     "title": "Request for approval to decree that the Harris County Flood Control District project serves a public purpose and public necessity, which requires that the Harris County Real Property Division be…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49190&GUID=9AC4FEA7-4E2C-4A62-BBDA-AE37FFF4A4A7",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “bond”, “hmgp”, “harris county flood control”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 28
+    },
+    {
+     "id": "i15iyt45",
+     "title": "Request for approval of an interlocal agreement with the University of Houston in the amount of $533,444, to study and monitor floating vegetated islands at the Stormwater Detention Basin at the…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49188&GUID=A35F95FB-E7F4-4C92-9DDC-401D07B0C614",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “stormwater”, “detention”, “watershed”, “bond”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 22
+    },
+    {
+     "id": "i1i2f13q",
+     "title": "Request for approval of amendment No. 4 to an agreement with Stantec Consulting Services, Inc., in the amount of $336,753.50, to provide additional archeological and environmental consulting…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49187&GUID=CBB2F489-2F45-4B5F-BB8B-86CC4AF836FB",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood”, “channel”, “bayou”, “watershed”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 20
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "iyf0t87",
+     "title": "Request for approval of a joint use agreement with Texas Department of Transportation (TxDOT) to establish joint access within TxDOT right-of-way, allowing the Flood Control District to perform…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49189&GUID=82663868-A4D8-49AC-9657-CE9C169B29BE",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "grant",
+     "why": "Mentions “flood control”, “watershed”, “cdbg-mit”, “txdot”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 31
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 2,
+   "items": [
+    {
+     "id": "iz1mkqp",
+     "title": "Request for approval of the sale by Harris County Flood Control District, a political subdivision of the State of Texas, of a 0.05-acre pipeline easement to the Targa Gulf Coast NGL Pipeline LLC…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49248&GUID=ABD15033-1628-47DE-81B7-0D083B1A7C09",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-21",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “harris county flood control”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 18
+    },
+    {
+     "id": "ijmx0uf",
+     "title": "Request for approval of an award on the basis of highest overall evaluation and that the County Judge execute an agreement with CliftonLarsonAllen LLP for external audit services for Harris County,…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49183&GUID=70828C76-B91E-4230-A071-A26118876FE2",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “flood control”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 12
+    }
+   ]
+  },
+  {
+   "topic": "policy",
+   "label": "New program / policy",
+   "total": 2,
+   "items": [
+    {
+     "id": "i145x3lm",
+     "title": "Request that the County Judge execute an amendment to an agreement with R.G. Miller Engineers, Inc. in the additional amount of $50,000 for professional architectural and engineering services to…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49227&GUID=34DF93CD-5A57-4C8B-B305-8C35FD724A11",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "policy",
+     "why": "Mentions “engineering services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 12
+    },
+    {
+     "id": "is9zghi",
+     "title": "Request that the County Judge execute an amendment to an agreement with Edminster, Hinshaw, Russ & Associates, Inc. d/b/a EHRA Engineering for professional architectural and engineering services to…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49228&GUID=5A60DE78-7996-4A37-B942-AA1D22BA09C4",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-10-19",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "policy",
+     "why": "Mentions “engineering services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "score": 12
+    }
+   ]
+  }
+ ],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 3,
+   "items": [
+    {
+     "id": "i12xslm7",
+     "title": "Fiscal Year 2026 Flood Mitigation Assistance",
+     "link": "https://www.grants.gov/search-results-detail/364124",
+     "source": "Grants.gov (flood / water / infrastructure)",
+     "date": "2026-10-22",
+     "place": "Federal / national",
+     "region": "Federal / national",
+     "topic": "budget",
+     "why": "Mentions “flood mitigation”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 10
+    },
+    {
+     "id": "i15g9wm1",
+     "title": "Noemi Herrera Rojas to the Capital Improvements Advisory Committee by Representative Lily Limón, District 7.",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16574&GUID=E1CD7B23-A68E-4324-ADD5-3106A3DBCBF0",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-20",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    },
+    {
+     "id": "i1jjl45w",
+     "title": "Joshua Rhoads to the Capital Improvements Advisory Committee by Representative Alejandra Chávez, District 1.",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16575&GUID=238F97A2-B9DA-4DD6-A056-4647AEA7F405",
+     "source": "City of El Paso agenda items",
+     "date": "2026-10-20",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 1,
+   "items": [
+    {
+     "id": "ik0dtzx",
+     "title": "October 28, 2026, City Council Agenda Items 26-3265A, 26-3266A, and 26-3263A Seeking Approval of - General Obligation Refunding and Improvement Bonds, Series 2026; Equipment Acquisition Contractual…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26626&GUID=C7D3F900-217B-4074-8D46-166B66A2E73D",
+     "source": "City of Dallas agenda items",
+     "date": "2026-10-20",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “sewer”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1m2qm4z",
+     "title": "Executive session pursuant to Texas Government Code § 551.071 and Texas Disciplinary Rules of Professional Conduct Rule 1.05 to consult with attorneys regarding legal issues concerning LM & JM…",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26700&GUID=655B35B9-19F4-4AC0-9AEE-6EEC3DB6F4A7",
+     "source": "City of Corpus Christi agenda items",
+     "date": "2026-10-19",
+     "place": "Corpus Christi",
+     "region": "Coastal Bend",
+     "topic": "grant",
+     "why": "Mentions “wastewater”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1uto6y0",
+     "title": "City of New Braunfels Begins Work on Coll Street Drainage Improvement Project",
+     "link": "https://www.newbraunfels.gov/CivicAlerts.aspx?aid=4161",
+     "source": "City of New Braunfels",
+     "date": "2026-10-21",
+     "place": "New Braunfels",
+     "region": "Central Texas",
+     "topic": "flood",
+     "why": "Mentions “drainage”, “design”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 7
+    }
+   ]
+  }
+ ],
+ "deadlines": [
+  {
+   "date": "2027-02-26",
+   "what": "closes 02/26/2027",
+   "id": "i12xslm7",
+   "title": "Fiscal Year 2026 Flood Mitigation Assistance",
+   "link": "https://www.grants.gov/search-results-detail/364124",
+   "source": "Grants.gov (flood / water / infrastructure)"
+  }
+ ],
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+}
