@@ -58,3 +58,7 @@ Whole batch: `git revert --no-edit national-pre-v4..national-v4-final`. Daily da
 - Before v5: tag `national-pre-water` (18a0ff2). v5 code: a522203 (no floor + EPA SRF source), 8b305b9 (Upcoming scope, upcoming-first sort, Positionable). Tags `national-v5` (8b305b9), `national-v5-final` (c8886d9), `national-v5.3` (Data-tab notes, latest).
 - Roll back without force: `git revert --no-edit 8b305b9 a522203 && git push` (keeps history), then run the National refresh so the data files match the code.
 - Or restore files only: `git checkout national-pre-water -- national scripts/build-national.js && git commit -m "Restore National pre-v5" && git push`.
+
+## v5.4 (weekly list fix for phones) — Oct 29, 2026
+- Before: tag `national-pre-printfix` (32a746f). Fix: 0e58057, 1cf4714. Tags `national-v5.4` (1cf4714), `national-v5.4-final` (this ROLLBACK commit).
+- Roll back without force: `git revert --no-edit national-pre-printfix..national-v5.4 && git push`.
