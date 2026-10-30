@@ -69,3 +69,20 @@ The Intel tab is a feed of public news and planning signals: CIP and budget item
   The markup is tables with inline styles only, so the same HTML is used on the page (dark theme with inline SVG icons), in Copy as email HTML and Download .html (light theme, no SVG or CSS), and in Print (light, cards kept whole across pages). Colors are tested for contrast ≥ 4.5:1.
 - **Legistar links (intel2.1).** The collector follows `Gateway.aspx?M=L&ID=<MatterId>` once and checks the target page with an iPhone Safari user agent and no cookies. It stores the site's own `LegislationDetail.aspx?ID=<siteId>&GUID=<siteGuid>`, cached in `texas/data/legistar-links.json`. If no page can be verified, the item links to the client's Legislation search page with a note. Stored newsletter issues are repaired the same way. Run `WITH_NEWSLETTERS=1 node scripts/check-intel-links.js 100000` to check every link.
 - Run locally with `node scripts/build-intel.js`. To run some sources only: `INTEL_ONLY=hpw,glo node scripts/build-intel.js`. Tests: `node texas/test.js`.
+
+## Texas Intel Weekly: magazine PDF
+
+In Weekly newsletter mode, **Magazine PDF** prints the selected issue as a trade-magazine style edition, and **Compact print** keeps the earlier single-sheet layout. The last choice is highlighted next time (stored on this device only). Use the browser's Print → Save as PDF, on Letter or A4. Turn on "Background graphics" if your browser asks.
+
+The edition has these parts:
+
+- **Cover:** a full-bleed cover with the masthead, issue and week, the lead headline, up to four cover lines and a Texas map with the Houston region highlighted.
+- **In this issue:** contents with section letters, plus By the numbers, From the desk and the topic mix.
+- **Cover story:** the feature, with a pull quote and a "What to do next" sidebar.
+- **Departments:** Houston Region, then the topic departments.
+- **Dates to watch.**
+- **Back cover:** the sources, how to use the issue, and a reminder that items are signals, not solicitations.
+
+Section letters stand in for page numbers, because browsers don't fill in page references reliably. Running headers and footers carry the page number.
+
+Download .html saves the same magazine as one self-contained file. Copy as email HTML is unchanged.
