@@ -194,5 +194,22 @@
   }
  ],
  "deadlines": [],
- "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source.",
+ "stats": {
+  "items": 11,
+  "newThisWeek": 0,
+  "houston": 2,
+  "grant": 5,
+  "flood": 3,
+  "mix": {
+   "budget": 7,
+   "bond": 0,
+   "grant": 0,
+   "flood": 3,
+   "water": 0,
+   "road": 0,
+   "policy": 0,
+   "agenda": 1
+  }
+ }
 }

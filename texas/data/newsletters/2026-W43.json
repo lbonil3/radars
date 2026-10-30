@@ -263,5 +263,22 @@
    "source": "Grants.gov (flood / water / infrastructure)"
   }
  ],
- "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source.",
+ "stats": {
+  "items": 14,
+  "newThisWeek": 0,
+  "houston": 8,
+  "grant": 4,
+  "flood": 8,
+  "mix": {
+   "budget": 3,
+   "bond": 4,
+   "grant": 2,
+   "flood": 3,
+   "water": 0,
+   "road": 0,
+   "policy": 2,
+   "agenda": 0
+  }
+ }
 }

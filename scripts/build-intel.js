@@ -124,6 +124,7 @@ function writeNewsletters(items, nowIso) {
   const plan = N.plan(nowIso), keep = {}, index = [];
   plan.forEach((p) => {
     const f = path.join(dir, p.week + '.json'); keep[p.week + '.json'] = 1; let prev = null; try { prev = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { /* new week */ }
+    if (prev && prev.final && !prev.stats) { prev.stats = N.stats(items.filter((it) => N.itemWeek(it) === p.week), p.week); fs.writeFileSync(f, JSON.stringify(prev, null, 1)); } // presentation-only numbers for older final issues
     let issue = prev && prev.final ? prev : N.build(items, p.week, { generatedAt: nowIso, final: p.final, backfilled: p.final && !prev });
     if (!(prev && prev.final)) fs.writeFileSync(f, JSON.stringify(issue, null, 1));
     index.push({ week: issue.week, start: issue.start, end: issue.end, final: issue.final, backfilled: issue.backfilled, items: issue.counts.items, houston: issue.counts.houston, generatedAt: issue.generatedAt });

@@ -334,5 +334,22 @@
    "source": "City of Dallas agenda items"
   }
  ],
- "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source.",
+ "stats": {
+  "items": 20,
+  "newThisWeek": 0,
+  "houston": 9,
+  "grant": 8,
+  "flood": 2,
+  "mix": {
+   "budget": 8,
+   "bond": 4,
+   "grant": 1,
+   "flood": 1,
+   "water": 0,
+   "road": 3,
+   "policy": 0,
+   "agenda": 3
+  }
+ }
 }

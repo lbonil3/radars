@@ -3,13 +3,30 @@
  "start": "2026-10-26",
  "end": "2026-11-01",
  "title": "Texas Intel weekly, 2026-W44 (Oct 26, 2026 to Nov 1, 2026)",
- "generatedAt": "2026-10-30T23:05:54.753Z",
+ "generatedAt": "2026-10-30T23:11:01.559Z",
  "final": false,
  "backfilled": false,
  "counts": {
   "items": 6,
   "houston": 1,
   "other": 5
+ },
+ "stats": {
+  "items": 6,
+  "newThisWeek": 6,
+  "houston": 1,
+  "grant": 3,
+  "flood": 0,
+  "mix": {
+   "budget": 5,
+   "bond": 0,
+   "grant": 1,
+   "flood": 0,
+   "water": 0,
+   "road": 0,
+   "policy": 0,
+   "agenda": 0
+  }
  },
  "houston": [
   {

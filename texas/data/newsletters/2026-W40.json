@@ -275,5 +275,22 @@
    "source": "City of Austin agenda items"
   }
  ],
- "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source.",
+ "stats": {
+  "items": 18,
+  "newThisWeek": 0,
+  "houston": 3,
+  "grant": 15,
+  "flood": 8,
+  "mix": {
+   "budget": 10,
+   "bond": 4,
+   "grant": 2,
+   "flood": 1,
+   "water": 1,
+   "road": 0,
+   "policy": 0,
+   "agenda": 0
+  }
+ }
 }
