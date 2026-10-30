@@ -65,12 +65,26 @@ const SOURCES = [
   leg('harriscountytx', 'Harris County Commissioners Court', 'Harris County', 'Harris', HOU), leg('austintexas', 'City of Austin', 'Austin', 'Travis', 'Central Texas'),
   leg('cityofdallas', 'City of Dallas', 'Dallas', 'Dallas', DFW), leg('corpuschristi', 'City of Corpus Christi', 'Corpus Christi', 'Nueces', 'Coastal Bend'),
   leg('elpasotexas', 'City of El Paso', 'El Paso', 'El Paso', 'West Texas'), leg('plano', 'City of Plano', 'Plano', 'Collin', DFW),
+  // HTML pages (no feed offered). Parsers in texas/intel.js; robots.txt is checked first.
+  { id: 'txdot-hou', name: 'TxDOT Houston District news', agency: 'TxDOT', kind: 'html', parser: 'txdot', url: 'https://www.txdot.gov/about/newsroom/local/houston.html', prefix: '/about/newsroom/local/houston/', place: 'Houston', county: 'Harris', region: HOU, minScore: 2, topics: ['road'] },
+  { id: 'txdot-state', name: 'TxDOT statewide news (drainage / flood / Houston only)', agency: 'TxDOT', kind: 'html', parser: 'txdot', url: 'https://www.txdot.gov/about/newsroom/statewide.html', prefix: '/about/newsroom/statewide/', region: 'Statewide', minScore: 3, topics: ['road'], must: /drain|flood|storm|culvert|bridge|houston|harris|fort bend|galveston|brazoria|montgomery|unified transportation program|\bUTP\b|letting|funding|billion|million/i },
+  { id: 'fortbend', name: 'Fort Bend County news', agency: 'Fort Bend County', kind: 'html', parser: 'drupal', url: 'https://www.fortbendcountytx.gov/your-county/news', prefix: '/your-county/news/', place: 'Fort Bend', county: 'Fort Bend', region: HOU, minScore: 1 },
+  { id: 'hou-cip', name: 'City of Houston CIP page', agency: 'City of Houston', kind: 'html', parser: 'houcip', url: 'https://www.houstontx.gov/cip/', place: 'Houston', county: 'Harris', region: HOU, minScore: 0, topics: ['budget'] },
+  leg('galvestoncountytx', 'Galveston County Commissioners Court', 'Galveston', 'Galveston', HOU), leg('brazoriacountytx', 'Brazoria County Commissioners Court', 'Brazoria', 'Brazoria', HOU),
+  leg('leaguecity', 'City of League City', 'League City', 'Galveston', HOU),
   { id: 'fedreg', name: 'Federal Register (Texas flood / water notices)', agency: 'Federal Register', kind: 'fedreg', region: 'Federal / national', minScore: 3, topics: ['policy'] },
   { id: 'grantsgov', name: 'Grants.gov (flood / water / infrastructure)', agency: 'Grants.gov', kind: 'grantsgov', region: 'Federal / national', minScore: 6, topics: ['grant'] },
   { id: 'openfema', name: 'FEMA disaster declarations (Texas)', agency: 'FEMA', kind: 'openfema', region: 'Statewide', minScore: 0, topics: ['grant', 'flood'] }
 ];
 async function collect(src) {
   if (src.kind === 'rss') return (await feed(src.url)).map((x) => Object.assign(x, { desc: src.media ? '' : x.desc })); // media: headline + link only
+  if (src.kind === 'html') {
+    if (!(await robotsAllowed(src.url))) throw new Error('robots.txt disallows this path');
+    const html = await get(src.url, { accept: 'text/html' });
+    const rows = src.parser === 'txdot' ? I.parseTxdotList(html, src.url, src.prefix) : src.parser === 'drupal' ? I.parseDrupalViews(html, src.url, src.prefix) : I.parseHoustonCip(html, src.url);
+    if (!rows.length) throw new Error('page layout changed: no items found');
+    return src.must ? rows.filter((r) => src.must.test(r.title + ' ' + r.desc)) : rows;
+  }
   if (src.kind === 'legistar') {
     const u = 'https://webapi.legistar.com/v1/' + src.client + '/matters?$top=60&$orderby=MatterIntroDate desc&$filter=' + encodeURIComponent("MatterIntroDate ge datetime'" + SINCE() + "' and (" + LEG_FILTER + ')');
     return JSON.parse(await get(u, { accept: 'application/json' })).map((m) => ({ title: I.text(m.MatterTitle || m.MatterName || ''), link: I.legistarLink(src.client, m.MatterId),

@@ -32,6 +32,35 @@
     u.hash = ''; return u.href;
   }
   function legistarLink(client, matterId) { return 'https://' + client + '.legistar.com/Gateway.aspx?M=L&ID=' + encodeURIComponent(matterId); }
+
+  // ---- HTML list pages (sites without a feed). Each parser reads one known page layout and returns {title, link, date, desc}.
+  function absUrl(href, base) { try { return new URL(decode(href), base).href; } catch (e) { return null; } }
+  function mdy(s) { var m = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/.exec(s || ''); if (!m) return null; var y = +m[3] < 100 ? 2000 + +m[3] : +m[3]; return new Date(Date.UTC(y, +m[1] - 1, +m[2], 12)).toISOString(); }
+  function longDate(s) { var m = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}),? (\d{4})/.exec(s || ''); if (!m) return null; return new Date(Date.UTC(+m[3], 'January February March April May June July August September October November December'.split(' ').indexOf(m[1]), +m[2], 12)).toISOString(); }
+  // TxDOT newsroom (local district and statewide lists): <a href="/about/newsroom/.../slug.html" title="..."> or <span class="cmp-list__item-title">; a MM/DD/YY date may follow
+  function parseTxdotList(html, base, prefix) {
+    html = String(html || ''); var re = new RegExp('<a [^>]*href="(' + prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[^"#?]+\\.html)"([^>]*)>([\\s\\S]*?)</a>', 'g'), hits = [], m;
+    while ((m = re.exec(html))) { var tm = /title="([^"]+)"/.exec(m[2]), t = text(tm ? tm[1] : m[3]); if (t.length >= 12 && !/^\d{4}$/.test(t)) hits.push({ i: m.index, end: re.lastIndex, href: m[1], title: t }); }
+    var seen = {}, out = [];
+    hits.forEach(function (h, k) { if (seen[h.href]) return; seen[h.href] = 1; var seg = html.slice(h.end, k + 1 < hits.length ? hits[k + 1].i : h.end + 800); out.push({ title: h.title, link: absUrl(h.href, base), date: mdy(text(seg).slice(0, 40)), desc: '' }); });
+    return out.filter(function (x) { return x.link; });
+  }
+  // Drupal "views-row" news lists (Fort Bend County news)
+  function parseDrupalViews(html, base, prefix) {
+    return String(html || '').split(/<div class="views-row">/).slice(1).map(function (row) {
+      var a = new RegExp('<a [^>]*href="(' + prefix + '[^"]+)"[^>]*>([\\s\\S]*?)</a>').exec(row); if (!a) return null;
+      var d = /views-field-field-post-date[\s\S]*?field-content">([^<]+)/.exec(row), body = /views-field-body[\s\S]*?field-content">([\s\S]*?)<\/span>/.exec(row);
+      var desc = body ? text(body[1]) : ''; if (/^Download /i.test(desc)) desc = '';
+      return { title: text(a[2]), link: absUrl(a[1], base), date: d ? longDate(d[1]) : null, desc: desc };
+    }).filter(function (x) { return x && x.title && x.link; });
+  }
+  // City of Houston CIP page: the adopted / proposed plan links (newest two)
+  function parseHoustonCip(html, base) {
+    var re = /<a [^>]*href="([^"]+)"[^>]*>([^<]*\b(20\d\d)\s*-\s*(20\d\d)\b[^<]*(Adopted|Proposed)[^<]*Capital Improvement Plan[^<]*)<\/a>/gi, m, out = [];
+    while ((m = re.exec(String(html || '')))) out.push({ y: +m[3], title: 'City of Houston ' + text(m[2]) + ' (CIP) posted', link: absUrl(m[1], base), date: null, desc: 'The City of Houston publishes its ' + text(m[2]) + ' on the CIP page, with project lists by department, including Public Works drainage and storm water.' });
+    out.sort(function (a, b) { return b.y - a.y; });
+    return out.slice(0, 2).map(function (x) { return { title: x.title, link: x.link, date: x.date, desc: x.desc }; });
+  }
   // ---- deterministic classification
   var TOPICS = [
     { id: 'budget', label: 'Budget / CIP', re: /\b(budget|capital improvement|\bCIP\b|capital program|capital plan|fiscal year 20\d\d|FY ?\d{2}|tax rate|appropriat\w+)/i },
@@ -50,7 +79,7 @@
     ['wastewater', 2], ['water main', 2], ['water line', 2], ['sewer', 2], ['lift station', 2], ['water treatment', 2], ['utility', 1], ['txdot', 2], ['unified transportation program', 3], ['utp', 2], ['roadway', 1], ['street reconstruction', 2], ['bridge', 1],
     ['rfq', 3], ['request for qualifications', 3], ['task order', 2], ['interlocal', 1], ['master plan', 2], ['resilience', 1], ['harris county flood control', 3], ['houston public works', 2]
   ];
-  var INFRA = /\b(drainage|storm ?water|storm sewer|flood\w*|detention|culvert|channel|bayou|levee|watershed|water|wastewater|sewer|lift station|utilit\w+|road\w*|street|highway|bridge|TxDOT|mobility|paving|infrastructure|capital improvement|CIP|engineering|bond)/i;
+  var INFRA = /\b(drainage|storm ?water|storm sewer|flood\w*|detention|culvert|channel|bayou|levee|watershed|water|wastewater|sewer|lift station|utilit\w+|road\w*|street|highway|bridge|TxDOT|mobility|paving|infrastructure|capital improvement|CIP|engineering|bond|adopted budget|proposed budget)/i;
   // places: [name, county, region]
   var HOU = 'Houston region';
   var PLACES = [
@@ -82,7 +111,7 @@
     agenda: 'Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.',
     policy: 'Program / policy signal: new rules or programs can create study and compliance work.'
   };
-  var NOISE = /\b(replat|re-plat|plat\b|subdivision plat|zoning case|SUSU\d|SURW\d|SUPA\d|job|jobs|positions?\b|hiring|now hiring|bill discounts?|newsletter|5K|fun run)/i;
+  var NOISE = /\b(replat|re-plat|plat\b|subdivision plat|zoning case|SUSU\d|SURW\d|SUPA\d|job|jobs|positions?\b|hiring|now hiring|bill discounts?|newsletter|5K|fun run|personal bond|bail bonds?|payroll|accounts payable|restitution|surety bond for|notary)/i;
   function lc(s) { return String(s || '').toLowerCase(); }
   function classify(it, src) {
     var hay = it.title + ' \u0001 ' + (it.desc || ''), l = lc(hay), why = [], score = 0;
@@ -95,11 +124,11 @@
     var hint = null; HINTS.some(function (h) { if (h[0].test(hay)) { hint = h[1]; return true; } return false; });
     if (!hint) hint = TOPIC_HINT[topics.filter(function (t) { return TOPIC_HINT[t]; })[0]] || null;
     if (pl && region === HOU) score += 2;
-    if (NOISE.test(it.title)) score = 0;
+    var noise = NOISE.test(it.title); if (noise) score = 0;
     var dedupeWhy = why.filter(function (w, i) { return why.indexOf(w) === i && !why.some(function (o) { return o !== w && o.indexOf(w) >= 0; }); });
-    return { topics: topics, place: pl, county: place ? place.county : (src && src.county) || null, region: region, score: score, why: dedupeWhy.slice(0, 6), hint: hint, infra: INFRA.test(hay) };
+    return { topics: topics, place: pl, county: place ? place.county : (src && src.county) || null, region: region, score: score, why: dedupeWhy.slice(0, 6), hint: hint, infra: INFRA.test(hay), noise: noise };
   }
-  function relevant(c, src) { var min = src && src.minScore !== undefined ? src.minScore : 4; return c.infra && c.score >= min; }
+  function relevant(c, src) { var min = src && src.minScore !== undefined ? src.minScore : 4; return !c.noise && c.infra && c.score >= min; }
   // ---- dedupe near-identical headlines
   var STOP = { the: 1, a: 1, an: 1, of: 1, and: 1, to: 1, for: 1, in: 1, on: 1, at: 1, by: 1, with: 1, is: 1, are: 1, from: 1, city: 1, county: 1, texas: 1, news: 1, update: 1 };
   function tokens(t) { return lc(text(t)).replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter(function (w) { return w && !STOP[w]; }); }
@@ -131,5 +160,5 @@
     it.id = idOf(it); return it;
   }
   function topicLabel(id) { var t = TOPICS.filter(function (x) { return x.id === id; })[0]; return t ? t.label : id; }
-  return { KEEP_DAYS: KEEP_DAYS, SNIP: SNIP, TOPICS: TOPICS, PLACES: PLACES, REGIONS: REGIONS, HOU: HOU, decode: decode, text: text, snip: snip, parseFeed: parseFeed, classify: classify, relevant: relevant, similar: similar, dedupe: dedupe, idOf: idOf, mergePrev: mergePrev, fixLink: fixLink, legistarLink: legistarLink, build: build, topicLabel: topicLabel };
+  return { KEEP_DAYS: KEEP_DAYS, SNIP: SNIP, TOPICS: TOPICS, PLACES: PLACES, REGIONS: REGIONS, HOU: HOU, decode: decode, text: text, snip: snip, parseFeed: parseFeed, parseTxdotList: parseTxdotList, parseDrupalViews: parseDrupalViews, parseHoustonCip: parseHoustonCip, mdy: mdy, longDate: longDate, classify: classify, relevant: relevant, similar: similar, dedupe: dedupe, idOf: idOf, mergePrev: mergePrev, fixLink: fixLink, legistarLink: legistarLink, build: build, topicLabel: topicLabel };
 });

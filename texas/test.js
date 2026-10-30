@@ -325,5 +325,17 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.strictEqual(again[0].firstSeen, '2026-10-21T00:00:00.000Z', 'first-seen survives the link change');
   const ij = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'intel.json'), 'utf8'));
   ij.items.forEach((it) => { assert.strictEqual(I.fixLink(it.link), it.link, 'stored link is normalized: ' + it.link); assert.ok(!/LegislationDetail\.aspx|&amp;/.test(it.link), 'no broken Legistar or escaped links'); });
+// Intel HTML-page parsers (sites without feeds)
+{
+  const I = require('./intel.js'), fx = (f) => fs.readFileSync(path.join(dir, 'test-fixtures', f), 'utf8');
+  const tx = I.parseTxdotList(fx('intel-txdot.html'), 'https://www.txdot.gov/about/newsroom/local/houston.html', '/about/newsroom/local/houston/');
+  assert.strictEqual(tx.length, 2, 'duplicate links and nav links dropped');
+  assert.strictEqual(tx[0].link, 'https://www.txdot.gov/about/newsroom/local/houston/new-bridge-to-honor-houston-teen.html'); assert.strictEqual(tx[0].date, '2026-09-17T12:00:00.000Z'); assert.strictEqual(tx[1].date, '2026-10-02T12:00:00.000Z');
+  const dr = I.parseDrupalViews(fx('intel-drupal.html'), 'https://www.fortbendcountytx.gov/your-county/news', '/your-county/news/');
+  assert.strictEqual(dr.length, 2); assert.strictEqual(dr[0].date, '2026-09-24T12:00:00.000Z'); assert.strictEqual(dr[0].desc, '', '"Download ..." is not an excerpt'); assert.ok(/channel/.test(dr[1].desc));
+  assert.ok(I.build(dr[0], { id: 'fb', name: 'FB', minScore: 1, place: 'Fort Bend', region: I.HOU }, '2026-10-28T00:00:00Z'), 'county adopted budget kept');
+  const cip = I.parseHoustonCip(fx('intel-houcip.html'), 'https://www.houstontx.gov/cip/');
+  assert.strictEqual(cip.length, 2); assert.ok(/2027-2031/.test(cip[0].title)); assert.strictEqual(cip[0].link, 'https://www.houstontx.gov/cip/27cipadopt/index.html'); assert.strictEqual(cip[0].date, null, 'no date invented');
+  assert.strictEqual(I.build({ title: 'Receive and file September Personal Bond/Collections Monthly Report', link: 'https://x', desc: '' }, { id: 'g', name: 'g', minScore: 0 }, '2026-10-28T00:00:00Z'), null, 'bail bonds are not bond programs');
 }
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
