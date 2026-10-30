@@ -55,6 +55,6 @@ Baseline tag `national-pre-v4`; finished tag `national-v4-final`. Newest first w
 Whole batch: `git revert --no-edit national-pre-v4..national-v4-final`. Daily data commits in that range are re-applied by the next daily refresh.
 
 ## v5 (water / wastewater, no value floor, future-first) — Oct 29, 2026
-- Before v5: tag `national-pre-water` (18a0ff2). v5 code: a522203 (no floor + EPA SRF source), 8b305b9 (Upcoming scope, upcoming-first sort, Positionable). Tags `national-v5`, `national-v5-final`.
+- Before v5: tag `national-pre-water` (18a0ff2). v5 code: a522203 (no floor + EPA SRF source), 8b305b9 (Upcoming scope, upcoming-first sort, Positionable). Tags `national-v5` (8b305b9), `national-v5-final` (c8886d9), `national-v5.3` (Data-tab notes, latest).
 - Roll back without force: `git revert --no-edit 8b305b9 a522203 && git push` (keeps history), then run the National refresh so the data files match the code.
 - Or restore files only: `git checkout national-pre-water -- national scripts/build-national.js && git commit -m "Restore National pre-v5" && git push`.
