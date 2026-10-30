@@ -51,7 +51,7 @@
       '<div class="itags">' + tags + '</div>' +
       (it.desc ? '<p class="ids">' + esc(it.desc) + '</p>' : '') +
       (it.why && it.why.length ? '<p class="iwhy"><b>Why this matters:</b> mentions ' + it.why.map(function (w) { return '“' + esc(w) + '”'; }).join(', ') + '.</p>' : '') +
-      (it.hint ? '<p class="ihint"><b>Positioning hint:</b> ' + esc(it.hint) + '</p>' : '') +
+      (it.linkNote ? '<p class="ihint">' + esc(it.linkNote) + '</p>' : '') + (it.hint ? '<p class="ihint"><b>Positioning hint:</b> ' + esc(it.hint) + '</p>' : '') +
       '<div class="iact"><a class="btn small" href="' + esc(it.link) + '" target="_blank" rel="noopener noreferrer" data-iopen="' + esc(it.id) + '">Open original ↗</a><button type="button" class="btn small" data-iread="' + esc(it.id) + '">' + (rd ? 'Mark unread' : 'Mark read') + '</button>' +
       (it.also && it.also.length ? '<span class="also">Also reported by ' + it.also.map(function (a) { return '<a href="' + esc(a.link) + '" target="_blank" rel="noopener noreferrer">' + esc(a.source) + '</a>'; }).join(', ') + '</span>' : '') + '</div></div></article>';
   }

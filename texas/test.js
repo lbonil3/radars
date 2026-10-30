@@ -314,17 +314,19 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
 // Intel links: stable, unescaped, no tracking parameters
 {
   const I = require('./intel.js');
-  assert.strictEqual(I.fixLink('https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49248&amp;GUID=ABD15033-1628'), 'https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49248', 'Legistar API MatterId goes through Gateway.aspx');
+  assert.strictEqual(I.fixLink('https://x.legistar.com/LegislationDetail.aspx?ID=8298628&amp;GUID=8BADC855'), 'https://x.legistar.com/LegislationDetail.aspx?ID=8298628&GUID=8BADC855', 'entities decoded; Legistar ids are resolved by the collector, not rewritten');
   assert.strictEqual(I.legistarLink('plano', 1908), 'https://plano.legistar.com/Gateway.aspx?M=L&ID=1908');
   assert.strictEqual(I.fixLink('https://www.example.gov/CivicAlerts.aspx?AID=12&amp;utm_source=rss&fbclid=x#top'), 'https://www.example.gov/CivicAlerts.aspx?AID=12');
   assert.strictEqual(I.fixLink('javascript:alert(1)'), null); assert.strictEqual(I.fixLink('not a url'), null);
-  const prev = { items: [{ id: 'old', srcId: 'leg-x', title: 'T', link: 'https://x.legistar.com/LegislationDetail.aspx?ID=5&GUID=G', date: '2026-10-20T00:00:00.000Z', firstSeen: '2026-10-21T00:00:00.000Z', topics: [], region: 'Statewide' }] };
-  const mg = I.mergePrev([], prev, '2026-10-28T00:00:00.000Z', ['leg-x']);
-  assert.strictEqual(mg[0].link, 'https://x.legistar.com/Gateway.aspx?M=L&ID=5', 'kept items from failed sources are repaired too');
-  const again = I.mergePrev([{ id: 'new', srcId: 'leg-x', title: 'T', link: 'https://x.legistar.com/Gateway.aspx?M=L&ID=5', date: '2026-10-20T00:00:00.000Z' }], prev, '2026-10-28T00:00:00.000Z', []);
-  assert.strictEqual(again[0].firstSeen, '2026-10-21T00:00:00.000Z', 'first-seen survives the link change');
+  const LL = require('../scripts/legistar-links.js');
+  assert.deepStrictEqual(LL.parse('https://HarrisCountyTX.legistar.com/Gateway.aspx?M=L&ID=49248'), { client: 'harriscountytx', path: '/gateway.aspx', id: '49248', guid: null });
+  assert.strictEqual(LL.fallback('plano'), 'https://plano.legistar.com/Legislation.aspx'); assert.ok(/iPhone/.test(LL.SAFARI)); assert.ok(LL.INVALID.test('Invalid parameters!'));
+  const cache = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'legistar-links.json'), 'utf8'));
+  Object.keys(cache.links).forEach((k) => assert.ok(/^[a-z0-9-]+\|\d+$/.test(k) && /^https:\/\/[a-z0-9-]+\.legistar\.com\/LegislationDetail\.aspx\?ID=\d+&GUID=[0-9A-F-]+$/i.test(cache.links[k]), 'verified link ' + k));
+  const siteLinks = new Set(Object.values(cache.links));
   const ij = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'intel.json'), 'utf8'));
-  ij.items.forEach((it) => { assert.strictEqual(I.fixLink(it.link), it.link, 'stored link is normalized: ' + it.link); assert.ok(!/LegislationDetail\.aspx|&amp;/.test(it.link), 'no broken Legistar or escaped links'); });
+  ij.items.forEach((it) => { assert.strictEqual(I.fixLink(it.link), it.link, 'stored link is normalized: ' + it.link); assert.ok(!/&amp;/.test(it.link)); if (/legistar\.com/.test(it.link)) assert.ok(siteLinks.has(it.link) || /Legislation\.aspx$/.test(it.link), 'Legistar link is a verified site link or the labelled search page: ' + it.link); });
+  fs.readdirSync(path.join(dir, 'data', 'newsletters')).filter((f) => /W\d\d\.json$/.test(f)).forEach((f) => { const t = fs.readFileSync(path.join(dir, 'data', 'newsletters', f), 'utf8'); (t.match(/https:\/\/[a-z0-9-]+\.legistar\.com\/[^"]+/g) || []).forEach((u) => assert.ok(siteLinks.has(u) || /Legislation\.aspx$/.test(u), f + ' has an unverified Legistar link ' + u)); });
 }
 // Intel HTML-page parsers (sites without feeds)
 {

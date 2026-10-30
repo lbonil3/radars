@@ -20,14 +20,12 @@
     }
     return out;
   }
-  // ---- stable item links. Legistar's LegislationDetail.aspx?ID= takes the web page's own id, not the API MatterId, so links built
-  // from the API showed "Invalid parameter"; Gateway.aspx?M=L&ID=<MatterId> redirects to the right page. Entities are decoded,
-  // common tracking parameters are dropped, and only http(s) links are kept.
+  // ---- stable item links: entities decoded, common tracking parameters dropped, only http(s) kept.
+  // Legistar links are resolved and verified by the collector (scripts/build-intel.js), not rewritten here.
   var TRACK = /^(utm_[a-z]+|fbclid|gclid|mc_cid|mc_eid|_hsenc|_hsmi)$/i;
   function fixLink(link) {
     var s = decode(String(link || '').trim()).replace(/&amp;/g, '&'), u; try { u = new URL(s); } catch (e) { return null; }
     if (!/^https?:$/.test(u.protocol)) return null;
-    if (/\.legistar\.com$/i.test(u.hostname) && /\/LegislationDetail\.aspx$/i.test(u.pathname) && u.searchParams.get('ID') && u.searchParams.get('GUID')) return 'https://' + u.hostname + '/Gateway.aspx?M=L&ID=' + encodeURIComponent(u.searchParams.get('ID'));
     Array.from(u.searchParams.keys()).forEach(function (k) { if (TRACK.test(k)) u.searchParams.delete(k); });
     u.hash = ''; return u.href;
   }
@@ -156,7 +154,7 @@
   function build(raw, src, nowIso) { // raw {title, link, date, desc} -> stored item, or null when not relevant
     var c = classify(raw, src); if (!relevant(c, src)) return null;
     var link = fixLink(raw.link); if (!link) return null;
-    var it = { id: null, srcId: src.id, source: src.name, title: snip(raw.title, 200), link: link, date: raw.date || null, desc: snip(raw.desc || ''), topics: c.topics, place: c.place, county: c.county, region: c.region, score: c.score, why: c.why, hint: c.hint };
+    var it = { id: null, srcId: src.id, source: src.name, title: snip(raw.title, 200), link: link, mid: raw.mid || undefined, date: raw.date || null, desc: snip(raw.desc || ''), topics: c.topics, place: c.place, county: c.county, region: c.region, score: c.score, why: c.why, hint: c.hint };
     it.id = idOf(it); return it;
   }
   function topicLabel(id) { var t = TOPICS.filter(function (x) { return x.id === id; })[0]; return t ? t.label : id; }

@@ -12,7 +12,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,7 +25,7 @@ jobs:
       # Also writes the weekly newsletter issues; the Monday run is the first after a week ends, so it finalizes that issue.
       - name: Build Intel feed (news and planning signals; one failing source never fails the job)
         continue-on-error: true
-        timeout-minutes: 10
+        timeout-minutes: 25
         run: node scripts/build-intel.js
       - name: Check a sample of Intel links (report only)
         continue-on-error: true

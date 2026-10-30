@@ -87,7 +87,7 @@ async function collect(src) {
   }
   if (src.kind === 'legistar') {
     const u = 'https://webapi.legistar.com/v1/' + src.client + '/matters?$top=60&$orderby=MatterIntroDate desc&$filter=' + encodeURIComponent("MatterIntroDate ge datetime'" + SINCE() + "' and (" + LEG_FILTER + ')');
-    return JSON.parse(await get(u, { accept: 'application/json' })).map((m) => ({ title: I.text(m.MatterTitle || m.MatterName || ''), link: I.legistarLink(src.client, m.MatterId),
+    return JSON.parse(await get(u, { accept: 'application/json' })).map((m) => ({ title: I.text(m.MatterTitle || m.MatterName || ''), link: I.legistarLink(src.client, m.MatterId), mid: m.MatterId,
       date: m.MatterIntroDate ? new Date(m.MatterIntroDate + (/Z|[+-]\d\d:?\d\d$/.test(m.MatterIntroDate) ? '' : 'Z')).toISOString() : null, desc: [m.MatterTypeName, m.MatterBodyName, m.MatterFile].filter(Boolean).join(' · ') })).filter((x) => x.title);
   }
   if (src.kind === 'fedreg') {
@@ -132,6 +132,22 @@ function writeNewsletters(items, nowIso) {
   fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify({ generatedAt: nowIso, keepWeeks: N.KEEP_WEEKS, weeks: index }, null, 1));
   console.log('newsletters', index.map((w) => w.week + (w.final ? '' : '*') + ':' + w.items).join(' '));
 }
+// Legistar: store links that open directly in a clean browser (see scripts/legistar-links.js). Item ids are kept, so first-seen
+// and stars survive. Newsletter issues (including final ones) get the same link repair.
+async function repairLegistar(items) {
+  const LL = require('./legistar-links.js'), cache = LL.load(); let fixed = 0, fell = 0;
+  const byHost = {}; items.forEach((it) => { const p = LL.parse(it.link); if (p) (byHost[p.client] = byHost[p.client] || []).push(it); });
+  await Promise.all(Object.keys(byHost).map(async (h) => { for (const it of byHost[h]) { const r = await LL.repair(it.link, cache, it.mid); if (r.link !== it.link) fixed++; it.link = r.link; if (r.note) { it.linkNote = r.note; fell++; } else delete it.linkNote; } }));
+  const dir = path.join(path.dirname(OUT), 'newsletters'); let nfix = 0;
+  if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter((x) => /^\d{4}-W\d\d\.json$/.test(x))) {
+    const fp = path.join(dir, f), n = JSON.parse(fs.readFileSync(fp, 'utf8')); let ch = false;
+    const ents = [].concat(...(n.houston || []).map((g) => g.items), ...(n.texas || []).map((g) => g.items), n.deadlines || []);
+    for (const e of ents) { if (!LL.parse(e.link)) continue; const cur = items.find((it) => it.id === e.id); const r = cur ? { link: cur.link, note: cur.linkNote } : await LL.repair(e.link, cache); if (r.link !== e.link) { e.link = r.link; ch = true; nfix++; } if (r.note) e.linkNote = r.note; else delete e.linkNote; }
+    if (ch) fs.writeFileSync(fp, JSON.stringify(n, null, 1));
+  }
+  delete cache.ok; LL.save(cache);
+  console.log('legistar links: ' + fixed + ' item links resolved, ' + fell + ' fell back to the search page, ' + nfix + ' newsletter links repaired');
+}
 async function main() {
   const nowIso = new Date().toISOString();
   let prev = null; try { prev = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch (e) { /* first run */ }
@@ -151,6 +167,7 @@ async function main() {
   const st = require('./source-status.js').build(SOURCES.map((s) => statuses.find((x) => x.id === s.id)).filter(Boolean).concat(only ? ((prev && prev.sources && prev.sources.sources) || []).filter((p) => only.indexOf(p.id) < 0).map((p) => ({ id: p.id, name: p.name, agency: p.agency, status: p.health === 'fresh' ? 'ok' : 'failed', kept: p.records, fetchedAt: p.lastSuccess })) : []), prev && prev.sources, 'texas-intel', nowIso);
   st.sources.forEach((s) => { s.records = merged.filter((m) => m.srcId === s.id).length; });
   const out = { generatedAt: nowIso, keepDays: I.KEEP_DAYS, note: 'Public news and planning signals, not solicitations. Verify with the original source.', count: merged.length, sources: st, items: merged };
+  await repairLegistar(merged);
   fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
   writeNewsletters(merged, nowIso);
   console.log('wrote', OUT, merged.length, 'items;', JSON.stringify(st.counts));
