@@ -62,3 +62,8 @@ Whole batch: `git revert --no-edit national-pre-v4..national-v4-final`. Daily da
 ## v5.4 (weekly list fix for phones) — Oct 29, 2026
 - Before: tag `national-pre-printfix` (32a746f). Fix: 0e58057, 1cf4714. Tags `national-v5.4` (1cf4714), `national-v5.4-final` (this ROLLBACK commit).
 - Roll back without force: `git revert --no-edit national-pre-printfix..national-v5.4 && git push`.
+
+## v6 (list-first interface) — Oct 30, 2026
+- Before: tag `national-pre-v6` (59d9bf7 = `national-v5.4-final`). Groups: `national-v6.1` (list first + small map + count markers), `national-v6.2` (slim header, one control row, switch CSS fix, Texas prompt in drawer, no headline sum, phone tidy), `national-v6.3` (card order), `national-v6.4` (quick filters, tags, saved sets, sw v21). `national-v6` = v6.4 code; `national-v6-final` = docs commit.
+- Roll back without force: `git revert --no-edit national-pre-v6..national-v6-final && git push`.
+- Saved filter sets stay in localStorage `nr.filtersets`; older versions ignore that key.
