@@ -31,7 +31,7 @@
     }
     return out;
   }
-  function entry(it) { return { id: it.id, title: it.title, link: it.link, source: it.source, date: it.date ? it.date.slice(0, 10) : null, place: it.place || it.region, region: it.region, topic: primary(it), why: it.why && it.why.length ? 'Mentions ' + it.why.slice(0, 4).map(function (w) { return '“' + w + '”'; }).join(', ') + '.' : '', hint: it.hint || '', linkNote: it.linkNote || undefined, score: it.score }; }
+  function entry(it) { return { id: it.id, title: it.title, link: it.link, source: it.source, date: it.date ? it.date.slice(0, 10) : null, place: it.place || it.region, region: it.region, topic: primary(it), why: it.why && it.why.length ? 'Mentions ' + it.why.slice(0, 4).map(function (w) { return '“' + w + '”'; }).join(', ') + '.' : '', hint: it.hint || '', desc: it.desc || undefined, linkNote: it.linkNote || undefined, score: it.score }; }
   function group(list, max) { var g = {}; list.forEach(function (it) { (g[primary(it)] = g[primary(it)] || []).push(it); }); return ORDER.filter(function (t) { return g[t]; }).map(function (t) { var a = g[t].sort(rank); return { topic: t, label: LABEL[t], total: a.length, items: a.slice(0, max).map(entry) }; }); }
   // "By the numbers": counted from the week's collected items only
   function stats(inWeek, week) {
