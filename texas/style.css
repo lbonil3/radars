@@ -149,6 +149,10 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .nlpaper a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 @media print{
   body.nlprint{background:#fff;color:#111;padding:0;max-width:none}
+  body.nlmag{background:#fff;color:#111;padding:0;margin:0;max-width:none}
+  body.nlmag > *:not(main), body.nlmag main > section:not(#v-intel), body.nlmag #v-intel > *:not(#inNews), body.nlmag #inNews > *:not(#nlMag){display:none!important}
+  body.nlmag main, body.nlmag #v-intel, body.nlmag #inNews{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:#fff!important}
+  body.nlmag #nlMag{display:block!important}
   body.nlprint > *:not(main), body.nlprint main > section:not(#v-intel), body.nlprint #v-intel > *:not(#inNews), body.nlprint #inNews > *:not(#nlPaper){display:none!important}
   body.nlprint #nlPaper{margin:0;padding:0;border-radius:0}
   body.nlprint #nlPaper a{text-decoration:underline}

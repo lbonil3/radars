@@ -131,7 +131,7 @@
     }).catch(function (e) { $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p><b>Newsletter could not be loaded</b> (' + esc(e.message) + ').</p>'; });
   }
   function loadWeek(wk) {
-    var show = function (n) { NL.cur = n; $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'dark', icons: true }); $('nlStatus').textContent = Nw.status(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
+    var show = function (n) { NL.cur = n; pmMark(); $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'dark', icons: true }); $('nlStatus').textContent = Nw.status(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
     if (NL.cache[wk]) return show(NL.cache[wk]);
     $('nlStatus').textContent = 'Loading…';
     fetch('data/newsletters/' + encodeURIComponent(wk) + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (n) { NL.cache[wk] = n; show(n); })
@@ -139,6 +139,9 @@
   }
   function download(name, type, body) { var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([body], { type: type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
   function copyText(t) { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t); return Promise.reject(new Error('clipboard unavailable')); }
+  var PMK = 'opportunityRadar.nlPrintMode.v1';
+  function pmSet(m) { try { localStorage.setItem(PMK, m); } catch (e) {} pmMark(); }
+  function pmMark() { var m = 'mag'; try { m = localStorage.getItem(PMK) || 'mag'; } catch (e) {} document.querySelectorAll('[data-pm]').forEach(function (b) { var on = b.getAttribute('data-pm') === m; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.classList.toggle('on', on); }); }
   function nlAction(act) {
     var n = NL.cur; if (!n) { toast('Pick a week first.'); return; }
     var base = 'texas-intel-' + n.week;
@@ -147,8 +150,9 @@
       var html = Nw.toHtml(n, { fragment: true, theme: 'light' });
       if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) navigator.clipboard.write([new window.ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([Nw.toText(n)], { type: 'text/plain' }) })]).then(function () { toast('Copied. Paste into a new email.'); }, function () { copyText(html).then(function () { toast('Copied the HTML source.'); }, function () { toast('Copy is blocked here. Use Download .html.'); }); });
       else copyText(html).then(function () { toast('Copied the HTML source.'); }, function () { toast('Copy is blocked here. Use Download .html.'); });
-    } else if (act === 'print') { document.body.classList.add('nlprint'); $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'light', icons: true }); /* ink-friendly */ var done = function () { document.body.classList.remove('nlprint'); if (NL.cur) $('nlPaper').innerHTML = Nw.toHtml(NL.cur, { fragment: true, theme: 'dark', icons: true }); window.removeEventListener('afterprint', done); }; window.addEventListener('afterprint', done); setTimeout(function () { window.print(); setTimeout(done, 1500); }, 30); }
-    else if (act === 'html') download(base + '.html', 'text/html', Nw.toHtml(n));
+    } else if (act === 'print') { pmSet('compact'); document.body.classList.add('nlprint'); $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'light', icons: true }); /* ink-friendly */ var done = function () { document.body.classList.remove('nlprint'); if (NL.cur) $('nlPaper').innerHTML = Nw.toHtml(NL.cur, { fragment: true, theme: 'dark', icons: true }); window.removeEventListener('afterprint', done); }; window.addEventListener('afterprint', done); setTimeout(function () { window.print(); setTimeout(done, 1500); }, 30); }
+    else if (act === 'mag') { pmSet('mag'); var M = window.TXMagazine, box = $('nlMag'), st = document.getElementById('mzPage'); if (!st) { st = document.createElement('style'); st.id = 'mzPage'; document.head.appendChild(st); } st.textContent = M.pageCss(n); box.innerHTML = M.build(n); box.hidden = false; document.body.classList.add('nlmag'); var fin = function () { NL.magFin = null; document.body.classList.remove('nlmag'); box.hidden = true; box.innerHTML = ''; st.textContent = ''; window.removeEventListener('afterprint', fin); }; if (NL.magFin) NL.magFin(); NL.magFin = fin; window.addEventListener('afterprint', fin); setTimeout(function () { window.print(); }, 60); } /* no timed cleanup: mobile print() returns before the sheet closes */
+    else if (act === 'html') { var Mz = window.TXMagazine; fetch('magazine.css').then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; }).then(function (css) { download(base + '.html', 'text/html', css ? Mz.toDoc(n, css) : Nw.toHtml(n)); }); }
     else if (act === 'txt') download(base + '.txt', 'text/plain', Nw.toText(n));
     else if (act === 'share' && navigator.share) navigator.share({ title: n.title, text: Nw.toText(n) }).catch(function () { /* cancelled */ });
   }

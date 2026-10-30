@@ -15,6 +15,7 @@
   <title>Texas Opportunity – drainage PS&amp;E opportunities across agencies</title>
   <link rel="stylesheet" href="../home-btn.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="magazine.css">
 </head>
 <body>
 <header class="top">
@@ -125,11 +126,12 @@
         <div class="irow"><label class="isel"><span>Week</span><select id="nlWeek" aria-label="Newsletter week"></select></label><span class="nlst" id="nlStatus" role="status" aria-live="polite"></span></div>
         <div class="chips nlact">
           <button type="button" class="chip" data-nl="copytext">Copy as text</button><button type="button" class="chip" data-nl="copyhtml">Copy as email HTML</button>
-          <button type="button" class="chip" data-nl="print">Print / PDF</button><button type="button" class="chip" data-nl="html">Download .html</button><button type="button" class="chip" data-nl="txt">Download .txt</button>
+          <button type="button" class="chip" data-nl="mag" data-pm="mag">Magazine PDF</button><button type="button" class="chip" data-nl="print" data-pm="compact">Compact print</button><button type="button" class="chip" data-nl="html">Download .html</button><button type="button" class="chip" data-nl="txt">Download .txt</button>
           <button type="button" class="chip" data-nl="share" id="nlShare" hidden>Share</button>
         </div>
       </div>
       <div id="nlPaper" class="nlpaper" aria-live="polite"></div>
+      <div id="nlMag" hidden></div>
     </div>
   </section>
 
@@ -167,6 +169,7 @@
 <script src="app.js"></script>
 <script src="intel.js"></script>
 <script src="newsletter.js"></script>
+<script src="magazine.js"></script>
 <script src="intel-ui.js"></script>
 </body>
 </html>
