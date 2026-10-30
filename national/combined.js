@@ -1,4 +1,4 @@
-/* National Radar v4.5: one combined, ungrouped record set (browser + Node, no dependencies).
+/* National Radar v5: one combined, ungrouped record set (browser + Node, no dependencies).
    Merges the three snapshot files, tags each record with the file it came from (r._ln, internal only, used to
    pick the right detail renderer), de-duplicates by record id, and filters/sorts without any lane or fee gating. */
 (function (root, factory) { if (typeof module === 'object' && module.exports) module.exports = factory(); else root.NRC = factory(); })(this, function () {
@@ -24,12 +24,13 @@
   // plain info only (not a grouping): what kind of dollar figure the source states
   function kindOf(r) {
     if (r._ln === 'pse') return r.lens === 'db' ? 'Design-build' : r.lens === 'pipeline' ? 'Project cost (not fee)' : r.lens === 'advance' ? 'Early notice' : 'Fee stated';
-    return r.amt ? 'Fee stated' : 'Fee not stated';
+    return r.amt ? 'Fee stated' : 'Fee/amount not stated';
   }
   function isConfirmed(r) { return r._ln === 'pse' ? (r.lens !== 'fee' || r.conf === 'confirmed') : r.bucket !== 'review'; }
   function sectorsOf(r) { return r.sectors || r.domains || []; }
   var STAGE_LABEL = { open: 'Open / upcoming', forecast: 'Forecast', awarded: 'Awarded', closed: 'Closed' };
   var SCOPES = [
+    { id: 'upcoming', label: 'Upcoming', sub: 'open, upcoming and forecast: work you can still position for' },
     { id: 'all', label: 'All', sub: 'every record from every source' },
     { id: 'open', label: 'Open', sub: 'open or upcoming, not yet awarded' },
     { id: 'forecast', label: 'Forecast', sub: 'agency forecasts and early notices' },
@@ -39,6 +40,7 @@
   function inScope(r, scope, watch) {
     var s = stageOf(r);
     if (scope === 'watch') return !!(watch && watch[r.id]);
+    if (scope === 'upcoming') return s === 'open' || s === 'forecast';
     if (scope === 'open') return s === 'open';
     if (scope === 'forecast') return s === 'forecast';
     if (scope === 'awarded') return s === 'awarded' || s === 'closed';
@@ -58,13 +60,23 @@
     });
   }
   function dateOf(r) { var d = r.dates || {}; return d.due || d.est || d.award || d.posted || '9999'; }
-  function sort(list, key) {
+  // Positionable: not awarded or closed, and the response date (if any) is still at least 14 days away, so there is time to shape the pursuit.
+  function isPositionable(r, today) {
+    var s = stageOf(r); if (s !== 'open' && s !== 'forecast') return false;
+    var d = r.dates || {}, t = today || new Date().toISOString().slice(0, 10); if (!d.due) return true;
+    var lim = new Date(t + 'T12:00:00Z'); lim.setUTCDate(lim.getUTCDate() + 14); return d.due >= lim.toISOString().slice(0, 10);
+  }
+  function fwdDate(r, t) { var d = r.dates || {}, v = d.due || d.est || null; return v && v >= t ? v : null; } // past dates do not count as 'soon'
+  function sort(list, key, today) {
     var a = list.slice();
+    if (key === 'soon') { var rank = function (r) { var s = stageOf(r); return s === 'open' || s === 'forecast' ? (isPositionable(r, today) ? 0 : 1) : 2; };
+      a.sort(function (x, y) { var d = rank(x) - rank(y); if (d) return d; var t = today || new Date().toISOString().slice(0, 10), dx = fwdDate(x, t), dy = fwdDate(y, t); if (rank(x) === 2) { dx = (x.dates || {}).award || dx; dy = (y.dates || {}).award || dy; return (dy || '') < (dx || '') ? -1 : (dy || '') > (dx || '') ? 1 : 0; }
+        if (dx && dy && dx !== dy) return dx < dy ? -1 : 1; if (dx && !dy) return -1; if (dy && !dx) return 1; return valueOf(y) - valueOf(x); }); return a; }
     if (key === 'agency') a.sort(function (x, y) { return (x.agency || '') < (y.agency || '') ? -1 : (x.agency || '') > (y.agency || '') ? 1 : valueOf(y) - valueOf(x); });
     else if (key === 'date') a.sort(function (x, y) { return dateOf(x) < dateOf(y) ? -1 : dateOf(x) > dateOf(y) ? 1 : valueOf(y) - valueOf(x); });
     else if (key === 'conf') a.sort(function (x, y) { return (isConfirmed(y) ? 1 : 0) - (isConfirmed(x) ? 1 : 0) || valueOf(y) - valueOf(x); });
     else a.sort(function (x, y) { return valueOf(y) - valueOf(x); });
     return a;
   }
-  return { merge: merge, stageOf: stageOf, valueOf: valueOf, kindOf: kindOf, isConfirmed: isConfirmed, sectorsOf: sectorsOf, STAGE_LABEL: STAGE_LABEL, SCOPES: SCOPES, inScope: inScope, filter: filter, sort: sort };
+  return { merge: merge, stageOf: stageOf, valueOf: valueOf, kindOf: kindOf, isConfirmed: isConfirmed, isPositionable: isPositionable, sectorsOf: sectorsOf, STAGE_LABEL: STAGE_LABEL, SCOPES: SCOPES, inScope: inScope, filter: filter, sort: sort };
 });
