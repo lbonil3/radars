@@ -39,3 +39,17 @@ Baseline tag `national-pre-theme`; finished tag `national-v-theme`. Day is the d
 | Day theme + Night/Auto preference, pre-paint script, theme-color, tests | adcb42c | `git revert adcb42c` |
 
 Whole theme change: `git revert --no-edit national-pre-theme..national-v-theme` (data-bot commits in the range only touch data and are re-applied by the next daily run). Reverting leaves a harmless unused `nr.theme` key in browsers.
+
+## v4.1 to v4.5 (sources, change tracking, since-last-visit, polish, no lane grouping)
+
+Baseline tag `national-pre-v4`; finished tag `national-v4-final`. Newest first when undoing.
+
+| Step | Commit / tag | Rollback |
+|---|---|---|
+| v4.5 one combined ungrouped set (no lane picker, no fee gating, optional minimum amount), cache v18 | 484a80c, `national-v4.5` (baseline `national-pre-nogroup`) | `git revert --no-edit national-pre-nogroup..national-v4.5` |
+| v4.4 collapsible Top of this view, empty states, two-column desktop, cache v17 | 4a97bad, `national-v4.4` | `git revert 4a97bad` |
+| v4.3 since-last-visit summary + on-device .ics export, cache v16 | 45ba30c, `national-v4.3` | `git revert 45ba30c` |
+| v4.2 change tracking (due date, addendum, status, value, title), cache v15 | 63e233a, `national-v4.2` | `git revert 63e233a` |
+| v4.1 Source health, polite Bonfire throttling, Houston SWMB public layer, cache v14 | f3c725c, `national-v4.1` | `git revert f3c725c` (also undoes the feed fixes) |
+
+Whole batch: `git revert --no-edit national-pre-v4..national-v4-final`. Daily data commits in that range are re-applied by the next daily refresh.

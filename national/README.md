@@ -1,5 +1,8 @@
 # National Radar
 
+> **v4.5 update:** the lane picker (PS&E / H&H fee > $5M, Water > $20M, Roadway + drainage) and the fee-threshold gating were removed. The app shows one combined, ungrouped set of records (merged from all three data files, de-duplicated by id), with an optional minimum-amount filter in the Filters drawer. The lane descriptions below describe how the data files are built, not what the screen groups by.
+
+
 Phone-first static page (vanilla JS, no build step, works offline). Three views of the same public feeds, selected by the buttons under the banner:
 
 - **PS&E / H&H, fee > $5M (default).** Consultant engineering services for PS&E / final design and hydrology and hydraulics (drainage, stormwater, floodplain, culverts, storm drains, coastal and resilience, water and wastewater design), all states, whose SOURCE states a fee or contract value. The threshold is an editable control (default strictly greater than $5,000,000, a one-tap "include exactly" toggle, and a visible note listing records at exactly the cutoff). Tabs: All, Upcoming / open, Forecast, Awarded, **Large projects, fee not published**, **Design-build**, Watchlist.
