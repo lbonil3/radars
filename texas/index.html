@@ -100,9 +100,29 @@
     <button type="button" class="btn wide" id="btnMoreRows" hidden>Show 100 more</button>
   </section>
 
+  <section id="v-intel" class="view" hidden aria-label="Intel: news and planning signals">
+    <div class="idisc" role="note"><b>News and planning signals, not solicitations.</b> Items are collected automatically from public news feeds and agenda systems and tagged by keyword. They are not verified and may be incomplete; check the original source before acting.</div>
+    <div class="ifil">
+      <div class="row"><input id="inQ" type="search" inputmode="search" enterkeyhint="search" placeholder="Search headlines, places, sources…" aria-label="Search Intel" autocomplete="off"></div>
+      <div class="chips" id="inTopics" aria-label="Topic"></div>
+      <div class="irow">
+        <label class="isel"><span>Place</span><select id="inPlace" aria-label="Place or region"></select></label>
+        <div class="seg" id="inDays" role="group" aria-label="Date range"><button type="button" data-idays="7">7 days</button><button type="button" data-idays="30">30 days</button><button type="button" data-idays="90" class="on">90 days</button></div>
+      </div>
+      <div class="chips"><button type="button" class="chip" id="inStar">&#9733; Starred</button><button type="button" class="chip" id="inUnread">Unread</button>
+        <label class="isel sm"><span>Sort</span><select id="inSort" aria-label="Sort"><option value="date">New first, then newest</option><option value="score">Most relevant</option></select></label>
+        <button type="button" class="chip" id="inCsv">Export CSV</button><button type="button" class="chip" id="inClear">Clear</button></div>
+    </div>
+    <div class="panel istate" id="inState" hidden></div>
+    <p class="icount" id="inCount" role="status" aria-live="polite"></p>
+    <div id="inList" class="cards"></div>
+    <button type="button" class="btn wide" id="inMore" hidden>Show 60 more</button>
+  </section>
+
   <section id="v-sources" class="view" hidden aria-label="Sources and freshness">
     <h2 class="sec">Data freshness</h2><div id="srcFresh" class="panel"></div>
     <h2 class="sec">Sources used</h2><div id="srcList" class="cards"></div>
+    <h2 class="sec">Intel feeds</h2><div id="srcIntel"></div>
     <h2 class="sec">Tested, not used</h2><div id="srcNo" class="cards"></div>
     <h2 class="sec">How to read this</h2><div id="srcHow" class="panel"></div>
   </section>
@@ -113,6 +133,7 @@
   <button type="button" data-tab="timeline">Timeline</button>
   <button type="button" data-tab="agencies">Agencies</button>
   <button type="button" data-tab="list">List</button>
+  <button type="button" data-tab="intel">Intel<span class="tbadge" id="intelBadge" hidden></span></button>
   <button type="button" data-tab="sources">Sources</button>
 </nav>
 
@@ -130,5 +151,7 @@
 <script src="model.js"></script>
 <script src="map.js"></script>
 <script src="app.js"></script>
+<script src="intel.js"></script>
+<script src="intel-ui.js"></script>
 </body>
 </html>

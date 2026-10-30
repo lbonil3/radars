@@ -409,7 +409,9 @@
   var map = null;
   function switchTab(t) {
     state.tab = t;
-    ['radar', 'timeline', 'agencies', 'list', 'sources'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
+    ['radar', 'timeline', 'agencies', 'list', 'intel', 'sources'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
+    $('kpis').hidden = t === 'intel'; document.querySelector('.filters').hidden = t === 'intel'; /* Intel has its own filters */
+    if (t === 'intel' && window.TXIntelUI) window.TXIntelUI.onShow();
     Array.prototype.forEach.call(document.querySelectorAll('.tabs button'), function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
     if (map) { map.setVisible(t === 'radar'); }
     if (t === 'timeline') scrollTimeline();
@@ -418,6 +420,7 @@
   function toggleIn(arr, v) { var i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); }
   function onClick(e) {
     var t = e.target, el;
+    if (t.closest('#v-intel')) return; /* handled by intel-ui.js */
     if (t.closest('.capwrap') && !t.closest('[data-star]')) return;
     if ((el = t.closest('[data-star]'))) { e.stopPropagation(); toggleWatch(el.getAttribute('data-star')); return; }
     if ((el = t.closest('[data-open]'))) { openSheet(el.getAttribute('data-open')); return; }
