@@ -1,0 +1,5091 @@
+{
+ "generatedAt": "2026-10-30T19:55:42.489Z",
+ "keepDays": 90,
+ "note": "Public news and planning signals, not solicitations. Verify with the original source.",
+ "count": 182,
+ "sources": {
+  "generatedAt": "2026-10-30T19:55:42.489Z",
+  "group": "texas-intel",
+  "counts": {
+   "fresh": 34,
+   "stale": 0,
+   "failing": 0,
+   "skipped": 0,
+   "disabled": 0
+  },
+  "sources": [
+   {
+    "id": "hpw",
+    "name": "Houston Public Works news",
+    "agency": "Houston Public Works",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.047Z",
+    "records": 0,
+    "fetched": 10,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "glo",
+    "name": "Texas GLO news",
+    "agency": "Texas General Land Office",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.161Z",
+    "records": 0,
+    "fetched": 10,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "tml",
+    "name": "Texas Municipal League news",
+    "agency": "Texas Municipal League",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.504Z",
+    "records": 0,
+    "fetched": 2,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "tribune",
+    "name": "Texas Tribune (headlines)",
+    "agency": "Texas Tribune",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.405Z",
+    "records": 1,
+    "fetched": 20,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "dallas",
+    "name": "Dallas City News",
+    "agency": "City of Dallas",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.749Z",
+    "records": 1,
+    "fetched": 12,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-sugarland",
+    "name": "City of Sugar Land",
+    "agency": "City of Sugar Land",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.300Z",
+    "records": 0,
+    "fetched": 7,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-leaguecity",
+    "name": "City of League City",
+    "agency": "City of League City",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.534Z",
+    "records": 0,
+    "fetched": 31,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-galveston",
+    "name": "City of Galveston",
+    "agency": "City of Galveston",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.359Z",
+    "records": 0,
+    "fetched": 2,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-baytown",
+    "name": "City of Baytown",
+    "agency": "City of Baytown",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.485Z",
+    "records": 0,
+    "fetched": 8,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-pasadena",
+    "name": "City of Pasadena",
+    "agency": "City of Pasadena",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.319Z",
+    "records": 0,
+    "fetched": 4,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-rosenberg",
+    "name": "City of Rosenberg",
+    "agency": "City of Rosenberg",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.334Z",
+    "records": 0,
+    "fetched": 1,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-bellaire",
+    "name": "City of Bellaire",
+    "agency": "City of Bellaire",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.502Z",
+    "records": 0,
+    "fetched": 4,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-westu",
+    "name": "City of West University Place",
+    "agency": "City of West University Place",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.538Z",
+    "records": 0,
+    "fetched": 13,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-tomball",
+    "name": "City of Tomball",
+    "agency": "City of Tomball",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.530Z",
+    "records": 0,
+    "fetched": 6,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-webster",
+    "name": "City of Webster",
+    "agency": "City of Webster",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.479Z",
+    "records": 0,
+    "fetched": 1,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-texascity",
+    "name": "City of Texas City",
+    "agency": "City of Texas City",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.450Z",
+    "records": 0,
+    "fetched": 3,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-angleton",
+    "name": "City of Angleton",
+    "agency": "City of Angleton",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.459Z",
+    "records": 0,
+    "fetched": 4,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-deerpark",
+    "name": "City of Deer Park",
+    "agency": "City of Deer Park",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.517Z",
+    "records": 0,
+    "fetched": 2,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-laporte",
+    "name": "City of La Porte",
+    "agency": "City of La Porte",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.410Z",
+    "records": 0,
+    "fetched": 9,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-portarthur",
+    "name": "City of Port Arthur",
+    "agency": "City of Port Arthur",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.360Z",
+    "records": 0,
+    "fetched": 3,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-frisco",
+    "name": "City of Frisco",
+    "agency": "City of Frisco",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.107Z",
+    "records": 0,
+    "fetched": 20,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-mckinney",
+    "name": "City of McKinney",
+    "agency": "City of McKinney",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.074Z",
+    "records": 0,
+    "fetched": 21,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-garland",
+    "name": "City of Garland",
+    "agency": "City of Garland",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.542Z",
+    "records": 0,
+    "fetched": 11,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-mansfield",
+    "name": "City of Mansfield",
+    "agency": "City of Mansfield",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.393Z",
+    "records": 0,
+    "fetched": 1,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "cp-newbraunfels",
+    "name": "City of New Braunfels",
+    "agency": "City of New Braunfels",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.363Z",
+    "records": 2,
+    "fetched": 20,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "leg-harriscountytx",
+    "name": "Harris County Commissioners Court agenda items",
+    "agency": "Harris County Commissioners Court",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:43.122Z",
+    "records": 41,
+    "fetched": 60,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "leg-austintexas",
+    "name": "City of Austin agenda items",
+    "agency": "City of Austin",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:44.259Z",
+    "records": 33,
+    "fetched": 52,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "leg-cityofdallas",
+    "name": "City of Dallas agenda items",
+    "agency": "City of Dallas",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:45.932Z",
+    "records": 48,
+    "fetched": 60,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "leg-corpuschristi",
+    "name": "City of Corpus Christi agenda items",
+    "agency": "City of Corpus Christi",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:47.218Z",
+    "records": 26,
+    "fetched": 34,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "leg-elpasotexas",
+    "name": "City of El Paso agenda items",
+    "agency": "City of El Paso",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:48.745Z",
+    "records": 21,
+    "fetched": 38,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "leg-plano",
+    "name": "City of Plano agenda items",
+    "agency": "City of Plano",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:50.178Z",
+    "records": 6,
+    "fetched": 13,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "fedreg",
+    "name": "Federal Register (Texas flood / water notices)",
+    "agency": "Federal Register",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:47.169Z",
+    "records": 1,
+    "fetched": 7,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "grantsgov",
+    "name": "Grants.gov (flood / water / infrastructure)",
+    "agency": "Grants.gov",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:48.695Z",
+    "records": 1,
+    "fetched": 65,
+    "error": null,
+    "failingSince": null
+   },
+   {
+    "id": "openfema",
+    "name": "FEMA disaster declarations (Texas)",
+    "agency": "FEMA",
+    "group": "texas-intel",
+    "health": "fresh",
+    "lastAttempt": "2026-10-30T19:55:42.489Z",
+    "lastSuccess": "2026-10-30T19:55:42.685Z",
+    "records": 1,
+    "fetched": 3,
+    "error": null,
+    "failingSince": null
+   }
+  ]
+ },
+ "items": [
+  {
+   "id": "iazijzz",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and Action: Filing of semi-annual reports as required under Chapter 395 of the Texas Local Government Code with respect to the progress of the capital improvements plan and report to the…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16644&GUID=1DC9CBD5-28C1-4BFC-B1F4-DDAB37F7BFC4",
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Board Agenda Items · Capital Improvements Advisory Committee · BC-2668",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1a9bsp9",
+   "srcId": "tribune",
+   "source": "Texas Tribune (headlines)",
+   "title": "Trump says more FEMA aid is coming to Texas after 2026 floods",
+   "link": "https://feeds.texastribune.org/link/16799/17510265/trump-fema-flood-aid-hill-country-texas",
+   "date": "2026-10-28T20:08:56.000Z",
+   "desc": "",
+   "topics": [
+    "flood"
+   ],
+   "place": null,
+   "county": null,
+   "region": "Statewide",
+   "score": 4,
+   "why": [
+    "flood"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1rhl3xm",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action that the El Paso City Council hereby approves the list of projects on Exhibit “A” attached to the Resolution, totaling $72,550,000, which establishes: 1) the “Comprehensive…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16632&GUID=7FE7A191-EC58-42DA-AC81-A21CBEF5C4E3",
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Other Business · City Council · 26-1241",
+   "topics": [
+    "budget",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 8,
+   "why": [
+    "capital improvement",
+    "bridge"
+   ],
+   "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i7psvdf",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action that the City Manager be authorized to sign a Mutual Cooperation Agreement between the CITY OF EL PASO and the PASO DEL NORTE COMMUNITY FOUNDATION, a non-profit 501(c)(3)…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16638&GUID=550921D8-A869-4239-A38B-CCDD99AF85E4",
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Other Business · City Council · 26-1247",
+   "topics": [
+    "budget",
+    "road",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 8,
+   "why": [
+    "capital improvement",
+    "bridge"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1rbsn85",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "The award of Solicitation 2025-0283 El Paso Electric Company Paved Trails to Horizone Construction 1, LTD for a total estimated amount of $1,339,456.23. Department: Capital Improvement Award to:…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16605&GUID=939B7928-5E25-4115-B8FC-FA76D1DB2C9A",
+   "date": "2026-10-26T00:00:00.000Z",
+   "desc": "Bids · City Council · 26-1221",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 8,
+   "why": [
+    "capital improvement",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i12xslm7",
+   "srcId": "grantsgov",
+   "source": "Grants.gov (flood / water / infrastructure)",
+   "title": "Fiscal Year 2026 Flood Mitigation Assistance",
+   "link": "https://www.grants.gov/search-results-detail/364124",
+   "date": "2026-10-22T05:00:00.000Z",
+   "desc": "Department of Homeland Security - FEMA · DHS-26-MT-029-000-98 · posted · closes 02/26/2027 (federal funding notice)",
+   "topics": [
+    "budget",
+    "grant",
+    "flood"
+   ],
+   "place": null,
+   "county": null,
+   "region": "Federal / national",
+   "score": 10,
+   "why": [
+    "flood mitigation"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "Grants.gov (flood / water / infrastructure)",
+     "link": "https://www.grants.gov/search-results-detail/364124"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1uto6y0",
+   "srcId": "cp-newbraunfels",
+   "source": "City of New Braunfels",
+   "title": "City of New Braunfels Begins Work on Coll Street Drainage Improvement Project",
+   "link": "https://www.newbraunfels.gov/CivicAlerts.aspx?aid=4161",
+   "date": "2026-10-21T18:45:52.000Z",
+   "desc": "The City of New Braunfels has officially begun construction on the $9.6 million Coll Street Drainage Improvement Project, which is designed to improve drainage, upgrade aging utilities, and enhance pedestrian access along Coll Street...",
+   "topics": [
+    "flood",
+    "water",
+    "road"
+   ],
+   "place": "New Braunfels",
+   "county": "Comal",
+   "region": "Central Texas",
+   "score": 7,
+   "why": [
+    "drainage",
+    "design"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iz1mkqp",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of the sale by Harris County Flood Control District, a political subdivision of the State of Texas, of a 0.05-acre pipeline easement to the Targa Gulf Coast NGL Pipeline LLC…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49248&GUID=ABD15033-1628-47DE-81B7-0D083B1A7C09",
+   "date": "2026-10-21T00:00:00.000Z",
+   "desc": "Asset Management · Commissioners Court · 26-7226",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 18,
+   "why": [
+    "harris county flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i15g9wm1",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Noemi Herrera Rojas to the Capital Improvements Advisory Committee by Representative Lily Limón, District 7.",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16574&GUID=E1CD7B23-A68E-4324-ADD5-3106A3DBCBF0",
+   "date": "2026-10-20T00:00:00.000Z",
+   "desc": "Board Appointments · City Council · 26-1198",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1jjl45w",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Joshua Rhoads to the Capital Improvements Advisory Committee by Representative Alejandra Chávez, District 1.",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16575&GUID=238F97A2-B9DA-4DD6-A056-4647AEA7F405",
+   "date": "2026-10-20T00:00:00.000Z",
+   "desc": "Board Appointments · City Council · 26-1199",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ik0dtzx",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "October 28, 2026, City Council Agenda Items 26-3265A, 26-3266A, and 26-3263A Seeking Approval of - General Obligation Refunding and Improvement Bonds, Series 2026; Equipment Acquisition Contractual…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26626&GUID=C7D3F900-217B-4074-8D46-166B66A2E73D",
+   "date": "2026-10-20T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Committee on Finance · 26-3486A",
+   "topics": [
+    "bond",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "sewer"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iyf0t87",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a joint use agreement with Texas Department of Transportation (TxDOT) to establish joint access within TxDOT right-of-way, allowing the Flood Control District to perform…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49189&GUID=82663868-A4D8-49AC-9657-CE9C169B29BE",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7167",
+   "topics": [
+    "grant",
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 31,
+   "why": [
+    "flood control",
+    "watershed",
+    "cdbg-mit",
+    "txdot",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "imhlflb",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to decree that the Harris County Flood Control District project serves a public purpose and public necessity, which requires that the Harris County Real Property Division be…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49190&GUID=9AC4FEA7-4E2C-4A62-BBDA-AE37FFF4A4A7",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Public Necessity · Commissioners Court · 26-7168",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 28,
+   "why": [
+    "bond",
+    "hmgp",
+    "harris county flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i15iyt45",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an interlocal agreement with the University of Houston in the amount of $533,444, to study and monitor floating vegetated islands at the Stormwater Detention Basin at the…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49188&GUID=A35F95FB-E7F4-4C92-9DDC-401D07B0C614",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7166",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda",
+    "policy"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 22,
+   "why": [
+    "stormwater",
+    "detention",
+    "watershed",
+    "bond",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1i2f13q",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of amendment No. 4 to an agreement with Stantec Consulting Services, Inc., in the amount of $336,753.50, to provide additional archeological and environmental consulting…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49187&GUID=CBB2F489-2F45-4B5F-BB8B-86CC4AF836FB",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7165",
+   "topics": [
+    "bond",
+    "flood",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 20,
+   "why": [
+    "flood",
+    "channel",
+    "bayou",
+    "watershed",
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ijmx0uf",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an award on the basis of highest overall evaluation and that the County Judge execute an agreement with CliftonLarsonAllen LLP for external audit services for Harris County,…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49183&GUID=70828C76-B91E-4230-A071-A26118876FE2",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7161",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i145x3lm",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request that the County Judge execute an amendment to an agreement with R.G. Miller Engineers, Inc. in the additional amount of $50,000 for professional architectural and engineering services to…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49227&GUID=34DF93CD-5A57-4C8B-B305-8C35FD724A11",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7205",
+   "topics": [
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "is9zghi",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request that the County Judge execute an amendment to an agreement with Edminster, Hinshaw, Russ & Associates, Inc. d/b/a EHRA Engineering for professional architectural and engineering services to…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49228&GUID=5A60DE78-7996-4A37-B942-AA1D22BA09C4",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7206",
+   "topics": [
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1m2qm4z",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Executive session pursuant to Texas Government Code § 551.071 and Texas Disciplinary Rules of Professional Conduct Rule 1.05 to consult with attorneys regarding legal issues concerning LM & JM…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26700&GUID=655B35B9-19F4-4AC0-9AEE-6EEC3DB6F4A7",
+   "date": "2026-10-19T00:00:00.000Z",
+   "desc": "E-Session Item · City Council · 26-1635",
+   "topics": [
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 4,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1cmew2g",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request that the County Judge execute an amendment to an agreement with Resalire Infrastructure Solutions LLC in the additional amount of $250,000 for additional professional…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49127&GUID=182AFC2D-FDF7-4E79-B091-D651211F4048",
+   "date": "2026-10-16T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7105",
+   "topics": [
+    "flood",
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 22,
+   "why": [
+    "flood control",
+    "bayou",
+    "watershed",
+    "engineering"
+   ],
+   "hint": "Planning study: follow-on design phases often go to consultants.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i818c5t",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Transmittal by the Office of the Purchasing Agent of a project scheduled for advertisement for general watershed repairs to channels (E) White Oak Bayou, (W) Buffalo Bayou, (H) Hunting Bayou, and…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49130&GUID=3E39C932-6F5F-47E3-8558-18861463FB86",
+   "date": "2026-10-16T00:00:00.000Z",
+   "desc": "Transmittal · Commissioners Court · 26-7108",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 22,
+   "why": [
+    "flood control",
+    "channel",
+    "bayou",
+    "watershed"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i9nxcgz",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of six Community Development Block Grant Entitlement (CDBG-EN) funded agreements between Harris County and 1) Harris County Precinct 2 total allocation of $1,155,000.00 for…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49174&GUID=F6AF1E53-106B-4648-8549-5E74A07E30AF",
+   "date": "2026-10-16T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7152",
+   "topics": [
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 20,
+   "why": [
+    "grant",
+    "cdbg",
+    "wastewater",
+    "water line",
+    "sewer"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1oc7t1u",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an award on the basis of low bid to Hassell Construction Group, LLC in the amount of $3,668,105 for extension of Birnam Wood Boulevard from Hickorygate Drive to south of…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49126&GUID=F6068384-7ECF-4EFA-B771-3F084981E66B",
+   "date": "2026-10-16T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7104",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 18,
+   "why": [
+    "harris county flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "igox90o",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Transmittal by the Office of the Purchasing Agent of a project scheduled for advertisement for mowing and various maintenance services for the South Central Region for the Flood Control District…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49129&GUID=505B6181-4E98-45A7-8C08-4BB55B65A54E",
+   "date": "2026-10-16T00:00:00.000Z",
+   "desc": "Transmittal · Commissioners Court · 26-7107",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1r5ezkh",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with InfraTECH Engineers & Innovators, LLC in the amount of $91,488.00 for Professional Services in connection with drainage assessment - 2025,…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49117&GUID=C9332096-B724-4368-B337-F65ABB0BFAC0",
+   "date": "2026-10-15T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7095",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "drainage",
+    "professional services"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1pxgufm",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an interlocal agreement with Saint George Place Redevelopment Authority Reinvestment Zone Number One, City of Houston, Texas, and City of Houston Parks and Recreation…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49118&GUID=7E079FAD-39EF-4085-976C-50008E9047A8",
+   "date": "2026-10-15T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7096",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "drainage",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ibu70ry",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution that directs the City Manager to update the City’s Strategic Housing Blueprint to address updated housing production and preservation goals, include a data analysis,…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29356&GUID=522C563E-C42C-40F9-A8BF-6EB94A290B67",
+   "date": "2026-10-15T00:00:00.000Z",
+   "desc": "Item From Council Committee · City Council · 26-2987",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 10,
+   "why": [
+    "bond program"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i108750r",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by Leon, Alcala, Morse & Reynolds, PLLC, as bond counsel, for approval of a resolution approving, solely for purposes of Section 147(f) of the Internal Revenue Code, a tax-exempt financing…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49092&GUID=444FD968-7BDE-48AE-A5D6-283EE6540A5C",
+   "date": "2026-10-15T00:00:00.000Z",
+   "desc": "Miscellaneous Section · Commissioners Court · 26-7070",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 6,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond approved: design contracts usually follow; watch for RFQs for the listed projects.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ibw903d",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of the Purchasing Agent for approval of an award on the basis of lowest priced proposal meeting requirements and that the County Judge execute an agreement with Fun Abounds,…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49115&GUID=BB47DF83-9B73-4ABB-983A-A9D6449C930A",
+   "date": "2026-10-15T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7093",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 4,
+   "why": [
+    "design"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i16fr15",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Sago Solutions LLC (Primary); and P-Ville Incorporated (Secondary) for mowing and various maintenance services for the Northwest Region for the Flood…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49065&GUID=C06286E6-6ADF-4A88-8A54-AA4D04808DB8",
+   "date": "2026-10-14T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7043",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "izn6o58",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a second amendment to an agreement with Geotest Engineering, Inc. in the amount of $35,154.75 for Professional Engineering Services regarding Construction Materials Testing…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49072&GUID=D5D0FB8D-977E-4F34-AB52-427429A7CE56",
+   "date": "2026-10-14T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7050",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iwqhjh5",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an Interlocal Agreement with the City of Tomball in connection with construction of a trail within Jerry Matheson Park, conveyance of the land to Harris County from…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49077&GUID=264AD747-AD9E-4F56-B149-5D33AC59C8F4",
+   "date": "2026-10-14T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7055",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "drainage",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1hpsi4j",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-3301A) Authorize (1) a professional services contract with Halff Associates, Inc. to provide engineering design services for the McKinney Ave/Cole Avenue Two-way Conversion project (also known…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26531&GUID=71212DDE-1B60-476F-BC27-D08FCAD556D5",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3391A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "McKinney",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 28,
+   "why": [
+    "professional services",
+    "design services",
+    "engineering",
+    "capital improvement",
+    "bond",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of Dallas agenda items",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26441&GUID=4C2B1B12-A720-4194-94FC-85048AF6F759"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "info9e3",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-2770A) Authorize a professional services contract with Ardurra Group, Inc. to provide engineering services for the design of four local streets, 3000 Marideen Avenue from Tangle Terrace to…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26541&GUID=CF5B381C-8D7D-4452-BC46-F99E86BE5E13",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3401A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 28,
+   "why": [
+    "engineering services",
+    "professional services",
+    "design",
+    "capital improvement",
+    "bond",
+    "wastewater"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1jcp65o",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency/Texas Division of Emergency Management to extend the period of…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49059&GUID=C01261CD-A91E-41BC-97E8-FAEF7687195F",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7037",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 26,
+   "why": [
+    "flood control",
+    "bayou",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1tshx7q",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the U.S. Department of Agriculture/Natural Resources Conservation Service to extend the grant end date…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49062&GUID=FB23B986-2E9B-416C-BB20-B3E5042D5130",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7040",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 26,
+   "why": [
+    "flood control",
+    "bayou",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1kbz2x8",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Texas Division of Emergency Management to extend the grant end date to April 1, 2027, for the FEMA…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49060&GUID=4DC3938E-2243-49DB-9787-941575116671",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7038",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 22,
+   "why": [
+    "flood control",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "also": [
+    {
+     "source": "Harris County Commissioners Court agenda items",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49063&GUID=949C4550-DDC5-4902-954D-76591B926809"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1b1dgzc",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the United States Department of Agriculture/Natural Resources Conservation Service to extend the grant…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49061&GUID=E738B1C2-9169-4E81-8E4D-8E7FF38FC21E",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7039",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 18,
+   "why": [
+    "flood control",
+    "watershed",
+    "grant"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1y252i7",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency to extend the grant end date to September 30, 2028, and…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49064&GUID=6A2D024C-B06C-4433-BB6E-563A8B1297D6",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7042",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 16,
+   "why": [
+    "flood control",
+    "budget",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iskenjb",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of authorized budget appropriation transfers for the Flood Control District and certain county departments.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49051&GUID=E6FB248F-7CFE-49F8-8434-54670737F6C3",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Financial Authorization · Commissioners Court · 26-7028",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "flood control",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ieszo2f",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to submit an application to the Federal Emergency Management Agency for grant funds in the amount of $500,000, with no required match, for the FY26…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49057&GUID=C7D3135E-3C16-4441-A91E-0751177E947A",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7035",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "flood control",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "Harris County Commissioners Court agenda items",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49058&GUID=ADA34C2D-2DA4-4D12-8480-F1AB865CABF3"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i4rkwff",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-2840A) Authorize a professional services contract with Gresham Smith to provide engineering services for the design of Elsie Faye Heggins TOD Connections “2nd to Scyene” - Not to exceed $____ -…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26542&GUID=8C49A73A-114B-44E5-81BE-72A927594E57",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3402A",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 14,
+   "why": [
+    "engineering services",
+    "professional services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1aqr4se",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-2996A) Authorize a professional engineering services contract with AECOM Technical Services, Inc., to provide planning and engineering services for the Dallas Streetcar project that connects the…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26529&GUID=5378EFF1-1E5F-467D-8D7D-28DD732184A3",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-3389A",
+   "topics": [
+    "budget",
+    "grant",
+    "road",
+    "policy",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "master plan"
+   ],
+   "hint": "Planning study: follow-on design phases often go to consultants.",
+   "also": [
+    {
+     "source": "City of Dallas agenda items",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26136&GUID=30A249DD-9A9C-48AA-B154-BA511A0642B2"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ipcp5d4",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-3198A) Authorize a three-year master agreement for the purchase of laboratory equipment and supplies for the Dallas Water Utilities Department - Taylor Distribution Group, LLC dba TDG Scientific…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26533&GUID=0A03CA40-01CA-414D-AEB2-09874BDF47AD",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3393A",
+   "topics": [
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 12,
+   "why": [
+    "drainage",
+    "stormwater"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "also": [
+    {
+     "source": "City of Dallas agenda items",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26338&GUID=05EEEB78-8F89-4535-BBCA-3764B44FDBFC"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ihj5ejh",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-2675A) Authorize an engineering services contract with Garver, LLC to provide design and construction administration services, construction alternatives, implement aircraft communications…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26519&GUID=45B7AB4B-7547-45A9-9763-754ACFC2CE74",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-3379A",
+   "topics": [
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "engineering services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i12pnck6",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-966A) Authorize an amendment to Resolution No. 25-1445, previously approved on September 10, 2025, for an Advance Funding Agreement (AFA) with the Texas Department of Transportation (TxDOT) for…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26544&GUID=2644CCCB-2F9B-4E08-A915-25A85B306688",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3404A",
+   "topics": [
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "bond",
+    "grant",
+    "txdot"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ibdt64m",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Resolution amending a portion of TIRZ #2 Capital Improvement Projects (CIP) to fully fund the North Padre Island Seawall CIP Project, including transferring $1,408,621.00 from the Sand Dollar CIP…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26680&GUID=2E29A763-09B8-49F6-94BB-C183715075E0",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Motion · Reinvestment Zone No. 2 - Island · 26-1615",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 10,
+   "why": [
+    "capital improvement",
+    "cip"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1rk27ko",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-2728A) Authorize a three-year engineering services contract in an amount not to exceed $1,077,650.00, with two one-year renewal options in an amount not to exceed $TBD to provide professional…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26540&GUID=3FB661FE-B4FA-4A06-A9C4-441A0303FC81",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3400A",
+   "topics": [
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 8,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ibh39p5",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize negotiation and execution of all documents and instruments necessary or desirable to acquire, on behalf of Austin Transportation and Public Works, a right of way and two-part temporary…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29326&GUID=CE507440-1865-49AE-8CE3-76E8C333538D",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2957",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i16axac9",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution authorizing the filing of eminent domain proceedings and payment to acquire the property interest needed in support of Austin Water’s NW Tarrytown Wastewater Pipeline Renewal…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29327&GUID=D2405CA7-BB59-4DA8-9C38-98467E6B8F77",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "Eminent Domain · City Council · 26-2958",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "budget",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i11czud4",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "(26-3203A) Authorize a three-year Interlocal Agreement with ASC ENVIRONMENTAL SERVICES, INC. through North Texas Municipal Water District for water and wastewater processing facility cleaning…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26534&GUID=5421C7CD-65CD-421C-A4D8-BD606D5F841E",
+   "date": "2026-10-13T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Transportation and Infrastructure Committee · 26-3394A",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 6,
+   "why": [
+    "wastewater",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "also": [
+    {
+     "source": "City of Dallas agenda items",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26343&GUID=3A76E35E-86DA-4FA9-BF7B-2B1C756E1ED7"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1txy2tg",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an agreement with Geoscience Engineering & Testing, Inc. in the amount of $284,125.00 for Professional Engineering Services regarding Construction Materials Testing…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49046&GUID=56799CB0-605E-4FC9-846E-94023BAC1BE2",
+   "date": "2026-10-12T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7023",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "roadway"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1h624oi",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an agreement with Alliance Laboratories, Inc. in the amount of $609,001.00 for Professional Engineering Services regarding Construction Materials Testing and related…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49048&GUID=FC7926AE-CC12-4F62-8284-A016C040011B",
+   "date": "2026-10-12T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7025",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "roadway"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1ykcrmo",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an agreement with InfraTECH Engineers & Innovators, LLC. in the amount of $501,406.28 for professional engineering services in connection with Study and Design of…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49049&GUID=7DE3AD34-910E-47DC-B054-50ADD03A26D7",
+   "date": "2026-10-12T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7026",
+   "topics": [
+    "road",
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1exs1ct",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance and sale of City of Austin, Texas Electric Utility System Revenue Refunding and/or Improvement Bonds, in one or more series with an aggregate par amount…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29317&GUID=5851630B-959A-4131-BFEE-629196B4E86F",
+   "date": "2026-10-12T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2948",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 8,
+   "why": [
+    "bond",
+    "budget",
+    "utility"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1iotyip",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Conduct a public hearing and consider an ordinance granting floodplain variances for the property located at 1213 Fort Branch Boulevard from certain floodplain regulations prescribed by City Code…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29323&GUID=DE18C2C0-74C2-42E1-8DFC-0C106644CF7E",
+   "date": "2026-10-12T00:00:00.000Z",
+   "desc": "Public Hearing · City Council · 26-2954",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "flood",
+    "grant"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1th4kfu",
+   "srcId": "cp-newbraunfels",
+   "source": "City of New Braunfels",
+   "title": "City Hosting Open House: Conrads Lane and South Kowald Lane Improvement Projects",
+   "link": "https://www.newbraunfels.gov/CivicAlerts.aspx?aid=4154",
+   "date": "2026-10-08T20:31:27.000Z",
+   "desc": "The City of New Braunfels is hosting an open-house style public meeting for residents to learn more about roadway improvement projects on South Kowald Lane and Conrads Lane, both funded through the 2023 Bond program...",
+   "topics": [
+    "bond",
+    "road"
+   ],
+   "place": "New Braunfels",
+   "county": "Comal",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond program",
+    "roadway"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ir85dyt",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on the award of Solicitation 2026-0448 GA Ramp Rehabilitation Stage 2 & 3 to CI Constructors, Inc. for a total estimated amount of $12,096,647.50. Department: Capital…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16506&GUID=4BC5F27B-257E-4927-BBE3-2CE037555CF0",
+   "date": "2026-10-08T00:00:00.000Z",
+   "desc": "Other Bids, Contracts, Procurements · City Council · 26-1144",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 10,
+   "why": [
+    "capital improvement",
+    "budget",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1i255pz",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Engineering Services Type A Quarterly Project Report",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26660&GUID=575E5B4A-8F78-49A5-8063-311309390EE3",
+   "date": "2026-10-08T00:00:00.000Z",
+   "desc": "Presentation · City Council · 26-1595",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 8,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "also": [
+    {
+     "source": "City of Corpus Christi agenda items",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26662&GUID=D4D53966-ABFA-4846-A5CA-AA2D4F733103"
+    },
+    {
+     "source": "City of Corpus Christi agenda items",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26644&GUID=400A338E-09AE-4D2A-9836-4295A55171F2"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ipeq0pf",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $15,000,000, to fund the Helms Stormwater Detention Basin and Channel…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49024&GUID=B77DA1D3-D626-4339-B208-C1F5B635FD13",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7001",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 38,
+   "why": [
+    "stormwater",
+    "flood control",
+    "detention",
+    "channel",
+    "bayou",
+    "watershed"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1eb6tuw",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with the Texas Water Development Board, in the amount of $2,500,000, to fund the Halls Aldine Westfield South Stormwater…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49021&GUID=7D45882C-D264-41D8-90C0-7778818123D5",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-6998",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 34,
+   "why": [
+    "stormwater",
+    "flood control",
+    "detention",
+    "channel",
+    "bayou",
+    "watershed"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1jxu9ha",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board in the amount of $2,500,000, to address flood risk mitigation through a combination of…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49025&GUID=1F98C6CF-5BCC-486D-87A4-BE8C80343113",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7002",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 34,
+   "why": [
+    "stormwater",
+    "flood control",
+    "detention",
+    "channel",
+    "bayou",
+    "bond"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ibnjqbm",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $6,500,000, to fund the West Little York Stormwater Detention Basin in…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49019&GUID=F29CF01E-1512-443D-9C0F-D48328D80D98",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-6996",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 32,
+   "why": [
+    "stormwater",
+    "flood control",
+    "detention",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i11bgs9",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $11,000,000, to fund the Cloverleaf Area Drainage Improvements in the…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49023&GUID=72254683-2652-497E-B995-1899C944FE38",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7000",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 32,
+   "why": [
+    "drainage",
+    "flood control",
+    "bayou",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1day0ax",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $10,000,000, to fund the South Mayde Creek Bypass Channel in the Addicks…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49022&GUID=7EFA5CC0-261F-445C-B493-C8FC4319A8B0",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-6999",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 24,
+   "why": [
+    "flood control",
+    "channel",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "inkq17q",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $5,000,000, to fund the Kingwood Diversion Ditch Improvements in the San…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49018&GUID=F5A38A24-1FF2-464F-8214-772BDBC236F0",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-6995",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 22,
+   "why": [
+    "flood control",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iviljqx",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "One-Reading ordinance authorizing the acceptance of a grant from the Department of Homeland Security, Federal Emergency Management Agency under the Hazard Mitigation Grant Program, DR-4332 Hurricane…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26648&GUID=F73C069A-9E12-4FB5-8502-229C0ED93A47",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Ordinance · City Council · 26-1583",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 22,
+   "why": [
+    "drainage",
+    "storm water",
+    "budget",
+    "grant",
+    "hazard mitigation"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1nj1qpv",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $22,500,000, to fund repairs needed due to erosion and sediment deposits…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49020&GUID=5F3DE0C5-A48E-45CF-81E9-8635CD2A37AF",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-6997",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 18,
+   "why": [
+    "flood control",
+    "watershed",
+    "grant"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1pra318",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of the Purchasing Agent for approval of a ratification of a renewal option with Kimley-Horn and Associates, Inc.*, at a cost of $200,000; and Quiddity Engineering, LLC,…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=48993&GUID=842906EF-E30F-4C3A-A657-E548631ADF1E",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-6970",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "if6a25f",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of Management and Budget for approval of commercial paper funding for Engineering for the Miscellaneous Building Cost project in the additional amount of $4,370,000 for a total…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49014&GUID=42CD5AA8-B78E-4ABE-8F51-DFA7D2BFC6D5",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Commercial Paper · Commissioners Court · 26-6991",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 6,
+   "why": [
+    "engineering",
+    "budget"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1fa0lc7",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Capital Improvement Report",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26658&GUID=005B113A-AA4B-4762-9E1B-CC8B389CACD0",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Staff Report · Airport Board · 26-1593",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1skfans",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of the Purchasing Agent for approval of an award on the basis of best proposal meeting requirements and that the County Judge execute an agreement with Kraftsman, LLC to…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49004&GUID=EAC62A5E-DE09-49F4-96E2-9C7E8DB1C13C",
+   "date": "2026-10-07T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-6981",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 4,
+   "why": [
+    "design"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "also": [
+    {
+     "source": "Harris County Commissioners Court agenda items",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=49005&GUID=EF6A197C-314A-4A79-8EE4-1B9EB54DBDF9"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1uwdlow",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Engineering Services Quarterly Project Update for Type B",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26643&GUID=4C67C176-F19F-4825-B26E-D04B8012186C",
+   "date": "2026-10-06T00:00:00.000Z",
+   "desc": "Presentation · Corpus Christi B Corporation - Type B · 26-1578",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 8,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "icwlpza",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "An ordinance authorizing the issuance and sale of City of Dallas, Texas Waterworks and Sewer System Revenue Bonds, Series 2026C, in the amount of $34,000,000 to the Texas Water Development Board;…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26403&GUID=CAF85B01-80DF-43ED-AB6A-D16F84E50E7B",
+   "date": "2026-10-05T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · City Controller's Office · 26-3263A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 14,
+   "why": [
+    "capital improvement",
+    "wastewater",
+    "sewer"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1au8mxc",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "An ordinance authorizing (1) the issuance and sale of City of Dallas, Texas, General Obligation Refunding and Improvement Bonds, Series 2026, in an aggregate principal amount not to exceed…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26405&GUID=69BEE8E0-240F-490F-AFED-96BA18CAD3B1",
+   "date": "2026-10-05T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · City Controller's Office · 26-3265A",
+   "topics": [
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i6wwpqq",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Wastewater Reuse Project Update",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26617&GUID=0338D626-C3F8-409B-9F50-B0524CC5BA60",
+   "date": "2026-10-02T00:00:00.000Z",
+   "desc": "Presentation · City Council · 26-1552",
+   "topics": [
+    "water",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 4,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "id8dmt",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution directing the City Manager to incorporate a six-year bond cycle as a foundational consideration in bond-program development consistent with the City’s financial policies…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29283&GUID=078F72D7-405B-48BB-A232-6A7770308CC1",
+   "date": "2026-10-01T00:00:00.000Z",
+   "desc": "Item from Council · City Council · 26-2914",
+   "topics": [
+    "budget",
+    "bond",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1td6y2w",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion awarding a construction contract to South Texas Building Partners Inc. of Corpus Christi for construction of the Oso Beach Golf Course Club House in an amount up to $10,309,927.00 and…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26563&GUID=B8E3E5B2-95FF-4655-9C0A-F06137F98173",
+   "date": "2026-10-01T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1498",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iyi30cm",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution authorizing the issuance by Pilot Knob Municipal Utility District No. 2 of Unlimited Tax Bonds, Series 2026, in an amount not to exceed $2,300,000 to be used for water,…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29274&GUID=F9C7CE65-802F-4960-8BC0-F2C692998861",
+   "date": "2026-09-30T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2905",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "water",
+    "agenda",
+    "policy"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 14,
+   "why": [
+    "drainage",
+    "engineering",
+    "wastewater",
+    "utility"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "also": [
+    {
+     "source": "City of Austin agenda items",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29276&GUID=05900349-A9E0-4B2C-9357-94D938B95A04"
+    },
+    {
+     "source": "City of Austin agenda items",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29278&GUID=B2EF82B9-B662-4D0B-B6FE-4191DE9B0EC2"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i2skmq1",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a three-year cooperative purchasing agreement for cloud-based construction management and electronic invoicing platform software licensing and support services for the Department of…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26390&GUID=84D4FBA0-8D8C-44CC-BBCC-2995904579BB",
+   "date": "2026-09-30T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Office of Procurement Services · 26-3250A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "bond program"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1tfeuy7",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution authorizing the issuance by Pilot Knob Municipal Utility District No. 3 of Unlimited Tax Road Bonds, Series 2026A, in an amount not to exceed $3,875,000 to be used for…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29277&GUID=28FB0966-D798-40DE-8A2A-F4431E61FFBD",
+   "date": "2026-09-30T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2908",
+   "topics": [
+    "bond",
+    "grant",
+    "water",
+    "road",
+    "agenda",
+    "policy"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 4,
+   "why": [
+    "engineering",
+    "utility"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iu4yxfm",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize Supplemental Agreement No. 2 to the Construction Manager at Risk contract (“CMAR Contract”) with Swinerton Builders, approved as to form by the City Attorney, for the Dallas Police…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26385&GUID=B3AA64AF-59BA-4DAB-86A3-28DA3DA67D0A",
+   "date": "2026-09-30T00:00:00.000Z",
+   "desc": "UPCOMING AGENDA ITEMS · Public Safety Committee · 26-3245A",
+   "topics": [
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1vovedn",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize the acquisition of two tracts of land from Dallas Area Rapid Transit, containing a total of approximately 5.239 acres, located on East Kiest Boulevard near its intersection with…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26342&GUID=08EA2585-212A-48ED-AAD2-9A231D2BC490",
+   "date": "2026-09-29T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Dallas Water Utilities Department · 26-3202A",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 16,
+   "why": [
+    "drainage",
+    "flood",
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of Dallas agenda items",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26517&GUID=87847A56-F2EE-4634-99B4-8ECC14CBBBB0"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ixmo43j",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution authorizing the issuance by Moore’s Crossing Municipal Utility District of Unlimited Tax Bonds, Series 2026, in an amount not to exceed $7,600,000 to be used for water…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29259&GUID=82C4B1BF-71D4-48FE-A77C-7F585350BB4D",
+   "date": "2026-09-29T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2890",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "drainage",
+    "wastewater",
+    "utility"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ir65qio",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance amending Ordinance No. 20260806 002 ordering a General Obligation Bond Election to be held on November 3, 2026, to update Exhibit A containing election day and early voting…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29215&GUID=86680D91-4205-4EB5-9864-5D1936AD70BE",
+   "date": "2026-09-29T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2699",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ixxjqi8",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize negotiation and execution of an amendment to the Agreement for Wholesale Wastewater Utility Service for the Comanche Canyon Ranch Extraterritorial Jurisdiction Planned Unit Development…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29219&GUID=CCF46712-87D4-4B7F-869C-2466211CEAD0",
+   "date": "2026-09-29T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2703",
+   "topics": [
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "wastewater",
+    "utility"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i4ebk1f",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve Service Extension Request No. 6451 for wastewater service to a 2.85-acre tract located at 1107 Castle Ridge Road within the City’s Drinking Water Protection Zone, the City’s two-mile…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29218&GUID=4C22A00B-5DD3-4F85-AF5E-E025D26C0C9B",
+   "date": "2026-09-29T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2702",
+   "topics": [
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 4,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iw8ceph",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a four-year service price agreement for asbestos abatement, demolition, removal of improvements and related services for City and non-City owned structures for citywide use - RNDI…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26335&GUID=35301108-0824-4C03-9E7E-246A1A01A31A",
+   "date": "2026-09-28T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Office of Procurement Services · 26-3195A",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 14,
+   "why": [
+    "drainage",
+    "stormwater",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1b7vp8i",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a three-year service price agreement for emergency generator maintenance and repairs for citywide use - Genserve LLC dba LJ Power, Inc. in the estimated amount of $565,643.40 and PS…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26339&GUID=B31371C0-CEF4-4A88-8063-6E22F9C54BEB",
+   "date": "2026-09-28T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Office of Procurement Services · 26-3199A",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 12,
+   "why": [
+    "drainage",
+    "stormwater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i3qmy1q",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize a contract for biomass characterization testing, used to monitor the operational health of wastewater treatment plants, for Austin Water with Hydro Solutions, Inc. d/b/a Effluency, LLC,…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29200&GUID=B9906A95-3698-44E1-9A27-E110B2A00D44",
+   "date": "2026-09-28T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2684",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "budget",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "idpq282",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion awarding a construction contract to Bridges Specialties, Inc., of Robstown, Texas, for the Citywide Storm Water Infrastructure Cured-In-Place Pipe (CIPP) Indefinite Delivery Indefinite…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26590&GUID=9C5D470F-58E1-4A69-A0B9-8161A66D3A6C",
+   "date": "2026-09-25T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1525",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 8,
+   "why": [
+    "storm water",
+    "bridge"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ig5ktz6",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize a contract for construction services for the West Congress (Radam/St. Elmo) Water and Wastewater Pipeline Renewal Project for Austin Water with Facilities Rehabilitation Inc., in the…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29192&GUID=B56B432A-7727-4C46-B167-2D895FD6D9D6",
+   "date": "2026-09-25T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2676",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "budget",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1daff2t",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Resolution authorizing the submission of a grant application to the Office of the Governor, Texas Military Preparedness Commission, for the FY 2027 Defense Economic Adjustment Assistant Grant…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26577&GUID=80830EAE-6C79-47C9-AC3A-EFF99F17BF7A",
+   "date": "2026-09-23T00:00:00.000Z",
+   "desc": "Resolution · City Council · 26-1512",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "grant",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1v5pxe5",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion authorizing execution of a one-year supply agreement, with two one-year options, with ACT Pipe and Supply, Inc., headquartered in Houston, Texas, for the purchase of manhole covers, risers,…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26574&GUID=B86AE2F3-F18D-4163-80DC-3256B704C43B",
+   "date": "2026-09-22T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1509",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 6,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ie50f3x",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Information and Discussion: Completion of the Bear Ridge Trail Contact: Gilbert Guerrero, Capital Improvement Department, guerreogx@elpasotexas.gov",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16398&GUID=08C678A3-3B97-4C15-A12B-12524E185E7F",
+   "date": "2026-09-22T00:00:00.000Z",
+   "desc": "Board Agenda Items · Open Space Advisory Board · BC-2578",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iupruw2",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Information and Discussion: El Paso Water (EP Water) Quarterly financial report on the 10% annual drainage utility fee revenue and expenses Contact: Jonathan Persall, El Paso Water,…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16370&GUID=DBE2E43F-BCB5-485B-9223-0C33F9C6F9D6",
+   "date": "2026-09-21T00:00:00.000Z",
+   "desc": "Board Agenda Items · Open Space Advisory Board · BC-2565",
+   "topics": [
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 8,
+   "why": [
+    "drainage",
+    "utility"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1sff58a",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Scott Winton to the Capital Improvements Advisory Committee by Mayor Renard U. Johnson.",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16392&GUID=3666B4FC-4E5B-46AC-9CCE-07D3ED21CEA2",
+   "date": "2026-09-21T00:00:00.000Z",
+   "desc": "Board Appointments · City Council · 26-1080",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1nbozra",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Information and Discussion: Update on the Mountain to River project Contact: Gilbert Guerrero, Capital Improvement Department, guerrerogx@elpasotexas.gov",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16394&GUID=A7238DA8-CDA8-42BC-86C7-F990C55A2043",
+   "date": "2026-09-21T00:00:00.000Z",
+   "desc": "Board Agenda Items · Open Space Advisory Board · BC-2577",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1lql46i",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "PZRZ26-00016: A portion of Tract 32A, and all of Tracts 32C, 32D, and 32E, Block 5, Upper Valley Surveys, City of El Paso, El Paso County, Texas Location: 250 Lindbergh Ave. Zoning: R-1…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16361&GUID=A815EB8E-D473-4C75-8A48-D7FE73F8D6D8",
+   "date": "2026-09-18T00:00:00.000Z",
+   "desc": "Board Agenda Items · City Plan Commission · BC-2557",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "engineering",
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "also": [
+    {
+     "source": "City of El Paso agenda items",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16270&GUID=D6DB7365-DE3A-4FC6-B66B-1CF5BF0A6148"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i15x2emr",
+   "srcId": "fedreg",
+   "source": "Federal Register (Texas flood / water notices)",
+   "title": "Notice of Final Federal Agency Actions on Proposed Highway Projects in Texas",
+   "link": "https://www.federalregister.gov/documents/2026/09/17/2026-19085/notice-of-final-federal-agency-actions-on-proposed-highway-projects-in-texas",
+   "date": "2026-09-17T12:00:00Z",
+   "desc": "Notice: The FHWA, on behalf of the Texas Department of Transportation (TxDOT), is issuing this notice to announce actions taken by TxDOT and other Federal agencies that are final agency actions. The actions relate to various proposed highway projects in the State of Texas.…",
+   "topics": [
+    "grant",
+    "road",
+    "policy"
+   ],
+   "place": null,
+   "county": null,
+   "region": "Federal / national",
+   "score": 3,
+   "why": [
+    "grant",
+    "txdot"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1ryxs5m",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "2024 Bond CECAP Resolution Annual Status Update for 2026 [Angela Hodges Gott, Director, Office of Environmental Quality and Sustainability]",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26260&GUID=70740B2B-0AEF-4130-81BC-6824D654EAB5",
+   "date": "2026-09-17T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Parks, Trails, and the Environment Committee · 26-3120A",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ih16sch",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a three-year service price agreement for the period October 14, 2026 through October 13, 2029, with two, one-year renewal options for median and right-of-way grounds maintenance services…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26242&GUID=B46EB351-8AE2-4C5F-B843-F55EC366A769",
+   "date": "2026-09-15T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Office of Procurement Services · 26-3102A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "bond program"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ieetpd4",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize 16 contracts for engineering services for the 2026 Small Scale General Civil Engineering Services Rotation List for various departments with Huitt-Zollars, Inc.; Lockwood, Andrews &…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29145&GUID=5B68715B-7530-4087-A62D-CBB7D10977DE",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2629",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "design",
+    "budget"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1hph24k",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize a contract for engineering services for the 2026 Reservoir Improvement Program Contract for Austin Water with Freese and Nichols, Inc., in an amount not to exceed $10,000,000. Funding:…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29144&GUID=809CD50D-2A0C-418C-A851-C2949C24EE1E",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2628",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 10,
+   "why": [
+    "engineering services",
+    "budget"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i9z0wgo",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on a Resolution that the City Council hereby accepts the State Infrastructure Bank (SIB) loan agreement in its substantially final form in order to secure receipt of funds in…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16316&GUID=4F3B788D-408E-413F-BB26-B2192BE8EDD2",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "Other Business · City Council · 26-1049",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 8,
+   "why": [
+    "engineering",
+    "design",
+    "budget",
+    "utility"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "also": [
+    {
+     "source": "City of El Paso agenda items",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16317&GUID=25AD8AC6-9945-44A0-9895-8A6D733D2ACB"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1bnrbok",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize amendments to existing contracts with the Austin Area Urban League, Austin Habitat for Humanity, Inc., Easterseals Central Texas, Inc., Interfaith Action of Central Texas, Meals on Wheels…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29153&GUID=E49345C8-00D2-468A-8046-0EDEBADFED00",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "Consent · Austin Housing Finance Corporation · 26-2637",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1rh4r3",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "FY 2025-26 Quarterly Report on Remaining Unencumbered General Obligation Bond Funds for Period 3: April 1, 2026 - June 30, 2026. [Office of Bond & Construction Management]",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26241&GUID=B042685F-55B0-427A-B602-09E552E73B8F",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Committee on Finance · 26-3101A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i15rg3ri",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on an update of the 2012 Quality of Life, 2019 Public Safety and 2022 Community Progress Bond Projects",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16327&GUID=5E3E4985-B655-4423-8DFD-D205ECC7E255",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "Board Agenda Items · Bond Overview Advisory Committee · BC-2536",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i7hk2oy",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Presentation - Update on All Abilities Playground, 2022 Community Progress Bond",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16328&GUID=CE4F72D8-D02B-4EE6-9A97-05DC8E1C65B9",
+   "date": "2026-09-14T00:00:00.000Z",
+   "desc": "Board Agenda Items · Bond Overview Advisory Committee · BC-2537",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iuhq1pi",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Discussion and possible action regarding the selection and approval of an attorney or law firm to serve as General Counsel for the Corpus Christi B Corporation and possible action to amend and…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26552&GUID=5EB4753E-BAB8-411C-98CB-C88C54D1D3E3",
+   "date": "2026-09-11T00:00:00.000Z",
+   "desc": "Resolution · Corpus Christi B Corporation - Type B · 26-1487",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 10,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i10e0vis",
+   "srcId": "dallas",
+   "source": "Dallas City News",
+   "title": "Dallas experiences increase in water main breaks and leaks due to extreme heat and high water demands",
+   "link": "https://www.dallascitynews.net/dwu_0910",
+   "date": "2026-09-10T15:52:04.000Z",
+   "desc": "Dallas Water Utilities (DWU) operates as one of the largest municipal water systems in the country, managing just over 5,000 miles of water mains […]",
+   "topics": [
+    "water"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "water main"
+   ],
+   "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i592m3t",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize a contract for the ATX Floods application, the City’s public flood monitoring and low water crossing alert platform, for Austin Watershed Protection with The Sanborn Map Company, Inc., for…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29116&GUID=C3784336-BC07-414A-AC27-8833E6209C21",
+   "date": "2026-09-09T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2601",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 10,
+   "why": [
+    "flood",
+    "watershed",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "it62zbz",
+   "srcId": "leg-plano",
+   "source": "City of Plano agenda items",
+   "title": "To approve an expenditure for engineering professional services for Erosion Control Improvements - Various Locations, Project No. ENG-D-00016, in the amount of $270,487.50 from Walter P. Moore and…",
+   "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1908&GUID=F55EA4BB-1E74-4CC0-BA0B-F26BD9D1A050",
+   "date": "2026-09-09T00:00:00.000Z",
+   "desc": "CC - Approval of Expenditure · City Council · 26-825",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Plano",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 6,
+   "why": [
+    "professional services",
+    "engineering"
+   ],
+   "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ilf63rr",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Dallas Police Department Law Enforcement Training Center at University of North Texas at Dallas Update - October 2026 [Jennifer Nicewander, Director, Office of Bond and Construction Management,…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26187&GUID=F4524D3B-A9E4-4872-8888-4E1DCE27E177",
+   "date": "2026-09-09T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Public Safety Committee · 26-3047A",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ih2r42o",
+   "srcId": "leg-plano",
+   "source": "City of Plano agenda items",
+   "title": "To approve an increase to the current awarded agreement amount of $99,000 by $91,000 for a total contract amount of $190,000 for On-Call Wastewater Modeling Services (2026), Project No.…",
+   "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1902&GUID=28C922A4-E52B-429E-AAF3-FFE31417E099",
+   "date": "2026-09-08T00:00:00.000Z",
+   "desc": "CC - Approval of Contract Modification · City Council · 26-819",
+   "topics": [
+    "water",
+    "agenda"
+   ],
+   "place": "Plano",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 6,
+   "why": [
+    "engineering",
+    "wastewater"
+   ],
+   "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ifbh1ve",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Upcoming Agenda Items: October 14, 2026, Dallas City Council Agenda Items #26-2927A and 26-3041A: Authorize Resolution of No Objection (RONO) and TEFRA Hearing Approval for one application to the…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26144&GUID=458FB4DC-972C-4D8A-9B55-E1B3FE4B5398",
+   "date": "2026-09-08T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Housing and Homelessness Solutions Committee · 26-3004A",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ivd9e89",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a professional services contract with Halff Associates, Inc. to provide engineering services for the design of Jefferson Complete Street from Hampton Road to Polk Street - Not to exceed…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26118&GUID=6DB924F0-A30E-45DB-B295-779CBF50D1F0",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2978A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 28,
+   "why": [
+    "engineering services",
+    "professional services",
+    "design",
+    "capital improvement",
+    "bond",
+    "wastewater"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "izfv79i",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a professional services contract with GEI Consultants, Inc. to provide engineering services for the design of three local streets as part of Street Project Group 24-1201 (list attached to…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26125&GUID=1EEF3D83-9B35-440F-A5FC-E076B9982F41",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2985A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 28,
+   "why": [
+    "engineering services",
+    "professional services",
+    "design",
+    "capital improvement",
+    "bond",
+    "wastewater"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iqr9wll",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a professional services contract with Wade Trim, Inc. to provide engineering services associated with the Lift Station and Diversion Structure Improvements Project - Not to exceed…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26112&GUID=65214EA9-8A2B-4B15-B407-8242B8520289",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2972A",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 26,
+   "why": [
+    "engineering services",
+    "professional services",
+    "capital improvement",
+    "wastewater",
+    "lift station"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iwww4pu",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize professional services contracts with four consulting firms to provide engineering services for flood management, erosion control and storm drainage improvements at 19 locations (list…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26113&GUID=8F95FBD1-1907-4319-AAC9-29CD57FAB710",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2973A",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 26,
+   "why": [
+    "drainage",
+    "flood",
+    "engineering services",
+    "professional services",
+    "bond"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i19ch1yt",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize an engineering services contract with Garver, LLC to (1) provide design and construction administration services and construction alternatives; (2) extend the existing Taxiway Echo from…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26121&GUID=C8A2AEE8-1E3B-46E8-85F7-C58E7727EB20",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2981A",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 24,
+   "why": [
+    "drainage",
+    "storm water",
+    "engineering services",
+    "design",
+    "grant"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i11sn1gf",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a professional services contract with T. M. Kilduff Consulting, Inc. dba Kilduff Underground Engineering to provide engineering services associated with the East Bank Interceptor Project -…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26111&GUID=DBB28419-B090-4420-A298-F6238BCE8A3B",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2971A",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 22,
+   "why": [
+    "engineering services",
+    "professional services",
+    "capital improvement",
+    "wastewater"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i66d9h3",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a three-year Joint Funding Agreement with the United States Geological Survey to continue the operation of stream flow and water quality gauging stations in the Trinity River Basin for…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26110&GUID=4E05A674-ADD9-459A-9D00-A42191807FB5",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2970A",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "water",
+    "policy",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 16,
+   "why": [
+    "drainage",
+    "stormwater",
+    "watershed"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i16ihgji",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize Supplemental Agreement No. 3 to the professional services contract with Black & Veatch Corporation to provide additional engineering and construction management services required for the…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26120&GUID=3EDB3CDD-B480-4E39-9495-7F55759888BB",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2980A",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 16,
+   "why": [
+    "drainage",
+    "flood",
+    "professional services",
+    "engineering"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i17wv42e",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a professional services contract with to provide engineering services for the design of four local streets as Ardurra Group, Inc. part of Project Group 24-3002 (list attached to the Agenda…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26126&GUID=70027DB6-F748-45D1-A8A7-35ECD1477DF4",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2986A",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 14,
+   "why": [
+    "engineering services",
+    "professional services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1dyxskg",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the East Side Water Treatment Plant Residuals Handling Project, Phase II - CLW Water Group, LLC, lowest responsible bidder of five - Not to exceed…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26115&GUID=6C31AEE1-0100-43D1-A5FC-2455D5F444CE",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2975A",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "capital improvement",
+    "water treatment"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1y5uhb7",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the installation and rehabilitation of water and wastewater mains at eighteen locations (list attached to the Agenda Information Sheet) - Douglas…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26116&GUID=3A9CBBF4-9DC7-4660-ABC7-8A63A046DEA0",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2976A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "capital improvement",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "if5q23e",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the installation of water and wastewater mains at 16 locations (list attached to Agenda Information Sheet) - SYB Construction Co., Inc., lowest…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26117&GUID=C4687FC8-5B48-4614-9305-5A1AE9067A38",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2977A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "capital improvement",
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1xsra1y",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the 2026 On-Call Paving Contract - Grey Sky Construction, lowest responsible bidder of two - Not to exceed $42,136,372.00 - Financing: ARPA…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26119&GUID=40DA7F80-C8CF-4611-9C04-B8F9BF970751",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2979A",
+   "topics": [
+    "bond",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 8,
+   "why": [
+    "bond",
+    "sewer"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ixuz262",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Public Hearing on the Capital Improvement Project for Museum of Science & History Improvements.",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26526&GUID=F195B139-3081-445F-9C4A-754EA3847451",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "Public Hearing · Corpus Christi B Corporation - Type B · 26-1461",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ixgdcgh",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Resolution authorizing the submission of a grant application to the Corpus Christi Metropolitan Planning Organization, Transportation Policy Committee, for the FY 2027 Surface Transportation Block…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26534&GUID=DB661562-2FA3-4CAD-9648-76D42AA4B6DD",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "Resolution · City Council · 26-1469",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "road",
+    "agenda",
+    "policy"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "bond",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ixlgupd",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize Change Order No. 1 to decrease the construction services contract with EAR Telecommunications, LLC DBA: EARTC, to de-scope (remove) all traffic signal work associated with the intersection…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26122&GUID=5B5B9ABB-ECC1-4F55-A7EB-440DE51421C2",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2982A",
+   "topics": [
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i10moclt",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the 2024 Bond Traffic Signal Construction - Group 6 Project to construct four new traffic signals at the intersections of Masters Drive at Checota…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26123&GUID=09687405-221A-481A-82C3-7458D1068020",
+   "date": "2026-09-03T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Transportation and Infrastructure Committee · 26-2983A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ii5lgrx",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance of City of Austin Water and Wastewater System Revenue Bonds, Series 2026C, in the par amount of $5,000,000 to fund Austin Water’s waterline services…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29082&GUID=CE490CBA-48AD-4A65-8B76-1632884BF92D",
+   "date": "2026-09-02T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2567",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "bond",
+    "budget",
+    "wastewater",
+    "utility"
+   ],
+   "hint": "Bond approved: design contracts usually follow; watch for RFQs for the listed projects.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i10dde2f",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Authorize negotiation and execution of an amendment to the interlocal agreement with the Lower Colorado River Authority to provide equipment and services for Austin Watershed Protection to provide…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29071&GUID=F7C2767E-9B5B-4E3E-BD25-A2532F948486",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2556",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "flood",
+    "watershed",
+    "budget",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1ubqhjd",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize the (1) the acceptance of a grant from the Environmental Protection Agency through the North Central Texas Council of Governments for an award through the “North Texas Diesel Emissions…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26089&GUID=7B6A8D08-E46A-458F-947A-81FF7C22012B",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Department of Equipment and Fleet Management · 26-2949A",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 8,
+   "why": [
+    "capital improvement",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1qfvrjv",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Conduct a public hearing and consider an ordinance granting variances for property located at 1120 Denfield Street from certain floodplain regulations prescribed by City Code for the conversion of…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29073&GUID=E953E16C-5482-48FC-A8F5-AF9EA32417CA",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "Public Hearing · City Council · 26-2558",
+   "topics": [
+    "grant",
+    "flood",
+    "road",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "flood",
+    "grant"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i115pu3r",
+   "srcId": "openfema",
+   "source": "FEMA disaster declarations (Texas)",
+   "title": "FEMA major disaster declaration DR-4935 (Texas): SEVERE STORMS, STRAIGHT-LINE WINDS, TORNADOES, AND FLOODING",
+   "link": "https://www.fema.gov/disaster/4935",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "Flood · 23 designated area(s): Kerr, Frio, Kendall, Kinney, Real, Val Verde, Kimble, Sutton, Gillespie, Maverick, Grimes, Edwards…",
+   "topics": [
+    "flood",
+    "grant"
+   ],
+   "place": null,
+   "county": null,
+   "region": "Statewide",
+   "score": 5,
+   "why": [
+    "flood",
+    "design"
+   ],
+   "hint": "Disaster declaration: HMGP mitigation funding typically opens 6–12 months later.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i62rumh",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize acquisition of three single-family dwellings and two vacant lots, containing a total of approximately 28,178 square feet of land located near the intersection of McGowan and Nolen Streets…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26088&GUID=BB8C38FE-1449-4352-BFE0-12046D82548B",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Department of Facilities and Real Estate Management · 26-2948A",
+   "topics": [
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i7ncboy",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the Martin Luther King Jr. Boulevard at Meadow Street Intersection Improvements Construction Project - Texas Standard Construction, Ltd., lowest…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26095&GUID=0F8F71EA-82DA-4D58-B168-919D5E046D24",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Department of Transportation and Public Works · 26-2955A",
+   "topics": [
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i14li02i",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize a construction services contract for the Bond Traffic Signal Construction - Group 7 Project to construct two new traffic signals at the intersections of Illinois Avenue at Western Park and…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26097&GUID=4F9EDD74-6BDC-4B59-842D-2270691D6C38",
+   "date": "2026-09-01T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Department of Transportation and Public Works · 26-2957A",
+   "topics": [
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1mw5sdm",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "An ordinance amending Chapters 2, 7, 7A, 8A, 12B, 15D, 16, 17, 18, 20A, 27, 38A, 42, 43A, 48B, 49, 50, 51A, and 52 of the Dallas City Code and Section 1 of Ordinance 19860 as passed by the city…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26073&GUID=F0726BF1-5B10-4E98-9AE5-910954BD07E3",
+   "date": "2026-08-31T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Budget and Management Services · 26-2932A",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 21,
+   "why": [
+    "drainage",
+    "stormwater",
+    "budget",
+    "wastewater",
+    "water treatment"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1xgaln0",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Conduct a public hearing and consider a resolution related to an application by Verbena Flats LP, or an affiliated entity, for federal 4% non-competitive housing tax credits for the construction of…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=29058&GUID=44F7D54F-5E21-4F2A-ACDF-8FA96A2C585D",
+   "date": "2026-08-31T00:00:00.000Z",
+   "desc": "Public Hearing · City Council · 26-2543",
+   "topics": [
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 10,
+   "why": [
+    "bond program"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iecusca",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize the (1) acceptance of a grant from the Texas Office of the Governor, Criminal Justice Division (CJD) for the Regional Law Enforcement Facility program (Grant No. 6003001, Award ID No.…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26071&GUID=F2BE566E-81EC-4721-89F5-A8A7671F4CB3",
+   "date": "2026-08-31T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Office of Bond and Construction Management · 26-2929A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 6,
+   "why": [
+    "bond",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of Dallas agenda items",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26072&GUID=36BADAF8-8840-41D4-B380-C63A3E8F1D19"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1dobx1o",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion awarding a construction contract to PM Construction & Rehab, LLC, of Pasadena, Texas, for the Citywide Wastewater Indefinite Delivery Indefinite Quantity (IDIQ) FY2026 project in an amount up…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26490&GUID=E7A13432-2BA4-41C4-A2AE-36562C85A353",
+   "date": "2026-08-31T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1425",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Pasadena",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 6,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1qxqn6o",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize the City Manager to (1) adopt the Sponsorship Toolkit for the Dallas Police Department Law Enforcement Training Center (“DPD LETC”) project in the form hereto attached as Exhibit A; (2)…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26070&GUID=685CF356-F287-4219-891C-30DBC19673A0",
+   "date": "2026-08-31T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Office of Bond and Construction Management · 26-2928A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i5zs47o",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize Supplemental Agreement No. 2 to the Construction Manager at Risk contract (“CMAR Contract”) with Swinerton Builders for the Dallas Police Department Law Enforcement Training Center on the…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26081&GUID=8272DB88-90F2-447B-B299-D362ECE216EC",
+   "date": "2026-08-31T00:00:00.000Z",
+   "desc": "CONSENT AGENDA · Office of Bond and Construction Management · 26-2941A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ivi50us",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Public Hearing on the Capital Improvement Projects for Coastal Parks, North Beach, North Padre Island & Downtown Seawall Systems Analysis & Master Plan; Floodwall Upgrades at the Science Museum;…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26486&GUID=D3CED242-85D4-4B3E-8BF3-B00B1773B98B",
+   "date": "2026-08-28T00:00:00.000Z",
+   "desc": "Public Hearing · Corpus Christi B Corporation - Type B · 26-1421",
+   "topics": [
+    "budget",
+    "flood",
+    "policy",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 14,
+   "why": [
+    "flood",
+    "capital improvement",
+    "master plan"
+   ],
+   "hint": "Planning study: follow-on design phases often go to consultants.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1yh9uk9",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Public Hearing on the Capital Improvement Projects for Alameda Street (Texan Trail to Doddridge Street) and Sam Rankin Street (Port Avenue to IH-37)",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26484&GUID=A47EF368-75E3-4CF8-B8FD-473EB103066A",
+   "date": "2026-08-28T00:00:00.000Z",
+   "desc": "Public Hearing · Corpus Christi B Corporation - Type B · 26-1419",
+   "topics": [
+    "budget",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1j0rprf",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Public Hearing on the Capital Improvement Projects for Hilliard Center Structural Repairs & Life Safety Improvements; Art Museum HVAC System Improvements; Harbor Playhouse Building & HVAC System…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26485&GUID=28470080-6A8B-41C4-B286-51C4CECB2D69",
+   "date": "2026-08-28T00:00:00.000Z",
+   "desc": "Public Hearing · Corpus Christi B Corporation - Type B · 26-1420",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1gwhk8k",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Authorize the (1) acceptance of a grant from the U.S. Department of Transportation, Federal Aviation Administration (FAA) Airport Improvement Program for the federal share of the eligible capital…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=26031&GUID=A6A0A07E-F8A3-4C5B-983B-5C7CEF4C1C59",
+   "date": "2026-08-26T00:00:00.000Z",
+   "desc": "ITEMS FOR INDIVIDUAL CONSIDERATION · Department of Aviation · 26-2888A",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 8,
+   "why": [
+    "capital improvement",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i2yjzi9",
+   "srcId": "leg-plano",
+   "source": "City of Plano agenda items",
+   "title": "To approve an expenditure for engineering professional services for Drainage Improvements - Various Locations, Project No. ENG-D-00017, in the amount of $537,700 from Teague Nall and Perkins, Inc.…",
+   "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1875&GUID=915918EC-81DB-4043-9E32-3A045AC7B67E",
+   "date": "2026-08-25T00:00:00.000Z",
+   "desc": "CC - Approval of Expenditure · City Council · 26-792",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Plano",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 12,
+   "why": [
+    "drainage",
+    "professional services",
+    "engineering"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iesdb95",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion authorizing the execution of an amendment to the Interlocal Agreement with the Port of Corpus Christi Authority of Nueces County, Texas (PCCA) to include utility construction on City-owned…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26449&GUID=EB9F81B7-D8A4-46DA-BA5D-A2AFF5153BD1",
+   "date": "2026-08-25T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1384",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 8,
+   "why": [
+    "wastewater",
+    "utility",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1hji5j8",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Upcoming Council Agenda Item #26-2409: Bath House Cultural Center and South Dallas Cultural Center - Roof Replacement and Water Infiltration Mitigation [Benjamin Espino, Infrastructure Performance…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=25977&GUID=9495DE2B-A8DB-4A36-9FD4-C073BD9652BB",
+   "date": "2026-08-25T00:00:00.000Z",
+   "desc": "BRIEFING MEMORANDUM · Quality of Life, Arts, and Culture Committee · 26-2834A",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iyamxrq",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "Upcoming Dallas City Council Agenda Item #26-2798A: Authorize (1) Supplemental Agreement No. 1 to increase the Construction Manager at Risk Agreement with Linbeck Group, LLC, to provide…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=25958&GUID=AD46DE53-1298-42FF-B9EF-571221FEB2F8",
+   "date": "2026-08-24T00:00:00.000Z",
+   "desc": "BRIEFING ITEMS · Parks, Trails, and the Environment Committee · 26-2815A",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ilm6gb2",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution authorizing the filing of eminent domain proceedings and payment to acquire the property interests needed waterline easement and temporary working easement needed to support of…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28983&GUID=58582DCF-8EA4-48AE-8A64-255F12EB73F5",
+   "date": "2026-08-20T00:00:00.000Z",
+   "desc": "Eminent Domain · City Council · 26-2468",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "budget",
+    "wastewater",
+    "water line",
+    "roadway"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ib4441r",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution declaring the City's official intent to reimburse itself from proceeds of tax-exempt obligations in an aggregate maximum principal amount of $525,000,000 for expenditures…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28976&GUID=10ED44D2-A7B4-4FF4-A2F9-FFDE377F38AB",
+   "date": "2026-08-19T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2461",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "capital improvement",
+    "budget",
+    "wastewater"
+   ],
+   "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+   "also": [
+    {
+     "source": "City of Austin agenda items",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28948&GUID=4201DED9-9206-4796-BFF0-26A3B740CC88"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1c0tba3",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Resolution establishing an ad hoc committee to review the City's procurement of professional services, including architectural and engineering services, and recommend improvements to City processes…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26419&GUID=159096AF-FF83-46FF-9ED5-6A58FAF8CA7C",
+   "date": "2026-08-19T00:00:00.000Z",
+   "desc": "Resolution · City Council · 26-1354",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 12,
+   "why": [
+    "engineering services",
+    "professional services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "im4xt2h",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on the award of Solicitation 2026-0429 Resler Drive Extension to International Eagle Enterprises, Inc. for a total estimated amount of $12,598,962.57. Department: Capital…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16128&GUID=884571A2-3961-4746-9944-80AD99B3EA6C",
+   "date": "2026-08-18T00:00:00.000Z",
+   "desc": "Other Bids, Contracts, Procurements · City Council · 26-0974",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 14,
+   "why": [
+    "capital improvement",
+    "bond",
+    "budget",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i10rmhff",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on the award of Solicitation 2026-0374 Montwood Extension to International Eagle Enterprises, Inc. for a total estimated amount of $18,172,452.74. Department: Capital…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16132&GUID=C4836147-2C73-48BD-9175-DF0ED5E9C283",
+   "date": "2026-08-18T00:00:00.000Z",
+   "desc": "Other Bids, Contracts, Procurements · City Council · 26-0978",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 14,
+   "why": [
+    "capital improvement",
+    "bond",
+    "budget",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i7d01nx",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on the award of Solicitation 2026-0372 ELP Terminal Ramp Reconstruction Stage 1 & 2 to Dan Williams Company for a total estimated amount of $21,295,295.00. Department: Capital…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16127&GUID=8F8A0FD3-AB5F-4D65-B9A1-B40E861FAF1F",
+   "date": "2026-08-18T00:00:00.000Z",
+   "desc": "Other Bids, Contracts, Procurements · City Council · 26-0973",
+   "topics": [
+    "budget",
+    "grant",
+    "road",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 10,
+   "why": [
+    "capital improvement",
+    "budget",
+    "grant"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i525x0p",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "An Ordinance amending Title 18 (Building and Construction), Chapter 18.60 (Flood Damage Prevention, Article IV (Administration), Subsection 18.60.140 (Designation of the Floodplain Administrator) to…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16135&GUID=B52671CC-5A6C-4687-B5EF-00B427BF8FD8",
+   "date": "2026-08-18T00:00:00.000Z",
+   "desc": "Ordinances · City Council · 26-0981",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "flood",
+    "design"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1d4cahn",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "An Ordinance amending Title 19 (Subdivisions), Article 3 (Authority of Decision Makers), Section 19.31 (Responsible Officials), Subsection 19.31.080 (Floodplain Administrator) to amend the…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16137&GUID=2961E05D-2581-4387-AF70-401C6B671C48",
+   "date": "2026-08-18T00:00:00.000Z",
+   "desc": "Ordinances · City Council · 26-0983",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 4,
+   "why": [
+    "flood"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1n500la",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion: Presentation on All Abilities Playground Update, Capital Improvement Department.",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=16119&GUID=F71BB11E-AC52-47BE-8ACA-FDD7F9B5D6C9",
+   "date": "2026-08-17T00:00:00.000Z",
+   "desc": "Board Agenda Items · City Accessibility Advisory Committee · BC-2405",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iohriqp",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution adopting the City of Austin Hazard Mitigation Action Plan Update to include new and updated mitigation actions for hazards including cyber security threats, severe weather, and…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28952&GUID=F83EA1CC-6F95-418C-A3C1-992EFC274B24",
+   "date": "2026-08-14T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2437",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda",
+    "policy"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 10,
+   "why": [
+    "flood",
+    "hazard mitigation"
+   ],
+   "hint": "Planning study: follow-on design phases often go to consultants.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1qsmu2z",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion authorizing a one-year supply agreement with one additional one-year option period with Southern Ionics Incorporated of West Point, Mississippi, for sodium bisulfite, for Corpus Christi Water…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26387&GUID=6051F99C-F392-4D8D-9812-685A9BCC59EF",
+   "date": "2026-08-13T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1322",
+   "topics": [
+    "budget",
+    "grant",
+    "water",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 4,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1fcdqaa",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Planning Commission recommendation of the Proposed FY 2027 Capital Improvement Program (CIP) Budget",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26364&GUID=988EAD72-6E1A-4B60-8038-6E85C70E7FC1",
+   "date": "2026-08-11T00:00:00.000Z",
+   "desc": "Presentation · Planning Commission · 26-1299",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 12,
+   "why": [
+    "capital improvement",
+    "cip",
+    "budget"
+   ],
+   "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ia49wja",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Motion awarding a construction contract to Bridges Specialties, Inc., of Robstown, Texas, for the Citywide Storm Water Infrastructure Indefinite Delivery Indefinite Quantity (IDIQ) FY26-28 project,…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26356&GUID=B837944D-4E1E-4D99-B3A2-D53AD1CC49DE",
+   "date": "2026-08-07T00:00:00.000Z",
+   "desc": "Motion · City Council · 26-1291",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 10,
+   "why": [
+    "storm water",
+    "channel",
+    "bridge"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "icibn1u",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "La Volla Creek Drainage Improvements - Phase One / Texas GLO",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26357&GUID=A0B36679-0043-4020-9061-64098B8B3E63",
+   "date": "2026-08-07T00:00:00.000Z",
+   "desc": "Briefing · City Council · 26-1292",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 6,
+   "why": [
+    "drainage"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i12edhvy",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution directing the City Manager to study if the proposed increase in the drainage charge rate for Austin Watershed Protection as part of Fiscal Year 2026-2027 proposed budget is…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28892&GUID=12356013-64CB-4952-8797-A1C6C8F40F47",
+   "date": "2026-08-06T00:00:00.000Z",
+   "desc": "Item from Council · City Council · 26-2376",
+   "topics": [
+    "budget",
+    "flood",
+    "water",
+    "agenda",
+    "policy"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 14,
+   "why": [
+    "drainage",
+    "watershed",
+    "budget",
+    "utility"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of Austin agenda items",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28893&GUID=5B953302-4035-42C8-8C67-F4FA00F2E9BD"
+    },
+    {
+     "source": "City of Austin agenda items",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28832&GUID=482A2D94-4FC4-4515-83F2-F32E87411A2E"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ir0leo0",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Conduct a public hearing and consider a proposed drainage charge rate change for Austin Watershed Protection as part of the Fiscal Year 2026-2027 proposed budget.",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28856&GUID=F937E543-0986-4DFE-A4E4-E9C1E633757F",
+   "date": "2026-08-06T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2340",
+   "topics": [
+    "budget",
+    "flood",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 12,
+   "why": [
+    "drainage",
+    "watershed",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of Austin agenda items",
+     "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28860&GUID=109673B4-74BA-44AD-99C1-585594D66D7E"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i15q7sjx",
+   "srcId": "leg-plano",
+   "source": "City of Plano agenda items",
+   "title": "To approve an expenditure for engineering professional services for Sewer Improvements - Spring Creek at Plano Parkway, Project No. ENG-SS-00005, in the amount of $203,367 from Garver, LLC for the…",
+   "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1818&GUID=A73CF362-BBD2-4D0B-8363-703DA249821A",
+   "date": "2026-08-06T00:00:00.000Z",
+   "desc": "CC - Approval of Expenditure · City Council · 26-735",
+   "topics": [
+    "water",
+    "agenda"
+   ],
+   "place": "Plano",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "professional services",
+    "engineering",
+    "sewer"
+   ],
+   "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1waebgj",
+   "srcId": "leg-plano",
+   "source": "City of Plano agenda items",
+   "title": "To approve an expenditure for engineering professional services for Chisholm Trail Erosion at San Simeon Phase 2, Project No. ENG-D-00018, in the amount of $515,000 from Freese and Nichols, Inc. for…",
+   "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1819&GUID=D2C150E0-F0CC-4631-9AF4-08841CB6B56A",
+   "date": "2026-08-06T00:00:00.000Z",
+   "desc": "CC - Approval of Expenditure · City Council · 26-736",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Plano",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 6,
+   "why": [
+    "professional services",
+    "engineering"
+   ],
+   "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1lnspps",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Presentation on the Capital Improvement Program (CIP) and potential adjustments to the FY 2027 Proposed Budget",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26339&GUID=1BAB0358-AFC4-4C90-9E11-009CB183953B",
+   "date": "2026-08-04T00:00:00.000Z",
+   "desc": "Briefing · City Council Workshop · 26-1274",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 12,
+   "why": [
+    "capital improvement",
+    "cip",
+    "budget"
+   ],
+   "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1lt1g4h",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Presentation on Public Works Streets and Storm Water FY 2027 Proposed Budget",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26334&GUID=1DCC2C15-2F7E-43EB-8AFB-517402C1E73E",
+   "date": "2026-08-04T00:00:00.000Z",
+   "desc": "Motion · City Council Workshop · 26-1269",
+   "topics": [
+    "budget",
+    "flood",
+    "road",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 8,
+   "why": [
+    "storm water",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of Corpus Christi agenda items",
+     "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=26338&GUID=831A6181-5D4A-4608-AF15-ACBE60F62234"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iv13s1s",
+   "srcId": "leg-plano",
+   "source": "City of Plano agenda items",
+   "title": "To approve an expenditure for engineering professional services for Jupiter Road Elevated Storage Tank Rehabilitation, Project No. PW-W-00036, in the amount of $339,250 from Kimley-Horn and…",
+   "link": "https://plano.legistar.com/LegislationDetail.aspx?ID=1813&GUID=BB4199F2-0BC6-41C1-BA44-6D93913A27CB",
+   "date": "2026-08-04T00:00:00.000Z",
+   "desc": "CC - Approval of Expenditure · City Council · 26-730",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Plano",
+   "county": "Collin",
+   "region": "Dallas–Fort Worth",
+   "score": 6,
+   "why": [
+    "professional services",
+    "engineering"
+   ],
+   "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i3tag5d",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Conduct a public hearing in accordance with Texas Parks and Wildlife Code Chapter 26 and consider a resolution authorizing a change in use of dedicated parkland, known as Sir Swante Palm…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28814&GUID=3E790B62-D4B2-42B6-8F3E-CC8394DA4A48",
+   "date": "2026-08-04T00:00:00.000Z",
+   "desc": "Public Hearing · City Council · 26-2298",
+   "topics": [
+    "grant",
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 4,
+   "why": [
+    "wastewater"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i66a73c",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance and sale of tax-exempt City of Austin, Texas Public Improvement and Refunding Bonds, Series 2026, in a par amount not to exceed $338,935,000 in…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28794&GUID=EE768FD4-C4C8-4CBA-8539-0D3CFD7C9EC1",
+   "date": "2026-08-03T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2278",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ibjkwki",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance and sale of City of Austin, Texas Public Improvement Bonds, Taxable Series 2026, in a par amount not to exceed $67,500,000 in accordance with the…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28795&GUID=9ED5F76F-A3A6-4B5A-BF35-9EB166C8D3F8",
+   "date": "2026-08-03T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2279",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1vlcgr",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance and sale of tax-exempt City of Austin, Texas, Certificates of Obligation, Series 2026, in a par amount not to exceed $142,665,000, in accordance with…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28796&GUID=CB7DC83C-5B19-4780-AAB9-6B04725D68FF",
+   "date": "2026-08-03T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2280",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "ioxg0ds",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance and sale of taxable City of Austin, Texas Certificates of Obligation, Taxable Series 2026, in a par amount not to exceed $13,600,000, in accordance with…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28797&GUID=74EAB10C-9D92-4A94-BEBC-6873A9CB71E7",
+   "date": "2026-08-03T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2281",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "iuq6q1",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve an ordinance authorizing the issuance and sale of tax-exempt City of Austin, Texas Public Property Finance Contractual Obligations, Series 2026, in a par amount not to exceed $85,745,000 in…",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=28798&GUID=5FCCB682-6EB3-4B23-885B-6FB50793AFAF",
+   "date": "2026-08-03T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-2282",
+   "topics": [
+    "budget",
+    "bond",
+    "grant",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 6,
+   "why": [
+    "bond",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  }
+ ]
+}
