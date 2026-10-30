@@ -1,5 +1,5 @@
 /* Offline cache for National Radar. Static files are cached on install; the data snapshot is network-first so a refreshed snapshot shows up when online. Bump CACHE when files change. */
-var CACHE = 'radars-national-v16';
+var CACHE = 'radars-national-v17';
 var FILES = ['./', './index.html', './style.css', './proj.js', './us-geo.js', './capture.js', './v2.js', './v4.js', './model.js', './cost.js', './roadway.js', './pse.js', './sources.js', './app.js', './data/national.json', './data/roadway.json', './data/pse.json', './data/cost-prices.json', './data/source-status.json', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', '../home-btn.css'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(FILES); }).then(function () { return self.skipWaiting(); }));

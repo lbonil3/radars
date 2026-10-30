@@ -185,7 +185,7 @@
     return 'Construction cost: insufficient scope to estimate';
   }
   function cardsInto(el, list, emptyHtml) {
-    el.innerHTML = list.length ? list.map(cardHtml).join('') : (emptyHtml || '');
+    el.innerHTML = list.length ? list.map(cardHtml).join('') : (emptyHtml || '<div class="empty"><b>Nothing to show here.</b></div>') + emptyActions();
   }
   function emptyScopeHtml() {
     var counts = {}; SCOPES.forEach(function (s) { counts[s.id] = scoped(s.id).length; });
@@ -437,6 +437,30 @@
     if (!ev.length) { toast('No records in this view state a due date.'); return; }
     dlFile('national-radar-view.ics', V4.ics(ev, new Date().toISOString(), 'National Radar: due dates'), 'text/calendar'); toast(ev.length + ' due date' + (ev.length === 1 ? '' : 's') + ' saved.');
   }
+  // ---------- v4.4: empty states with a one-tap way out, collapsible top list, docked detail on wide screens ----------
+  function emptyActions() {
+    var a = [], b = function (k, t) { a.push('<button type="button" class="btn small" data-way="' + k + '">' + t + '</button>'); };
+    if (S.digest) b('digest', 'Show everything (not only ' + ({ 'new': 'New', soon: 'Closing soon', changed: 'Changed' })[S.digest] + ')');
+    if (activeCount() > 0) b('clear', 'Clear filters');
+    if (CONF) b('conf', 'Include unconfirmed');
+    var first = (PRIMARY[S.mode] || [])[0]; if (first && S.scope !== first && S.scope !== 'watch') b('scope', 'Show the whole lane');
+    ['pse', 'water', 'road'].filter(function (m) { return m !== S.mode && (m !== 'pse' || DATA_P) && (m !== 'road' || DATA_R); }).forEach(function (m) { b('lane:' + m, 'Switch to ' + ({ pse: 'PS&amp;E / H&amp;H', water: 'Water', road: 'Roadway' })[m]); });
+    return '<div class="ways">' + a.join('') + '</div>';
+  }
+  function wayOut(k) {
+    if (k === 'digest') S.digest = null;
+    else if (k === 'clear') { resetFilters(); return; }
+    else if (k === 'conf') setConf(false);
+    else if (k === 'scope') S.scope = PRIMARY[S.mode][0];
+    else if (k.indexOf('lane:') === 0) { $('modeSel').value = k.slice(5); setMode(k.slice(5)); return; }
+    S.rows = 50; render();
+  }
+  var WIDE = window.matchMedia ? matchMedia('(min-width: 1200px)') : { matches: false };
+  function initTopDet() {
+    var d = $('topDet'), v = null; try { v = localStorage.getItem('nr.topOpen'); } catch (e) { v = null; }
+    d.open = v === null ? WIDE.matches : v === '1';
+    d.addEventListener('toggle', function () { try { localStorage.setItem('nr.topOpen', d.open ? '1' : '0'); } catch (e) { /* private mode */ } });
+  }
   function renderHealthDot() {
     var n = HEALTH ? HEALTH.bad.length : 0, t = n ? n + ' source' + (n === 1 ? ' is' : 's are') + ' stale or failing; see Data & sources' : '';
     $('healthDot').hidden = !n; $('healthDot').title = t; $('healthWarn').hidden = !n; $('healthWarn').textContent = n ? n + ' stale' : '';
@@ -627,7 +651,7 @@
     if (r.bucket === 'nofee') h += '<h3>Why it is under "Fee not stated"</h3><p class="note" style="margin:0">Engineering notice with a water-sector title that is open or upcoming, but the source states no fee. It is not counted as over $20M.</p>';
     h += '</details>';
     $('shBody').innerHTML = h; $('sheet').hidden = false; $('sheet').setAttribute('data-id', id); $('shStar').className = 'star big' + (WATCH[id] ? ' on' : ''); $('shStar').innerHTML = WATCH[id] ? '&#9733;' : '&#9734;';
-    refreshCapPanel(id); document.body.style.overflow = 'hidden'; $('shClose').focus();
+    refreshCapPanel(id); var dock = WIDE.matches; document.body.classList.toggle('docked', dock); $('sheet').setAttribute('aria-modal', String(!dock)); if (!dock) document.body.style.overflow = 'hidden'; $('shClose').focus();
     if (S.mode === 'road') initWhatIf(r);
   }
   function sheetMoneyPse(r) {
@@ -645,7 +669,7 @@
     }
     return h;
   }
-  function closeSheet() { var was = !$('sheet').hidden; $('sheet').hidden = true; document.body.style.overflow = ''; if (was) render(); }
+  function closeSheet() { var was = !$('sheet').hidden; $('sheet').hidden = true; document.body.style.overflow = ''; document.body.classList.remove('docked'); if (was) render(); }
 
 
   // ---------- roadway: construction cost base + what-if ----------
@@ -781,6 +805,8 @@
   document.addEventListener('input', onCapInput); document.addEventListener('change', onCapInput);
   document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.hasAttribute && d.hasAttribute('data-capopen')) { var id = d.getAttribute('data-capopen'); if (d.open) S.capOpen[id] = true; else delete S.capOpen[id]; } }, true);
   $('capSort').addEventListener('click', function (e) { var b = e.target.closest('[data-capsort]'); if (!b) return; S.sort = b.getAttribute('data-capsort'); $('sort').value = S.sort; render(); });
+  initTopDet();
+  document.addEventListener('click', function (e) { var w = e.target.closest('[data-way]'); if (w) wayOut(w.getAttribute('data-way')); });
   $('btnPurIcs').addEventListener('click', exportPursuitIcs); $('btnViewIcs').addEventListener('click', exportViewIcs);
   $('since').addEventListener('click', function (e) { if (e.target.closest('#sinceX')) { try { ssn && ssn.setItem(V4.SINCE_DISMISS, '1'); } catch (er) {} $('since').hidden = true; return; } var b = e.target.closest('[data-since]'); if (b) sinceTap(b.getAttribute('data-since')); });
   $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurPrint').addEventListener('click', printPursuits); $('btnBackup').addEventListener('click', exportBackup);

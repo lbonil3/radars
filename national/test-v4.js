@@ -71,3 +71,13 @@ const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = 
 }
 console.log('national v4 tests passed');
 
+// v4.4 interface polish
+{
+  const css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
+  assert.ok(/<details class="topdet" id="topDet"><summary[^>]*>Top of this view/.test(html) && /function initTopDet\(\)/.test(app) && /nr\.topOpen/.test(app), 'top-of-view list is collapsible and remembered');
+  assert.ok(/function emptyActions\(\)/.test(app) && /emptyActions\(\);/.test(app) && /data-way/.test(app) && /function wayOut\(k\)/.test(app), 'empty states offer one-tap ways out');
+  ['clear', 'conf', 'digest', 'scope', 'lane:'].forEach((k) => assert.ok(app.includes("'" + k), 'way out: ' + k));
+  assert.ok(/@media \(min-width:1200px\)\{[\s\S]*#v-map:not\(\[hidden\]\)\{display:grid/.test(css) && /body\.docked \.sheet\{/.test(css) && /classList\.toggle\('docked', dock\)/.test(app), 'two-column desktop layout with a docked detail panel');
+  assert.ok(!/@media \(max-width[^)]*\)\{[^}]*body\.docked/.test(css), 'mobile layout unchanged');
+}
+console.log('national v4.4 tests passed');
