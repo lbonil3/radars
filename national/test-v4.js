@@ -76,8 +76,26 @@ console.log('national v4 tests passed');
   const css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
   assert.ok(/<details class="topdet" id="topDet"><summary[^>]*>Top of this view/.test(html) && /function initTopDet\(\)/.test(app) && /nr\.topOpen/.test(app), 'top-of-view list is collapsible and remembered');
   assert.ok(/function emptyActions\(\)/.test(app) && /emptyActions\(\);/.test(app) && /data-way/.test(app) && /function wayOut\(k\)/.test(app), 'empty states offer one-tap ways out');
-  ['clear', 'conf', 'digest', 'scope', 'lane:'].forEach((k) => assert.ok(app.includes("'" + k), 'way out: ' + k));
+  ['clear', 'conf', 'digest', 'scope'].forEach((k) => assert.ok(app.includes("'" + k), 'way out: ' + k));
   assert.ok(/@media \(min-width:1200px\)\{[\s\S]*#v-map:not\(\[hidden\]\)\{display:grid/.test(css) && /body\.docked \.sheet\{/.test(css) && /classList\.toggle\('docked', dock\)/.test(app), 'two-column desktop layout with a docked detail panel');
   assert.ok(!/@media \(max-width[^)]*\)\{[^}]*body\.docked/.test(css), 'mobile layout unchanged');
 }
 console.log('national v4.4 tests passed');
+// v4.5 one combined, ungrouped set
+{
+  const C = require('./combined.js');
+  const d = (f) => JSON.parse(fs.readFileSync(path.join(__dirname, 'data', f + '.json'), 'utf8'));
+  const P = d('pse'), W = d('national'), R = d('roadway'), m = C.merge(P, W, R);
+  const ids = new Set(); P.records.concat(W.records, R.records).forEach((r) => ids.add(r.id));
+  assert.strictEqual(m.records.length, ids.size, 'all lane files merged, de-duplicated by id');
+  assert.ok(m.records.some((r) => r._ln === 'pse') && m.records.some((r) => r._ln === 'water'), 'records from several files');
+  assert.strictEqual(C.filter(m.records, {}, 'all', {}).length, m.records.length, 'no threshold gating by default');
+  const f5 = C.filter(m.records, { feeMin: 5e6 }, 'all', {}); assert.ok(f5.length < m.records.length && f5.every((r) => C.valueOf(r) >= 5e6), 'optional minimum amount');
+  const w = {}; w[m.records[3].id] = { ts: 1 }; assert.deepStrictEqual(C.filter(m.records, {}, 'watch', w).map((r) => r.id), [m.records[3].id], 'saved stars still resolve');
+  ['open', 'forecast', 'awarded'].forEach((s) => assert.ok(C.filter(m.records, {}, s, {}).length > 0, 'stage scope ' + s));
+  assert.ok(C.filter(m.records, { hideUnconfirmed: true }, 'all', {}).every(C.isConfirmed), 'Confirmed only');
+  const srt = C.sort(m.records, 'fee'); assert.ok(C.valueOf(srt[0]) >= C.valueOf(srt[srt.length - 1]));
+  assert.ok(!/id="modeSel"|PS&amp;E \/ H&amp;H, fee|Water, fee &gt; \$20M|Roadway \+ drainage<\/option>/.test(html), 'no lane picker or lane labels on the page');
+  assert.ok(/C\.merge\(DATA_P, DATA_W, DATA_R\)/.test(app) && html.includes('src="combined.js"') && sw.includes("'./combined.js'"), 'app uses the combined set');
+}
+console.log('national v4.5 tests passed');

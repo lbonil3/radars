@@ -2,7 +2,7 @@
    Every record already carries the rule that included it, the source field of each dollar figure, and a source link. */
 (function () {
   'use strict';
-  var V2 = window.NRV2, V4 = window.NRV4, HEALTH = null, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
+  var C = window.NRC, V2 = window.NRV2, V4 = window.NRV4, HEALTH = null, CP = window.RadarCapture, M = window.NationalModel, RW = window.NationalRoadway, PS = window.NationalPse, CO = window.NationalCost, G = window.US_GEO, TX = window.NATIONAL_TEXT || { notUsed: [], rules: [] }, TXR = window.NATIONAL_ROAD_TEXT || { rules: [] }, TXP = window.NATIONAL_PSE_TEXT || { rules: [], pipe: '', db: '' };
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SRC_SHORT = { 'sam': 'SAM.gov', 'usaspending': 'USAspending', 'txdot-pcl': 'TxDOT projected contracts', 'nyc': 'NYC City Record', 'chicago': 'Chicago contracts', 'dhs-apfs': 'DHS forecast (APFS)', 'ag-forecast': 'Acquisition Gateway forecasts', 'caltrans-lar': 'Caltrans A&E look-ahead', 'caltrans-awards': 'Caltrans A&E awards', 'usaspending-rw': 'USAspending prime awards (roadway lane)', 'usaspending-sub': 'USAspending subawards', 'wsdot-proj': 'WSDOT projected design list', 'pse-usaspending': 'USAspending prime awards / IDVs (PS&E lens)', 'austin': 'City of Austin master agreements', 'txdot-pi': 'TxDOT Project Information', 'wssc': 'WSSC Water projected solicitations', 'cdot-sched': 'CDOT tentative advertisement schedule', 'la-dotd': 'Louisiana DOTD projected advertisements', 'dc-pass': 'DC OCP PASS forecast', 'sd-forecast': 'San Diego County procurement forecast' };
@@ -31,19 +31,19 @@
     { id: 'db', label: 'Design-build', sub: 'DB value includes construction, NOT a fee' },
     { id: 'watch', label: 'Watchlist', sub: 'starred on this device' }
   ];
-  var SCOPES = SCOPES_P;
+  var SCOPES = C.SCOPES; // v4.5: one combined set, no lanes
   var COLOR = { opp: '#34d399', review: '#fbbf24', nofee: '#94a3b8', award: '#7cb7ff', closed: '#64748b', recompete: '#fb7185' };
   var STATUS_LABEL = { open: 'Open', upcoming: 'Upcoming', awarded: 'Awarded' };
   var EXCL_LABEL = { 'not-engineering': 'Not an engineering-services notice (NAICS / PSC)', 'construction-naics': 'Construction NAICS (23xxxx)', 'construction-title': 'Title reads as a construction contract', 'no-sector': 'No drainage / water / wastewater / flood / coastal wording', 'no-stated-fee': 'No fee stated by the source', 'project-cost-only': 'Only a project or construction cost stated (never counts as a fee)', 'fee-not-above-20m': 'Stated fee is $20,000,000 or less', 'deadline-passed': 'Response date already passed', 'outside-us': 'Place of performance outside the US', 'non-civil-context': 'Title looks non-civil (vessel, ESPC, cyber and similar)', 'stale-no-deadline': 'No deadline and posted over 12 months ago', 'award-older-than-24-months': 'Award older than 24 months', 'closed-older-than-12-months': 'Closed more than 12 months ago', 'notice-type-not-used': 'Notice type not used (justification, amendment only, etc.)', 'not-active-status': 'Not an active status', 'status-unknown': 'Status unknown', 'no-roadway-context': 'No roadway / highway / bridge / corridor wording', 'non-roadway-title': 'Title names a dam, canal, trail, airport, rail, vessel or similar, not a road', 'drain-fee-not-above-5m': 'Drainage-specific fee is $5,000,000 or less', 'total-fee-not-above-20m': 'Total fee is $20,000,000 or less', 'scope-does-not-name-drainage': 'Total fee above $20M but the scope does not name drainage / hydraulics / stormwater / culvert / flood' };
 
-  var DATA = null, RECS = [], ASOF = '', LIVE = {}, DATA_W = null, DATA_R = null, DATA_P = null, PRICES = null;
+  var COMB = null, DATA = null, RECS = [], ASOF = '', LIVE = {}, DATA_W = null, DATA_R = null, DATA_P = null, PRICES = null;
   var secLabel = function (k) { return k === 'roadway' ? 'Roadway' : k === 'drainage' ? 'Drainage named in the title' : M.sectorLabel(k); };
   var WATCH = {}; try { WATCH = JSON.parse(localStorage.getItem('nr.watch') || '{}') || {}; } catch (e) { WATCH = {}; }
   var CAP = {}; try { CAP = JSON.parse(localStorage.getItem('nr.capture') || '{}') || {}; } catch (e) { CAP = {}; } Object.keys(CAP).forEach(function (k) { CAP[k] = CP.clean(CAP[k]); });
-  var freshF = function (mode) { var f = { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null }; if (mode === 'pse') Object.assign(f, { feeMin: PS.DEFAULT_FEE, costMin: PS.PIPE_DEFAULT, inclusive: false, hideUnconfirmed: false, noText: false, dbMin: null, dbRoles: [], dbTypes: [], dbStages: [] }); return f; };
+  var freshF = function () { return { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null }; }; // v4.5: no threshold by default
   var CONF = false; try { CONF = localStorage.getItem('nr.confirmedOnly') === '1'; } catch (e) { CONF = false; } // item 5: saved Confirmed-only switch
   var freshF0 = freshF; freshF = function (mode) { var f = freshF0(mode); f.hideUnconfirmed = CONF; return f; };
-  var S = { mode: 'pse', scope: 'all', tab: 'map', sort: 'conf', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('pse') };
+  var S = { mode: 'all', scope: 'all', tab: 'map', sort: 'conf', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('all') };
   var SYNTH = { sectors: M.SECTORS.map(function (s) { return s.id; }) };
 
   function toast(t) { var el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { el.hidden = true; }, 3500); }
@@ -66,7 +66,7 @@
   S.region = V2.loadRegion(lsx); // saved; default All US
   function latestAsOf() { return [DATA_P, DATA_W, DATA_R].reduce(function (a, d) { return d && d.asOfDate > a ? d.asOfDate : a; }, ''); }
   function digestOf(list, kind) { var t = todayCentral(); return list.filter(function (r) { return kind === 'new' ? V2.isNew(r, NEWBASE) : kind === 'changed' ? V4.isChanged(r, t) : V2.isClosingSoon(r, t); }); }
-  function isConfirmedRec(r) { return S.mode === 'pse' ? (r.lens !== 'fee' || r.conf === 'confirmed') : r.bucket !== 'review'; } // pse: other lenses carry no Confirmed badge and are filtered by their own rules
+  function isConfirmedRec(r) { return C.isConfirmed(r); } // pse: other lenses carry no Confirmed badge and are filtered by their own rules
   function post(list, skipDigest) {
     if (S.region !== 'all') list = list.filter(function (r) { return V2.inRegion(r, S.region); });
     if (CONF) list = list.filter(isConfirmedRec);
@@ -91,13 +91,13 @@
   }
   function setRegion(id) { S.region = V2.regionOf(id).id; V2.saveRegion(lsx, S.region); V2.dismissRegionHint(lsx); S.rows = 50; render(); }
   function scoped(scope, skip) { return post(scopedRaw(scope, skip)); }
-  function scopedRaw(scope, skip) { return (S.mode === 'pse' ? PS.filterPse : S.mode === 'road' ? RW.filterRoadway : M.filterRecords)(RECS, filterFor(scope || S.scope, S.f, skip), WATCH); }
-  function fee(r) { return r.amt ? r.amt.v : S.mode === 'pse' ? (r.dbValue ? r.dbValue.v : r.projectCost ? r.projectCost.v : 0) : 0; }
+  function scopedRaw(scope, skip) { var o = Object.assign({}, S.f); (skip || []).forEach(function (k) { o[k] = Array.isArray(o[k]) ? [] : null; }); return C.filter(RECS, o, scope || S.scope, WATCH); }
+  function fee(r) { return C.valueOf(r); }
   function sortFor(list, key) {
     if (key === 'due' || key === 'decision') { var byId = {}; list.forEach(function (r) { byId[r.id] = r; }); return CP.sortRows(list.map(function (r) { return { id: r.id, cap: CAP[r.id] || CP.blank() }; }), key).map(function (x) { return byId[x.id]; }); }
     return sortStd(list, key);
   }
-  function sortStd(list, key) { return S.mode === 'pse' && key !== 'agency' ? PS.sortPse(list, key) : M.sortRecords(list, key === 'conf' ? 'fee' : key); }
+  function sortStd(list, key) { return C.sort(list, key); }
   function sum(list) { return list.reduce(function (a, r) { return a + fee(r); }, 0); }
 
   // ---------- small renderers ----------
@@ -126,24 +126,24 @@
   // v3: cards show at most 2 badges (confidence + one status); the detail sheet keeps every badge (tagsFor)
   function cardTags(r) {
     var b = r.badges || [], conf, st = null, t = todayCentral();
-    if (S.mode === 'pse') conf = r.lens === 'fee' ? (b.indexOf('Confirmed') >= 0 ? ['conf', 'Confirmed'] : ['unconf', 'Unconfirmed']) : r.lens === 'db' ? ['db', 'Design-build'] : r.lens === 'advance' ? ['plain', 'Early notice'] : ['plain', 'No fee yet'];
+    if (r._ln === 'pse') conf = r.lens === 'fee' ? (b.indexOf('Confirmed') >= 0 ? ['conf', 'Confirmed'] : ['unconf', 'Unconfirmed']) : ['plain', C.kindOf(r)];
     else conf = r.bucket === 'review' ? ['rev', 'Needs review'] : r.bucket === 'nofee' ? ['plain', 'Fee not stated'] : ['dir', r.bucket === 'closed' ? 'Closed' : STATUS_LABEL[r.status] || r.status];
     if (V2.isNew(r, NEWBASE)) st = ['new', 'New']; else if (V2.isClosingSoon(r, t)) st = ['inf', 'Closing soon']; else if (r.status === 'awarded' || r.stage === 'awarded') st = ['plain', 'Awarded']; else if (r.stage === 'forecast') st = ['plain', 'Forecast']; else if (r.stage === 'closed' || r.bucket === 'closed') st = ['plain', 'Closed'];
     if (st && st[1] === conf[1]) st = null;
     return [conf, st].filter(Boolean).map(function (x) { return '<span class="tag ' + x[0] + '">' + esc(x[1]) + '</span>'; }).join('');
   }
   function tagsFor(r) {
-    if (S.mode === 'pse') return tagsPse(r);
+    if (r._ln === 'pse') return tagsPse(r);
     var t = [alsoHtml(r)]; if (V2.isNew(r, NEWBASE)) t.push('<span class="tag new">New</span>');
     t.push('<span class="tag ' + (r.bucket === 'review' ? 'rev' : 'dir') + '">' + esc(r.bucket === 'closed' ? 'Closed (deadline passed)' : r.bucket === 'review' ? 'Needs review' : r.bucket === 'nofee' ? 'Fee not stated' : STATUS_LABEL[r.status] || r.status) + '</span>');
-    if (S.mode === 'road' && r.rw === 'drain') t.push('<span class="tag dir">Drainage-specific fee</span>');
-    if (S.mode === 'road' && r.rw === 'total') t.push('<span class="tag rev">Total fee, drainage share unknown</span>');
+    if (r._ln === 'road' && r.rw === 'drain') t.push('<span class="tag dir">Drainage-specific fee</span>');
+    if (r._ln === 'road' && r.rw === 'total') t.push('<span class="tag rev">Total fee, drainage share unknown</span>');
     if (r.recompete) t.push('<span class="tag inf">Recompete (inferred)</span>');
     (r.sectors || []).forEach(function (s) { t.push('<span class="tag inf" title="Inferred from keywords">' + esc(secLabel(s)) + '</span>'); });
     if (r.also && r.also.length) t.push('<span class="tag">+' + r.also.length + ' same record</span>');
     return t.join('');
   }
-  function colorOf(r) { if (S.mode === 'pse') return r.lens === 'db' ? '#c4b5fd' : r.lens === 'pipeline' ? '#94a3b8' : r.lens === 'advance' ? '#5eead4' : r.stage === 'awarded' || r.stage === 'closed' ? COLOR.award : r.stage === 'forecast' ? COLOR.review : COLOR.opp; return r.recompete && S.scope === 'recompete' ? COLOR.recompete : COLOR[r.bucket] || '#64748b'; }
+  function colorOf(r) { if (r._ln === 'pse') return r.lens === 'db' ? '#c4b5fd' : r.lens === 'pipeline' ? '#94a3b8' : r.lens === 'advance' ? '#5eead4' : r.stage === 'awarded' || r.stage === 'closed' ? COLOR.award : r.stage === 'forecast' ? COLOR.review : COLOR.opp; return COLOR[r.bucket] || '#64748b'; }
   function moneyPse(r, full) {
     var il = r.illustrative, h = '';
     if (r.lens === 'fee') h = '<span class="lbl">Consultant fee · ' + esc(r.amt.kind === 'design_fee' ? 'design fee stated in the notice text' : (M.AMOUNT_KINDS[r.amt.kind] || {}).label || r.amt.kind) + (full ? ' · source field: ' + esc(r.amt.field) : '') + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
@@ -167,16 +167,16 @@
   }
   function cardHtmlBase(r) {
     var money;
-    if (S.mode === 'pse') {
+    if (r._ln === 'pse') {
       var wherep = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
       return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button><button type="button" class="b" data-open="' + esc(r.id) + '">' + moneyPse(r) + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(wherep) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + '</button></div>';
     }
     if (r.amt) money = '<span class="lbl">' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     else money = '<span class="lbl">No fee stated by the source</span>' + (r.projectCost ? '<span class="big" style="font-size:16px">project cost (not fee): ' + esc(M.fmtMoney(r.projectCost.v)) + '</span><span class="lbl">' + esc(r.projectCost.field) + '</span>' : '');
-    if (S.mode === 'road' && r.amt) money = '<span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> ' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
+    if (r._ln === 'road' && r.amt) money = '<span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> ' + esc(M.AMOUNT_KINDS[r.amt.kind] ? M.AMOUNT_KINDS[r.amt.kind].label : r.amt.kind) + '</span><span class="big">' + esc(M.fmtMoneyFull(r.amt.v)) + '</span>';
     var where = [r.agency, r.subagency && r.subagency !== r.agency ? r.subagency : null, r.city ? r.city + ', ' + (r.state || '') : r.state ? (M.STATE_NAMES[r.state] || r.state) : 'state not stated'].filter(Boolean).join(' · ');
     return '<div class="card" style="--c:' + colorOf(r) + '"><button type="button" class="star' + (WATCH[r.id] ? ' on' : '') + '" data-star="' + esc(r.id) + '" aria-label="' + (WATCH[r.id] ? 'Remove from watchlist' : 'Add to watchlist') + '">' + (WATCH[r.id] ? '&#9733;' : '&#9734;') + '</button>' +
-      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + (S.mode === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
+      '<button type="button" class="b" data-open="' + esc(r.id) + '">' + money + '<span class="t">' + esc(r.title) + '</span><span class="m"><span>' + esc(where) + '</span></span><span class="m"><span>' + esc(dateText(r)) + '</span><span>' + esc(SRC_SHORT[r.src] || r.src) + '</span></span><span>' + cardTags(r) + '</span>' + chgLine(r) + (r._ln === 'road' ? '<span class="costline">' + esc(costBrief(r)) + '</span>' : '') + '</button></div>';
   }
   function costBrief(r) {
     var c = r.cost; if (!c) return '';
@@ -188,27 +188,12 @@
     el.innerHTML = list.length ? list.map(cardHtml).join('') : (emptyHtml || '<div class="empty"><b>Nothing to show here.</b></div>') + emptyActions();
   }
   function emptyScopeHtml() {
-    var counts = {}; SCOPES.forEach(function (s) { counts[s.id] = scoped(s.id).length; });
-    var filtered = activeCount() > 0;
-    if (S.mode === 'pse') {
-      var thr = S.f.feeMin === null ? 0 : S.f.feeMin;
-      if (S.scope === 'watch') return '<div class="empty"><b>Your watchlist is empty.</b> Tap the star on any record to keep it here. It is saved on this device only.</div>';
-      if (filtered || S.f.hideUnconfirmed || S.f.noText || (S.scope === 'db' && (S.f.dbMin !== null))) return '<div class="empty"><b>Nothing matches the current filters in this tab.</b> Loosen them: lower the threshold, switch off Hide unconfirmed or Hide text-parsed, or clear filters.</div>';
-      if (S.scope === 'advance') return '<div class="empty"><b>No advance notice in this snapshot matches.</b> Clear filters to see the full tab.</div>';
-      if (S.scope === 'pipeline') return '<div class="empty"><b>No design-phase project with a stated cost above ' + esc(M.fmtMoney(S.f.costMin || 0)) + ' names drainage or H&amp;H words.</b> Lower the project-cost threshold above.</div>';
-      if (S.scope === 'db') return '<div class="empty"><b>No design-build records in this snapshot match.</b></div>';
-      return '<div class="empty"><b>No record in this tab has a stated consultant fee ' + (S.f.inclusive ? '&ge; ' : '&gt; ') + esc(M.fmtMoney(thr)) + '.</b> Most agencies publish no fee before award. Try lowering the threshold, or open <b>Large projects (' + counts.pipeline + ')</b> and <b>Design-build (' + counts.db + ')</b>; those show stated project costs, never fees.</div>';
-    }
-    if (filtered && RECS.length) return '<div class="empty"><b>Nothing matches these filters in this tab.</b> Clear filters to see the full tab.</div>';
-    if (S.mode === 'road') {
-      var rb = { drain: '<b>0 confirmed upcoming or open records</b> in this snapshot. A record needs a consultant engineering notice on a roadway / highway / bridge / corridor project AND a <b>drainage-specific fee that the source itself states</b> as strictly more than $5,000,000, while still upcoming or open. No source checked states such a fee for an open or upcoming roadway project. Nothing was estimated to fill the tab. See <b>Needs review (' + counts.review + ')</b>, <b>Awards / competitors (' + counts.awards + ')</b>, and the Data tab for each source and its closest misses.', total: '<b>0 records</b>: no open or upcoming roadway engineering notice states a total fee over $20,000,000 and also names drainage, hydraulics, stormwater, culverts or flood in its scope. The source would not state the drainage share either way.', review: '<b>0 records need review</b> in this snapshot.', awards: '<b>0 awards</b> in this snapshot.', watch: '<b>Your watchlist is empty.</b> Tap the star on any record to keep it here. It is saved on this device only.' };
-      return '<div class="empty">' + rb[S.scope] + '</div>';
-    }
-    var base = { opp: '<b>0 confirmed upcoming or open records</b> in this snapshot. A record needs all of these: a consultant engineering notice, a drainage / water / wastewater sector, and a fee that the source itself states as strictly more than $20,000,000, while still upcoming or open. Most agencies do not publish a consultant fee before award. This is the true count, nothing has been added to fill it. Try <b>Needs review (' + counts.review + ')</b> and <b>Fee not stated (' + counts.nofee + ')</b>, or <b>Awards / competitors (' + counts.awards + ')</b>.', review: '<b>0 records need review</b> in this snapshot.', nofee: '<b>0 records</b>: no open or upcoming engineering notice in a water sector without a stated fee.', recompete: '<b>0 recompete candidates.</b> No awarded record with a stated fee over $20M has an end date within 18 months of the snapshot. Recompete dates are inferred.', awards: '<b>0 awards</b> in this snapshot.', watch: '<b>Your watchlist is empty.</b> Tap the star on any record to keep it here. It is saved on this device only.' };
-    return '<div class="empty">' + base[S.scope] + '</div>';
+    if (S.scope === 'watch') return '<div class="empty"><b>Your watchlist is empty.</b> Tap the star on any record to keep it here. It is saved on this device only.</div>';
+    if (activeCount() > 0 || CONF || S.digest) return '<div class="empty"><b>Nothing matches what is switched on.</b> Use a button below to widen the view.</div>';
+    return '<div class="empty"><b>No records in this view.</b> Try All, or check Data &amp; sources for feeds that are stale.</div>';
   }
   function setBadge(n) { var b = $('advCount'); b.hidden = !n; b.textContent = n; $('btnMore').setAttribute('aria-label', 'Filters' + (n ? ', ' + n + ' active' : '')); }
-  function activeCount() { var f = S.f, d = freshF(S.mode); return (f.q ? 1 : 0) + f.states.length + f.agencies.length + f.statuses.length + f.sectors.length + f.sources.length + (S.region && S.region !== 'all' ? 1 : 0) + (S.mode === 'pse' ? ((f.noText ? 1 : 0) + (f.inclusive ? 1 : 0) + (f.feeMin !== d.feeMin ? 1 : 0) + (f.costMin !== d.costMin ? 1 : 0) + (f.dbMin !== d.dbMin && f.dbMin !== undefined ? 1 : 0) + (f.dbRoles || []).length + (f.dbTypes || []).length + (f.dbStages || []).length) : (f.feeMin !== d.feeMin ? 1 : 0) + (f.costMin !== d.costMin ? 1 : 0)); } // Confirmed only is not counted: it is its own visible switch
+  function activeCount() { var f = S.f; return (f.q ? 1 : 0) + f.states.length + f.agencies.length + f.statuses.length + f.sectors.length + f.sources.length + (S.region && S.region !== 'all' ? 1 : 0) + (f.feeMin !== null && f.feeMin !== undefined ? 1 : 0); }
 
   // ---------- header, scopes, kpis ----------
   function renderFresh() {
@@ -219,7 +204,7 @@
     $('freshDot').className = 'dot ' + cls;
     $('freshTxt').textContent = 'Data updated ' + M.fmtDate(DATA.asOfDate) + ' (built ' + gen.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) + ', ' + (age < 1 ? 'today' : Math.floor(age) + ' day' + (Math.floor(age) === 1 ? '' : 's') + ' old') + ')' + (bad.length ? '. ' + bad.length + ' source(s) stale or failed.' : '.') + (LIVE.at ? ' Live awards refreshed ' + LIVE.at + '.' : '');
   }
-  var PRIMARY = { pse: ['all', 'open', 'forecast', 'awarded'], water: ['opp', 'review', 'nofee'], road: ['drain', 'total', 'review'] };
+  var PRIMARY = { all: ['all', 'open', 'forecast', 'awarded'] };
   var SHORT = { all: 'All', open: 'Open', forecast: 'Forecast', awarded: 'Awarded', opp: 'Open', review: 'Review', nofee: 'No fee', drain: 'Drainage', total: 'Roadway total' };
   function scopeBtn(s0, cls) { var n = scoped(s0.id).length, due = s0.id === 'watch' ? capCounts().soon + capCounts().overdue : 0; return '<button type="button" class="' + cls + (S.scope === s0.id ? ' on' : '') + '" data-scope="' + s0.id + '" aria-pressed="' + (S.scope === s0.id) + '" title="' + esc(s0.sub) + '"><b>' + n + '</b><span>' + esc(cls === 'scope' && SHORT[s0.id] ? SHORT[s0.id] : s0.label) + '</span>' + (due ? '<i class="flagn">' + due + ' due soon</i>' : '') + '</button>'; }
   function renderScopes() { // 3-4 primary scopes; the rest behind More (same scopes, same counts)
@@ -229,13 +214,10 @@
   }
 
   function renderKpis(list) {
-    var states = {}, ag = {}; list.forEach(function (r) { if (r.state) states[r.state] = 1; ag[r.agency] = 1; });
-    var scope = SCOPES.filter(function (s) { return s.id === S.scope; })[0];
-    var total = sum(list), withFee = list.filter(function (r) { return r.amt; }).length;
-    var withV = S.mode === 'pse' ? list.filter(function (r) { return fee(r); }).length : withFee, sumLbl = S.mode === 'pse' ? (S.scope === 'db' ? 'sum of DB values, NOT fees (' : S.scope === 'pipeline' ? 'sum of project costs, NOT fees (' : 'sum of stated fees (') : 'sum of stated values (';
-    var k = [[list.length, 'records · ' + scope.sub], S.mode === 'pse' && S.scope === 'advance' ? ['n/a', 'no fee is stated or used in this tab'] : [withV ? M.fmtMoney(total) : 'n/a', sumLbl + withV + ')'], [Object.keys(states).length, 'states'], [Object.keys(ag).length, 'agencies']];
-    $('kpis').innerHTML = '<p class="kline"><b>' + list.length + '</b> records &middot; ' + (S.mode === 'pse' && S.scope === 'advance' ? 'no fee is stated or used here' : '<b>' + esc(withV ? M.fmtMoney(total) : 'n/a') + '</b> ' + esc(sumLbl.replace(/ \($/, '').replace(/\($/, '')) + ' (' + withV + ')') + ' <span class="hint">' + esc(scope.sub) + '</span></p>'; // v3: one line; states / agencies live in Breakdown
+    var withV = list.filter(function (r) { return fee(r); }).length, total = sum(list), scope = SCOPES.filter(function (x) { return x.id === S.scope; })[0] || SCOPES[0];
+    $('kpis').innerHTML = '<p class="kline"><b>' + list.length + '</b> records &middot; <b>' + esc(withV ? M.fmtMoney(total) : 'n/a') + '</b> sum of amounts stated by the sources (' + withV + ') <span class="hint">' + esc(scope.sub) + '</span></p>';
   }
+
 
   // ---------- filter chips ----------
   function chipSet(elId, key, items, selected) {
@@ -250,15 +232,12 @@
     var f = S.f;
     chipSet('fState', 'states', itemsFor('states', function (r) { return r.state || '??'; }, function (k) { return k === '??' ? 'State not stated' : k + ' · ' + (M.STATE_NAMES[k] || k); }), f.states);
     chipSet('fAgency', 'agencies', itemsFor('agencies', function (r) { return r.agency; }), f.agencies);
-    chipSet('fStatus', 'statuses', itemsFor('statuses', function (r) { return r.status; }, function (k) { return STATUS_LABEL[k] || k; }), f.statuses);
-    chipSet('fSector', 'sectors', itemsFor('sectors', function (r) { return r.sectors || []; }, function (k) { return secLabel(k); }), f.sectors);
+    chipSet('fStatus', 'statuses', itemsFor('statuses', function (r) { return C.stageOf(r); }, function (k) { return C.STAGE_LABEL[k] || k; }), f.statuses);
+    chipSet('fSector', 'sectors', itemsFor('sectors', function (r) { return C.sectorsOf(r); }, function (k) { return secLabel(k); }), f.sectors);
     chipSet('fSource', 'sources', itemsFor('sources', function (r) { return r.src; }, function (k) { return SRC_SHORT[k] || k; }), f.sources);
-    var fees = S.mode === 'road' ? [[null, 'Any'], [5e6, '> $5M'], [10e6, '> $10M'], [20e6, '> $20M'], [50e6, '> $50M'], [100e6, '> $100M']] : [[null, 'Any'], [20e6, '> $20M'], [50e6, '> $50M'], [100e6, '> $100M'], [250e6, '> $250M'], [500e6, '> $500M']];
-    if (S.mode === 'pse') { $('fFee').innerHTML = '<span class="hint">use the fee threshold control above the list</span>'; $('costBox').hidden = true; var n0 = activeCount() - (f.q ? 1 : 0); setBadge(n0); var a0 = $('activeNote'); a0.hidden = !activeCount(); a0.textContent = activeCount() ? activeCount() + ' filter' + (activeCount() === 1 ? '' : 's') + ' on. Counts above reflect them.' : ''; renderPseCtl(); return; }
-    $('fFee').innerHTML = S.scope === 'nofee' ? '<span class="hint">not applicable: these records state no fee</span>' : fees.map(function (x) { return '<button type="button" class="chip' + (f.feeMin === x[0] ? ' on' : '') + '" data-fee="' + x[0] + '" aria-pressed="' + (f.feeMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
-    $('costBox').hidden = S.scope !== 'nofee';
-    var costs = [[null, 'Off'], [20e6, 'Project cost > $20M'], [50e6, 'Project cost > $50M'], [100e6, 'Project cost > $100M']];
-    $('fCost').innerHTML = costs.map(function (x) { return '<button type="button" class="chip' + (f.costMin === x[0] ? ' on' : '') + '" data-cost="' + x[0] + '" aria-pressed="' + (f.costMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
+    var fees = [[null, 'Any (default)'], [1e6, '$1M+'], [5e6, '$5M+'], [20e6, '$20M+'], [50e6, '$50M+'], [100e6, '$100M+']];
+    $('fFee').innerHTML = fees.map(function (x) { return '<button type="button" class="chip' + (f.feeMin === x[0] ? ' on' : '') + '" data-fee="' + x[0] + '" aria-pressed="' + (f.feeMin === x[0]) + '">' + x[1] + '</button>'; }).join('');
+    $('costBox').hidden = true; $('pseCtl').hidden = true;
     var n = activeCount() - (f.q ? 1 : 0); setBadge(n);
     var a = $('activeNote'); a.hidden = !activeCount(); a.textContent = activeCount() ? activeCount() + ' filter' + (activeCount() === 1 ? '' : 's') + ' on. Counts above reflect them.' : '';
   }
@@ -401,7 +380,7 @@
     var gen = new Date(DATA.generatedAt), age = Math.max(0, Math.floor((Date.now() - gen.getTime()) / 86400000));
     $('dqHealth').innerHTML = '<p><span class="dot ' + (bad.length ? 'warn' : 'ok') + '"></span> <b>' + ok + ' of ' + src.length + ' sources OK</b>' + (off ? ' &middot; ' + off + ' turned off' : '') + (bad.length ? ' &middot; <b>' + bad.length + ' stale or failed</b> (' + esc(bad.map(function (x) { return SRC_SHORT[x.id] || x.name || x.id; }).join(', ')) + ')' : '') + '</p>' +
       '<p>Data updated <b>' + esc(M.fmtDate(DATA.asOfDate)) + '</b> (' + (age < 1 ? 'today' : age + ' day' + (age === 1 ? '' : 's') + ' ago') + ') &middot; refreshed automatically every morning.</p>' +
-      '<p><b>' + (DATA.records || []).length + '</b> records in this lane. Open the sections below for per-source counts, exclusions and rules.</p>';
+      '<p><b>' + (DATA.records || []).length + '</b> records in total. Open the sections below for per-source counts and rules.</p>';
   }
   function fmtWhen(iso) { if (!iso) return 'never'; var d = new Date(iso); return isNaN(d) ? 'unknown' : d.toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); }
   // ---------- v4.3: since you last visited + calendar ----------
@@ -443,16 +422,14 @@
     if (S.digest) b('digest', 'Show everything (not only ' + ({ 'new': 'New', soon: 'Closing soon', changed: 'Changed' })[S.digest] + ')');
     if (activeCount() > 0) b('clear', 'Clear filters');
     if (CONF) b('conf', 'Include unconfirmed');
-    var first = (PRIMARY[S.mode] || [])[0]; if (first && S.scope !== first && S.scope !== 'watch') b('scope', 'Show the whole lane');
-    ['pse', 'water', 'road'].filter(function (m) { return m !== S.mode && (m !== 'pse' || DATA_P) && (m !== 'road' || DATA_R); }).forEach(function (m) { b('lane:' + m, 'Switch to ' + ({ pse: 'PS&amp;E / H&amp;H', water: 'Water', road: 'Roadway' })[m]); });
+    if (S.scope !== 'all' && S.scope !== 'watch') b('scope', 'Show all records');
     return '<div class="ways">' + a.join('') + '</div>';
   }
   function wayOut(k) {
     if (k === 'digest') S.digest = null;
     else if (k === 'clear') { resetFilters(); return; }
     else if (k === 'conf') setConf(false);
-    else if (k === 'scope') S.scope = PRIMARY[S.mode][0];
-    else if (k.indexOf('lane:') === 0) { $('modeSel').value = k.slice(5); setMode(k.slice(5)); return; }
+    else if (k === 'scope') S.scope = 'all';
     S.rows = 50; render();
   }
   var WIDE = window.matchMedia ? matchMedia('(min-width: 1200px)') : { matches: false };
@@ -482,11 +459,23 @@
     });
     el.innerHTML = h;
   }
+  var BANNER_ALL = '<b>Consultant engineering pursuits from public sources, all in one list.</b> Every record shows the dollar figure exactly as the source states it (a fee, a contract value, a design-build value or a project cost; the label says which). Nothing is hidden by a fee threshold: use Filters to set a minimum amount, a region, a stage or Confirmed only.';
+  var HOW_ALL = '<p><b>What is included.</b> Consultant engineering notices, forecasts and awards (design, PS&amp;E, H&amp;H, water, drainage, roadway design) from public federal, state and city feeds, refreshed every morning. Construction contracts and supplies are left out.</p>' +
+    '<p><b>Dollar figures.</b> Shown exactly as the source states them, with the source field named. A design-build value or a project cost is labeled as such and is not a consultant fee. Nothing is estimated as a fee.</p>' +
+    '<p><b>Confirmed.</b> The amount comes from a structured field and the scope is named in the title. Records that rely on text parsing or inferred scope are marked so you can check the source. Confirmed only hides the rest.</p>' +
+    '<p><b>Same opportunity, several sources.</b> Listed once, with the other sources shown on the card and in the detail view.</p>';
+  function renderDataAll() {
+    var gen = new Date(DATA.generatedAt), bySrc = M.countBy(RECS, function (r) { return r.src; }), st = M.countBy(RECS, function (r) { return C.stageOf(r); });
+    $('dqFresh').innerHTML = '<p><b>Snapshot as of ' + esc(M.fmtDate(DATA.asOfDate)) + '</b> (US Central date), built ' + esc(gen.toLocaleString([], { dateStyle: 'full', timeStyle: 'short' })) + '. <b>' + RECS.length + '</b> records after removing duplicates. Stages: ' + Object.keys(st).map(function (k) { return esc(C.STAGE_LABEL[k] || k) + ' ' + st[k]; }).join(', ') + '.</p>';
+    $('dqFunnel').innerHTML = '<table class="t"><thead><tr><th>Source</th><th>Records</th><th>With a stated amount</th></tr></thead><tbody>' + Object.keys(bySrc).sort(function (a, b) { return bySrc[b] - bySrc[a]; }).map(function (k) { var n = RECS.filter(function (r) { return r.src === k && fee(r); }).length; return '<tr><td>' + esc(SRC_SHORT[k] || k) + '</td>' + td(bySrc[k]) + td(n) + '</tr>'; }).join('') + '</tbody></table>';
+    $('dqSrc').innerHTML = DATA.sources.map(function (s) { return '<div class="card static" style="--c:' + (s.status === 'ok' ? '#34d399' : s.status === 'skipped' || s.status === 'disabled' ? '#94a3b8' : '#fb7185') + '"><div class="t">' + esc(s.name) + '</div><div class="m"><span>Status: <b>' + esc(s.status) + '</b></span><span>Records: ' + (bySrc[s.id] || 0) + '</span></div></div>'; }).join('');
+    $('dqNo').innerHTML = TX.notUsed.map(function (x) { return '<div class="card static" style="--c:#64748b"><div class="t">' + esc(x[0]) + '</div><p class="note" style="margin:4px 0">' + esc(x[2]) + '</p></div>'; }).join('');
+    $('dqRules').innerHTML = HOW_ALL;
+  }
   function renderData() {
     if (!DATA) return;
     renderHealth(); renderSrcHealth();
-    if (S.mode === 'pse') { renderDataPse(); return; }
-    if (S.mode === 'road') { renderDataRoad(); return; }
+    renderDataAll(); return;
     var gen = new Date(DATA.generatedAt);
     $('dqFresh').innerHTML = '<p><b>Snapshot as of ' + esc(M.fmtDate(DATA.asOfDate)) + '</b> (US Central date), built ' + esc(gen.toLocaleString([], { dateStyle: 'full', timeStyle: 'short' })) + '. Deadlines are compared against that date. ' + DATA.counts.total + ' records kept after removing ' + DATA.counts.mergedDuplicates + ' duplicates (' + DATA.counts.beforeDedupe + ' before).</p><p>Kept records: ' + Object.keys(DATA.counts.byBucket).map(function (k) { return esc(({ opp: 'confirmed upcoming/open', review: 'needs review', nofee: 'fee not stated', award: 'awards', closed: 'closed solicitations' })[k] || k) + ' ' + DATA.counts.byBucket[k]; }).join(', ') + '. <b>Recompete watch</b>: ' + DATA.counts.recompete + ' (inferred).</p>';
     var rows = DATA.sources.filter(function (s) { return s.stats; }).map(function (s) {
@@ -505,8 +494,7 @@
     $('dqRules').innerHTML = '<ul>' + TX.rules.map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul>';
   }
   function renderHow() {
-    if (S.mode === 'pse') { $('how').innerHTML = '<p>' + TXP.rules.join('</p><p>') + '</p>'; return; }
-    if (S.mode === 'road') { $('how').innerHTML = '<p>' + TXR.rules.join('</p><p>') + '</p>'; return; }
+    $('how').innerHTML = HOW_ALL; return;
     $('how').innerHTML = '<p>' + TX.rules.join('</p><p>') + '</p><p><b>Not counted:</b> construction contracts, supply contracts, project or construction costs standing in for a fee, fees estimated by percentage, and anything outside the United States.</p>';
   }
 
@@ -626,15 +614,15 @@
     var r = RECS.filter(function (x) { return x.id === id; })[0]; if (!r) return;
     var h = '<h2>' + esc(r.title) + '</h2><div>' + tagsFor(r) + '</div>';
     h += '<h3>Dollar figures</h3>';
-    if (S.mode === 'pse') h += sheetMoneyPse(r);
-    else if (S.mode === 'road' && r.amt) h += '<div class="money"><span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> · decides the fee rule</span><b>' + esc(M.fmtMoneyFull(r.amt.v)) + '</b><div>' + esc(moneyLabel(r.amt)) + '</div>' + (r.feeBasis === 'total' ? '<div class="hint">The source states only this total. How much of it is drainage is not stated, and no share is estimated here.</div>' : '') + (r.amt.ctx ? '<div class="hint">"…' + esc(r.amt.ctx) + '…"</div>' : '') + '</div>';
-    else if (S.mode === 'pse') { /* handled above */ }
+    if (r._ln === 'pse') h += sheetMoneyPse(r);
+    else if (r._ln === 'road' && r.amt) h += '<div class="money"><span class="lbl"><b class="basis ' + (r.feeBasis === 'total' ? 'tot' : 'dr') + '">' + esc(r.feeBasisLabel || '') + '</b> · decides the fee rule</span><b>' + esc(M.fmtMoneyFull(r.amt.v)) + '</b><div>' + esc(moneyLabel(r.amt)) + '</div>' + (r.feeBasis === 'total' ? '<div class="hint">The source states only this total. How much of it is drainage is not stated, and no share is estimated here.</div>' : '') + (r.amt.ctx ? '<div class="hint">"…' + esc(r.amt.ctx) + '…"</div>' : '') + '</div>';
+    else if (r._ln === 'pse') { /* handled above */ }
     else if (r.amt) h += '<div class="money"><span class="lbl">Stated fee / value (decides the fee rule)</span><b>' + esc(M.fmtMoneyFull(r.amt.v)) + '</b><div>' + esc(moneyLabel(r.amt)) + '</div>' + (r.amt.ctx ? '<div class="hint">"…' + esc(r.amt.ctx) + '…"</div>' : '') + '</div>';
     else h += '<div class="money"><b style="font-size:16px">No fee stated by the source</b></div>';
-    if (S.mode !== 'pse') (r.amts || []).filter(function (a) { return a.kind !== 'project_cost' && !(r.amt && a.v === r.amt.v && a.kind === r.amt.kind); }).forEach(function (a) { h += '<div class="money"><span class="lbl">Other figure</span><b style="font-size:17px">' + esc(M.fmtMoneyFull(a.v)) + '</b><div>' + esc(moneyLabel(a)) + '</div>' + (a.ctx ? '<div class="hint">"…' + esc(a.ctx) + '…"</div>' : '') + '</div>'; });
-    if (r.projectCost && S.mode !== 'pse') h += '<div class="money cost"><span class="lbl">Project cost (NOT a fee, never used for the fee rule)</span><b style="font-size:17px">' + esc(M.fmtMoneyFull(r.projectCost.v)) + '</b><div>' + esc(r.projectCost.field) + '</div>' + (r.projectCost.ctx ? '<div class="hint">"…' + esc(r.projectCost.ctx) + '…"</div>' : '') + '</div>';
-    if (S.mode === 'road') h += costSectionHtml(r);
-    h += '<h3>Details</h3><dl>' + [['Status', (STATUS_LABEL[r.status] || r.status) + ' · ' + (r.noticeLabel || r.noticeType || '')], ['Agency', [r.agency, r.subagency, r.office].filter(Boolean).join(' / ')], ['Place', [r.city, r.state].filter(Boolean).join(', ') || 'not stated'], ['Dates', dateText(r)], ['Awardee', r.awardee], ['Award #', r.awardNum], ['Solicitation #', r.solNum], ['NAICS / PSC', [r.naics, r.psc].filter(Boolean).join(' / ')], ['Sector (inferred)', (S.mode === 'pse' ? r.domains || [] : r.sectors || []).map(secLabel).join(', ')], ['Source', SRC_SHORT[r.src] || r.src], ['Snapshot as of', ASOF]].filter(function (x) { return x[1]; }).map(function (x) { return '<dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd>'; }).join('') + '</dl>';
+    if (r._ln !== 'pse') (r.amts || []).filter(function (a) { return a.kind !== 'project_cost' && !(r.amt && a.v === r.amt.v && a.kind === r.amt.kind); }).forEach(function (a) { h += '<div class="money"><span class="lbl">Other figure</span><b style="font-size:17px">' + esc(M.fmtMoneyFull(a.v)) + '</b><div>' + esc(moneyLabel(a)) + '</div>' + (a.ctx ? '<div class="hint">"…' + esc(a.ctx) + '…"</div>' : '') + '</div>'; });
+    if (r.projectCost && r._ln !== 'pse') h += '<div class="money cost"><span class="lbl">Project cost (NOT a fee, never used for the fee rule)</span><b style="font-size:17px">' + esc(M.fmtMoneyFull(r.projectCost.v)) + '</b><div>' + esc(r.projectCost.field) + '</div>' + (r.projectCost.ctx ? '<div class="hint">"…' + esc(r.projectCost.ctx) + '…"</div>' : '') + '</div>';
+    if (r._ln === 'road') h += costSectionHtml(r);
+    h += '<h3>Details</h3><dl>' + [['Status', (STATUS_LABEL[r.status] || r.status) + ' · ' + (r.noticeLabel || r.noticeType || '')], ['Agency', [r.agency, r.subagency, r.office].filter(Boolean).join(' / ')], ['Place', [r.city, r.state].filter(Boolean).join(', ') || 'not stated'], ['Dates', dateText(r)], ['Awardee', r.awardee], ['Award #', r.awardNum], ['Solicitation #', r.solNum], ['NAICS / PSC', [r.naics, r.psc].filter(Boolean).join(' / ')], ['Sector (inferred)', (r._ln === 'pse' ? r.domains || [] : r.sectors || []).map(secLabel).join(', ')], ['Source', SRC_SHORT[r.src] || r.src], ['Snapshot as of', ASOF]].filter(function (x) { return x[1]; }).map(function (x) { return '<dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd>'; }).join('') + '</dl>';
     if (r.url) h += '<a class="srclink" href="' + esc(r.url) + '" target="_blank" rel="noopener">Open the source record</a>';
     h += '<details class="capdet" id="capDet"' + (CAP[r.id] && !CP.isEmpty(CAP[r.id]) ? ' open' : '') + '><summary>Capture file <span class="hint">(your notes on this device)</span></summary><div id="capPanel"></div></details>';
     var fk = Object.keys(r.fields || {}).filter(function (k) { return r.fields[k] !== '' && r.fields[k] !== null && r.fields[k] !== undefined; });
@@ -645,14 +633,14 @@
     h += changesSheet(r);
     h += '<details class="rulesdet"><summary>Why it is listed (the exact rules)</summary>';
     h += '<h3>Why it is in this list (the exact rules)</h3><ul>' + (r.rules || []).map(function (x) { return '<li>' + esc(x.t) + '</li>'; }).join('') + '</ul>';
-    if (S.mode === 'pse' && r.reasons && r.reasons.length) h += '<h3>Why it is Unconfirmed or flagged</h3><ul>' + r.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
-    if (S.mode === 'pse' && r.lens === 'db') h += '<h3>Your possible role (inferred, not stated by the owner)</h3><p style="font-size:13px;margin:0"><b>' + esc(r.dbRoleLabel) + '</b>. ' + esc(r.dbRoleWhy) + '</p>';
-    if (S.mode !== 'pse' && r.review && r.review.length) h += '<h3>Why it needs review</h3><ul>' + r.review.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (r._ln === 'pse' && r.reasons && r.reasons.length) h += '<h3>Why it is Unconfirmed or flagged</h3><ul>' + r.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (r._ln === 'pse' && r.lens === 'db') h += '<h3>Your possible role (inferred, not stated by the owner)</h3><p style="font-size:13px;margin:0"><b>' + esc(r.dbRoleLabel) + '</b>. ' + esc(r.dbRoleWhy) + '</p>';
+    if (r._ln !== 'pse' && r.review && r.review.length) h += '<h3>Why it needs review</h3><ul>' + r.review.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
     if (r.bucket === 'nofee') h += '<h3>Why it is under "Fee not stated"</h3><p class="note" style="margin:0">Engineering notice with a water-sector title that is open or upcoming, but the source states no fee. It is not counted as over $20M.</p>';
     h += '</details>';
     $('shBody').innerHTML = h; $('sheet').hidden = false; $('sheet').setAttribute('data-id', id); $('shStar').className = 'star big' + (WATCH[id] ? ' on' : ''); $('shStar').innerHTML = WATCH[id] ? '&#9733;' : '&#9734;';
     refreshCapPanel(id); var dock = WIDE.matches; document.body.classList.toggle('docked', dock); $('sheet').setAttribute('aria-modal', String(!dock)); if (!dock) document.body.style.overflow = 'hidden'; $('shClose').focus();
-    if (S.mode === 'road') initWhatIf(r);
+    if (r._ln === 'road') initWhatIf(r);
   }
   function sheetMoneyPse(r) {
     var h = '';
@@ -722,19 +710,13 @@
   }
 
   // ---------- master render ----------
-  function renderModes() {
-    var ms = $('modeSel'); if (ms.value !== S.mode) ms.value = S.mode;
-    $('bannerShort').innerHTML = S.mode === 'pse' ? 'Consultant PS&amp;E / H&amp;H fees ' + (S.f.inclusive ? '&ge; ' : '&gt; ') + esc(M.fmtMoney(S.f.feeMin || 0)) + ', as stated by the source.' : S.mode === 'water' ? 'Water / wastewater / flood consultant fees &gt; $20M, as stated by the source.' : 'Roadway consultant work naming drainage, fee as stated by the source.';
-    $('btnLive').hidden = S.mode !== 'water'; $('liveNote').hidden = S.mode !== 'water';
-  }
-  function setMode(m) {
-    if (m === 'road' && !DATA_R) { toast('The roadway data file did not load.'); return; }
-    if (m === 'pse' && !DATA_P) { toast('The PS&E data file did not load.'); return; }
-    S.mode = m; SCOPES = m === 'road' ? SCOPES_R : m === 'pse' ? SCOPES_P : SCOPES_W; DATA = m === 'road' ? DATA_R : m === 'pse' ? DATA_P : DATA_W; RECS = DATA.records || []; ASOF = DATA.asOfDate;
-    S.scope = m === 'road' ? 'drain' : m === 'pse' ? 'all' : 'opp'; S.sort = m === 'pse' ? 'conf' : (S.sort === 'conf' ? 'fee' : S.sort); $('sort').value = S.sort; S.rows = 50; S.tlMonth = null; S.f = freshF(m); $('q').value = '';
-    $('bannerTxt').innerHTML = m === 'pse' ? TXP.banner : m === 'road' ? '<b>Roadway + drainage, consultant engineering only.</b> Confirmed = the source states a <b>drainage-specific fee strictly over $5M</b>. A separate bucket lists a <b>total roadway fee over $20M</b> when the scope names drainage (the drainage share is unknown and never estimated). Construction cost is either stated by the source or an estimate labeled <b>Estimate (not from source)</b>; it never affects a fee test.' : '<b>Fee &gt; $20M as stated by the source, engineering consultants only.</b> Most agencies publish no fee before award, so counts are small and true; nothing is padded or estimated.';
-    try { history.replaceState(null, '', m === 'road' ? '#road' : m === 'water' ? '#water' : location.pathname + location.search); } catch (e) { /* ignore */ }
-    renderHow(); renderFresh(); render(); window.scrollTo(0, 0);
+  function renderModes() { $('btnLive').hidden = false; $('liveNote').hidden = false; }
+  function setMode() { // v4.5: a single combined set; kept as the one place that (re)builds it
+    COMB = C.merge(DATA_P, DATA_W, DATA_R); DATA = COMB; RECS = COMB.records; ASOF = COMB.asOfDate; SCOPES = C.SCOPES;
+    S.mode = 'all'; S.rows = 50; S.tlMonth = null;
+    $('bannerTxt').innerHTML = BANNER_ALL;
+    try { if (location.hash === '#road' || location.hash === '#water') history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+    renderHow(); renderFresh(); render();
   }
   function render() {
     var list = scoped();
@@ -755,8 +737,8 @@
   // ---------- CSV ----------
   function exportCsv() {
     var list = sortFor(scoped(), S.sort); if (!list.length) { toast('Nothing to export in this view.'); return; }
-    var blob = new Blob(['\ufeff' + (S.mode === 'pse' ? PS.toCSVPse(list, ASOF) : S.mode === 'road' ? RW.toCSVRoadway(list, ASOF) : M.toCSV(list, ASOF))], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'national-radar-' + (S.mode === 'road' ? 'roadway-' : S.mode === 'pse' ? 'pse-hh-' : '') + S.scope + '-' + ASOF + '.csv'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    var blob = new Blob(['\ufeff' + M.toCSV(list, ASOF)], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'national-radar-' + S.scope + '-' + ASOF + '.csv'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
     toast('Exported ' + list.length + ' record(s).');
   }
 
@@ -838,11 +820,10 @@
   document.querySelectorAll('[data-theme-set]').forEach(function (x) { x.addEventListener('click', function (e) { e.stopPropagation(); var p = x.getAttribute('data-theme-set'); try { localStorage.setItem('nr.theme', p); } catch (er) {} applyTheme(p); }); });
   if (window.matchMedia) { var mq = matchMedia('(prefers-color-scheme: dark)'), onMq = function () { if (themePref() === 'auto') applyTheme('auto'); }; if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq); }
   applyTheme(themePref());
-  $('modeSel').addEventListener('change', function () { setMode(this.value); });
   $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
-  function resetFilters() { S.f = freshF(S.mode); $('q').value = ''; S.region = 'all'; V2.saveRegion(lsx, 'all'); S.rows = 50; render(); toast('Filters reset (Confirmed only and your watchlist are unchanged).'); }
+  function resetFilters() { S.f = freshF(); $('q').value = ''; S.region = 'all'; V2.saveRegion(lsx, 'all'); S.rows = 50; render(); toast('Filters reset (Confirmed only and your watchlist are unchanged).'); }
   $('btnClear').addEventListener('click', resetFilters); $('btnReset').addEventListener('click', resetFilters);
   $('feeIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.feeMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
   $('costIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.costMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
@@ -858,8 +839,7 @@
     HEALTH = V4.health([x[4], x[5]]); renderHealthDot();
     var lastTab = null; try { lastTab = localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab;
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
-    if (DATA_P) setMode(location.hash === '#road' && DATA_R ? 'road' : location.hash === '#water' ? 'water' : 'pse');
-    else { var po = document.querySelector('#modeSel option[value="pse"]'); if (po) po.remove(); setMode(location.hash === '#road' && DATA_R ? 'road' : 'water'); }
+    setMode();
     if (S.tab !== 'map') setTab(S.tab);
   }).catch(function (e) { $('freshTxt').textContent = 'Could not load data/national.json (' + e.message + '). Open the app once while online so it can be saved for offline use.'; $('freshDot').className = 'dot bad'; });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});

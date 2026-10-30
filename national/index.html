@@ -34,10 +34,7 @@
 
 <section class="banner" id="banner" aria-label="Read this first">
   <div class="bline">
-    <label class="lane"><span class="vh">Lane</span><select id="modeSel" aria-label="Lane">
-      <option value="pse">PS&amp;E / H&amp;H, fee &gt; $5M</option><option value="water">Water, fee &gt; $20M</option><option value="road">Roadway + drainage</option>
-    </select></label>
-    <span id="bannerShort" class="bshort"></span>
+    <span id="bannerShort" class="bshort">Consultant engineering pursuits from public sources, all in one list, amounts as stated by the source.</span>
     <button type="button" class="linkbtn" id="btnBanner" aria-expanded="false" aria-controls="bannerMore">What counts &rsaquo;</button>
   </div>
   <div id="bannerMore" hidden>
@@ -105,7 +102,7 @@
     <h3>Status <span class="hint">(as the source states it)</span></h3><div class="chips" id="fStatus"></div>
     <h3>Sector <span class="hint">(keyword match, inferred)</span></h3><div class="chips" id="fSector"></div>
     <h3>Source</h3><div class="chips" id="fSource"></div>
-    <h3>Stated fee, strictly greater than</h3><div class="chips" id="fFee"></div>
+    <h3>Minimum stated amount <span class="hint">optional; default shows everything</span></h3><div class="chips" id="fFee"></div>
     <div id="costBox" hidden>
       <h3>Project cost (NOT a fee) <span class="hint">off by default; only for records with no stated fee</span></h3>
       <div class="chips" id="fCost"></div>
@@ -162,9 +159,7 @@
     <h2 class="sec">Data health</h2><div id="dqHealth" class="panel health"></div>
     <h2 class="sec" id="srcHealthH">Source health <span class="hint">every feed, last successful refresh, records and status</span></h2><div id="srcHealth" class="srch"></div>
     <details class="dqd"><summary><h2 class="sec">Data freshness</h2></summary><div id="dqFresh" class="panel"></div></details>
-    <details class="dqd"><summary><h2 class="sec">Counts by source <span class="hint">how many rows survived each rule</span></h2></summary><div id="dqFunnel" class="panel scrollx"></div></details>
-    <details class="dqd"><summary><h2 class="sec">Why rows were excluded</h2></summary><div id="dqExcl" class="panel"></div></details>
-    <details class="dqd"><summary><h2 class="sec">Closest misses <span class="hint">excluded, but worth knowing about</span></h2></summary><div id="dqMiss" class="cards"></div></details>
+    <details class="dqd"><summary><h2 class="sec">Counts by source <span class="hint">records per source</span></h2></summary><div id="dqFunnel" class="panel scrollx"></div></details>
     <details class="dqd"><summary><h2 class="sec">Sources used</h2></summary><div id="dqSrc" class="cards"></div></details>
     <details class="dqd"><summary><h2 class="sec">Sources tested, not used</h2></summary><div id="dqNo" class="cards"></div></details>
     <details class="dqd"><summary><h2 class="sec">Rules</h2></summary><div id="dqRules" class="panel"></div></details>
@@ -199,6 +194,7 @@
 <script src="capture.js"></script>
 <script src="v2.js"></script>
 <script src="v4.js"></script>
+<script src="combined.js"></script>
 <script src="model.js"></script>
 <script src="cost.js"></script>
 <script src="roadway.js"></script>

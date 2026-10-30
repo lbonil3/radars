@@ -3,20 +3,20 @@ const assert = require('assert'), fs = require('fs'), path = require('path');
 const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
 // P1: one-line banner (expandable), lanes as a dropdown, 3-4 primary scopes + More
 assert.ok(html.includes('id="bannerShort"') && /id="bannerMore" hidden/.test(html) && html.includes('id="btnBanner"'), 'explainer collapsed to one line, expandable');
-assert.ok(/<select id="modeSel"[^>]*>[\s\S]*value="pse"[\s\S]*value="water"[\s\S]*value="road"/.test(html) && !/class="modes"/.test(html), 'lanes are a dropdown');
+assert.ok(!/id="modeSel"/.test(html) && !/class="modes"/.test(html), 'v4.5: no lane dropdown or lane tabs');
 const prim = app.match(/var PRIMARY = (\{[^}]*\})/)[1].replace(/'/g, '"').replace(/(\w+):/g, '"$1":');
-Object.values(JSON.parse(prim)).forEach((l) => assert.ok(l.length >= 3 && l.length <= 4, 'primary scopes per lane: 3-4'));
+Object.values(JSON.parse(prim)).forEach((l) => assert.ok(l.length >= 3 && l.length <= 4, 'primary scopes: 3-4'));
 assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes behind More');
 // P1: single Filters drawer (fee threshold, region, include-exactly, text-parsed, exact-$5M note, chips, reset), badge, Confirmed only visible, no duplicate Hide unconfirmed
 {
   const adv = html.slice(html.indexOf('<div id="adv"'), html.indexOf('<div class="active" id="activeNote"'));
-  ['id="regionSel"', 'id="feeIn"', 'id="btnIncl"', 'id="btnText"', 'id="feePre"', 'id="exactNote"', 'id="pcDb"', 'id="pcPipe"', 'id="fState"', 'id="fSource"', 'id="btnReset"', 'id="btnClear"', 'id="btnCsv"', 'id="btnLive"', 'href="../texas/"'].forEach((k) => assert.ok(adv.includes(k), 'drawer holds ' + k));
+  ['id="regionSel"', 'id="fFee"', 'id="fState"', 'id="fSource"', 'id="btnReset"', 'id="btnClear"', 'id="btnCsv"', 'id="btnLive"', 'href="../texas/"'].forEach((k) => assert.ok(adv.includes(k), 'drawer holds ' + k));
   assert.ok(!html.includes('id="btnConf"'), 'duplicate Hide unconfirmed button removed');
   const before = html.slice(0, html.indexOf('<div id="adv"'));
   assert.ok(before.includes('id="btnConfOnly"') && before.includes('id="regionHint"'), 'Confirmed only and the region hint stay outside the drawer');
   assert.ok(html.includes('class="fbadge" id="advCount"') && /function setBadge\(n\)/.test(app), 'active-filter badge');
-  assert.ok(/S\.region && S\.region !== 'all' \? 1 : 0/.test(app) && /f\.feeMin !== d\.feeMin/.test(app), 'badge counts region and a changed fee threshold');
-  assert.ok(/function resetFilters\(\) \{ S\.f = freshF\(S\.mode\);[^\n]*S\.region = 'all'/.test(app) && /f\.hideUnconfirmed = CONF/.test(app), 'reset clears filters and region but keeps the saved Confirmed only');
+  assert.ok(/S\.region && S\.region !== 'all' \? 1 : 0/.test(app) && /f\.feeMin !== null && f\.feeMin !== undefined \? 1 : 0/.test(app), 'badge counts region and an optional minimum amount');
+  assert.ok(/function resetFilters\(\) \{ S\.f = freshF\(\);[^\n]*S\.region = 'all'/.test(app) && /f\.hideUnconfirmed = CONF/.test(app), 'reset clears filters and region but keeps the saved Confirmed only');
 }
 // P1: max 2 badges per card, all badges in the detail sheet; source-field detail only in the sheet
 {
@@ -50,7 +50,7 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   ['Why it is in this list', 'Why it is Unconfirmed', 'Why it needs review'].forEach((k) => assert.ok(pos(k) > pos('class="rulesdet"'), k + ' is inside the rules section at the end'));
   const d = html.slice(html.indexOf('<section id="v-data"'), html.indexOf('</section>', html.indexOf('<section id="v-data"')));
   assert.ok(d.indexOf('id="dqHealth"') > 0 && d.indexOf('id="dqHealth"') < d.indexOf('<details'), 'Data tab opens on the health summary');
-  ['dqFresh', 'dqFunnel', 'dqExcl', 'dqMiss', 'dqSrc', 'dqNo', 'dqRules'].forEach((k) => assert.ok(/<details class="dqd">/.test(d) && d.includes('id="' + k + '"'), k + ' kept in an expander'));
+  ['dqFresh', 'dqFunnel', 'dqSrc', 'dqNo', 'dqRules'].forEach((k) => assert.ok(/<details class="dqd">/.test(d) && d.includes('id="' + k + '"'), k + ' kept in an expander'));
   assert.ok(/function renderHealth\(\)/.test(app) && /renderData\(\) \{\n    if \(!DATA\) return;\n    renderHealth\(\);/.test(app));
 }
 // P3 (trivial ones): plainer scope wording, last view remembered; closed More menu takes no space
