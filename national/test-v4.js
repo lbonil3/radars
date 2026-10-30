@@ -45,4 +45,29 @@ const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = 
   assert.ok(/chgLine\(r\)/.test(app) && /data-digest="changed"/.test(app) && /changesSheet\(r\)/.test(app), 'card change line, Changed filter, sheet list');
   assert.strictEqual((fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-national.js'), 'utf8').match(/V4\.trackChanges/g) || []).length, 3, 'refresh tracks changes in all three lanes');
 }
+// v4.3 since last visit + .ics
+{
+  const mem = () => { const o = {}; return { getItem: (k) => (k in o ? o[k] : null), setItem: (k, v) => { o[k] = String(v); } }; };
+  const ls = mem(), ss1 = mem();
+  assert.strictEqual(V4.visitBaseline(ls, ss1, '2026-10-01T10:00:00Z'), null, 'first visit: nothing to compare');
+  const ss2 = mem(); assert.strictEqual(V4.visitBaseline(ls, ss2, '2026-10-05T10:00:00Z'), '2026-10-01T10:00:00Z', 'second visit sees the first');
+  assert.strictEqual(V4.visitBaseline(ls, ss2, '2026-10-05T11:00:00Z'), '2026-10-01T10:00:00Z', 'frozen for the session');
+  assert.ok(V4.changedSince({ history: [{ t: '2026-10-03' }] }, '2026-10-01T10:00:00Z') && !V4.changedSince({ history: [{ t: '2026-09-30' }] }, '2026-10-01T10:00:00Z'));
+  assert.strictEqual(V4.newlyStale([{ health: 'stale', failingSince: '2026-10-02T00:00:00Z' }, { health: 'stale', failingSince: '2026-09-02T00:00:00Z' }, { health: 'fresh' }], '2026-10-01T10:00:00Z').length, 1);
+  assert.strictEqual(V4.findDate('Pre-proposal conference November 4, 2026 at 10 AM'), '2026-11-04'); assert.strictEqual(V4.findDate('site visit 11/9/2026'), '2026-11-09');
+  const r = { id: 'sam:1', title: 'Levee design, Phase 2; A/E', agency: 'USACE', url: 'https://sam.gov/x', dates: { due: '2026-11-20' }, desc: 'A pre-bid meeting will be held Nov 6, 2026. Optional site visit on 2026-11-07.' };
+  const ev = V4.eventsFor(r, { due: '', next: 'Call PM', decision: 'Go' }, r.title);
+  assert.deepStrictEqual(ev.map((e) => e.date), ['2026-11-20', '2026-11-06', '2026-11-07']);
+  assert.deepStrictEqual(ev[0].alarms, ['P7D', 'P1D'], 'reminders 1 week and 1 day before due');
+  assert.strictEqual(V4.eventsFor(r, { due: '2026-11-18' }, r.title)[0].date, '2026-11-18', 'capture due date wins');
+  const txt = V4.ics(ev, '2026-10-29T12:00:00.000Z', 'Test');
+  const lines = txt.split('\r\n'); assert.strictEqual(lines[0], 'BEGIN:VCALENDAR'); assert.strictEqual(lines[lines.length - 2], 'END:VCALENDAR');
+  assert.strictEqual((txt.match(/BEGIN:VEVENT/g) || []).length, 3); assert.strictEqual((txt.match(/BEGIN:VALARM/g) || []).length, 4);
+  assert.ok(txt.includes('DTSTART;VALUE=DATE:20261120') && txt.includes('DTEND;VALUE=DATE:20261121') && txt.includes('TRIGGER:-P7D') && txt.includes('DTSTAMP:20261029T120000Z'));
+  assert.ok(txt.includes('SUMMARY:Due: Levee design\\, Phase 2\\; A/E'), 'escaped text');
+  assert.ok(lines.every((l) => Buffer.byteLength(l) <= 75), 'lines folded to 75 octets');
+  assert.ok(!/fetch\(|XMLHttpRequest/.test(fs.readFileSync(path.join(__dirname, 'v4.js'), 'utf8')), 'v4 helpers make no network requests');
+  assert.ok(html.includes('id="since"') && html.includes('id="btnPurIcs"') && html.includes('id="btnViewIcs"') && /renderSince\(\)/.test(app) && /data-since/.test(app), 'since summary + .ics buttons wired');
+}
 console.log('national v4 tests passed');
+

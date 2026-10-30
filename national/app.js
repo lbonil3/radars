@@ -404,6 +404,39 @@
       '<p><b>' + (DATA.records || []).length + '</b> records in this lane. Open the sections below for per-source counts, exclusions and rules.</p>';
   }
   function fmtWhen(iso) { if (!iso) return 'never'; var d = new Date(iso); return isNaN(d) ? 'unknown' : d.toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+  // ---------- v4.3: since you last visited + calendar ----------
+  var VISIT = V4.visitBaseline(lsx, ssn, new Date().toISOString());
+  function allRecs() { var o = {}; [DATA_P, DATA_W, DATA_R].forEach(function (d) { if (d) d.records.forEach(function (r) { if (!o[r.id]) o[r.id] = r; }); }); return o; }
+  function renderSince() {
+    var el = $('since'), dis = null; try { dis = ssn && ssn.getItem(V4.SINCE_DISMISS); } catch (e) { dis = null; }
+    if (!VISIT || dis || !DATA) { el.hidden = true; return; }
+    var base = post(scopedRaw(S.scope), true), t = todayCentral();
+    var nNew = digestOf(base, 'new').length, nSoon = digestOf(base, 'soon').length, nChg = base.filter(function (r) { return V4.changedSince(r, VISIT); }).length, st = HEALTH ? V4.newlyStale(HEALTH.all, VISIT) : [];
+    var pur = V2.pursuitRows(WATCH, CAP, function () { return null; }, t, CP).filter(function (r) { return r.flag === 'soon' || r.flag === 'overdue'; }).length;
+    var it = [], b = function (k, n, txt, cls) { if (n) it.push('<button type="button" class="sinb' + (cls ? ' ' + cls : '') + '" data-since="' + k + '"><b>' + n + '</b> ' + txt + '</button>'); };
+    b('new', nNew, 'new'); b('soon', nSoon, 'closing soon'); b('changed', nChg, 'changed'); b('pursuits', pur, 'pursuit' + (pur === 1 ? '' : 's') + ' due soon'); b('stale', st.length, 'source' + (st.length === 1 ? '' : 's') + ' newly stale', 'warn');
+    if (!it.length) { el.hidden = true; return; }
+    el.innerHTML = '<div class="sinh"><span>Since your last visit <span class="hint">' + esc(new Date(VISIT).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })) + '</span></span><button type="button" class="sinx" id="sinceX" aria-label="Dismiss the since-last-visit summary">&times;</button></div><div class="sinl">' + it.join('') + '</div>';
+    el.hidden = false;
+  }
+  function sinceTap(k) {
+    if (k === 'pursuits') { setTab('pursuits'); return; }
+    if (k === 'stale') { setTab('data'); setTimeout(function () { var h = $('srcHealthH'); if (h) h.scrollIntoView(); }, 60); return; }
+    S.digest = k; S.rows = 50; render();
+  }
+  function dlFile(name, text, type) { var a = document.createElement('a'), u = URL.createObjectURL(new Blob([text], { type: type })); a.href = u; a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 500); }
+  function exportPursuitIcs() {
+    var all = allRecs(), rows = V2.pursuitRows(WATCH, CAP, function (id) { return all[id] || null; }, todayCentral(), CP), ev = [];
+    rows.forEach(function (row) { ev = ev.concat(V4.eventsFor(all[row.id] || null, row.cap, row.title)); });
+    if (!ev.length) { toast('No due dates yet: add a due date in a capture file, or star a record that states one.'); return; }
+    dlFile('national-radar-pursuits.ics', V4.ics(ev, new Date().toISOString(), 'National Radar: My pursuits'), 'text/calendar');
+    toast(ev.length + ' calendar event' + (ev.length === 1 ? '' : 's') + ' saved, with reminders 1 week and 1 day before each due date.');
+  }
+  function exportViewIcs() {
+    var ev = []; scoped().forEach(function (r) { ev = ev.concat(V4.eventsFor(r, CAP[r.id] || null, r.title)); });
+    if (!ev.length) { toast('No records in this view state a due date.'); return; }
+    dlFile('national-radar-view.ics', V4.ics(ev, new Date().toISOString(), 'National Radar: due dates'), 'text/calendar'); toast(ev.length + ' due date' + (ev.length === 1 ? '' : 's') + ' saved.');
+  }
   function renderHealthDot() {
     var n = HEALTH ? HEALTH.bad.length : 0, t = n ? n + ' source' + (n === 1 ? ' is' : 's are') + ' stale or failing; see Data & sources' : '';
     $('healthDot').hidden = !n; $('healthDot').title = t; $('healthWarn').hidden = !n; $('healthWarn').textContent = n ? n + ' stale' : '';
@@ -681,7 +714,7 @@
   }
   function render() {
     var list = scoped();
-    renderModes(); renderScopes(); renderDigest(); renderCapBar(); renderKpis(list); renderFilters();
+    renderModes(); renderScopes(); renderDigest(); renderSince(); renderCapBar(); renderKpis(list); renderFilters();
     if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') renderList(list); else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else if (S.tab === 'pursuits') renderPursuits(); else renderData();
     renderPurBadge();
   }
@@ -748,6 +781,8 @@
   document.addEventListener('input', onCapInput); document.addEventListener('change', onCapInput);
   document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.hasAttribute && d.hasAttribute('data-capopen')) { var id = d.getAttribute('data-capopen'); if (d.open) S.capOpen[id] = true; else delete S.capOpen[id]; } }, true);
   $('capSort').addEventListener('click', function (e) { var b = e.target.closest('[data-capsort]'); if (!b) return; S.sort = b.getAttribute('data-capsort'); $('sort').value = S.sort; render(); });
+  $('btnPurIcs').addEventListener('click', exportPursuitIcs); $('btnViewIcs').addEventListener('click', exportViewIcs);
+  $('since').addEventListener('click', function (e) { if (e.target.closest('#sinceX')) { try { ssn && ssn.setItem(V4.SINCE_DISMISS, '1'); } catch (er) {} $('since').hidden = true; return; } var b = e.target.closest('[data-since]'); if (b) sinceTap(b.getAttribute('data-since')); });
   $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurPrint').addEventListener('click', printPursuits); $('btnBackup').addEventListener('click', exportBackup);
   $('btnRestore').addEventListener('click', function () { S.restoreMode = 'merge'; $('restoreFile').value = ''; $('restoreFile').click(); });
   $('btnRestoreAll').addEventListener('click', function () { S.restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });

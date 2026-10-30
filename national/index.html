@@ -30,6 +30,7 @@
   </div>
   <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span><button type="button" class="pill" id="digestPill" aria-expanded="false" aria-controls="digest" hidden></button></div>
 </header>
+<section class="since" id="since" aria-label="Since you last visited" hidden></section>
 
 <section class="banner" id="banner" aria-label="Read this first">
   <div class="bline">
@@ -110,7 +111,7 @@
       <div class="chips" id="fCost"></div>
     </div>
     <h3>Actions</h3>
-    <div class="chips"><button type="button" class="btn small" id="btnCsv">Export CSV</button><button type="button" class="btn small" id="btnLive">Refresh live awards</button><button type="button" class="btn small" id="btnClear">Reset filters</button></div>
+    <div class="chips"><button type="button" class="btn small" id="btnCsv">Export CSV</button><button type="button" class="btn small" id="btnViewIcs">Due dates in this view (.ics)</button><button type="button" class="btn small" id="btnLive">Refresh live awards</button><button type="button" class="btn small" id="btnClear">Reset filters</button></div>
     <p class="note" id="liveNote"></p>
   </div>
   <div class="active" id="activeNote" hidden></div>
@@ -153,7 +154,7 @@
 
   <section id="v-pursuits" class="view" hidden aria-label="My pursuits">
     <div class="purhead"><h2>My pursuits <span class="hint" id="purWeek"></span></h2>
-      <div class="purbtns"><button type="button" class="btn" id="btnPurPrint">Print weekly list</button><button type="button" class="btn" id="btnPurCsv">Export CSV</button></div></div>
+      <div class="purbtns"><button type="button" class="btn" id="btnPurPrint">Print weekly list</button><button type="button" class="btn" id="btnPurCsv">Export CSV</button><button type="button" class="btn" id="btnPurIcs">Add to calendar (.ics)</button></div></div>
     <p class="note">Starred records and records with a capture file, all lanes, sorted by your due date. Go / No-go, due date, next action and notes are your notes on this device (shared capture model with Texas Opportunity).</p>
     <div id="purList"></div>
   </section>

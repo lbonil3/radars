@@ -307,3 +307,10 @@ html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
 /* v4.2 change line + sheet list */
 .chg{display:block;margin-top:4px;font-size:12.5px;font-weight:600;color:var(--acc)}.chg.st{color:var(--bad)}
 .chgl{margin:4px 0;padding-left:18px;font-size:13.5px}.chgl li{margin:2px 0}
+/* v4.3 since last visit */
+.since{margin:2px calc(14px + env(safe-area-inset-right)) 6px calc(14px + env(safe-area-inset-left));padding:6px 10px 8px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.sinh{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:700}
+.sinx{min-width:44px;min-height:36px;border:0;background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--dim)}
+.sinl{display:flex;flex-wrap:wrap;gap:6px}
+.sinb{min-height:36px;padding:0 12px;border-radius:18px;border:1px solid var(--line);background:var(--panel2);font-size:13px;cursor:pointer}
+.sinb b{color:var(--acc)}.sinb.warn{border-color:var(--warn)}.sinb.warn b{color:var(--warn)}
