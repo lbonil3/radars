@@ -380,4 +380,22 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(/fetch\('data\/newsletters\/index\.json'/.test(ui) && !/fetch\(\s*['"]https?:/.test(ui));
   assert.ok(!/mailto:|sendMail/i.test(ui), 'no email sending');
 }
+
+// Newsletter editorial design: same table/inline markup for page (dark) and email (light), readable contrast
+{
+  const N = require('./newsletter.js'), n = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'newsletters', JSON.parse(fs.readFileSync(path.join(dir, 'data', 'newsletters', 'index.json'), 'utf8')).weeks.find((w) => w.items).week + '.json'), 'utf8'));
+  const light = N.toHtml(n), dark = N.toHtml(n, { fragment: true, theme: 'dark', icons: true });
+  ['Texas Intel Weekly', 'Issue No. ', 'By the numbers', 'Top story', 'Topic mix'].forEach((t) => assert.ok(light.indexOf(t) > 0 && dark.indexOf(t) > 0, t));
+  assert.ok(/role="presentation"/.test(light) && !/<style|<link|<script|<img|class=|<svg/.test(light), 'email: tables + inline styles, no SVG/CSS/images');
+  assert.ok(/<svg/.test(dark) && !/<script/.test(dark), 'page version may use inline SVG icons');
+  assert.ok(!/https?:\/\/(?!([a-z0-9-]+\.)+[a-z]+\/)/.test(light.replace(/href="[^"]+"/g, '')), 'no external assets');
+  const hrefs = (light.match(/href="([^"]+)"/g) || []).map((h) => h.slice(6, -1).replace(/&amp;/g, '&'));
+  const known = new Set([].concat(...n.houston.map((g) => g.items), ...n.texas.map((g) => g.items), n.deadlines).map((e) => e.link)); assert.ok(hrefs.every((h) => known.has(h)), 'only links to collected items');
+  const L = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const C = (a, b) => { const x = L(a), y = L(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  ['light', 'dark'].forEach((th) => { const P = N.palette(th); [[P.ink, P.paper], [P.ink, P.card], [P.dim, P.card], [P.dim, P.paper], [P.brand, P.card], [P.head, P.card], [P.warnInk, P.warnBg], [P.brand, P.quote]].concat(Object.keys(P.acc).map((t) => [P.acc[t], P.paper])).forEach((pr) => assert.ok(C(pr[0], pr[1]) >= 4.5, th + ' contrast ' + pr.join(' on ') + ' = ' + C(pr[0], pr[1]).toFixed(2))); assert.ok(C('#ffffff', P.warnBd) >= 4.5, 'calendar month label'); });
+  ['#6d28d9', '#a16207', '#047857', '#0369a1', '#0e7490', '#c2410c', '#be185d', '#475569'].forEach((c) => assert.ok(C('#ffffff', c) >= 4.5, 'badge ' + c));
+  const txt = N.toText(n); assert.ok(/^TEXAS INTEL WEEKLY · Issue No\. \d+/.test(txt) && /BY THE NUMBERS/.test(txt) && /TOP STORY/.test(txt));
+  assert.ok(n.stats && typeof n.stats.items === 'number', 'issues carry By-the-numbers counts');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
