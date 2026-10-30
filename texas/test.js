@@ -325,6 +325,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.strictEqual(again[0].firstSeen, '2026-10-21T00:00:00.000Z', 'first-seen survives the link change');
   const ij = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'intel.json'), 'utf8'));
   ij.items.forEach((it) => { assert.strictEqual(I.fixLink(it.link), it.link, 'stored link is normalized: ' + it.link); assert.ok(!/LegislationDetail\.aspx|&amp;/.test(it.link), 'no broken Legistar or escaped links'); });
+}
 // Intel HTML-page parsers (sites without feeds)
 {
   const I = require('./intel.js'), fx = (f) => fs.readFileSync(path.join(dir, 'test-fixtures', f), 'utf8');
