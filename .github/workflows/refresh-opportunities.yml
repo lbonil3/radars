@@ -35,7 +35,8 @@ jobs:
         run: node test.js
       - name: Commit if changed
         run: |
-          if [ -z "$(git status --porcelain -- texas/data/)" ]; then
+          git add -N texas/data/   # new newsletter files show up in the diff
+          if git diff --quiet -- texas/data/; then
             echo "No data changes."
           else
             git config user.name "github-actions[bot]"
