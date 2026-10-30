@@ -350,3 +350,26 @@ html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
 .posr{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:#047857;background:#d1fae5;border-radius:6px;padding:1px 6px;margin:0 0 3px}
 [data-theme=night] .posr,.night .posr{color:#6ee7b7;background:rgba(16,185,129,.16)}
 .card.past{opacity:.72}
+
+/* ===== v6.1: list first, small map beside / above the list; count markers ===== */
+.lgrid{display:flex;flex-direction:column;gap:8px}
+.mini{margin:0 0 4px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.mini[hidden]{display:none}
+.minisum{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);list-style:none}
+.minisum::-webkit-details-marker{display:none}.minisum::after{content:"\25BE";margin-left:auto;color:var(--dim)}details[open]>.minisum::after{content:"\25B4"}
+.minisum .hint{font-weight:400;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.miniwrap{background:#070c19;border-top:1px solid var(--line)}
+#usmini{display:block;width:100%;height:auto;max-height:280px}
+.minibar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 12px 4px;font-size:12px}
+.minibar .linkbtn{min-height:36px;font-size:13px}
+.st.has{cursor:pointer}
+.mk{fill:#1d4ed8;stroke:#dbeafe;stroke-width:2;cursor:pointer}.mk.cnt{fill:#b45309;stroke:#fef3c7}
+.mkg.sel .mk{stroke:#fbbf24;stroke-width:4}
+.mkt{fill:#fff;font:700 13px system-ui,-apple-system,sans-serif;text-anchor:middle;pointer-events:none}.mkt.sm{font-size:17px}
+.legd{border-top:1px solid var(--line)}.legd>summary{min-height:36px;display:flex;align-items:center;padding:0 14px;font-size:13px;color:var(--dim);cursor:pointer}
+.legend i.lg-v,.legend i.lg-c,.legend i.lg-p{border-radius:50%}.lg-v{background:#1d4ed8}.lg-c{background:#b45309}.lg-p{background:#fb7185}
+html[data-theme=day] .miniwrap{background:#dfe8f3}
+#usmap{max-height:62vh}
+@media (min-width:1200px){
+  .lgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
+  .lgrid .mini{grid-column:2;grid-row:1;position:sticky;top:8px}.lgrid .lmain{grid-column:1;grid-row:1;min-width:0}
+}

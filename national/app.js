@@ -43,7 +43,7 @@
   var freshF = function () { return { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null }; }; // v4.5: no threshold by default
   var CONF = false; try { CONF = localStorage.getItem('nr.confirmedOnly') === '1'; } catch (e) { CONF = false; } // item 5: saved Confirmed-only switch
   var freshF0 = freshF; freshF = function (mode) { var f = freshF0(mode); f.hideUnconfirmed = CONF; return f; };
-  var S = { mode: 'all', scope: 'upcoming', tab: 'map', sort: 'soon', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('all') };
+  var S = { mode: 'all', scope: 'upcoming', tab: 'list', sort: 'soon', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('all') };
   var SYNTH = { sectors: M.SECTORS.map(function (s) { return s.id; }) };
 
   function toast(t) { var el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { el.hidden = true; }, 3500); }
@@ -302,7 +302,37 @@
     var html = '<g id="gSt">'; Object.keys(G.states).forEach(function (k) { html += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"><title>' + esc(G.states[k].n) + '</title></path>'; });
     $('usmap').innerHTML = html + '</g><g id="gBub"></g><g id="gPin"></g>';
   }
+  // v6: count markers (no dollar-sized bubbles); dollar value in the tooltip and on tap. Shared by the full map and the small map.
+  function stateTotals(list) { var by = {}; list.forEach(function (r) { if (!r.state) return; var o = by[r.state] = by[r.state] || { n: 0, v: 0, nv: 0 }; o.n++; var v = fee(r); if (v) { o.v += v; o.nv++; } }); return by; }
+  function stateTip(k, o) { return (M.STATE_NAMES[k] || k) + ': ' + o.n + ' record' + (o.n === 1 ? '' : 's') + (o.v ? ' · ' + M.fmtMoney(o.v) + ' stated by ' + o.nv + ' of them (fees, design-build values and project costs as the sources state them)' : ' · count only, no stated value'); }
+  function markersHtml(by, small) {
+    var out = ''; Object.keys(by).forEach(function (k) { var g = G.states[k]; if (!g) return; var o = by[k], r = small ? (o.n > 99 ? 24 : 19) : (o.n > 99 ? 19 : 15);
+      out += '<g class="mkg' + (S.f.states.indexOf(k) >= 0 ? ' sel' : '') + '" data-st="' + k + '"><circle class="mk' + (o.v ? '' : ' cnt') + '" data-st="' + k + '" cx="' + g.cx + '" cy="' + g.cy + '" r="' + r + '"><title>' + esc(stateTip(k, o)) + '</title></circle><text class="mkt' + (small ? ' sm' : '') + '" x="' + g.cx + '" y="' + (g.cy + (small ? 8 : 6)) + '">' + o.n + '</text></g>'; });
+    return out;
+  }
+  var miniBuilt = false;
+  function renderMini(list) {
+    if (!G) { $('mini').hidden = true; return; }
+    if (!miniBuilt) { miniBuilt = true; var h = '<g class="gSt">'; Object.keys(G.states).forEach(function (k) { h += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"><title>' + esc(G.states[k].n) + '</title></path>'; }); $('usmini').innerHTML = h + '</g><g class="gMk"></g>'; if (!WIDE.matches) $('miniDet').open = false; }
+    var by = stateTotals(list); $('usmini').querySelectorAll('.st').forEach(function (p) { var k = p.getAttribute('data-st'); p.classList.toggle('sel', S.f.states.indexOf(k) >= 0); p.classList.toggle('has', !!by[k]); });
+    $('usmini').querySelector('.gMk').innerHTML = markersHtml(by, true);
+    var sel = S.f.states; $('miniSel').textContent = sel.length ? 'showing ' + sel.join(', ') + ' (tap again to remove)' : 'tap a state to filter the list';
+    var nost = list.filter(function (r) { return !r.state; }).length; $('miniNote').textContent = Object.keys(by).length + ' states' + (nost ? ' · ' + nost + ' with no state' : '');
+  }
   function renderMap(list) {
+    buildMap(); if (!G) { $('usmap').innerHTML = ''; return; }
+    var by = stateTotals(list); document.querySelectorAll('#gSt .st').forEach(function (p) { var k = p.getAttribute('data-st'); p.classList.toggle('sel', S.f.states.indexOf(k) >= 0); p.classList.toggle('has', !!by[k]); });
+    $('gBub').innerHTML = markersHtml(by, false);
+    var pins = ''; list.forEach(function (r) { if (r.lat && r.lon) { var xy = project(r.lon, r.lat, r.state); pins += '<circle class="pin" data-open="' + esc(r.id) + '" cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="5"><title>' + esc(r.title) + '</title></circle>'; } });
+    $('gPin').innerHTML = pins;
+    var nostate = list.filter(function (r) { return !r.state; }).length, pinned = list.filter(function (r) { return r.lat; }).length;
+    $('legend').innerHTML = '<span><i class="lg-v"></i>Number = records in the state; blue = some records state a dollar value (hover or tap for the total)</span><span><i class="lg-c"></i>Amber = count only (no stated value)</span><span><i class="lg-p"></i>Pin = city named in the source (' + pinned + ')</span>';
+    $('mapNote').textContent = (list.length ? 'Tap a state to filter the list by it. ' : '') + (nostate ? nostate + ' record(s) name no state (for example nationwide contracts) and are not on the map; they are in the List. ' : '');
+    var top = sortFor(list, S.sort).slice(0, 5);
+    $('topHint').textContent = list.length > 5 ? '(5 of ' + list.length + ')' : '';
+    cardsInto($('mapTop'), top, emptyScopeHtml());
+  }
+  function renderMapV5(list) { // dormant (v5 dollar bubbles), kept for rollback reference
     buildMap(); if (!G) { $('usmap').innerHTML = ''; return; }
     var byState = {}; list.forEach(function (r) { if (!r.state) return; var o = byState[r.state] = byState[r.state] || { n: 0, v: 0 }; o.n++; o.v += fee(r); });
     var max = 0; Object.keys(byState).forEach(function (k) { max = Math.max(max, byState[k].v); });
@@ -758,7 +788,7 @@
   function render() {
     var list = scoped();
     renderModes(); renderScopes(); renderDigest(); renderSince(); renderCapBar(); renderKpis(list); renderFilters();
-    if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') renderList(list); else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else if (S.tab === 'pursuits') renderPursuits(); else renderData();
+    if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') { renderList(list); renderMini(list); } else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else if (S.tab === 'pursuits') renderPursuits(); else renderData();
     renderPurBadge();
   }
   function setTab(t) {
@@ -815,7 +845,7 @@
     if (t.hasAttribute('data-fee')) { var v = t.getAttribute('data-fee'); S.f.feeMin = v === 'null' ? null : +v; render(); return; }
     if (t.hasAttribute('data-cost')) { var c = t.getAttribute('data-cost'); S.f.costMin = c === 'null' ? null : +c; render(); return; }
     if (t.hasAttribute('data-f')) { toggle(S.f[t.getAttribute('data-f')], t.getAttribute('data-k')); render(); return; }
-    if (t.hasAttribute('data-st')) { toggle(S.f.states, t.getAttribute('data-st')); render(); }
+    if (t.hasAttribute('data-st')) { var stk = t.getAttribute('data-st'), on0 = S.f.states.indexOf(stk) < 0, o0 = stateTotals(scoped(S.scope, ['states']))[stk]; toggle(S.f.states, stk); S.rows = 50; render(); toast(on0 ? (o0 ? stateTip(stk, o0) + '. List filtered to ' + (M.STATE_NAMES[stk] || stk) + '.' : 'Filtered to ' + (M.STATE_NAMES[stk] || stk) + '.') : 'Removed ' + (M.STATE_NAMES[stk] || stk) + ' from the filter.'); }
   });
   $('shClose').addEventListener('click', closeSheet); $('shBg').addEventListener('click', closeSheet);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('sheet').hidden) closeSheet(); });
@@ -874,10 +904,10 @@
   function loadJ(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
   Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; }), loadJ('data/source-status.json').catch(function () { return null; }), loadJ('../texas/data/source-status.json').catch(function () { return null; })]).then(function (x) {
     HEALTH = V4.health([x[4], x[5]]); renderHealthDot();
-    var lastTab = null; try { lastTab = localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab;
+    var lastTab = null; try { lastTab = localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab; // v6: List is the default; the full map is one tap away
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     setMode();
-    if (S.tab !== 'map') setTab(S.tab);
+    setTab(S.tab);
   }).catch(function (e) { $('freshTxt').textContent = 'Could not load data/national.json (' + e.message + '). Open the app once while online so it can be saved for offline use.'; $('freshDot').className = 'dot bad'; });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
 })();

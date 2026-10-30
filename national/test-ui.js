@@ -30,7 +30,7 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
 {
   const nav = html.slice(html.indexOf('<nav class="tabs"'), html.indexOf('</nav>', html.indexOf('<nav class="tabs"')));
   const top = nav.replace(/<div class="tabmore"[\s\S]*?<\/div>/, '');
-  assert.deepStrictEqual((top.match(/data-tab="(\w+)"/g) || []).map((x) => x.slice(10, -1)), ['map', 'list', 'pursuits'], '3 direct tabs');
+  assert.deepStrictEqual((top.match(/data-tab="(\w+)"/g) || []).map((x) => x.slice(10, -1)), ['list', 'map', 'pursuits'], '3 direct tabs, List first (v6)');
   assert.ok(top.includes('id="tabMoreBtn"'), '4th tab is More');
   const menu = nav.slice(nav.indexOf('<div class="tabmore"'));
   ['timeline', 'break', 'data'].forEach((t) => assert.ok(menu.includes('data-tab="' + t + '"'), t + ' in More'));
@@ -55,7 +55,8 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
 }
 // P3 (trivial ones): plainer scope wording, last view remembered; closed More menu takes no space
 assert.ok(app.includes("label: 'Early notices (no fee yet)'") && app.includes("label: 'Big projects (no fee yet)'"), 'plainer wording');
-assert.ok(/localStorage\.setItem\('nr\.tab', t\)/.test(app) && /if \(S\.tab !== 'map'\) setTab\(S\.tab\);/.test(app), 'last view remembered');
+assert.ok(/localStorage\.setItem\('nr\.tab', t\)/.test(app) && /\n    setTab\(S\.tab\);\n/.test(app) && /tab: 'list'/.test(app), 'last view remembered; List is the default (v6)');
+assert.ok(/id="usmini"/.test(html) && /data-tab="map">Expand map/.test(html) && /function markersHtml/.test(app) && /function renderMapV5/.test(app), 'v6.1: small map with Expand map, count markers, v5 bubbles kept dormant');
 assert.ok(css.includes('.scmore:not([open]) .scmenu{display:none}'));
 module.exports = { html, app, css };
 console.log('national ui (P1 header) tests passed');

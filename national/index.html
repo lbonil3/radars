@@ -115,23 +115,30 @@
 </section>
 
 <main id="main">
-  <section id="v-map" class="view" aria-label="US map">
+  <section id="v-map" class="view" hidden aria-label="US map">
     <div class="mapwrap">
-      <svg id="usmap" viewBox="0 0 975 610" role="img" aria-label="Map of the United States. Bubbles show state totals. Use the List tab for an accessible list."></svg>
-      <div class="legend" id="legend"></div>
+      <svg id="usmap" viewBox="0 0 975 610" role="img" aria-label="Map of the United States. Numbers show record counts per state. Use the List tab for an accessible list."></svg>
+      <details class="legd"><summary>Legend</summary><div class="legend" id="legend"></div></details>
     </div>
     <p class="note" id="mapNote"></p>
     <details class="topdet" id="topDet"><summary class="sec">Top of this view <span class="hint" id="topHint"></span></summary>
     <div id="mapTop" class="cards"></div></details>
   </section>
 
-  <section id="v-list" class="view" hidden aria-label="List">
+  <section id="v-list" class="view" aria-label="List">
+    <div class="lgrid"><aside class="mini" id="mini" aria-label="Small map">
+      <details id="miniDet" open><summary class="minisum"><span>Map</span> <span class="hint" id="miniSel">tap a state to filter the list</span></summary>
+        <div class="miniwrap"><svg id="usmini" viewBox="0 0 975 610" role="img" aria-label="Small US map. Numbers are record counts per state. Tap a state to filter the list."></svg></div>
+        <div class="minibar"><span class="hint" id="miniNote"></span><button type="button" class="linkbtn" data-tab="map">Expand map &rsaquo;</button></div>
+      </details></aside>
+    <div class="lmain">
     <div class="listbar">
       <label class="sortl">Sort <select id="sort"><option value="soon" selected>Upcoming first, soonest date</option><option value="conf">Confirmed first, then value</option><option value="fee">Stated value, high to low</option><option value="date">Date, soonest first</option><option value="agency">Agency</option><option value="due">My due date (watchlist)</option><option value="decision">My Go / No-go (watchlist)</option></select></label>
       <span id="listCount" class="hint"></span>
     </div>
     <div id="list" class="cards"></div>
     <button type="button" class="btn wide" id="btnMoreRows" hidden>Show 50 more</button>
+    </div></div>
   </section>
 
   <section id="v-timeline" class="view" hidden aria-label="Timeline">
@@ -167,8 +174,8 @@
 </main>
 
 <nav class="tabs" aria-label="Views">
-  <button type="button" data-tab="map" class="on">Map</button>
-  <button type="button" data-tab="list">List</button>
+  <button type="button" data-tab="list" class="on">List</button>
+  <button type="button" data-tab="map">Map</button>
   <button type="button" data-tab="pursuits">Pursuits <b class="tabbadge" id="purBadge" hidden></b></button>
   <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More <b class="hdot" id="healthDot" hidden></b><span id="tabMoreLbl" class="tml"></span></button>
   <div class="tabmore" id="tabMore" role="menu" hidden>
