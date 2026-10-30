@@ -189,6 +189,12 @@
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+<div id="weekly" class="wk-sheet" hidden role="dialog" aria-modal="true" aria-label="Weekly list">
+  <div class="wk-bar"><b class="wk-bt">Weekly list</b><button type="button" class="wk-btn" id="wkClose">Close</button>
+    <div class="wk-acts"><button type="button" class="wk-btn pri" id="wkPrint">Print / Save as PDF</button><button type="button" class="wk-btn" id="wkShare">Share</button><button type="button" class="wk-btn" id="wkCopy">Copy text</button><button type="button" class="wk-btn" id="wkDl">Download</button></div>
+    <p class="wk-hint" id="wkHint"></p></div>
+  <div id="wkBody" class="wk-doc"></div>
+</div>
 <script src="proj.js"></script>
 <script src="us-geo.js"></script>
 <script src="capture.js"></script>
@@ -200,6 +206,7 @@
 <script src="roadway.js"></script>
 <script src="pse.js"></script>
 <script src="sources.js"></script>
+<script src="weekly.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

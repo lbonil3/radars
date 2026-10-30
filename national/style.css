@@ -194,14 +194,26 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .purlink{display:inline-flex;align-items:center;min-height:36px;font-size:13px;color:var(--acc);margin-top:4px}
 #v-pursuits{padding:0 12px}
 @media (max-width:420px){.tabs button{font-size:12px;letter-spacing:-.01em}}
+/* v5.4 Weekly list sheet: always white and readable, whatever the app theme */
+.wk-sheet{position:fixed;inset:0;z-index:1000;background:#fff;color:#111;overflow-y:auto;-webkit-overflow-scrolling:touch;color-scheme:light}
+.wk-sheet[hidden]{display:none}
+.wk-bar{position:sticky;top:0;background:#f3f4f6;border-bottom:1px solid #d1d5db;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.wk-bt{flex:1;font-size:17px;color:#111}.wk-acts{display:flex;flex-wrap:wrap;gap:8px;width:100%}
+.wk-btn{min-height:44px;padding:0 14px;border-radius:10px;border:1px solid #9ca3af;background:#fff;color:#111;font:600 15px/1 -apple-system,system-ui,sans-serif;cursor:pointer}
+.wk-btn.pri{background:#1d4ed8;border-color:#1d4ed8;color:#fff}.wk-hint{margin:0;width:100%;font-size:13px;color:#374151}.wk-hint:empty{display:none}
+.wk-doc{padding:12px 16px calc(24px + env(safe-area-inset-bottom));max-width:820px;margin:0 auto}
+.wk-doc .wk-title{font-size:20px;margin:0 0 8px;color:#111}.wk-doc .wk-h{font-size:16px;margin:16px 0 6px;border-bottom:2px solid #111;padding-bottom:2px;color:#111}
+.wk-doc .wk-l{margin:0;padding-left:22px}.wk-doc .wk-i{margin:0 0 10px;padding:6px 8px;border:1px solid #999;border-left:4px solid #111;break-inside:avoid;page-break-inside:avoid;color:#111}
+.wk-doc .wk-i.overdue{border-left-color:#b91c1c}.wk-doc .wk-i.soon{border-left-color:#b45309}.wk-doc .wk-t{font-weight:700}.wk-doc .wk-w,.wk-doc .wk-u{color:#333;font-size:13px}.wk-doc .wk-u{word-break:break-all}
+.wk-doc .wk-m{display:flex;flex-wrap:wrap;gap:4px 16px}.wk-doc .wk-notes{white-space:pre-wrap}.wk-doc .wk-e{color:#333}
+body.wk-open{overflow:hidden}
 @media print{
-  body.print-pursuits{background:#fff!important;color:#000!important}
-  body.print-pursuits *{visibility:hidden}
-  body.print-pursuits #v-pursuits,body.print-pursuits #v-pursuits *{visibility:visible;color:#000!important;background:transparent!important;box-shadow:none!important}
-  body.print-pursuits #v-pursuits{position:absolute;left:0;top:0;width:100%;padding:0}
-  body.print-pursuits .purbtns,body.print-pursuits .purlink,body.print-pursuits .card.pur .star{display:none!important}
-  body.print-pursuits .card.pur{display:block!important;break-inside:avoid;border:1px solid #999!important;border-left:4px solid #000!important;margin:0 0 8px;padding:6px 8px}
-  body.print-pursuits .cdue.overdue{font-weight:700}
+  body.print-weekly>*:not(#weekly){display:none!important}
+  body.print-weekly{background:#fff!important;color:#000!important;overflow:visible!important}
+  body.print-weekly #weekly{position:static!important;display:block!important;overflow:visible!important;inset:auto;height:auto}
+  body.print-weekly .wk-bar{display:none!important}
+  body.print-weekly .wk-doc{padding:0;max-width:none}
+}
 }
 
 /* v2: Confirmed-only switch, also-listed tag */

@@ -618,8 +618,32 @@
     $('purList').innerHTML = rows.length ? (wk.length ? '<h3>This week: overdue or due within 7 days (' + wk.length + ')</h3>' + wk.map(purItem).join('') : '<p class="note">Nothing overdue or due in the next 7 days.</p>') + (rest.length ? '<h3>Later or no due date (' + rest.length + ')</h3>' + rest.map(purItem).join('') : '')
       : '<p class="note empty">No pursuits yet. Star a record (&#9734;) in the List or Map to start a capture file; it shows up here with its due date, Go / No-go and next action.</p>';
   }
-  function printPursuits() { if (S.tab !== 'pursuits') setTab('pursuits'); document.body.classList.add('print-pursuits'); setTimeout(function () { window.print(); }, 50); }
-  window.addEventListener('afterprint', function () { document.body.classList.remove('print-pursuits'); });
+  // v5.4: the weekly list opens as an in-app sheet (works even where window.print() is missing, e.g. iOS home-screen apps)
+  var WK = null;
+  function weeklyModel() { return NRW.model(purRows(), todayCentral(), CP, M.fmtDate); }
+  function printPursuits() { WK = weeklyModel(); $('wkBody').innerHTML = NRW.bodyHtml(WK); $('wkHint').textContent = ''; $('weekly').hidden = false; document.body.classList.add('wk-open'); $('wkShare').hidden = !navigator.share; $('wkClose').focus(); }
+  function closeWeekly() { $('weekly').hidden = true; document.body.classList.remove('wk-open', 'print-weekly'); $('btnPurPrint').focus(); }
+  function endPrint() { document.body.classList.remove('print-weekly'); }
+  function weeklyPrint() {
+    if (typeof window.print !== 'function') { $('wkHint').textContent = 'Printing is not available here. Use Share, Download or Copy text instead.'; return; }
+    document.body.classList.add('print-weekly');
+    setTimeout(function () { try { window.print(); } catch (e) { $('wkHint').textContent = 'Printing did not start. Use Share or Download, then print from that app.'; } setTimeout(endPrint, 1500); }, 60);
+    $('wkHint').textContent = 'If no print dialog appears (some iPhone home-screen apps), use Share or Download and print from there.';
+  }
+  function weeklyName(ext) { return 'national-radar-weekly-' + todayCentral() + '.' + ext; }
+  function weeklyShare() {
+    var md = WK || weeklyModel(), txt = NRW.text(md), data = { title: md.heading, text: txt };
+    try { var f = new File([NRW.docHtml(md)], weeklyName('html'), { type: 'text/html' }); if (navigator.canShare && navigator.canShare({ files: [f] })) data = { title: md.heading, text: md.heading, files: [f] }; } catch (e) { /* files not supported */ }
+    navigator.share(data).catch(function (e) { if (e && e.name !== 'AbortError') { if (data.files) navigator.share({ title: md.heading, text: txt }).catch(function () {}); } });
+  }
+  function weeklyCopy() {
+    var txt = NRW.text(WK || weeklyModel()), ok = function () { toast('Weekly list copied.'); $('wkHint').textContent = 'Copied. Paste it into a note, email or message.'; };
+    var fallback = function () { var ta = document.createElement('textarea'); ta.value = txt; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0'; $('weekly').appendChild(ta); ta.select(); ta.setSelectionRange(0, txt.length); var done = false; try { done = document.execCommand('copy'); } catch (e) { done = false; } ta.remove(); if (done) ok(); else $('wkHint').textContent = 'Copy is blocked here. Select the list below and copy it, or use Download.'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fallback); else fallback();
+  }
+  function weeklyDownload() { download(weeklyName('html'), 'text/html;charset=utf-8', NRW.docHtml(WK || weeklyModel()), false); $('wkHint').textContent = 'Saved as an HTML file. Open it to print or share.'; }
+  window.addEventListener('afterprint', endPrint);
+  if (window.matchMedia) { var mqp = window.matchMedia('print'); var onMq = function (e) { if (!e.matches) endPrint(); }; if (mqp.addEventListener) mqp.addEventListener('change', onMq); else if (mqp.addListener) mqp.addListener(onMq); }
 
   // ---------- detail sheet ----------
   function openSheet(id) {
@@ -804,7 +828,7 @@
   document.addEventListener('click', function (e) { var w = e.target.closest('[data-way]'); if (w) wayOut(w.getAttribute('data-way')); });
   $('btnPurIcs').addEventListener('click', exportPursuitIcs); $('btnViewIcs').addEventListener('click', exportViewIcs);
   $('since').addEventListener('click', function (e) { if (e.target.closest('#sinceX')) { try { ssn && ssn.setItem(V4.SINCE_DISMISS, '1'); } catch (er) {} $('since').hidden = true; return; } var b = e.target.closest('[data-since]'); if (b) sinceTap(b.getAttribute('data-since')); });
-  $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurPrint').addEventListener('click', printPursuits); $('btnBackup').addEventListener('click', exportBackup);
+  $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurPrint').addEventListener('click', printPursuits); $('wkClose').addEventListener('click', closeWeekly); $('wkPrint').addEventListener('click', weeklyPrint); $('wkShare').addEventListener('click', weeklyShare); $('wkCopy').addEventListener('click', weeklyCopy); $('wkDl').addEventListener('click', weeklyDownload); document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('weekly').hidden) closeWeekly(); }); $('btnBackup').addEventListener('click', exportBackup);
   $('btnRestore').addEventListener('click', function () { S.restoreMode = 'merge'; $('restoreFile').value = ''; $('restoreFile').click(); });
   $('btnRestoreAll').addEventListener('click', function () { S.restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });
   $('restoreFile').addEventListener('change', function () { var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { restoreBackup(String(rd.result), S.restoreMode); }; rd.onerror = function () { toast('Could not read that file.'); }; rd.readAsText(f); });

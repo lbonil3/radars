@@ -79,7 +79,8 @@ console.log('national v2 region tests passed');
   const csv = CP.toCSV(rows, today); assert.ok(csv.split('\n')[0].includes('Due') || csv.length > 0, 'capture CSV reused');
   const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
   assert.ok(html.includes('data-tab="pursuits"') && html.includes('id="v-pursuits"') && html.includes('id="btnPurPrint"') && html.includes('id="btnPurCsv"'));
-  assert.ok(/@media print\{[\s\S]*body\.print-pursuits #v-pursuits/.test(css), 'print stylesheet for the weekly list');
+  assert.ok(/@media print\{[\s\S]*body\.print-weekly>\*:not\(#weekly\)\{display:none/.test(css) && !/visibility:hidden/.test(css.slice(css.indexOf('body.print-weekly'))), 'print stylesheet for the weekly list uses display:none, not visibility');
+  assert.ok(html.includes('id="weekly"') && ['wkPrint', 'wkShare', 'wkCopy', 'wkDl', 'wkClose'].every((k) => html.includes('id="' + k + '"')), 'weekly list sheet with its buttons');
   assert.ok(/btnPurCsv'\)\.addEventListener\('click', exportCapCsv\)/.test(app), 'pursuits CSV reuses the capture CSV export');
 }
 console.log('national v2 pursuits tests passed');
