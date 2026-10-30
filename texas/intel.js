@@ -28,7 +28,7 @@
     { id: 'flood', label: 'Flood / drainage program', re: /\b(flood\w*|drainage|storm ?water|detention|culvert|storm sewer|channel|bayou|levee|watershed|inundation|resilien\w+|mitigation)/i },
     { id: 'water', label: 'Water / wastewater', re: /\b(water (main|line|plant|treatment|supply|system|utilit\w+|infrastructure)|wastewater|sewer|lift station|utility|utilities|reservoir|desalination|water conservation)/i },
     { id: 'road', label: 'Roadway / TxDOT', re: /\b(TxDOT|roadway|road|street|highway|freeway|interstate|\bI-\d+|\bSH \d+|\bUS \d+|\bFM \d+|bridge|intersection|mobility|\bUTP\b|unified transportation program|paving|reconstruction)/i },
-    { id: 'agenda', label: 'Council / agenda action', re: /\b(council|commissioners'? court|agenda|resolution|ordinance|approv\w+ (an? )?(contract|agreement)|interlocal|professional services agreement|task order|amendment no\.?)/i },
+    { id: 'agenda', label: 'Council / agenda action', re: /\b(council|commissioners'? court|agenda|resolution|ordinance|(approv|authoriz)\w+ (an? )?([\w-]+ ){0,3}(contract|agreement)|interlocal|professional services agreement|task order|amendment no\.?)/i },
     { id: 'policy', label: 'New program / policy', re: /\b(new program|launch\w*|pilot|master plan|strategic plan|study|plan update|regional plan|policy|rule ?making|proposed rule|notice of funding|NOFO)/i }
   ];
   var KW = [ // phrase, weight
@@ -58,7 +58,7 @@
     [/\b(RFQ|request for qualifications|request for proposals|RFP)\b/i, 'Mentions an RFQ / RFP: check the agency procurement page for the formal notice.'],
     [/\b(master plan|drainage study|watershed study|feasibility study|plan update)\b/i, 'Planning study: follow-on design phases often go to consultants.'],
     [/\b(disaster declaration|major disaster)\b/i, 'Disaster declaration: HMGP mitigation funding typically opens 6–12 months later.'],
-    [/\b(professional services agreement|engineering services|task order|interlocal)\b/i, 'Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.']
+    [/\b(professional (engineering )?services (agreement|contract)|engineering (design )?services|task order|interlocal)\b/i, 'Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.']
   ];
   var TOPIC_HINT = {
     flood: 'Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.',

@@ -249,4 +249,53 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(!/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('list'\)/.test(appSrc), 'startup must not jump to the List view');
   assert.ok(/<section id="v-radar" class="view"(?![^>]*hidden)/.test(ih) && /data-tab="radar" class="on"/.test(ih), 'radar view visible and its tab active in the HTML');
 }
+
+// ---- Intel (news and planning signals)
+{
+  const I = require('./intel.js');
+  const fx = (f) => fs.readFileSync(path.join(dir, 'test-fixtures', f), 'utf8');
+  const rss = I.parseFeed(fx('intel-feed.xml'));
+  assert.strictEqual(rss.length, 4);
+  assert.strictEqual(rss[0].title, 'Council approves $40 million drainage bond program for Sims Bayou & Brays', 'CDATA and entities decoded');
+  assert.strictEqual(rss[0].date, '2026-10-26T14:00:00.000Z');
+  assert.ok(rss[0].desc.indexOf('<') < 0 && rss[0].desc.indexOf('Pasadena') > 0, 'HTML stripped from the excerpt');
+  const atom = I.parseFeed(fx('intel-atom.xml'));
+  assert.strictEqual(atom[0].link, 'https://example.org/a/1'); assert.strictEqual(atom[0].date, '2026-10-20T12:00:00.000Z');
+  assert.ok(I.snip('word '.repeat(200)).length <= I.SNIP, 'excerpt at most 280 chars');
+  const src = { id: 'fx', name: 'Example City', region: 'Statewide' }, now = '2026-10-28T12:00:00.000Z';
+  const built = rss.map((r) => I.build(r, src, now));
+  const b0 = built[0];
+  assert.ok(b0 && b0.topics.indexOf('bond') >= 0 && b0.topics.indexOf('flood') >= 0 && b0.topics.indexOf('agenda') >= 0, 'topics: bond, flood, agenda');
+  assert.strictEqual(b0.place, 'Pasadena'); assert.strictEqual(b0.region, I.HOU); assert.strictEqual(b0.county, 'Harris');
+  assert.ok(b0.why.indexOf('drainage') >= 0 && b0.why.indexOf('bond program') >= 0, 'why lists matched phrases');
+  assert.ok(/Bond approved/.test(b0.hint), 'positioning hint for an approved bond');
+  assert.strictEqual(built[2], null, 'fun run is not relevant'); assert.strictEqual(built[3], null, 'job posting is noise');
+  const at = I.build(atom[0], src, now);
+  assert.ok(at.topics.indexOf('grant') >= 0 && at.place === 'Fort Bend' && /Funding awarded/.test(at.hint));
+  assert.strictEqual(I.classify({ title: 'Highway 6 drainage update', desc: '' }, {}).place, null, 'no place guessed');
+  // dedupe near-identical headlines, keep the higher score, remember the duplicate link
+  assert.ok(I.similar(rss[0].title, rss[1].title));
+  assert.ok(!I.similar(rss[0].title, 'Council approves water main contract'));
+  const dd = I.dedupe(built.filter(Boolean)); assert.strictEqual(dd.length, 1); assert.strictEqual(dd[0].also.length, 1);
+  // Legistar normalization through the collector, noise filter
+  const leg = JSON.parse(fx('intel-legistar.json'));
+  const lsrc = { id: 'leg-x', name: 'X agenda items', kind: 'legistar', minScore: 3, topics: ['agenda'], place: 'Dallas', county: 'Dallas', region: 'Dallas–Fort Worth' };
+  const lb = leg.map((m) => I.build({ title: m.MatterTitle, link: 'https://x.legistar.com/LegislationDetail.aspx?ID=' + m.MatterId, date: m.MatterIntroDate + 'Z', desc: m.MatterTypeName }, lsrc, now));
+  assert.ok(lb[0] && /Engineering contract action/.test(lb[0].hint) && lb[0].region === 'Dallas–Fort Worth' && lb[0].place === 'Dallas');
+  assert.strictEqual(lb[1], null, 'replat is dropped');
+  // merge: keep 90 days, carry firstSeen, keep items of failed sources
+  const old = Object.assign({}, b0, { id: 'old', srcId: 'gone', date: '2026-06-01T00:00:00.000Z' });
+  const kept = Object.assign({}, b0, { id: 'k', srcId: 'failed', date: '2026-10-01T00:00:00.000Z' });
+  const prev = { items: [Object.assign({}, b0, { firstSeen: '2026-10-27T00:00:00.000Z' }), old, kept] };
+  const mg = I.mergePrev([Object.assign({}, b0)], prev, now, ['failed']);
+  assert.strictEqual(mg.length, 2); assert.strictEqual(mg[0].firstSeen, '2026-10-27T00:00:00.000Z'); assert.ok(mg.some((m) => m.id === 'k')); assert.ok(!mg.some((m) => m.id === 'old'), '>90 days dropped');
+  // stored data file shape
+  const ij = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'intel.json'), 'utf8'));
+  assert.ok(Array.isArray(ij.items) && ij.sources && Array.isArray(ij.sources.sources));
+  ij.items.forEach((it) => { assert.ok(it.id && it.title && /^https:\/\//.test(it.link) && it.source, 'item fields'); assert.ok((it.desc || '').length <= I.SNIP, 'short excerpt only'); assert.ok(Array.isArray(it.topics) && it.region); });
+  const BI = require('../scripts/build-intel.js');
+  assert.ok(BI.SOURCES.every((s) => !/api[_-]?key|token=/i.test(s.url || '')), 'no keyed sources');
+  const wf = fs.readFileSync(path.join(dir, '..', '.github', 'workflows', 'refresh-opportunities.yml'), 'utf8');
+  assert.ok(/continue-on-error: true\s+timeout-minutes: \d+\s+run: node scripts\/build-intel\.js/.test(wf), 'intel step cannot fail the job');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
