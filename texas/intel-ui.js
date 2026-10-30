@@ -131,7 +131,7 @@
     }).catch(function (e) { $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p><b>Newsletter could not be loaded</b> (' + esc(e.message) + ').</p>'; });
   }
   function loadWeek(wk) {
-    var show = function (n) { NL.cur = n; $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true }); $('nlStatus').textContent = Nw.status(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
+    var show = function (n) { NL.cur = n; $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'dark', icons: true }); $('nlStatus').textContent = Nw.status(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
     if (NL.cache[wk]) return show(NL.cache[wk]);
     $('nlStatus').textContent = 'Loading…';
     fetch('data/newsletters/' + encodeURIComponent(wk) + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (n) { NL.cache[wk] = n; show(n); })
@@ -144,10 +144,10 @@
     var base = 'texas-intel-' + n.week;
     if (act === 'copytext') copyText(Nw.toText(n)).then(function () { toast('Newsletter copied as text.'); }, function () { toast('Copy is blocked in this browser. Use Download .txt.'); });
     else if (act === 'copyhtml') {
-      var html = Nw.toHtml(n, { fragment: true });
+      var html = Nw.toHtml(n, { fragment: true, theme: 'light' });
       if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) navigator.clipboard.write([new window.ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([Nw.toText(n)], { type: 'text/plain' }) })]).then(function () { toast('Copied. Paste into a new email.'); }, function () { copyText(html).then(function () { toast('Copied the HTML source.'); }, function () { toast('Copy is blocked here. Use Download .html.'); }); });
       else copyText(html).then(function () { toast('Copied the HTML source.'); }, function () { toast('Copy is blocked here. Use Download .html.'); });
-    } else if (act === 'print') { document.body.classList.add('nlprint'); var done = function () { document.body.classList.remove('nlprint'); window.removeEventListener('afterprint', done); }; window.addEventListener('afterprint', done); setTimeout(function () { window.print(); setTimeout(done, 1500); }, 30); }
+    } else if (act === 'print') { document.body.classList.add('nlprint'); $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'light', icons: true }); /* ink-friendly */ var done = function () { document.body.classList.remove('nlprint'); if (NL.cur) $('nlPaper').innerHTML = Nw.toHtml(NL.cur, { fragment: true, theme: 'dark', icons: true }); window.removeEventListener('afterprint', done); }; window.addEventListener('afterprint', done); setTimeout(function () { window.print(); setTimeout(done, 1500); }, 30); }
     else if (act === 'html') download(base + '.html', 'text/html', Nw.toHtml(n));
     else if (act === 'txt') download(base + '.txt', 'text/plain', Nw.toText(n));
     else if (act === 'share' && navigator.share) navigator.share({ title: n.title, text: Nw.toText(n) }).catch(function () { /* cancelled */ });
