@@ -57,4 +57,15 @@ The Intel tab is a feed of public news and planning signals: CIP and budget item
   - The current week is a draft, rebuilt every run. The first run after a week ends (the Monday run) marks it final, and it is never rewritten. Weeks that were first built after they ended are marked "built from items collected later".
   - The Intel tab has Feed / Weekly newsletter views: a week picker, Copy as text, Copy as email HTML, Print / PDF (prints only the issue), Download .html / .txt, and Share where the browser supports it. Nothing is emailed.
 - **Links.** `fixLink()` decodes entities, drops tracking parameters and keeps only http(s) links. Legistar items link to `Gateway.aspx?M=L&ID=<MatterId>`, because `LegislationDetail.aspx?ID=` expects the web page's own id and showed "Invalid parameter". `node scripts/check-intel-links.js [perSource]` GETs a sample of links per source and flags non-2xx or error pages. The daily workflow runs it as a report-only step.
+- **Newsletter look (nl-style).** "Texas Intel Weekly" is laid out like a magazine:
+  - masthead with the issue number (ISO week) and dates
+  - "By the numbers" strip (items, new this week, Houston region, grants, flood/drainage)
+  - topic mix bar
+  - Top story card with a "Why it matters" pull quote
+  - Houston region spotlight
+  - Positioning tips callout
+  - Statewide sections with topic accent colors
+  - Deadlines as calendar tiles
+  The markup is tables with inline styles only, so the same HTML is used on the page (dark theme with inline SVG icons), in Copy as email HTML and Download .html (light theme, no SVG or CSS), and in Print (light, cards kept whole across pages). Colors are tested for contrast ≥ 4.5:1.
+- **Legistar links (intel2.1).** The collector follows `Gateway.aspx?M=L&ID=<MatterId>` once and checks the target page with an iPhone Safari user agent and no cookies. It stores the site's own `LegislationDetail.aspx?ID=<siteId>&GUID=<siteGuid>`, cached in `texas/data/legistar-links.json`. If no page can be verified, the item links to the client's Legislation search page with a note. Stored newsletter issues are repaired the same way. Run `WITH_NEWSLETTERS=1 node scripts/check-intel-links.js 100000` to check every link.
 - Run locally with `node scripts/build-intel.js`. To run some sources only: `INTEL_ONLY=hpw,glo node scripts/build-intel.js`. Tests: `node texas/test.js`.
