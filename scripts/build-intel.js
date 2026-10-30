@@ -73,7 +73,7 @@ async function collect(src) {
   if (src.kind === 'rss') return (await feed(src.url)).map((x) => Object.assign(x, { desc: src.media ? '' : x.desc })); // media: headline + link only
   if (src.kind === 'legistar') {
     const u = 'https://webapi.legistar.com/v1/' + src.client + '/matters?$top=60&$orderby=MatterIntroDate desc&$filter=' + encodeURIComponent("MatterIntroDate ge datetime'" + SINCE() + "' and (" + LEG_FILTER + ')');
-    return JSON.parse(await get(u, { accept: 'application/json' })).map((m) => ({ title: I.text(m.MatterTitle || m.MatterName || ''), link: 'https://' + src.client + '.legistar.com/LegislationDetail.aspx?ID=' + m.MatterId + '&GUID=' + m.MatterGuid,
+    return JSON.parse(await get(u, { accept: 'application/json' })).map((m) => ({ title: I.text(m.MatterTitle || m.MatterName || ''), link: I.legistarLink(src.client, m.MatterId),
       date: m.MatterIntroDate ? new Date(m.MatterIntroDate + (/Z|[+-]\d\d:?\d\d$/.test(m.MatterIntroDate) ? '' : 'Z')).toISOString() : null, desc: [m.MatterTypeName, m.MatterBodyName, m.MatterFile].filter(Boolean).join(' · ') })).filter((x) => x.title);
   }
   if (src.kind === 'fedreg') {

@@ -26,6 +26,10 @@ jobs:
         continue-on-error: true
         timeout-minutes: 10
         run: node scripts/build-intel.js
+      - name: Check a sample of Intel links (report only)
+        continue-on-error: true
+        timeout-minutes: 8
+        run: node scripts/check-intel-links.js 2
       - name: Re-run tests on the new data
         run: node test.js
       - name: Commit if changed

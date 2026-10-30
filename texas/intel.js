@@ -20,6 +20,18 @@
     }
     return out;
   }
+  // ---- stable item links. Legistar's LegislationDetail.aspx?ID= takes the web page's own id, not the API MatterId, so links built
+  // from the API showed "Invalid parameter"; Gateway.aspx?M=L&ID=<MatterId> redirects to the right page. Entities are decoded,
+  // common tracking parameters are dropped, and only http(s) links are kept.
+  var TRACK = /^(utm_[a-z]+|fbclid|gclid|mc_cid|mc_eid|_hsenc|_hsmi)$/i;
+  function fixLink(link) {
+    var s = decode(String(link || '').trim()).replace(/&amp;/g, '&'), u; try { u = new URL(s); } catch (e) { return null; }
+    if (!/^https?:$/.test(u.protocol)) return null;
+    if (/\.legistar\.com$/i.test(u.hostname) && /\/LegislationDetail\.aspx$/i.test(u.pathname) && u.searchParams.get('ID') && u.searchParams.get('GUID')) return 'https://' + u.hostname + '/Gateway.aspx?M=L&ID=' + encodeURIComponent(u.searchParams.get('ID'));
+    Array.from(u.searchParams.keys()).forEach(function (k) { if (TRACK.test(k)) u.searchParams.delete(k); });
+    u.hash = ''; return u.href;
+  }
+  function legistarLink(client, matterId) { return 'https://' + client + '.legistar.com/Gateway.aspx?M=L&ID=' + encodeURIComponent(matterId); }
   // ---- deterministic classification
   var TOPICS = [
     { id: 'budget', label: 'Budget / CIP', re: /\b(budget|capital improvement|\bCIP\b|capital program|capital plan|fiscal year 20\d\d|FY ?\d{2}|tax rate|appropriat\w+)/i },
@@ -104,17 +116,20 @@
   // ---- keep 90 days, carry firstSeen from the previous file, newest first
   function addDays(iso, n) { var d = new Date(iso); d.setUTCDate(d.getUTCDate() + n); return d.toISOString(); }
   function mergePrev(items, prev, nowIso, keepIds) {
-    var cutoff = addDays(nowIso, -KEEP_DAYS), pm = {}; ((prev && prev.items) || []).forEach(function (p) { pm[p.id] = p; });
-    var byId = {}; items.forEach(function (it) { var p = pm[it.id]; it.firstSeen = p ? p.firstSeen : nowIso; byId[it.id] = it; });
+    var cutoff = addDays(nowIso, -KEEP_DAYS), pm = {}, pt = {};
+    var prevItems = ((prev && prev.items) || []).map(function (p) { var l = fixLink(p.link); if (l && l !== p.link) { p = Object.assign({}, p, { link: l }); p.id = idOf(p); } return p; });
+    prevItems.forEach(function (p) { pm[p.id] = p; pt[p.srcId + '|' + p.title] = p; });
+    var byId = {}; items.forEach(function (it) { var p = pm[it.id] || pt[it.srcId + '|' + it.title]; it.firstSeen = p ? p.firstSeen : nowIso; byId[it.id] = it; });
     // keep items from sources that failed this run (stale), so one bad source does not empty the feed
-    ((prev && prev.items) || []).forEach(function (p) { if (!byId[p.id] && keepIds && keepIds.indexOf(p.srcId) >= 0) byId[p.id] = p; });
+    prevItems.forEach(function (p) { if (!byId[p.id] && keepIds && keepIds.indexOf(p.srcId) >= 0) byId[p.id] = p; });
     return Object.keys(byId).map(function (k) { return byId[k]; }).filter(function (it) { return (it.date || it.firstSeen) >= cutoff; }).sort(function (a, b) { return (b.date || b.firstSeen) < (a.date || a.firstSeen) ? -1 : 1; });
   }
   function build(raw, src, nowIso) { // raw {title, link, date, desc} -> stored item, or null when not relevant
     var c = classify(raw, src); if (!relevant(c, src)) return null;
-    var it = { id: null, srcId: src.id, source: src.name, title: snip(raw.title, 200), link: raw.link, date: raw.date || null, desc: snip(raw.desc || ''), topics: c.topics, place: c.place, county: c.county, region: c.region, score: c.score, why: c.why, hint: c.hint };
+    var link = fixLink(raw.link); if (!link) return null;
+    var it = { id: null, srcId: src.id, source: src.name, title: snip(raw.title, 200), link: link, date: raw.date || null, desc: snip(raw.desc || ''), topics: c.topics, place: c.place, county: c.county, region: c.region, score: c.score, why: c.why, hint: c.hint };
     it.id = idOf(it); return it;
   }
   function topicLabel(id) { var t = TOPICS.filter(function (x) { return x.id === id; })[0]; return t ? t.label : id; }
-  return { KEEP_DAYS: KEEP_DAYS, SNIP: SNIP, TOPICS: TOPICS, PLACES: PLACES, REGIONS: REGIONS, HOU: HOU, decode: decode, text: text, snip: snip, parseFeed: parseFeed, classify: classify, relevant: relevant, similar: similar, dedupe: dedupe, idOf: idOf, mergePrev: mergePrev, build: build, topicLabel: topicLabel };
+  return { KEEP_DAYS: KEEP_DAYS, SNIP: SNIP, TOPICS: TOPICS, PLACES: PLACES, REGIONS: REGIONS, HOU: HOU, decode: decode, text: text, snip: snip, parseFeed: parseFeed, classify: classify, relevant: relevant, similar: similar, dedupe: dedupe, idOf: idOf, mergePrev: mergePrev, fixLink: fixLink, legistarLink: legistarLink, build: build, topicLabel: topicLabel };
 });
