@@ -205,7 +205,7 @@
     var bad = DATA.sources.filter(function (s) { return s.status === 'failed' || s.status === 'stale'; });
     var cls = bad.length || age > 7 ? (age > 7 ? 'bad' : 'warn') : age > 2 ? 'warn' : 'ok';
     $('freshDot').className = 'dot ' + cls;
-    $('freshTxt').textContent = 'Data updated ' + M.fmtDate(DATA.asOfDate) + ' (built ' + gen.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) + ', ' + (age < 1 ? 'today' : Math.floor(age) + ' day' + (Math.floor(age) === 1 ? '' : 's') + ' old') + ')' + (bad.length ? '. ' + bad.length + ' source(s) stale or failed.' : '.') + (LIVE.at ? ' Live awards refreshed ' + LIVE.at + '.' : '');
+    var full = 'Data updated ' + M.fmtDate(DATA.asOfDate) + ' (built ' + gen.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) + ', ' + (age < 1 ? 'today' : Math.floor(age) + ' day' + (Math.floor(age) === 1 ? '' : 's') + ' old') + ')' + (bad.length ? '. ' + bad.length + ' source(s) stale or failed.' : '.') + (LIVE.at ? ' Live awards refreshed ' + LIVE.at + '.' : ''); $('freshTxt').title = full; $('freshTxt').innerHTML = '<span class="upd">Updated </span>' + esc(M.fmtDate(DATA.asOfDate).replace(/, \d{4}$/, '')) + esc((age < 1 ? ', today' : ', ' + Math.floor(age) + 'd old') + (bad.length ? ' · ' + bad.length + ' source issue' + (bad.length === 1 ? '' : 's') : ''));
   }
   var PRIMARY = { all: ['upcoming', 'open', 'forecast', 'all'] };
   var SHORT = { all: 'All', open: 'Open', forecast: 'Forecast', awarded: 'Awarded', opp: 'Open', review: 'Review', nofee: 'No fee', drain: 'Drainage', total: 'Roadway total' };
@@ -218,7 +218,7 @@
 
   function renderKpis(list) {
     var withV = list.filter(function (r) { return fee(r); }).length, total = sum(list), scope = SCOPES.filter(function (x) { return x.id === S.scope; })[0] || SCOPES[0];
-    $('kpis').innerHTML = '<p class="kline"><b>' + list.length + '</b> records &middot; <b>' + esc(withV ? M.fmtMoney(total) : 'n/a') + '</b> sum of amounts stated by the sources (' + withV + ') <span class="hint">' + esc(scope.sub) + '</span></p>';
+    $('kpis').innerHTML = '<p class="kline"><b>' + list.length + '</b> records <span class="hint">&middot; ' + esc(scope.sub) + '</span></p>'; // v6: no headline sum (it mixed project costs and fees); total kept in the CSV / Breakdown
   }
 
 
@@ -887,7 +887,7 @@
   document.querySelectorAll('[data-theme-set]').forEach(function (x) { x.addEventListener('click', function (e) { e.stopPropagation(); var p = x.getAttribute('data-theme-set'); try { localStorage.setItem('nr.theme', p); } catch (er) {} applyTheme(p); }); });
   if (window.matchMedia) { var mq = matchMedia('(prefers-color-scheme: dark)'), onMq = function () { if (themePref() === 'auto') applyTheme('auto'); }; if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq); }
   applyTheme(themePref());
-  $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; });
+  $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; $('banner').classList.toggle('open', o); });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
   function resetFilters() { S.f = freshF(); $('q').value = ''; S.region = 'all'; V2.saveRegion(lsx, 'all'); S.rows = 50; render(); toast('Filters reset (Confirmed only and your watchlist are unchanged).'); }

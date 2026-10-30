@@ -214,7 +214,6 @@ body.wk-open{overflow:hidden}
   body.print-weekly .wk-bar{display:none!important}
   body.print-weekly .wk-doc{padding:0;max-width:none}
 }
-}
 
 /* v2: Confirmed-only switch, also-listed tag */
 .switch{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 8px;border-radius:22px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:600 14px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
@@ -373,3 +372,33 @@ html[data-theme=day] .miniwrap{background:#dfe8f3}
   .lgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
   .lgrid .mini{grid-column:2;grid-row:1;position:sticky;top:8px}.lgrid .lmain{grid-column:1;grid-row:1;min-width:0}
 }
+
+/* ===== v6.2: slim header, one control row, count-only KPI, phone tidy ===== */
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding-bottom:4px}
+.top h1{font-size:19px;margin:0}
+.top .fresh{margin:0;flex:1 1 auto;min-width:0;align-items:center;flex-wrap:nowrap;gap:8px;font-size:12px}
+.top .fresh #freshTxt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.top .fresh .pill{flex:none;min-height:30px;padding:0 10px;font-size:12px}
+.top .fresh .wc{flex:none;margin-left:auto;min-height:30px;font-size:12.5px}
+.banner.slim{margin:0;padding:0;border:0;background:none}.banner.slim .bline{display:none}
+.banner.slim.open{margin:4px calc(14px + env(safe-area-inset-right)) 6px calc(14px + env(safe-area-inset-left));padding:8px 12px;border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:12px;background:var(--panel)}
+.switch .swl{white-space:nowrap}
+.filters .row{flex-wrap:nowrap}
+.kline .hint{display:inline}
+@media (max-width:520px){
+  .top{padding-top:calc(4px + env(safe-area-inset-top));gap:0 8px}
+  .top .homebtn{min-height:34px;padding:0 10px;margin-right:4px;font-size:13px}
+  .top h1{font-size:17px}
+  .top .fresh{flex-basis:100%;font-size:11.5px}
+  .scopes{gap:4px;padding-top:2px;padding-bottom:4px}
+  .scopes .scope{min-height:40px;padding:3px 6px;border-radius:10px}
+  .scope b{font-size:15px}.scope span{font-size:11px;overflow:visible;text-overflow:clip;letter-spacing:-.01em}
+  .scopes .scope:first-child{flex-grow:1.25}
+  .filters{padding-top:2px;padding-bottom:4px}
+  .filters .row{gap:6px}
+  .filters .switch .swl{font-size:12px}
+  .chip{min-height:34px;padding:0 10px;font-size:12.5px}
+  .kline{font-size:12.5px;padding-bottom:4px}.kline .hint{display:none}
+}
+#listCount{display:none}
+@media (max-width:520px){.top .fresh .upd{display:none}}

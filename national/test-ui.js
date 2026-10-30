@@ -13,7 +13,10 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   ['id="regionSel"', 'id="fFee"', 'id="fState"', 'id="fSource"', 'id="btnReset"', 'id="btnClear"', 'id="btnCsv"', 'id="btnLive"', 'href="../texas/"'].forEach((k) => assert.ok(adv.includes(k), 'drawer holds ' + k));
   assert.ok(!html.includes('id="btnConf"'), 'duplicate Hide unconfirmed button removed');
   const before = html.slice(0, html.indexOf('<div id="adv"'));
-  assert.ok(before.includes('id="btnConfOnly"') && before.includes('id="regionHint"'), 'Confirmed only and the region hint stay outside the drawer');
+  assert.ok(before.includes('id="btnConfOnly"') && !before.includes('id="regionHint"') && adv.includes('id="regionHint"'), 'v6: Confirmed only stays in the control row; the Texas focus prompt moved into the drawer');
+  const row = html.slice(html.indexOf('<div class="row">'), html.indexOf('<div id="adv"')); assert.ok(row.indexOf('id="q"') < row.indexOf('id="btnMore"') && row.indexOf('id="btnMore"') < row.indexOf('id="btnConfOnly"'), 'v6: one row: search, Filters, Confirmed only');
+  const cssNoComments = css.replace(/\/\*[\s\S]*?\*\//g, ''); let depth = 0, minD = 0; for (const ch of cssNoComments) { if (ch === '{') depth++; if (ch === '}') { depth--; minD = Math.min(minD, depth); } } assert.ok(depth === 0 && minD === 0, 'style.css braces balanced (a stray brace dropped the switch style)');
+  assert.ok(!/sum of amounts stated/.test(app.slice(app.indexOf('function renderKpis'), app.indexOf('function renderKpis') + 600)), 'v6: no headline sum');
   assert.ok(html.includes('class="fbadge" id="advCount"') && /function setBadge\(n\)/.test(app), 'active-filter badge');
   assert.ok(/S\.region && S\.region !== 'all' \? 1 : 0/.test(app) && /f\.feeMin !== null && f\.feeMin !== undefined \? 1 : 0/.test(app), 'badge counts region and an optional minimum amount');
   assert.ok(/function resetFilters\(\) \{ S\.f = freshF\(\);[^\n]*S\.region = 'all'/.test(app) && /f\.hideUnconfirmed = CONF/.test(app), 'reset clears filters and region but keeps the saved Confirmed only');
