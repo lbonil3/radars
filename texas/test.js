@@ -398,4 +398,27 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   const txt = N.toText(n); assert.ok(/^TEXAS INTEL WEEKLY · Issue No\. \d+/.test(txt) && /BY THE NUMBERS/.test(txt) && /TOP STORY/.test(txt));
   assert.ok(n.stats && typeof n.stats.items === 'number', 'issues carry By-the-numbers counts');
 }
+// Magazine PDF: deterministic plan/contents/desk note, only collected links, readable colors, self-contained
+{
+  const L = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const C = (a, b) => { const x = L(a), y = L(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  const M = require('./magazine.js'), nd = path.join(dir, 'data', 'newsletters'), idx = JSON.parse(fs.readFileSync(path.join(nd, 'index.json'), 'utf8'));
+  const css = fs.readFileSync(path.join(dir, 'magazine.css'), 'utf8');
+  idx.weeks.filter((w) => w.items).forEach((w) => {
+    const n = JSON.parse(fs.readFileSync(path.join(nd, w.week + '.json'), 'utf8'));
+    const a = M.build(n), b = M.build(JSON.parse(JSON.stringify(n))); assert.strictEqual(a, b, w.week + ' build is deterministic');
+    const pl = M.plan(n); assert.deepStrictEqual(pl.sections.map((s) => s.letter), pl.sections.map((s, i) => String.fromCharCode(65 + i)), 'sections lettered A..');
+    assert.strictEqual(pl.sections[0].key, 'feature'); assert.ok(pl.cover.length >= 1 && pl.cover.length <= 4, 'cover lines');
+    pl.sections.forEach((s) => { assert.ok(a.includes('id="' + s.anchor + '"'), 'contents target ' + s.anchor); assert.ok(a.includes('href="#' + s.anchor + '"'), 'contents link ' + s.anchor); });
+    const known = new Set([].concat(...n.houston.map((g) => g.items), ...n.texas.map((g) => g.items), n.deadlines).map((e) => e.link));
+    (a.match(/href="([^"#][^"]*)"/g) || []).map((h) => h.slice(6, -1).replace(/&amp;/g, '&')).forEach((h) => assert.ok(known.has(h), 'magazine links only to collected items: ' + h));
+    assert.ok(/class="mz-cover/.test(a) && /class="mz-back/.test(a) && /not solicitations/i.test(a), 'cover + back cover + disclaimer');
+    const d1 = M.desk(n, pl).join(' '); assert.strictEqual(d1, M.desk(n, M.plan(n)).join(' ')); assert.ok(d1.includes(String(n.stats ? n.stats.items : '')), 'desk note uses real counts');
+    if (!(n.final)) assert.ok(/DRAFT|Draft/.test(a), 'draft issue is marked');
+    const doc = M.toDoc(n, css); assert.ok(!/<script|<link|@import|url\(\s*['"]?https?:|github|repositor/i.test(doc), 'standalone doc: no scripts, external assets or repo mentions');
+  });
+  Object.keys(M.COLOR).forEach((k) => assert.ok(C('#ffffff', M.COLOR[k]) >= 4.5, 'magazine color on white ' + k + ' ' + C('#ffffff', M.COLOR[k]).toFixed(2)));
+  assert.ok(C('#ffffff', '#0b2722') >= 4.5 && C('#ffffff', '#0f766e') >= 4.5 && C('#facc15', '#0b3b35') >= 4.5, 'cover text contrast');
+  assert.ok(/print-color-adjust:\s*exact/.test(css) && /break-inside:\s*avoid/.test(css) && !/@import|https?:/.test(css), 'print css');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
