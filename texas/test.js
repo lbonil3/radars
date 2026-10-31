@@ -421,4 +421,19 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(C('#ffffff', '#0b2722') >= 4.5 && C('#ffffff', '#0f766e') >= 4.5 && C('#facc15', '#0b3b35') >= 4.5, 'cover text contrast');
   assert.ok(/print-color-adjust:\s*exact/.test(css) && /break-inside:\s*avoid/.test(css) && !/@import|https?:/.test(css), 'print css');
 }
+// Newsletter PDFs: re-render only changed issues, prune with retention, size cap keeps the newest two
+{
+  const P = require('../scripts/newsletter-pdf-lib.js');
+  const j = (o) => JSON.stringify(o);
+  assert.strictEqual(P.hash(P.stable(j({ a: 1, generatedAt: 'x' })), 'm', 'c'), P.hash(P.stable(j({ a: 1, generatedAt: 'y' })), 'm', 'c'), 'rebuild stamp ignored');
+  assert.notStrictEqual(P.hash(P.stable(j({ a: 1 })), 'm', 'c'), P.hash(P.stable(j({ a: 2 })), 'm', 'c'), 'content change re-renders');
+  assert.notStrictEqual(P.hash('x', 'm1', 'c'), P.hash('x', 'm2', 'c'), 'layout change re-renders');
+  const weeks = [{ week: 'W3' }, { week: 'W2' }, { week: 'W1' }];
+  const r = P.plan(weeks, { W3: 'n', W2: 'b', W1: 'a' }, { issues: [{ week: 'W2', hash: 'b' }, { week: 'W1', hash: 'old' }, { week: 'W0', hash: 'z' }] });
+  assert.deepStrictEqual(r, { render: ['W3', 'W1'], prune: ['W0'] });
+  assert.deepStrictEqual(P.plan(weeks, { W3: 1, W2: 1, W1: 1 }, null).render, ['W3', 'W2', 'W1'], 'first run renders all');
+  const c = P.cap([{ week: 'a', bytes: 5 }, { week: 'b', bytes: 5 }, { week: 'c', bytes: 5 }, { week: 'd', bytes: 5 }], 11);
+  assert.deepStrictEqual([c.entries.map((e) => e.week), c.dropped, c.total], [['a', 'b'], ['d', 'c'], 10]);
+  assert.strictEqual(P.cap([{ week: 'a', bytes: 50 }, { week: 'b', bytes: 50 }], 10).entries.length, 2, 'never drops the newest two');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
