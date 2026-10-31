@@ -31,6 +31,12 @@ jobs:
         continue-on-error: true
         timeout-minutes: 8
         run: node scripts/check-intel-links.js 2
+      - name: Render newsletter PDFs (only changed issues; report only)
+        continue-on-error: true
+        timeout-minutes: 8
+        run: |
+          npm install --no-save --no-audit --no-fund --prefix /tmp/pdfdeps puppeteer-core@23
+          PUPPETEER=/tmp/pdfdeps/node_modules/puppeteer-core CHROME="$(command -v google-chrome || command -v chromium)" node scripts/build-newsletter-pdfs.js
       - name: Re-run tests on the new data
         run: node test.js
       - name: Commit if changed
