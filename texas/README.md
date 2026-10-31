@@ -90,3 +90,15 @@ Download .html saves the same magazine as one self-contained file. Copy as email
 ### Download PDF
 
 **Download PDF** gets a ready-made PDF of the selected issue. On phones it opens the share sheet (Save to Files, Mail and so on) when the browser supports sharing files. Otherwise it opens the PDF so you can use Share. On desktop it downloads the file. The daily refresh makes these PDFs (Letter size) for all kept issues, and only re-makes an issue when its content or the layout changed. They are kept for 12 weeks with a 12 MB total cap and stored in texas/data/newsletters/pdf/. If a week's PDF isn't made yet, the button says so and points to Magazine PDF.
+
+### Weekly publication (Sunday night)
+
+The PDFs come out once a week. The "Publish Texas Intel Weekly" workflow runs at 02:30 UTC on Monday, which is 9:30 PM Sunday Central in summer (CDT) and 8:30 PM Sunday in winter (CST). GitHub schedules can start late, sometimes by several minutes or more.
+
+A week runs Monday to Sunday and ends at 00:00 UTC Monday. Each run does three things:
+
+- It finalizes the week that just ended, which freezes it, and stamps it "Published <day>". The stamp is set only once.
+- It renders the current week as a **Preview edition**.
+- It re-renders other issues only if they changed.
+
+The run commits only texas/data/newsletters/ and doesn't depend on the daily refresh's tests. Both workflows share one concurrency group and push with rebase-and-retry. The daily refresh no longer makes PDFs, but it still updates the draft issue text. It can also be started by hand from the Actions tab.
