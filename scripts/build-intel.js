@@ -174,4 +174,4 @@ async function main() {
   console.log('wrote', OUT, merged.length, 'items;', JSON.stringify(st.counts));
 }
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
-module.exports = { SOURCES, robotsAllowed, collect };
+module.exports = { SOURCES, robotsAllowed, collect, writeNewsletters };

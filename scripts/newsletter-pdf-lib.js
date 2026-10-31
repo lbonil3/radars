@@ -16,3 +16,7 @@ function cap(entries, max) { max = max || MAX_TOTAL; const out = entries.slice()
 // daily rebuild stamps are not content: ignore them so an unchanged draft is not re-rendered
 function stable(json) { return JSON.stringify(JSON.parse(json), (k, v) => (k === 'generatedAt' ? undefined : v)); }
 module.exports = { stable, hash, plan, cap, MAX_TOTAL };
+// Weekly publication: a finished week gets publishedAt once (never moved); the in-progress week is a preview.
+function edition(issue) { return issue.final ? (issue.publishedAt ? 'published' : 'final') : 'preview'; }
+function markPublished(issue, nowIso) { if (!issue.final || issue.publishedAt) return false; issue.publishedAt = nowIso; return true; }
+module.exports.edition = edition; module.exports.markPublished = markPublished;

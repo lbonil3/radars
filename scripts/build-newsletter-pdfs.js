@@ -22,7 +22,7 @@ const M = require(path.join(T, 'magazine.js'));
     }
     await b.close();
   }
-  let entries = weeks.filter((w) => old[w.week]).map((w) => Object.assign({}, old[w.week], { final: !!w.final }));
+  let entries = weeks.filter((w) => old[w.week]).map((w) => { const n = JSON.parse(raw[w.week]); return Object.assign({}, old[w.week], { final: !!w.final, edition: L.edition(n), publishedAt: n.publishedAt || undefined }); });
   const c = L.cap(entries); entries = c.entries;
   pl.prune.concat(c.dropped).forEach((wk) => { try { fs.unlinkSync(path.join(PD, wk + '.pdf')); console.log('pruned', wk); } catch (e) {} });
   const next = { issues: entries, totalBytes: c.total };
