@@ -86,3 +86,7 @@ The edition has these parts:
 Section letters stand in for page numbers, because browsers don't fill in page references reliably. Running headers and footers carry the page number.
 
 Download .html saves the same magazine as one self-contained file. Copy as email HTML is unchanged.
+
+### Download PDF
+
+**Download PDF** gets a ready-made PDF of the selected issue. On phones it opens the share sheet (Save to Files, Mail and so on) when the browser supports sharing files. Otherwise it opens the PDF so you can use Share. On desktop it downloads the file. The daily refresh makes these PDFs (Letter size) for all kept issues, and only re-makes an issue when its content or the layout changed. They are kept for 12 weeks with a 12 MB total cap and stored in texas/data/newsletters/pdf/. If a week's PDF isn't made yet, the button says so and points to Magazine PDF.
