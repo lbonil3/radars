@@ -3,7 +3,7 @@
  "start": "2026-10-26",
  "end": "2026-11-01",
  "title": "Texas Intel weekly, 2026-W44 (Oct 26, 2026 to Nov 1, 2026)",
- "generatedAt": "2026-10-30T23:11:01.559Z",
+ "generatedAt": "2026-10-31T00:16:35.006Z",
  "final": false,
  "backfilled": false,
  "counts": {
@@ -45,6 +45,7 @@
      "topic": "budget",
      "why": "Mentions “capital improvement”, “cip”.",
      "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "Posted on the City of Houston Capital Improvement Plan page.",
      "score": 12
     }
    ]
@@ -67,6 +68,7 @@
      "topic": "budget",
      "why": "Mentions “capital improvement”, “bridge”.",
      "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
+     "desc": "Other Business · City Council · 26-1241",
      "score": 8
     },
     {
@@ -80,6 +82,7 @@
      "topic": "budget",
      "why": "Mentions “capital improvement”, “bridge”.",
      "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "Other Business · City Council · 26-1247",
      "score": 8
     },
     {
@@ -93,6 +96,7 @@
      "topic": "budget",
      "why": "Mentions “capital improvement”, “budget”.",
      "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "Bids · City Council · 26-1221",
      "score": 8
     },
     {
@@ -106,6 +110,7 @@
      "topic": "budget",
      "why": "Mentions “capital improvement”.",
      "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "Board Agenda Items · Capital Improvements Advisory Committee · BC-2668",
      "score": 6
     }
    ]
