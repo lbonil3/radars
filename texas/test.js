@@ -436,4 +436,14 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.deepStrictEqual([c.entries.map((e) => e.week), c.dropped, c.total], [['a', 'b'], ['d', 'c'], 10]);
   assert.strictEqual(P.cap([{ week: 'a', bytes: 50 }, { week: 'b', bytes: 50 }], 10).entries.length, 2, 'never drops the newest two');
 }
+// Weekly publication: finalize once, stamp publishedAt once, in-progress week is a preview
+{
+  const P = require('../scripts/newsletter-pdf-lib.js');
+  const d = { final: false }; assert.strictEqual(P.markPublished(d, 't1'), false); assert.strictEqual(P.edition(d), 'preview');
+  const f = { final: true }; assert.strictEqual(P.edition(f), 'final'); assert.strictEqual(P.markPublished(f, 't1'), true); assert.strictEqual(P.markPublished(f, 't2'), false);
+  assert.strictEqual(f.publishedAt, 't1', 'never re-published'); assert.strictEqual(P.edition(f), 'published');
+  const y = fs.readFileSync(path.join(dir, '..', '.github', 'workflows', 'publish-newsletter.yml'), 'utf8');
+  assert.ok(/cron: '30 2 \* \* 1'/.test(y) && /workflow_dispatch/.test(y) && /group: refresh-data/.test(y) && !/test\.js/.test(y) && /git pull --rebase origin main/.test(y) && !/--force/.test(y), 'weekly workflow: Sunday night, shared concurrency, independent of daily tests');
+  assert.ok(!/build-newsletter-pdfs/.test(fs.readFileSync(path.join(dir, '..', '.github', 'workflows', 'refresh-opportunities.yml'), 'utf8')), 'daily run leaves PDFs to the weekly publish');
+}
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
