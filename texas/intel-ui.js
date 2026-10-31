@@ -154,7 +154,7 @@
   function pdfGo(n) {
     var wk = n.week, e = PDF.ix && pdfEntry(PDF.ix, wk);
     if (!PDF.ix) { pdfIndex().then(function () { pdfGo(n); }); return; }
-    if (!e) { pdfMsg(n.final ? 'The PDF for this issue is not ready yet. It is made during the daily refresh; until then use Magazine PDF (print → Save as PDF).' : 'This week\'s issue is still a draft and its PDF has not been made yet. It is refreshed daily; for now use Magazine PDF (print → Save as PDF).'); return; }
+    if (!e) { pdfMsg(n.final ? 'The PDF for this issue is not ready yet. PDFs are published Sunday night; until then use Magazine PDF (print → Save as PDF).' : 'This week\'s issue is still a draft and publishes Sunday night; for now use Magazine PDF (print → Save as PDF).'); return; }
     var url = pdfUrl(wk) + '?v=' + e.hash, bl = PDF.blob[wk + e.hash];
     if (bl && typeof File === 'function' && navigator.canShare) { var f = new File([bl], pdfName(n), { type: 'application/pdf' }); if (navigator.canShare({ files: [f] })) { navigator.share({ files: [f], title: 'Texas Intel Weekly · ' + wk }).catch(function (er) { if (!er || er.name !== 'AbortError') window.open(url, '_blank'); }); pdfMsg(''); return; } }
     if (mobile()) { var w = window.open(url, '_blank', 'noopener'); if (!w) location.href = url; pdfMsg('Opened the PDF. Use Share → Save to Files to keep it.'); return; }
