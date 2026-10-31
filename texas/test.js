@@ -414,7 +414,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
     (a.match(/href="([^"#][^"]*)"/g) || []).map((h) => h.slice(6, -1).replace(/&amp;/g, '&')).forEach((h) => assert.ok(known.has(h), 'magazine links only to collected items: ' + h));
     assert.ok(/class="mz-cover/.test(a) && /class="mz-back/.test(a) && /not solicitations/i.test(a), 'cover + back cover + disclaimer');
     const d1 = M.desk(n, pl).join(' '); assert.strictEqual(d1, M.desk(n, M.plan(n)).join(' ')); assert.ok(d1.includes(String(n.stats ? n.stats.items : '')), 'desk note uses real counts');
-    if (!(n.final)) assert.ok(/DRAFT|Draft/.test(a), 'draft issue is marked');
+    if (!(n.final)) assert.ok(/Preview edition/.test(a), 'in-progress issue is marked as a preview');
     const doc = M.toDoc(n, css); assert.ok(!/<script|<link|@import|url\(\s*['"]?https?:|github|repositor/i.test(doc), 'standalone doc: no scripts, external assets or repo mentions');
   });
   Object.keys(M.COLOR).forEach((k) => assert.ok(C('#ffffff', M.COLOR[k]) >= 4.5, 'magazine color on white ' + k + ' ' + C('#ffffff', M.COLOR[k]).toFixed(2)));

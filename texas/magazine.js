@@ -85,7 +85,7 @@
     // COVER
     h.push('<section class="mz-cover"><div class="mz-cv-top"><div class="mz-cv-meta"><span>Vol. ' + esc(vol) + '</span><span>Issue No. ' + issue + '</span><span>' + esc(range(n)) + '</span></div>' +
       '<h1 class="mz-mast">TEXAS <span>INTEL</span> WEEKLY</h1><div class="mz-tagline">Texas public-works opportunity intelligence</div></div>' +
-      (n.final ? '' : '<div class="mz-draft">Draft edition · in progress</div>') +
+      (n.final ? '' : '<div class="mz-draft">Preview edition · in progress</div>') +
       '<div class="mz-cv-mid">' + coverArt(n) + '<div class="mz-cv-lines">' + pl.cover.map(function (c) { return '<div class="mz-cl" style="--c:' + c.sec.color + '"><span class="mz-cl-k">' + esc(c.sec.name) + ' · Sec. ' + c.sec.letter + '</span>' + esc(c.e.title.length > 96 ? c.e.title.slice(0, 95) + '…' : c.e.title) + '</div>'; }).join('') + '</div></div>' +
       '<div class="mz-cv-bottom">' + (top ? '<div class="mz-cv-kick">Cover story · ' + esc(top.place || top.region || '') + '</div><div class="mz-cv-head">' + esc(top.title.length > 150 ? top.title.slice(0, 149) + '…' : top.title) + '</div><div class="mz-cv-deck">' + meta(top) + ' · Section A</div>' : '<div class="mz-cv-head">No items were collected this week</div>') +
       '<div class="mz-cv-foot">' + n.counts.items + ' signals · ' + n.counts.houston + ' Houston region · ' + (st.grant || 0) + ' funding · ' + (st.flood || 0) + ' flood &amp; drainage</div></div></section>');
