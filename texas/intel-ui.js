@@ -126,12 +126,12 @@
     fetch('data/newsletters/index.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (ix) {
       NL.index = ix; var w = (ix.weeks || []);
       if (!w.length) { $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p>No newsletter issues yet. The first one is built on the next daily collection.</p>'; return; }
-      $('nlWeek').innerHTML = w.map(function (x) { return '<option value="' + esc(x.week) + '">' + esc(x.week + ' · ' + fmtD(x.start + 'T12:00:00Z') + ' to ' + fmtD(x.end + 'T12:00:00Z')) + (x.final ? '' : ' · in progress') + ' (' + x.items + ')</option>'; }).join('');
+      $('nlWeek').innerHTML = w.map(function (x) { return '<option value="' + esc(x.week) + '">' + esc(x.week + ' · ' + fmtD(x.start + 'T12:00:00Z') + ' to ' + fmtD(x.end + 'T12:00:00Z')) + (x.publishedAt ? ' · published' : x.final ? '' : ' · draft') + ' (' + x.items + ')</option>'; }).join('');
       var first = w.filter(function (x) { return x.final && x.items; })[0] || w.filter(function (x) { return x.items; })[0] || w[0]; /* open on the latest finished issue */ $('nlWeek').value = first.week; loadWeek(first.week);
     }).catch(function (e) { $('nlStatus').textContent = ''; $('nlPaper').innerHTML = '<p><b>Newsletter could not be loaded</b> (' + esc(e.message) + ').</p>'; });
   }
   function loadWeek(wk) {
-    var show = function (n) { NL.cur = n; pmMark(); pdfPrep(n); $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'dark', icons: true }); $('nlStatus').textContent = Nw.status(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
+    var show = function (n) { NL.cur = n; pmMark(); pdfPrep(n); $('nlPaper').innerHTML = Nw.toHtml(n, { fragment: true, theme: 'dark', icons: true }); $('nlStatus').textContent = edLabel(n) + (n.generatedAt ? ' · built ' + fmtDT(n.generatedAt) : ''); };
     if (NL.cache[wk]) return show(NL.cache[wk]);
     $('nlStatus').textContent = 'Loading…';
     fetch('data/newsletters/' + encodeURIComponent(wk) + '.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (n) { NL.cache[wk] = n; show(n); })
@@ -141,12 +141,13 @@
   function copyText(t) { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t); return Promise.reject(new Error('clipboard unavailable')); }
   // ---- one-tap PDF: files are pre-rendered daily next to the issue data (same origin) ----
   var PDF = { ix: null, blob: {} };
+  function edLabel(n) { if (n.publishedAt) return 'Published ' + new Date(n.publishedAt).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/Chicago' }); return n.final ? Nw.status(n) : 'Draft — publishes Sunday night'; }
   function pdfUrl(wk) { return 'data/newsletters/pdf/' + encodeURIComponent(wk) + '.pdf'; }
   function pdfMsg(t) { var m = $('nlPdfMsg'); if (!m) return; m.textContent = t || ''; m.hidden = !t; }
   function pdfIndex() { return PDF.ix ? Promise.resolve(PDF.ix) : fetch('data/newsletters/pdf/index.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : { issues: [] }; }).catch(function () { return { issues: [] }; }).then(function (ix) { PDF.ix = ix; return ix; }); }
   function pdfEntry(ix, wk) { return (ix.issues || []).filter(function (e) { return e.week === wk; })[0]; }
   function mobile() { return (window.matchMedia && matchMedia('(pointer:coarse)').matches) || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); }
-  function pdfPrep(n) { pdfMsg(''); var wk = n.week; pdfIndex().then(function (ix) { var e = pdfEntry(ix, wk), b = $('nlPdf'); if (b) b.textContent = e ? 'Download PDF · ' + Math.max(1, Math.round(e.bytes / 1024)) + ' KB' : 'Download PDF';
+  function pdfPrep(n) { pdfMsg(''); var wk = n.week; pdfIndex().then(function (ix) { var e = pdfEntry(ix, wk), b = $('nlPdf'); if (b) b.textContent = e ? (e.edition === 'preview' ? 'Download preview PDF · ' : 'Download PDF · ') + Math.max(1, Math.round(e.bytes / 1024)) + ' KB' : 'Download PDF';
       // fetch ahead on phones so the share sheet opens straight from the tap
       if (e && mobile() && !PDF.blob[wk + e.hash]) fetch(pdfUrl(wk) + '?v=' + e.hash).then(function (r) { if (r.ok) return r.blob(); }).then(function (bl) { if (bl) PDF.blob[wk + e.hash] = bl; }).catch(function () {}); }); }
   function pdfName(n) { return 'Texas-Intel-Weekly-' + n.week + '.pdf'; }
