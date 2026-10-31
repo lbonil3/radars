@@ -1,0 +1,36 @@
+# Weekly publication of Texas Intel Weekly: Sunday night, US Central.
+# GitHub cron is UTC: 02:30 UTC Monday = 9:30 PM CDT Sunday (summer) / 8:30 PM CST Sunday (winter).
+# The ISO week (Mon–Sun) ends at 00:00 UTC Monday, so this run finalizes and publishes the week that just ended.
+# Independent of the daily refresh and its tests; commits only texas/data/newsletters/.
+name: Publish Texas Intel Weekly
+on:
+  schedule:
+    - cron: '30 2 * * 1'
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build issues, publish the finished week, render changed PDFs
+        run: |
+          npm install --no-save --no-audit --no-fund --prefix /tmp/pdfdeps puppeteer-core@23
+          PUPPETEER=/tmp/pdfdeps/node_modules/puppeteer-core CHROME="$(command -v google-chrome || command -v chromium)" node scripts/publish-newsletter.js
+      - name: Commit and push (rebase and retry)
+        run: |
+          git add -N texas/data/newsletters/
+          if git diff --quiet -- texas/data/newsletters/; then echo "Nothing to publish."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A texas/data/newsletters/
+          git commit -m "data(texas): weekly newsletter publication"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep $((i*15)); done; exit 1
