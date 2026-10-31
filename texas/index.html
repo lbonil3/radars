@@ -125,10 +125,12 @@
       <div class="ifil">
         <div class="irow"><label class="isel"><span>Week</span><select id="nlWeek" aria-label="Newsletter week"></select></label><span class="nlst" id="nlStatus" role="status" aria-live="polite"></span></div>
         <div class="chips nlact">
+          <button type="button" class="chip chip-pri" data-nl="pdf" id="nlPdf">Download PDF</button>
           <button type="button" class="chip" data-nl="copytext">Copy as text</button><button type="button" class="chip" data-nl="copyhtml">Copy as email HTML</button>
           <button type="button" class="chip" data-nl="mag" data-pm="mag">Magazine PDF</button><button type="button" class="chip" data-nl="print" data-pm="compact">Compact print</button><button type="button" class="chip" data-nl="html">Download .html</button><button type="button" class="chip" data-nl="txt">Download .txt</button>
           <button type="button" class="chip" data-nl="share" id="nlShare" hidden>Share</button>
         </div>
+        <p class="nlpdfmsg" id="nlPdfMsg" role="status" aria-live="polite" hidden></p>
       </div>
       <div id="nlPaper" class="nlpaper" aria-live="polite"></div>
       <div id="nlMag" hidden></div>

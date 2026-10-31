@@ -142,6 +142,9 @@ details.cap>summary{min-height:44px;display:flex;align-items:center;cursor:point
 .imode{margin:6px calc(14px + env(safe-area-inset-right)) 4px calc(14px + env(safe-area-inset-left))}
 .nlst{font-size:12.5px;color:var(--dim);flex:1 1 200px}
 .nlact{gap:6px}
+.chip.chip-pri{background:#5eead4;border-color:#5eead4;color:#042f2e;font-weight:700}
+.chip.chip-pri:disabled{opacity:.7}
+.nlpdfmsg{margin:6px 0 0;font-size:13px;color:#cbd5e1}
 .nlpaper{margin:6px calc(14px + env(safe-area-inset-right)) 8px calc(14px + env(safe-area-inset-left));overflow-wrap:anywhere}
 .nlpaper td > table{transition:transform .15s ease,box-shadow .15s ease}
 .nlpaper td > table:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.35)}
