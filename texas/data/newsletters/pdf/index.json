@@ -1,13 +1,14 @@
 {
- "generatedAt": "2026-10-31T00:17:42.432Z",
+ "generatedAt": "2026-11-02T09:51:53.624Z",
  "issues": [
   {
    "week": "2026-W44",
-   "hash": "9b304cb0ecbee4b5",
-   "bytes": 167052,
-   "generatedAt": "2026-10-31T00:17:39.920Z",
-   "final": false,
-   "edition": "preview"
+   "hash": "297509da6072423d",
+   "bytes": 166218,
+   "generatedAt": "2026-11-02T09:51:53.547Z",
+   "final": true,
+   "edition": "published",
+   "publishedAt": "2026-11-02T09:51:51.905Z"
   },
   {
    "week": "2026-W43",
@@ -89,15 +90,7 @@
    "generatedAt": "2026-10-31T00:17:42.157Z",
    "final": true,
    "edition": "final"
-  },
-  {
-   "week": "2026-W33",
-   "hash": "771a6186086c0c9f",
-   "bytes": 158872,
-   "generatedAt": "2026-10-31T00:17:42.338Z",
-   "final": true,
-   "edition": "final"
   }
  ],
- "totalBytes": 2695277
+ "totalBytes": 2535571
 }
