@@ -3,32 +3,110 @@
  "start": "2026-11-02",
  "end": "2026-11-08",
  "title": "Texas Intel weekly, 2026-W45 (Nov 2, 2026 to Nov 8, 2026)",
- "generatedAt": "2026-11-04T18:02:26.485Z",
+ "generatedAt": "2026-11-05T18:06:38.075Z",
  "final": false,
  "backfilled": false,
  "counts": {
-  "items": 0,
-  "houston": 0,
+  "items": 4,
+  "houston": 4,
   "other": 0
  },
  "stats": {
-  "items": 0,
-  "newThisWeek": 0,
-  "houston": 0,
+  "items": 4,
+  "newThisWeek": 4,
+  "houston": 4,
   "grant": 0,
-  "flood": 0,
+  "flood": 2,
   "mix": {
    "budget": 0,
    "bond": 0,
    "grant": 0,
-   "flood": 0,
-   "water": 0,
+   "flood": 2,
+   "water": 1,
    "road": 0,
    "policy": 0,
-   "agenda": 0
+   "agenda": 1
   }
  },
- "houston": [],
+ "houston": [
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 2,
+   "items": [
+    {
+     "id": "i16yuozj",
+     "title": "Request by the Office of the Purchasing Agent for approval of a project scheduled for advertisement for Clear Creek Federal Flood Risk Management Project - Phase 2 - Hughes Stormwater Detention…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310373&GUID=ED3B8666-2F31-4148-83B7-1B3345034E3D",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-11-03",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “stormwater”, “flood control”, “detention”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "desc": "Proposals/Bids · Commissioners Court · 26-7594",
+     "score": 22
+    },
+    {
+     "id": "i1wl5uio",
+     "title": "Request by the Office of the Purchasing Agent for approval of a project scheduled for advertisement and consent for Request for Proposal for implementation of Oracle primavera unifier and…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310370&GUID=4187B23A-F3F3-4BBD-9560-11CDF82AF95C",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-11-03",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “flood control”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "desc": "Proposals/Bids · Commissioners Court · 26-7591",
+     "score": 12
+    }
+   ]
+  },
+  {
+   "topic": "water",
+   "label": "Water / wastewater",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1lyyreh",
+     "title": "Public Works Week in Review for November 5, 2026",
+     "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6459",
+     "source": "City of League City",
+     "date": "2026-11-02",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "water",
+     "why": "Mentions “wastewater”, “lift station”.",
+     "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+     "desc": "Public Works' Crews working on Hydro Excavation to Protect Tree Roots, Wastewater Department Upgrades Lift Station Controls to Improve Reliability, Parks Department Vehicle Modification and Maintenance, and Moss on Trees.",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1tvwsf0",
+     "title": "Request by the Office of the Purchasing Agent for approval of an award on the basis of successful negotiations with the best evaluated vendor(s) and that the County Judge execute an agreement with…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310375&GUID=22290684-ACB9-4467-8B95-A157BCACB66D",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-11-03",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering services”, “design services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "desc": "Contract - Award · Commissioners Court · 26-7596",
+     "score": 18
+    }
+   ]
+  }
+ ],
  "texas": [],
  "deadlines": [],
  "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."

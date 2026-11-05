@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-04T18:02:26.485Z",
+ "generatedAt": "2026-11-05T18:06:38.075Z",
  "keepWeeks": 12,
  "weeks": [
   {
@@ -8,9 +8,9 @@
    "end": "2026-11-08",
    "final": false,
    "backfilled": false,
-   "items": 0,
-   "houston": 0,
-   "generatedAt": "2026-11-04T18:02:26.485Z"
+   "items": 4,
+   "houston": 4,
+   "generatedAt": "2026-11-05T18:06:38.075Z"
   },
   {
    "week": "2026-W44",

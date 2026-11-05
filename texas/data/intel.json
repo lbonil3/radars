@@ -1,10 +1,10 @@
 {
- "generatedAt": "2026-11-04T18:02:26.485Z",
+ "generatedAt": "2026-11-05T18:06:38.075Z",
  "keepDays": 90,
  "note": "Public news and planning signals, not solicitations. Verify with the original source.",
- "count": 231,
+ "count": 238,
  "sources": {
-  "generatedAt": "2026-11-04T18:02:26.485Z",
+  "generatedAt": "2026-11-05T18:06:38.075Z",
   "group": "texas-intel",
   "counts": {
    "fresh": 41,
@@ -20,8 +20,8 @@
     "agency": "Houston Public Works",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.277Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.695Z",
     "records": 0,
     "fetched": 10,
     "error": null,
@@ -33,8 +33,8 @@
     "agency": "Texas General Land Office",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.195Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:39.892Z",
     "records": 0,
     "fetched": 10,
     "error": null,
@@ -46,8 +46,8 @@
     "agency": "Texas Municipal League",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.305Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.081Z",
     "records": 0,
     "fetched": 0,
     "error": null,
@@ -59,8 +59,8 @@
     "agency": "Texas Tribune",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.271Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.018Z",
     "records": 0,
     "fetched": 20,
     "error": null,
@@ -72,8 +72,8 @@
     "agency": "City of Dallas",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:42.900Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:41.726Z",
     "records": 1,
     "fetched": 12,
     "error": null,
@@ -85,10 +85,10 @@
     "agency": "City of Sugar Land",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.244Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:39.934Z",
     "records": 0,
-    "fetched": 7,
+    "fetched": 6,
     "error": null,
     "failingSince": null
    },
@@ -98,9 +98,9 @@
     "agency": "City of League City",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.474Z",
-    "records": 0,
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.236Z",
+    "records": 1,
     "fetched": 30,
     "error": null,
     "failingSince": null
@@ -111,8 +111,8 @@
     "agency": "City of Galveston",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.381Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.343Z",
     "records": 0,
     "fetched": 4,
     "error": null,
@@ -124,10 +124,10 @@
     "agency": "City of Baytown",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.609Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.251Z",
     "records": 0,
-    "fetched": 8,
+    "fetched": 9,
     "error": null,
     "failingSince": null
    },
@@ -137,8 +137,8 @@
     "agency": "City of Pasadena",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.358Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:39.965Z",
     "records": 0,
     "fetched": 2,
     "error": null,
@@ -150,10 +150,10 @@
     "agency": "City of Rosenberg",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.341Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.400Z",
     "records": 0,
-    "fetched": 1,
+    "fetched": 2,
     "error": null,
     "failingSince": null
    },
@@ -163,10 +163,10 @@
     "agency": "City of Bellaire",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.497Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.052Z",
     "records": 0,
-    "fetched": 4,
+    "fetched": 3,
     "error": null,
     "failingSince": null
    },
@@ -176,10 +176,10 @@
     "agency": "City of West University Place",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.601Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.340Z",
     "records": 0,
-    "fetched": 9,
+    "fetched": 10,
     "error": null,
     "failingSince": null
    },
@@ -189,10 +189,10 @@
     "agency": "City of Tomball",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.367Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.508Z",
     "records": 0,
-    "fetched": 4,
+    "fetched": 3,
     "error": null,
     "failingSince": null
    },
@@ -202,10 +202,10 @@
     "agency": "City of Webster",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.368Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.011Z",
     "records": 0,
-    "fetched": 1,
+    "fetched": 3,
     "error": null,
     "failingSince": null
    },
@@ -215,8 +215,8 @@
     "agency": "City of Texas City",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.327Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:39.936Z",
     "records": 0,
     "fetched": 3,
     "error": null,
@@ -228,8 +228,8 @@
     "agency": "City of Angleton",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.397Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:39.973Z",
     "records": 0,
     "fetched": 4,
     "error": null,
@@ -241,8 +241,8 @@
     "agency": "City of Deer Park",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.461Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.122Z",
     "records": 0,
     "fetched": 4,
     "error": null,
@@ -254,8 +254,8 @@
     "agency": "City of La Porte",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.484Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.150Z",
     "records": 0,
     "fetched": 9,
     "error": null,
@@ -267,8 +267,8 @@
     "agency": "City of Port Arthur",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.351Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.135Z",
     "records": 0,
     "fetched": 2,
     "error": null,
@@ -280,8 +280,8 @@
     "agency": "City of Frisco",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.421Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.101Z",
     "records": 0,
     "fetched": 9,
     "error": null,
@@ -293,10 +293,10 @@
     "agency": "City of McKinney",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.334Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.248Z",
     "records": 0,
-    "fetched": 16,
+    "fetched": 14,
     "error": null,
     "failingSince": null
    },
@@ -306,10 +306,10 @@
     "agency": "City of Garland",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.454Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.172Z",
     "records": 0,
-    "fetched": 12,
+    "fetched": 13,
     "error": null,
     "failingSince": null
    },
@@ -319,8 +319,8 @@
     "agency": "City of Mansfield",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.361Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.140Z",
     "records": 0,
     "fetched": 0,
     "error": null,
@@ -332,10 +332,10 @@
     "agency": "City of New Braunfels",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.589Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:45.101Z",
     "records": 2,
-    "fetched": 19,
+    "fetched": 18,
     "error": null,
     "failingSince": null
    },
@@ -345,9 +345,9 @@
     "agency": "Harris County Commissioners Court",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.687Z",
-    "records": 41,
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.424Z",
+    "records": 48,
     "fetched": 60,
     "error": null,
     "failingSince": null
@@ -358,10 +358,10 @@
     "agency": "City of Austin",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:29.151Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.926Z",
     "records": 25,
-    "fetched": 45,
+    "fetched": 41,
     "error": null,
     "failingSince": null
    },
@@ -371,8 +371,8 @@
     "agency": "City of Dallas",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:30.638Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:42.433Z",
     "records": 47,
     "fetched": 60,
     "error": null,
@@ -384,9 +384,9 @@
     "agency": "City of Corpus Christi",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:31.863Z",
-    "records": 26,
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:43.626Z",
+    "records": 24,
     "fetched": 33,
     "error": null,
     "failingSince": null
@@ -397,10 +397,10 @@
     "agency": "City of El Paso",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:33.618Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:45.202Z",
     "records": 21,
-    "fetched": 38,
+    "fetched": 36,
     "error": null,
     "failingSince": null
    },
@@ -410,10 +410,10 @@
     "agency": "City of Plano",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:34.902Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:46.590Z",
     "records": 3,
-    "fetched": 10,
+    "fetched": 8,
     "error": null,
     "failingSince": null
    },
@@ -423,8 +423,8 @@
     "agency": "TxDOT",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.391Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.371Z",
     "records": 1,
     "fetched": 15,
     "error": null,
@@ -436,8 +436,8 @@
     "agency": "TxDOT",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:29.737Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:41.675Z",
     "records": 1,
     "fetched": 4,
     "error": null,
@@ -449,8 +449,8 @@
     "agency": "Fort Bend County",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.922Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.557Z",
     "records": 2,
     "fetched": 21,
     "error": null,
@@ -462,8 +462,8 @@
     "agency": "City of Houston",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.593Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.272Z",
     "records": 1,
     "fetched": 1,
     "error": null,
@@ -475,8 +475,8 @@
     "agency": "Galveston County Commissioners Court",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:36.427Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:48.236Z",
     "records": 38,
     "fetched": 55,
     "error": null,
@@ -488,10 +488,10 @@
     "agency": "Brazoria County Commissioners Court",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:37.848Z",
-    "records": 12,
-    "fetched": 13,
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:49.610Z",
+    "records": 13,
+    "fetched": 14,
     "error": null,
     "failingSince": null
    },
@@ -501,8 +501,8 @@
     "agency": "City of League City",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:39.355Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:51.181Z",
     "records": 7,
     "fetched": 11,
     "error": null,
@@ -514,8 +514,8 @@
     "agency": "Federal Register",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:31.334Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:43.193Z",
     "records": 1,
     "fetched": 8,
     "error": null,
@@ -527,8 +527,8 @@
     "agency": "Grants.gov",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:33.115Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:44.952Z",
     "records": 1,
     "fetched": 64,
     "error": null,
@@ -540,8 +540,8 @@
     "agency": "FEMA",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-04T18:02:26.485Z",
-    "lastSuccess": "2026-11-04T18:02:28.559Z",
+    "lastAttempt": "2026-11-05T18:06:38.075Z",
+    "lastSuccess": "2026-11-05T18:06:40.267Z",
     "records": 1,
     "fetched": 3,
     "error": null,
@@ -550,6 +550,99 @@
   ]
  },
  "items": [
+  {
+   "id": "i16yuozj",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of the Purchasing Agent for approval of a project scheduled for advertisement for Clear Creek Federal Flood Risk Management Project - Phase 2 - Hughes Stormwater Detention…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310373&GUID=ED3B8666-2F31-4148-83B7-1B3345034E3D",
+   "mid": 49609,
+   "date": "2026-11-03T00:00:00.000Z",
+   "desc": "Proposals/Bids · Commissioners Court · 26-7594",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 22,
+   "why": [
+    "stormwater",
+    "flood control",
+    "detention"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1tvwsf0",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of the Purchasing Agent for approval of an award on the basis of successful negotiations with the best evaluated vendor(s) and that the County Judge execute an agreement with…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310375&GUID=22290684-ACB9-4467-8B95-A157BCACB66D",
+   "mid": 49611,
+   "date": "2026-11-03T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7596",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 18,
+   "why": [
+    "engineering services",
+    "design services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1wl5uio",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Office of the Purchasing Agent for approval of a project scheduled for advertisement and consent for Request for Proposal for implementation of Oracle primavera unifier and…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310370&GUID=4187B23A-F3F3-4BBD-9560-11CDF82AF95C",
+   "mid": 49606,
+   "date": "2026-11-03T00:00:00.000Z",
+   "desc": "Proposals/Bids · Commissioners Court · 26-7591",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1lyyreh",
+   "srcId": "cp-leaguecity",
+   "source": "City of League City",
+   "title": "Public Works Week in Review for November 5, 2026",
+   "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6459",
+   "date": "2026-11-02T16:36:52.000Z",
+   "desc": "Public Works' Crews working on Hydro Excavation to Protect Tree Roots, Wastewater Department Upgrades Lift Station Controls to Improve Reliability, Parks Department Vehicle Modification and Maintenance, and Moss on Trees.",
+   "topics": [
+    "water"
+   ],
+   "place": "League City",
+   "county": "Galveston",
+   "region": "Houston region",
+   "score": 6,
+   "why": [
+    "wastewater",
+    "lift station"
+   ],
+   "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
   {
    "id": "iop88ms",
    "srcId": "hou-cip",
@@ -595,6 +688,152 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
+   "id": "iphjvoj",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Transmittal by the Commissioner of Precinct 4 of acceptance from the U.S. Army Corps of Engineers License No. DACW64-3-26-0011, a temporary license allowing construction of a trail as part of the…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310200&GUID=1CA97406-7AFD-4790-87E5-1ADA31CC8293",
+   "mid": 49565,
+   "date": "2026-10-30T00:00:00.000Z",
+   "desc": "Transmittal · Commissioners Court · 26-7550",
+   "topics": [
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 16,
+   "why": [
+    "drainage",
+    "channel",
+    "bayou",
+    "bridge"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ip7q817",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for discussion and possible action regarding the naming of detention basin K500-05-00 the Dick Smith Stormwater Detention Basin.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310179&GUID=ACE5C16A-A351-4557-BECE-AE8607606BFA",
+   "mid": 49531,
+   "date": "2026-10-30T00:00:00.000Z",
+   "desc": "Dedication · Commissioners Court · 26-7516",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "stormwater",
+    "detention"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ipkbsfa",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with iGET Services LLC, in the amount of $159,575, for engineering services to provide design, bidding, and construction phase engineering…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310135&GUID=74200A93-DCFB-4333-855F-D262FA9F4632",
+   "mid": 49470,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7455",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 44,
+   "why": [
+    "stormwater",
+    "detention",
+    "bayou",
+    "watershed",
+    "engineering services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ij4au1v",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for discussion and possible action on the CDBG-DR and CDBG-MIT programs managed by the Harris County Flood Control District.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310146&GUID=6E4840B4-4A04-4CA2-B21C-DE7E52456C4F",
+   "mid": 49481,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Discussion Item · Commissioners Court · 26-7466",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 34,
+   "why": [
+    "cdbg-mit",
+    "cdbg-dr",
+    "harris county flood control"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "itt0rz7",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to decree that the Harris County Flood Control District project serves a public purpose and public necessity, which requires that the Harris County Real Property Division be…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310138&GUID=4F8F8F8F-7792-4610-9CA3-3EECDC69F0D8",
+   "mid": 49473,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Public Necessity · Commissioners Court · 26-7458",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 30,
+   "why": [
+    "bond",
+    "grant",
+    "hazard mitigation",
+    "harris county flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "also": [
+    {
+     "source": "Harris County Commissioners Court agenda items",
+     "link": "https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49190"
+    },
+    {
+     "source": "Harris County Commissioners Court agenda items",
+     "link": "https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49474"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
    "id": "ikh6fmm",
    "srcId": "leg-galvestoncountytx",
    "source": "Galveston County Commissioners Court agenda items",
@@ -624,6 +863,32 @@
    "firstSeen": "2026-11-03T17:54:04.190Z"
   },
   {
+   "id": "ijcv4w6",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Transmittal by the Flood Control District on project status updates for the CDBG-DR and CDBG-MIT programs.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310140&GUID=E33CD2BE-FA18-404E-B778-CC260BEC6692",
+   "mid": 49475,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Transmittal · Commissioners Court · 26-7460",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 28,
+   "why": [
+    "flood control",
+    "cdbg-mit",
+    "cdbg-dr"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
    "id": "ive7hpg",
    "srcId": "leg-galvestoncountytx",
    "source": "Galveston County Commissioners Court agenda items",
@@ -651,6 +916,198 @@
    ],
    "hint": "Bond signal: bond-funded projects move to design; track the project list.",
    "firstSeen": "2026-11-03T17:54:04.190Z"
+  },
+  {
+   "id": "i1g8rzl",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with QC Laboratories, Inc., in the amount of $99,449.00 for Professional Engineering Services regarding Construction Materials Testing and…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310114&GUID=C6AF57C6-5C56-4686-81B0-7A86C2007AD6",
+   "mid": 49448,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7433",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 20,
+   "why": [
+    "drainage",
+    "bayou",
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i39dtt",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an agreement with Buffalo Bayou Partnership, in the amount of $541,000, for continued development and enhancement of the existing program for managing and removing…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310134&GUID=BB4BA07F-17F8-4C14-99B6-C2C53D75D16B",
+   "mid": 49469,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7454",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 16,
+   "why": [
+    "flood control",
+    "bayou"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1mgolph",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with DCCM North America, LLC for professional architectural and/or engineering services to conduct a transportation master plan for the Office of the County…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310090&GUID=1A7580DA-1245-4339-B9AB-8B35934A59FF",
+   "mid": 49444,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7429",
+   "topics": [
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "engineering services",
+    "master plan"
+   ],
+   "hint": "Planning study: follow-on design phases often go to consultants.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "idbj5x0",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a Payment in Lieu of Taxes Agreement (“PILOT Agreement”) between Harris County (on behalf of itself, Flood Control District and Hospital District) and GPL Supply Chain Inc…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310144&GUID=67F71E7D-0290-4958-82A9-A21DE7730D1E",
+   "mid": 49479,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Financial Authorization · Commissioners Court · 26-7464",
+   "topics": [
+    "flood",
+    "road",
+    "agenda",
+    "policy"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "flood control",
+    "design"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i13qrv1f",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Cigna Health and Life Insurance Company for Dental Preferred Provider Organization (PPO) and Dental Health Maintenance Organization (DHMO) insurance for…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310077&GUID=EF862853-6A05-4B66-8CCF-C6112571E027",
+   "mid": 49429,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7414",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1ldwm50",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Davis Vision, Inc. for vision insurance for Harris County and the Flood Control District for the period of January 1, 2027 - December 31, 2027, at a…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310078&GUID=8E4EED4A-D0AF-4AC6-B752-74110B07FFAF",
+   "mid": 49430,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7415",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ixf973j",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Yellowstone Landscape for mowing and debris removal in the Clear Lake Area for the Flood Control District for the period of December 1, 2026 - November…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310082&GUID=665C8548-1D3E-4D3B-B124-E0EE1A477A64",
+   "mid": 49435,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7420",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ibie5fd",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with WSB, LLC, in the amount of $18,665.00 for professional architecture and engineering services in connection with Asphalt Rehabilitation -…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310116&GUID=2F427BAD-7D01-47F3-8005-0B539AEE9FE1",
+   "mid": 49450,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7435",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
    "id": "i331kqb",
@@ -699,6 +1156,29 @@
    "firstSeen": "2026-11-03T17:54:04.190Z"
   },
   {
+   "id": "ivpa5dt",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an agreement with Pape-Dawson Consulting Engineers, LLC, in the amount of $1,264,784.60 for Professional Engineering and related services in connection with Road…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310124&GUID=F831753A-B1F7-4B24-9894-E1A855520B64",
+   "mid": 49458,
+   "date": "2026-10-29T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7443",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 4,
+   "why": [
+    "engineering"
+   ],
+   "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
    "id": "irlevsd",
    "srcId": "leg-cityofdallas",
    "source": "City of Dallas agenda items",
@@ -720,6 +1200,87 @@
    ],
    "hint": "Bond signal: bond-funded projects move to design; track the project list.",
    "firstSeen": "2026-11-04T18:02:26.485Z"
+  },
+  {
+   "id": "ild5cbz",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Texas Division of Emergency Management to extend the grant end date to April 1, 2028, for the FEMA…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310059&GUID=29EC19DB-5CE8-4EB9-BDD9-3294B613DE80",
+   "mid": 49385,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Grant · Commissioners Court · 26-7370",
+   "topics": [
+    "bond",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 26,
+   "why": [
+    "flood control",
+    "bayou",
+    "watershed",
+    "bond",
+    "grant"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i11luwhs",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an agreement with Harris County Precinct 1 in the amount of $2,650,000.00 in Community Development Block Grant Disaster Recovery (CDBG-DR) funds and $392,000.00 in Precinct 1…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310049&GUID=89A40B5C-5087-4700-92A1-6850C40C62E9",
+   "mid": 49366,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7351",
+   "topics": [
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 20,
+   "why": [
+    "drainage",
+    "grant",
+    "cdbg-dr"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1yffomu",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with LASS Engineering and Construction, Inc. for general earthen and concrete channel repairs (Countywide) for the Flood Control District for the period of…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310014&GUID=E86B7504-FA8D-419A-9799-AB152AB35B8E",
+   "mid": 49325,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7304",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 16,
+   "why": [
+    "flood control",
+    "channel",
+    "engineering"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
    "id": "inzakao",
@@ -747,6 +1308,330 @@
    ],
    "hint": "Planning study: follow-on design phases often go to consultants.",
    "firstSeen": "2026-11-03T17:54:04.190Z"
+  },
+  {
+   "id": "i1omcf4x",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a submerged storm sewer system agreement with Bridgeland Creek Parkway Street Dedication Sec 10, Precinct 4.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310069&GUID=045B7CF8-F71E-4577-9BF7-64B5F79B6567",
+   "mid": 49417,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7402",
+   "topics": [
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 15,
+   "why": [
+    "storm sewer",
+    "bridge",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "also": [
+    {
+     "source": "Harris County Commissioners Court agenda items",
+     "link": "https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49419"
+    }
+   ],
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "iaokycx",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a submerged storm sewer system agreement with Bridgeland Migration Way Street Dedication for Sec 4, Precinct 4.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310072&GUID=04C33A71-53FE-4408-AC0C-832CD4957A1A",
+   "mid": 49420,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7405",
+   "topics": [
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 15,
+   "why": [
+    "storm sewer",
+    "bridge",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ixqwdd7",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of authorized budget appropriation transfers for the Flood Control District and certain county departments.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310301&GUID=4B1BE195-9FCD-4A61-AE2A-9D347D52F3A6",
+   "mid": 49340,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Financial Authorization · Commissioners Court · 26-7325",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "flood control",
+    "budget"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1uu4lc4",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a submerged storm sewer system agreement with Cypress Lakes Street Dedication and Reserves/Cypress Lakes Sec 1, Precinct 3.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310068&GUID=89C3FFF1-528E-4FCA-9DC6-27FAC1B15D2B",
+   "mid": 49416,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Interlocal Agreement · Commissioners Court · 26-7401",
+   "topics": [
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 13,
+   "why": [
+    "storm sewer",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "iea9fov",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Transmittal by the Office of the Purchasing Agent of a project scheduled for advertisement for paint and related items for Harris County and the Flood Control District (260330).",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310012&GUID=FF69282A-5933-48A6-A82A-A998FEFAE04F",
+   "mid": 49323,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Transmittal · Commissioners Court · 26-7302",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "io5eqau",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Seril, Inc. dba Houston Grotech for lawn care services for buy-out lots for the Flood Control District for the period of February 1, 2027 - January 31,…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310017&GUID=5E43B747-E803-4778-A131-4D08F811E2F0",
+   "mid": 49328,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7307",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i19qbq21",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an award on the basis of low bid to The Urban Foresters, LLC in the amount of $1,993,610 for property boundary vegetation removal, pruning and related items for the Flood…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310018&GUID=B400625C-02C2-4B01-815A-6F3FEE1FC57E",
+   "mid": 49329,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7308",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1msunwf",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Dearborn Life Insurance Company, a Blue Cross Blue Shield Association licensee for basic and optional long term disability insurance for Harris County…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310036&GUID=2150CCB1-99C9-4115-B491-8891546EB730",
+   "mid": 49353,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7338",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i176oxiy",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of a renewal option with Dearborn Life Insurance Company, a Blue Cross Blue Shield Association licensee for life and accidental death and dismemberment insurance for Harris…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310041&GUID=DCDF1B7F-87A1-4A10-B1D5-A4EB298E4336",
+   "mid": 49358,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7343",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i4mo2qf",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an award on the basis of low bid to ERC Environmental & Construction Services, Inc. in the amount of $939,577 for remodeling of the Michael Talbott Service Center…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310053&GUID=BCB64CEE-4982-4C86-ABEE-BDB9945582B2",
+   "mid": 49371,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7356",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1uzk8y0",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with HR Green, Inc., in the amount of $6,829.94 for Professional Engineering Services in connection with Hufsmith-Kohrville Rd 3, UPIN…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310039&GUID=7845D475-CD5B-41E2-8BEF-3E0BC623C5B6",
+   "mid": 49356,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7341",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "iny66cy",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Transmittal by the Office of the County Engineer of November 2026 Status Update for the 2018 Harris County Subdivision Drainage Improvement Program.",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310009&GUID=BBFFE4A3-1677-430A-AD92-DDA8E44C3D75",
+   "mid": 49320,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Transmittal · Commissioners Court · 26-7299",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 8,
+   "why": [
+    "drainage"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ilou96b",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an award on the basis of low bid meeting specifications to CE Barker Ltd. in the amount of $3,863,345 for White Oak Bayou pedestrian bridge construction at De Soto Street for…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8310015&GUID=356BF9C6-4BFB-473B-B929-D4FEC0ED818C",
+   "mid": 49326,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7305",
+   "topics": [
+    "bond",
+    "flood",
+    "road",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 8,
+   "why": [
+    "bayou",
+    "bridge"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
    "id": "i15g3pk6",
@@ -798,6 +1683,215 @@
    ],
    "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
    "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "it938ro",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval for Harris County Flood Control District, a political subdivision of the State of Texas to accept real estate from Harris County Municipal Utility District No. 389, a…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309984&GUID=7B22D612-2FE1-4BB5-8BD9-CD112E7B1DC1",
+   "mid": 49293,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Asset Management · Commissioners Court · 26-7271",
+   "topics": [
+    "flood",
+    "water",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 20,
+   "why": [
+    "utility",
+    "harris county flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1mppqo",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval for Harris County Flood Control District, a political subdivision of the State of Texas, to accept a real estate donation of a 3.515 acre tract of land from LVPQ 290 Crossroads,…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309992&GUID=1380F7B2-C927-4312-840A-B3EC350E5EE9",
+   "mid": 49302,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Donation · Commissioners Court · 26-7280",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 18,
+   "why": [
+    "harris county flood control"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i5qtdwq",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with All-Terra Engineering, Inc. in the amount of $91,217.00 for Professional Engineering Services regarding Construction Materials Testing and…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309986&GUID=AAE6DDA3-A9CB-4AD3-BC58-BEAF31872DDA",
+   "mid": 49296,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7274",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 16,
+   "why": [
+    "drainage",
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i19i49k3",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an award on the basis of low bid to HAM-BAR, LLC dba Environmental Southwest (Primary); and HGS, LLC dba RES Environmental Operating Company, LLC (Secondary) in the amount of…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309980&GUID=891F9C8C-B2A0-4F98-B29E-5D74ACFCA5B0",
+   "mid": 49289,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7267",
+   "topics": [
+    "bond",
+    "flood",
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 12,
+   "why": [
+    "flood control"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1nyb98j",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with Atser, LP in the amount of $43,958.50 for Professional Engineering Services regarding Construction Materials Testing and related Services…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309988&GUID=BCA821E2-7F18-429A-A8F7-8A890F83A78A",
+   "mid": 49298,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7276",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Harris County",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ic38rfv",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with Atlas Technical Consultants, LLC, in the amount of $140,238.00 for Professional Engineering Services regarding Construction Materials…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309989&GUID=3C330DB1-B8CA-4978-A49A-7DE210725C17",
+   "mid": 49299,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7277",
+   "topics": [
+    "agenda"
+   ],
+   "place": "Katy",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ih0qxic",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval of an amendment to an agreement with STOA International Architects, Inc., in the amount of $64,391.25 for professional architecture and engineering services in connection with…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309990&GUID=4D6906EE-94BA-4B74-A8A3-7C70E4ABDFCF",
+   "mid": 49300,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Contract - Amendment · Commissioners Court · 26-7278",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Tomball",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "iaat3hh",
+   "srcId": "leg-harriscountytx",
+   "source": "Harris County Commissioners Court agenda items",
+   "title": "Request for approval to execute an agreement with Isani Consultants, L.P. in the amount of $165,301.00 for professional engineering services for a new traffic signal with pedestrian related…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309991&GUID=FA7CB939-ECEA-470A-A62D-94772A4A0D38",
+   "mid": 49301,
+   "date": "2026-10-27T00:00:00.000Z",
+   "desc": "Contract - Award · Commissioners Court · 26-7279",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Houston",
+   "county": "Harris",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "ik4j6r9",
+   "srcId": "leg-brazoriacountytx",
+   "source": "Brazoria County Commissioners Court agenda items",
+   "title": "Solicit Statement of Qualifications for Architectural and Engineering Services of HUD Home Rehabilitation / Reconstruction Program",
+   "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=8309235&GUID=F2E8C5D6-7B20-4247-AF3D-E565B8D38850",
+   "mid": 5355,
+   "date": "2026-10-26T00:00:00.000Z",
+   "desc": "Discussion - Purchasing Department · Commissioners Court · 19052",
+   "topics": [
+    "road",
+    "agenda"
+   ],
+   "place": "Brazoria",
+   "county": "Brazoria",
+   "region": "Houston region",
+   "score": 10,
+   "why": [
+    "engineering services"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
    "id": "i1x1813t",
@@ -1052,33 +2146,6 @@
    "firstSeen": "2026-10-30T19:55:42.489Z"
   },
   {
-   "id": "itt0rz7",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval to decree that the Harris County Flood Control District project serves a public purpose and public necessity, which requires that the Harris County Real Property Division be…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298593&GUID=D7FD71F1-354F-419F-A9CA-C57FDFA0190E",
-   "mid": 49190,
-   "date": "2026-10-19T00:00:00.000Z",
-   "desc": "Public Necessity · Commissioners Court · 26-7168",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 28,
-   "why": [
-    "bond",
-    "hmgp",
-    "harris county flood control"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "i116w0a1",
    "srcId": "leg-harriscountytx",
    "source": "Harris County Commissioners Court agenda items",
@@ -1160,52 +2227,28 @@
    "firstSeen": "2026-10-30T19:55:42.489Z"
   },
   {
-   "id": "i5km9km",
+   "id": "itawf8x",
    "srcId": "leg-harriscountytx",
    "source": "Harris County Commissioners Court agenda items",
-   "title": "Request that the County Judge execute an amendment to an agreement with R.G. Miller Engineers, Inc. in the additional amount of $50,000 for professional architectural and engineering services to…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298618&GUID=33110B2B-F580-4ECC-9AC0-2C3B14B0ECB6",
-   "mid": 49227,
+   "title": "Request for approval of a renewal option with Seril, Inc. dba Houston Grotech for lawn care services for the Flood Control District for the period of February 1, 2027 - February 28, 2028, at a cost…",
+   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8309950&GUID=C8E5BEB5-25E6-4D3F-9954-43AE02EE9C5B",
+   "mid": 49225,
    "date": "2026-10-19T00:00:00.000Z",
-   "desc": "Contract - Amendment · Commissioners Court · 26-7205",
+   "desc": "Contract - Renewal · Commissioners Court · 26-7203",
    "topics": [
-    "agenda",
-    "policy"
+    "bond",
+    "flood",
+    "agenda"
    ],
-   "place": "Harris County",
+   "place": "Houston",
    "county": "Harris",
    "region": "Houston region",
    "score": 12,
    "why": [
-    "engineering services",
-    "design"
+    "flood control"
    ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1rkkvga",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request that the County Judge execute an amendment to an agreement with Edminster, Hinshaw, Russ & Associates, Inc. d/b/a EHRA Engineering for professional architectural and engineering services to…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298619&GUID=AAEEC77C-42CC-4291-870F-1B3F6ED940FB",
-   "mid": 49228,
-   "date": "2026-10-19T00:00:00.000Z",
-   "desc": "Contract - Renewal · Commissioners Court · 26-7206",
-   "topics": [
-    "agenda",
-    "policy"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "engineering services",
-    "design"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
    "id": "imclzq7",
@@ -1229,134 +2272,6 @@
     "wastewater"
    ],
    "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "invaes4",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request that the County Judge execute an amendment to an agreement with Resalire Infrastructure Solutions LLC in the additional amount of $250,000 for additional professional…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298539&GUID=C10495C6-0FD9-48CF-8126-3866A859C1F9",
-   "mid": 49127,
-   "date": "2026-10-16T00:00:00.000Z",
-   "desc": "Contract - Amendment · Commissioners Court · 26-7105",
-   "topics": [
-    "flood",
-    "agenda",
-    "policy"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 22,
-   "why": [
-    "flood control",
-    "bayou",
-    "watershed",
-    "engineering"
-   ],
-   "hint": "Planning study: follow-on design phases often go to consultants.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1wqpc4d",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Transmittal by the Office of the Purchasing Agent of a project scheduled for advertisement for general watershed repairs to channels (E) White Oak Bayou, (W) Buffalo Bayou, (H) Hunting Bayou, and…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298542&GUID=787EFCDF-740D-4117-BAB3-B98F83D1D76C",
-   "mid": 49130,
-   "date": "2026-10-16T00:00:00.000Z",
-   "desc": "Transmittal · Commissioners Court · 26-7108",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 22,
-   "why": [
-    "flood control",
-    "channel",
-    "bayou",
-    "watershed"
-   ],
-   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "iq55lrj",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval of six Community Development Block Grant Entitlement (CDBG-EN) funded agreements between Harris County and 1) Harris County Precinct 2 total allocation of $1,155,000.00 for…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298580&GUID=9D092ACE-D6AE-428F-9AD1-7D06E0191AAC",
-   "mid": 49174,
-   "date": "2026-10-16T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7152",
-   "topics": [
-    "grant",
-    "water",
-    "agenda"
-   ],
-   "place": "Houston",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 20,
-   "why": [
-    "grant",
-    "cdbg",
-    "wastewater",
-    "water line",
-    "sewer"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "itpdpsu",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval of an award on the basis of low bid to Hassell Construction Group, LLC in the amount of $3,668,105 for extension of Birnam Wood Boulevard from Hickorygate Drive to south of…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298538&GUID=71DFE15D-5ED0-44D1-BEFD-02B72EB3C543",
-   "mid": 49126,
-   "date": "2026-10-16T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7104",
-   "topics": [
-    "bond",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 18,
-   "why": [
-    "harris county flood control"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1pmpgmc",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Transmittal by the Office of the Purchasing Agent of a project scheduled for advertisement for mowing and various maintenance services for the South Central Region for the Flood Control District…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298541&GUID=616C5095-8113-4766-A827-F99B91054607",
-   "mid": 49129,
-   "date": "2026-10-16T00:00:00.000Z",
-   "desc": "Transmittal · Commissioners Court · 26-7107",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "flood control"
-   ],
-   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
    "firstSeen": "2026-10-30T19:55:42.489Z"
   },
   {
@@ -1437,54 +2352,6 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
-   "id": "ifguk2l",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval of an amendment to an agreement with InfraTECH Engineers & Innovators, LLC in the amount of $91,488.00 for Professional Services in connection with drainage assessment - 2025,…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298530&GUID=3A0EF546-B435-44D8-95DF-BF06163FDBB7",
-   "mid": 49117,
-   "date": "2026-10-15T00:00:00.000Z",
-   "desc": "Contract - Amendment · Commissioners Court · 26-7095",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "drainage",
-    "professional services"
-   ],
-   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "ilig71a",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval to execute an interlocal agreement with Saint George Place Redevelopment Authority Reinvestment Zone Number One, City of Houston, Texas, and City of Houston Parks and Recreation…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298531&GUID=4AAB1AF4-DA69-40E9-A575-956D9D696DC0",
-   "mid": 49118,
-   "date": "2026-10-15T00:00:00.000Z",
-   "desc": "Interlocal Agreement · Commissioners Court · 26-7096",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Houston",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 10,
-   "why": [
-    "drainage",
-    "interlocal"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "i1cepvmq",
    "srcId": "leg-austintexas",
    "source": "City of Austin agenda items",
@@ -1503,52 +2370,6 @@
    "score": 10,
    "why": [
     "bond program"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1av8f53",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by Leon, Alcala, Morse & Reynolds, PLLC, as bond counsel, for approval of a resolution approving, solely for purposes of Section 147(f) of the Internal Revenue Code, a tax-exempt financing…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298664&GUID=86BDEC24-69BB-4E9C-BE2C-F28133326C77",
-   "mid": 49092,
-   "date": "2026-10-15T00:00:00.000Z",
-   "desc": "Miscellaneous Section · Commissioners Court · 26-7070",
-   "topics": [
-    "bond",
-    "agenda"
-   ],
-   "place": "Houston",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 6,
-   "why": [
-    "bond"
-   ],
-   "hint": "Bond approved: design contracts usually follow; watch for RFQs for the listed projects.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i18q2b3p",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Office of the Purchasing Agent for approval of an award on the basis of lowest priced proposal meeting requirements and that the County Judge execute an agreement with Fun Abounds,…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298529&GUID=F2713E38-5A06-42C4-A5AB-9B01F53B0704",
-   "mid": 49115,
-   "date": "2026-10-15T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7093",
-   "topics": [
-    "bond",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 4,
-   "why": [
-    "design"
    ],
    "hint": "Bond signal: bond-funded projects move to design; track the project list.",
    "firstSeen": "2026-10-30T19:55:42.489Z"
@@ -1729,77 +2550,6 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
-   "id": "iqy7edx",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval of a renewal option with Sago Solutions LLC (Primary); and P-Ville Incorporated (Secondary) for mowing and various maintenance services for the Northwest Region for the Flood…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298494&GUID=94020721-7738-4A76-8838-7A98A4B29922",
-   "mid": 49065,
-   "date": "2026-10-14T00:00:00.000Z",
-   "desc": "Contract - Renewal · Commissioners Court · 26-7043",
-   "topics": [
-    "bond",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "flood control"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i8ity5s",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval of a second amendment to an agreement with Geotest Engineering, Inc. in the amount of $35,154.75 for Professional Engineering Services regarding Construction Materials Testing…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298500&GUID=E7BB7D1F-7D92-4601-B954-67BD57F6F6B3",
-   "mid": 49072,
-   "date": "2026-10-14T00:00:00.000Z",
-   "desc": "Contract - Amendment · Commissioners Court · 26-7050",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 10,
-   "why": [
-    "engineering services"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i26a445",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval to execute an Interlocal Agreement with the City of Tomball in connection with construction of a trail within Jerry Matheson Park, conveyance of the land to Harris County from…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298503&GUID=79F4D927-3032-4900-A766-599B45C8888A",
-   "mid": 49077,
-   "date": "2026-10-14T00:00:00.000Z",
-   "desc": "Interlocal Agreement · Commissioners Court · 26-7055",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 10,
-   "why": [
-    "drainage",
-    "interlocal"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "i5lw5ma",
    "srcId": "leg-galvestoncountytx",
    "source": "Galveston County Commissioners Court agenda items",
@@ -1889,210 +2639,6 @@
     "wastewater"
    ],
    "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1upp40",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency/Texas Division of Emergency Management to extend the period of…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298488&GUID=26A7D1E5-0F6C-487B-A342-4469D9A6A973",
-   "mid": 49059,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Grant · Commissioners Court · 26-7037",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 26,
-   "why": [
-    "flood control",
-    "bayou",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i3ctmju",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the U.S. Department of Agriculture/Natural Resources Conservation Service to extend the grant end date…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298491&GUID=A8C55AF4-9CF3-4D7E-ADFE-01B4FAF0FE77",
-   "mid": 49062,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Grant · Commissioners Court · 26-7040",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda",
-    "policy"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 26,
-   "why": [
-    "flood control",
-    "bayou",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1o8fjwg",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Texas Division of Emergency Management to extend the grant end date to April 1, 2027, for the FEMA…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298489&GUID=A267BF8F-1AAE-4B01-B4EA-5F2B97851666",
-   "mid": 49060,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Grant · Commissioners Court · 26-7038",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 22,
-   "why": [
-    "flood control",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "also": [
-    {
-     "source": "Harris County Commissioners Court agenda items",
-     "link": "https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49063"
-    }
-   ],
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "iw4lnas",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the United States Department of Agriculture/Natural Resources Conservation Service to extend the grant…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298490&GUID=B1746520-63ED-404C-9BC4-95EA95324C39",
-   "mid": 49061,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Grant · Commissioners Court · 26-7039",
-   "topics": [
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 18,
-   "why": [
-    "flood control",
-    "watershed",
-    "grant"
-   ],
-   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1w8bm1v",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval to accept an amendment to an agreement with the Federal Emergency Management Agency to extend the grant end date to September 30, 2028, and…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298493&GUID=10DAEA30-658A-42CA-9306-0C650EF9568F",
-   "mid": 49064,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Grant · Commissioners Court · 26-7042",
-   "topics": [
-    "budget",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 16,
-   "why": [
-    "flood control",
-    "budget",
-    "grant"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "ixqwdd7",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval of authorized budget appropriation transfers for the Flood Control District and certain county departments.",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298662&GUID=4BBEAFB0-7C93-41FA-B59C-A55C353912F5",
-   "mid": 49051,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Financial Authorization · Commissioners Court · 26-7028",
-   "topics": [
-    "budget",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 14,
-   "why": [
-    "flood control",
-    "budget"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1mxzqqj",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval to submit an application to the Federal Emergency Management Agency for grant funds in the amount of $500,000, with no required match, for the FY26…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298486&GUID=80F85DC1-2928-4F4E-937F-F7E5EA44BA13",
-   "mid": 49057,
-   "date": "2026-10-13T00:00:00.000Z",
-   "desc": "Grant · Commissioners Court · 26-7035",
-   "topics": [
-    "budget",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 14,
-   "why": [
-    "flood control",
-    "grant"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "also": [
-    {
-     "source": "Harris County Commissioners Court agenda items",
-     "link": "https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49058"
-    }
-   ],
    "firstSeen": "2026-10-30T19:55:42.489Z"
   },
   {
@@ -2413,79 +2959,6 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
-   "id": "il5yko",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval to execute an agreement with Geoscience Engineering & Testing, Inc. in the amount of $284,125.00 for Professional Engineering Services regarding Construction Materials Testing…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298477&GUID=BAD0028F-49AD-499A-97A2-B529A1F317F3",
-   "mid": 49046,
-   "date": "2026-10-12T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7023",
-   "topics": [
-    "road",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "engineering services",
-    "roadway"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "ip7i62m",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval to execute an agreement with Alliance Laboratories, Inc. in the amount of $609,001.00 for Professional Engineering Services regarding Construction Materials Testing and related…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298479&GUID=BB8A1C06-664A-437A-B889-672AA33ABD52",
-   "mid": 49048,
-   "date": "2026-10-12T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7025",
-   "topics": [
-    "road",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "engineering services",
-    "roadway"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i11z3m24",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request for approval to execute an agreement with InfraTECH Engineers & Innovators, LLC. in the amount of $501,406.28 for professional engineering services in connection with Study and Design of…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8298480&GUID=5DCC5B89-7B44-46AB-824C-B833E3DCC3CD",
-   "mid": 49049,
-   "date": "2026-10-12T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7026",
-   "topics": [
-    "road",
-    "agenda",
-    "policy"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 12,
-   "why": [
-    "engineering services",
-    "design"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "i1tcxp5d",
    "srcId": "leg-austintexas",
    "source": "City of Austin agenda items",
@@ -2741,214 +3214,6 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
-   "id": "i1hxxeov",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $15,000,000, to fund the Helms Stormwater Detention Basin and Channel…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282467&GUID=436D5D12-1AD2-423F-85CA-C71E7BCB729A",
-   "mid": 49024,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7001",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 38,
-   "why": [
-    "stormwater",
-    "flood control",
-    "detention",
-    "channel",
-    "bayou",
-    "watershed"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1fhz1no",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with the Texas Water Development Board, in the amount of $2,500,000, to fund the Halls Aldine Westfield South Stormwater…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282464&GUID=532B506D-40A1-457A-B570-8B74979E64F1",
-   "mid": 49021,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-6998",
-   "topics": [
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 34,
-   "why": [
-    "stormwater",
-    "flood control",
-    "detention",
-    "channel",
-    "bayou",
-    "watershed"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "iddrtyq",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board in the amount of $2,500,000, to address flood risk mitigation through a combination of…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282468&GUID=2058A324-41F4-4E1D-BB46-A76A922B6693",
-   "mid": 49025,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7002",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 34,
-   "why": [
-    "stormwater",
-    "flood control",
-    "detention",
-    "channel",
-    "bayou",
-    "bond"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i6lfeoe",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $6,500,000, to fund the West Little York Stormwater Detention Basin in…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282462&GUID=29A82C86-0237-47F9-8D52-BBFB575D63F4",
-   "mid": 49019,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-6996",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "water",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 32,
-   "why": [
-    "stormwater",
-    "flood control",
-    "detention",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "ijitbg5",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $11,000,000, to fund the Cloverleaf Area Drainage Improvements in the…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282466&GUID=7FCFEE68-00EB-43D0-83E5-97DA7F8595C4",
-   "mid": 49023,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-7000",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 32,
-   "why": [
-    "drainage",
-    "flood control",
-    "bayou",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1bvsohx",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $10,000,000, to fund the South Mayde Creek Bypass Channel in the Addicks…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282465&GUID=32491033-331D-4C6A-BA5A-C293DD656743",
-   "mid": 49022,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-6999",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "water",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 24,
-   "why": [
-    "flood control",
-    "channel",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i8dre0a",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $5,000,000, to fund the Kingwood Diversion Ditch Improvements in the San…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282461&GUID=9F52E71E-368B-4738-8642-01F147E871F4",
-   "mid": 49018,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-6995",
-   "topics": [
-    "bond",
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 22,
-   "why": [
-    "flood control",
-    "watershed",
-    "bond",
-    "grant"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "ixid31x",
    "srcId": "leg-corpuschristi",
    "source": "City of Corpus Christi agenda items",
@@ -2978,54 +3243,6 @@
    "firstSeen": "2026-10-30T19:55:42.489Z"
   },
   {
-   "id": "iyu47tb",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Flood Control District for approval of a grant agreement with Texas Water Development Board, in the amount of $22,500,000, to fund repairs needed due to erosion and sediment deposits…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282463&GUID=C0376D4C-A406-4D24-9E47-DE611C4F6D48",
-   "mid": 49020,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-6997",
-   "topics": [
-    "grant",
-    "flood",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 18,
-   "why": [
-    "flood control",
-    "watershed",
-    "grant"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "io2380g",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Office of the Purchasing Agent for approval of a ratification of a renewal option with Kimley-Horn and Associates, Inc.*, at a cost of $200,000; and Quiddity Engineering, LLC,…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282440&GUID=281E9ADF-7F84-4087-9A5B-B8E74E4F9DA0",
-   "mid": 48993,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Renewal · Commissioners Court · 26-6970",
-   "topics": [
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 10,
-   "why": [
-    "engineering services"
-   ],
-   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "io8dlio",
    "srcId": "leg-galvestoncountytx",
    "source": "Galveston County Commissioners Court agenda items",
@@ -3051,31 +3268,6 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
-   "id": "i1hdm67j",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Office of Management and Budget for approval of commercial paper funding for Engineering for the Miscellaneous Building Cost project in the additional amount of $4,370,000 for a total…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282457&GUID=5DE8B381-0AC2-4B1D-ABEA-459037844D0E",
-   "mid": 49014,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Commercial Paper · Commissioners Court · 26-6991",
-   "topics": [
-    "budget",
-    "grant",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 6,
-   "why": [
-    "engineering",
-    "budget"
-   ],
-   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "ixb2ayz",
    "srcId": "leg-corpuschristi",
    "source": "City of Corpus Christi agenda items",
@@ -3096,35 +3288,6 @@
     "capital improvement"
    ],
    "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "is5ouk4",
-   "srcId": "leg-harriscountytx",
-   "source": "Harris County Commissioners Court agenda items",
-   "title": "Request by the Office of the Purchasing Agent for approval of an award on the basis of best proposal meeting requirements and that the County Judge execute an agreement with Kraftsman, LLC to…",
-   "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8282449&GUID=AD59DF06-95D1-4854-826F-74FAAA654353",
-   "mid": 49004,
-   "date": "2026-10-07T00:00:00.000Z",
-   "desc": "Contract - Award · Commissioners Court · 26-6981",
-   "topics": [
-    "bond",
-    "agenda"
-   ],
-   "place": "Harris County",
-   "county": "Harris",
-   "region": "Houston region",
-   "score": 4,
-   "why": [
-    "design"
-   ],
-   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
-   "also": [
-    {
-     "source": "Harris County Commissioners Court agenda items",
-     "link": "https://harriscountytx.legistar.com/Gateway.aspx?M=L&ID=49005"
-    }
-   ],
    "firstSeen": "2026-10-30T19:55:42.489Z"
   },
   {
@@ -6502,58 +6665,6 @@
     "budget"
    ],
    "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1c4azga",
-   "srcId": "leg-corpuschristi",
-   "source": "City of Corpus Christi agenda items",
-   "title": "Motion awarding a construction contract to Bridges Specialties, Inc., of Robstown, Texas, for the Citywide Storm Water Infrastructure Indefinite Delivery Indefinite Quantity (IDIQ) FY26-28 project,…",
-   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=8175411&GUID=3190042C-A797-454A-A906-C9111FF0B57C",
-   "mid": 26356,
-   "date": "2026-08-07T00:00:00.000Z",
-   "desc": "Motion · City Council · 26-1291",
-   "topics": [
-    "budget",
-    "grant",
-    "flood",
-    "water",
-    "road",
-    "agenda"
-   ],
-   "place": "Corpus Christi",
-   "county": "Nueces",
-   "region": "Coastal Bend",
-   "score": 10,
-   "why": [
-    "storm water",
-    "channel",
-    "bridge"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1lzqovy",
-   "srcId": "leg-corpuschristi",
-   "source": "City of Corpus Christi agenda items",
-   "title": "La Volla Creek Drainage Improvements - Phase One / Texas GLO",
-   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=8164802&GUID=11830CE5-5C2B-47BD-82CF-60E0E173E6B3",
-   "mid": 26357,
-   "date": "2026-08-07T00:00:00.000Z",
-   "desc": "Briefing · City Council · 26-1292",
-   "topics": [
-    "flood",
-    "agenda"
-   ],
-   "place": "Corpus Christi",
-   "county": "Nueces",
-   "region": "Coastal Bend",
-   "score": 6,
-   "why": [
-    "drainage"
-   ],
-   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
    "firstSeen": "2026-10-30T19:55:42.489Z"
   }
  ]
