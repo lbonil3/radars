@@ -66,7 +66,7 @@ console.log('national v2 tests passed');
 console.log('national v2 region tests passed');
 // ---- item 4: My pursuits ----
 {
-  const CP = require('./capture.js');
+  const CP = require('../shared/capture.js');
   const today = '2026-10-29';
   const watch = { a: true, b: true, c: true };
   const cap = { a: CP.clean({ due: '2026-11-20', decision: 'Go' }), b: CP.clean({ due: '2026-10-25', next: 'call PM' }), c: CP.clean({}), d: CP.clean({ due: '2026-11-02', notes: 'not starred, has notes' }), e: CP.clean({}) };

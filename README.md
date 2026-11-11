@@ -13,7 +13,7 @@ The live pages intentionally carry no links to this repository; data-source cita
 | Texas Opportunity | [`texas/`](texas/) | Drainage PS&E opportunities across Texas agencies on a county map (formerly "Opportunity Radar"). |
 
 Vanilla JS, no build step, no dependencies. The landing page is `index.html`; each app's Home button returns to it
-(`home-btn.css` at the root). Texas Opportunity shares the capture-file model `national/capture.js`.
+(`home-btn.css` at the root). Texas Opportunity shares the capture-file model `shared/capture.js`.
 
 ## Rebuilding data (Node 18+)
 

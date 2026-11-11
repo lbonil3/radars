@@ -1,5 +1,5 @@
 // v5.4 weekly list builders. Run alone: node national/test-weekly.js
-const assert = require('assert'); const W = require('./weekly.js'); const CP = require('./capture.js');
+const assert = require('assert'); const W = require('./weekly.js'); const CP = require('../shared/capture.js');
 const fmt = (d) => d; const T = '2026-10-29';
 const rows = [{ id: 'a', week: true, flag: 'soon', cap: { due: '2026-11-02', decision: 'Go', next: 'Call PM', notes: 'Line1\nLine2 <b>' }, snap: { title: 'Drainage <PS&E>', agency: 'TxDOT', state: 'TX', url: 'https://example.test/a' } },
   { id: 'b', week: false, flag: '', cap: { due: '', decision: 'Undecided' }, snap: { title: 'Water plant design', agency: 'City', state: 'WA' } }];

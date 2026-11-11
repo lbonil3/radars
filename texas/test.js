@@ -226,12 +226,12 @@ const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
 assert.ok(html.includes('width=device-width') && html.includes('href="../"'));
 JSON.parse(fs.readFileSync(path.join(dir, 'manifest.webmanifest'), 'utf8')).icons.forEach((i) => assert.ok(fs.existsSync(path.join(dir, i.src)), 'manifest icon ' + i.src));
 assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, 'app.js'), 'utf8').replace(/no sample data is substituted/g, '')), 'no sample data in the app');
-// capture files on the watchlist (shared model: national/capture.js)
+// capture files on the watchlist (shared model: shared/capture.js)
 {
-  const CP = require('../national/capture.js');
+  const CP = require('../shared/capture.js');
   const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(dir, 'app.js'), 'utf8');
-  assert.ok(html.indexOf('../national/capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
-  assert.ok(fs.existsSync(path.join(dir, '..', 'national', 'capture.js')));
+  assert.ok(html.indexOf('../shared/capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
+  assert.ok(fs.existsSync(path.join(dir, '..', 'shared', 'capture.js')));
   ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id));
   assert.ok(html.indexOf('value="due"') > 0 && html.indexOf('value="decision"') > 0, 'sort options');
   assert.ok(app.indexOf("'opportunityRadar.watch.v1'") > 0, 'existing watch key unchanged');

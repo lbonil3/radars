@@ -99,9 +99,10 @@ assert.strictEqual(C.toCSV(Object.keys(old).map((id) => ({ id, cap: undefined, s
 
 // ---- the app wires it in (static checks: files, service worker, script order)
 const fs = require('fs'), path = require('path');
-const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
-assert.ok(html.indexOf('capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
-assert.ok(sw.indexOf('./capture.js') > 0, 'service worker caches capture.js');
+const nat = path.join(__dirname, '..', 'national');
+const html = fs.readFileSync(path.join(nat, 'index.html'), 'utf8'), sw = fs.readFileSync(path.join(nat, 'sw.js'), 'utf8'), app = fs.readFileSync(path.join(nat, 'app.js'), 'utf8');
+assert.ok(html.indexOf('../shared/capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
+assert.ok(sw.indexOf('../shared/capture.js') > 0, 'service worker caches capture.js');
 assert.ok(/radars-national-v([7-9]|\d\d)/.test(sw), 'service worker cache version was bumped past v3');
 assert.ok(app.indexOf("'nr.watch'") > 0, 'existing nr.watch key is still read'); assert.ok(app.indexOf("'nr.capture'") > 0);
 ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile', 'capSort'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id + ' exists in the page'));
