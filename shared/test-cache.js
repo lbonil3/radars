@@ -14,7 +14,7 @@ function appDir(app) {
   if (app === 'texas') return path.join(root, 'texas');
   return root;
 }
-const sharedNames = ['storage.js', 'theme.js', 'filters.js', 'capture.js', 'shell.css', 'cache.js'];
+const sharedNames = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'capture.js', 'shell.css', 'cache.js'];
 for (const app of ['national', 'texas', 'home']) {
   const list = C.files(app);
   assert.ok(Array.isArray(list) && list.length, app + ' file list');

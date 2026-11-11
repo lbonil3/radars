@@ -5,7 +5,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
   var VERSION = 22;
-  var SHARED = ['storage.js', 'theme.js', 'filters.js', 'capture.js', 'shell.css', 'cache.js'];
+  var SHARED = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'capture.js', 'shell.css', 'cache.js'];
   function shared(prefix) { return SHARED.map(function (f) { return prefix + f; }); }
   function name(app) {
     var prefix = app === 'texas' ? 'radars-texas-' : app === 'home' ? 'radars-home-' : 'radars-national-';
