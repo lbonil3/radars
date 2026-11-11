@@ -1,7 +1,7 @@
 // National Radar v4 tests (required from test.js). Run alone: node national/test-v4.js
 const assert = require('assert'), fs = require('fs'), path = require('path');
 const V4 = require('./v4.js'), SS = require('../scripts/source-status.js');
-const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8'), Cache = require('../shared/cache.js');
 // v4.1 source status file + health view
 {
   const now = '2026-10-29T12:00:00Z';
@@ -16,7 +16,7 @@ const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = 
   ['national/data/source-status.json', 'texas/data/source-status.json'].forEach((f) => { const j = JSON.parse(fs.readFileSync(path.join(__dirname, '..', f), 'utf8')); assert.ok(Array.isArray(j.sources) && j.sources.length > 5 && j.sources.every((s) => ['fresh', 'stale', 'failing', 'disabled', 'skipped'].indexOf(s.health) >= 0 && 'lastSuccess' in s && 'records' in s), f + ' shape'); });
   assert.ok(html.includes('id="srcHealth"') && html.includes('id="healthDot"') && html.includes('id="healthWarn"') && html.includes('src="v4.js"'), 'health view, dot and v4.js');
   assert.ok(/data\/source-status\.json/.test(app) && /\.\.\/texas\/data\/source-status\.json/.test(app), 'loads both status files');
-  assert.ok(sw.includes("'./v4.js'") && sw.includes("'./data/source-status.json'"), 'sw caches v4 files');
+  assert.ok(Cache.files('national').indexOf('./v4.js') >= 0 && Cache.files('national').indexOf('./data/source-status.json') >= 0, 'sw caches v4 files');
   const bo = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-opportunities.js'), 'utf8');
   assert.ok(/retry-after/i.test(bo) && /HOST_GAP_MS/.test(bo) && /source-status\.js/.test(bo), 'Texas refresh: polite throttle, Retry-After, status file');
   assert.ok(/source-status\.js/.test(fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-national.js'), 'utf8')), 'National refresh writes status file');
@@ -96,6 +96,6 @@ console.log('national v4.4 tests passed');
   assert.ok(C.filter(m.records, { hideUnconfirmed: true }, 'all', {}).every(C.isConfirmed), 'Confirmed only');
   const srt = C.sort(m.records, 'fee'); assert.ok(C.valueOf(srt[0]) >= C.valueOf(srt[srt.length - 1]));
   assert.ok(!/id="modeSel"|PS&amp;E \/ H&amp;H, fee|Water, fee &gt; \$20M|Roadway \+ drainage<\/option>/.test(html), 'no lane picker or lane labels on the page');
-  assert.ok(/C\.merge\(DATA_P, DATA_W, DATA_R\)/.test(app) && html.includes('src="combined.js"') && sw.includes("'./combined.js'"), 'app uses the combined set');
+  assert.ok(/C\.merge\(DATA_P, DATA_W, DATA_R\)/.test(app) && html.includes('src="combined.js"') && Cache.files('national').indexOf('./combined.js') >= 0, 'app uses the combined set');
 }
 console.log('national v4.5 tests passed');

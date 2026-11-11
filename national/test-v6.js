@@ -30,6 +30,8 @@ assert.deepStrictEqual(V.merge([V.snapshot('A', {}, 'all', 'all')], [V.snapshot(
 const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8');
 ['qsState', 'qsWork', 'qsDue', 'ftags', 'fsets', 'fsName', 'fsSave', 'usmini'].forEach((k) => assert.ok(html.includes('id="' + k + '"'), 'html has #' + k));
 assert.ok(/bk\.filtersets = FS/.test(app) && /j6\.filtersets/.test(app), 'saved sets go into the backup and come back on restore');
-assert.ok(/'\.\/v6\.js'/.test(sw) && /radars-national-v2[1-9]/.test(sw), 'sw caches v6.js, cache v21+');
+const Cache = require('../shared/cache.js');
+assert.ok(Cache.files('national').indexOf('./v6.js') >= 0 && Cache.name('national') === 'radars-national-v22', 'sw caches v6.js, cache v22');
+assert.ok(/importScripts\('\.\.\/shared\/cache\.js'\)/.test(sw) && /RadarCache\.files\('national'\)/.test(sw), 'national sw uses the shared cache list');
 assert.ok(!/github|repo\b|repository/i.test(html + fs.readFileSync(path.join(__dirname, 'v6.js'), 'utf8')), 'no repo mentions');
 console.log('national v6 tests passed');

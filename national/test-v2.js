@@ -46,7 +46,7 @@ for (const f of ['national.json', 'pse.json', 'roadway.json']) {
   const b = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-national.js'), 'utf8');
   assert.strictEqual((b.match(/V2\.carryFirstSeen\(/g) || []).length, 3, 'build carries firstSeen for national, roadway and pse outputs');
   const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8');
-  assert.ok(html.indexOf('v2.js') > 0 && html.indexOf('v2.js') < html.indexOf('app.js') && sw.includes("'./v2.js'") && html.includes('id="digest"'));
+  assert.ok(html.indexOf('v2.js') > 0 && html.indexOf('v2.js') < html.indexOf('app.js') && require('../shared/cache.js').files('national').indexOf('./v2.js') >= 0 && html.includes('id="digest"'));
 }
 console.log('national v2 tests passed');
 // ---- item 3: region focus ----

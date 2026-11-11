@@ -16,7 +16,8 @@ const html = rd('index.html').toString();
 for (const s of ['rel="manifest" href="manifest.webmanifest"', 'name="theme-color" content="' + m.theme_color + '"', 'apple-mobile-web-app-capable', 'apple-mobile-web-app-title" content="Radars"', 'rel="apple-touch-icon" href="icons/apple-touch-icon.png"', "register('sw.js')", 'id="installBtn"', 'beforeinstallprompt', 'id="iosHint"', 'display-mode: standalone'])
   assert.ok(html.includes(s), 'index.html missing ' + s);
 const sw = rd('sw.js').toString();
-const files = JSON.parse(sw.match(/var FILES = (\[[^\]]*\])/)[1].replace(/'/g, '"'));
+const files = require('../shared/cache.js').files('home');
+assert.ok(/importScripts\('\.\/shared\/cache\.js'\)/.test(sw) && /RadarCache\.files\('home'\)/.test(sw), 'landing sw uses the shared cache list');
 for (const f of files) assert.ok(fs.existsSync(path.join(ROOT, f === './' ? 'index.html' : f)), 'sw precache file missing: ' + f);
 for (const f of ['./index.html', './manifest.webmanifest'].concat(m.icons.map((i) => './' + i.src))) assert.ok(files.includes(f), 'sw does not precache ' + f);
 assert.ok(/var PREFIX = 'radars-home-'/.test(sw) && /k\.indexOf\(PREFIX\) === 0/.test(sw), 'sw must only delete its own radars-home-* caches');
