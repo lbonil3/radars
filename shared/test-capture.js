@@ -72,8 +72,9 @@ assert.strictEqual(lines[3].split(',')[0], 'gone', 'a starred record missing fro
 // ---- backup / restore
 const watch = { x1: true, x2: true }; const caps = { x1: csvRows[0].cap };
 const bk = C.makeBackup(watch, caps, '2026-10-26T13:00:00Z');
-assert.strictEqual(bk.app, C.BACKUP_APP); assert.strictEqual(bk.version, 1);
-let p = C.parseBackup(JSON.stringify(bk));
+const v1bk = { app: C.BACKUP_APP, version: 1, exportedAt: '2026-10-26T13:00:00Z', watch: { x1: true, x2: true }, capture: { x1: C.clean(caps.x1) } };
+assert.strictEqual(v1bk.app, C.BACKUP_APP); assert.strictEqual(v1bk.version, 1);
+let p = C.parseBackup(JSON.stringify(v1bk));
 assert.ok(p.ok); assert.deepStrictEqual(Object.keys(p.watch).sort(), ['x1', 'x2']); assert.strictEqual(p.capture.x1.incumbent, 'ACME Eng'); assert.strictEqual(p.capture.x1.decision, 'Go');
 assert.strictEqual(C.parseBackup('{not json').ok, false);
 assert.strictEqual(C.parseBackup('{"app":"other","version":1}').ok, false);
@@ -106,4 +107,26 @@ assert.ok(sw.indexOf('../shared/capture.js') > 0, 'service worker caches capture
 assert.ok(/radars-national-v([7-9]|\d\d)/.test(sw), 'service worker cache version was bumped past v3');
 assert.ok(app.indexOf("'nr.watch'") > 0, 'existing nr.watch key is still read'); assert.ok(app.indexOf("'nr.capture'") > 0);
 ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile', 'capSort'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id + ' exists in the page'));
+
+const v2 = C.makeBackup({ a: true }, { a: C.clean({ notes: 'n' }) }, '2026-11-11T12:00:00Z');
+assert.strictEqual(v2.version, 2);
+assert.strictEqual(v2.app, 'radars-national');
+assert.ok(C.parseBackup(JSON.stringify(v2)).ok);
+assert.ok(C.parseBackup(JSON.stringify(v2), 'radars-national').ok);
+assert.ok(C.parseBackup(JSON.stringify(v2), C.BACKUP_APP).ok, 'legacy National id still accepts a new National file');
+
+const v1 = { app: C.BACKUP_APP, version: 1, exportedAt: 'old', watch: { a: true }, capture: { a: C.clean({ notes: 'old' }) } };
+assert.ok(C.parseBackup(JSON.stringify(v1)).ok, 'version 1 National backup still restores');
+assert.ok(C.parseBackup(JSON.stringify(v1), 'radars-national').ok);
+
+const tx = C.makeBackup({ b: true }, { b: C.clean({ notes: 't' }) }, 'now', C.OPP_BACKUP_APP);
+assert.strictEqual(tx.app, 'radars-texas');
+assert.ok(C.parseBackup(JSON.stringify(tx), C.OPP_BACKUP_APP).ok);
+assert.ok(C.parseBackup(JSON.stringify(tx), 'radars-texas').ok);
+assert.strictEqual(C.parseBackup(JSON.stringify(tx)).ok, false, 'National parse rejects a Texas backup');
+assert.strictEqual(C.parseBackup(JSON.stringify(v2), 'radars-texas').ok, false);
+
+const v1tx = { app: C.OPP_BACKUP_APP, version: 1, watch: { b: true }, capture: {} };
+assert.ok(C.parseBackup(JSON.stringify(v1tx), 'radars-texas').ok, 'version 1 Texas backup still restores');
+assert.strictEqual(C.parseBackup(JSON.stringify({ app: 'radars-national', version: 3, watch: {}, capture: {} })).ok, false);
 console.log('national-radar capture tests passed');

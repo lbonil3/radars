@@ -235,10 +235,16 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id));
   assert.ok(html.indexOf('value="due"') > 0 && html.indexOf('value="decision"') > 0, 'sort options');
   assert.ok(app.indexOf("'opportunityRadar.watch.v1'") > 0, 'existing watch key unchanged');
-  // a backup from this page cannot be restored into the National Radar, and the reverse
+  // a version 2 Texas backup (new id radars-texas, even when made with the legacy app id) cannot be restored into National Radar, and the reverse
   const bk = CP.makeBackup({ a: true }, { a: CP.clean({ notes: 'x' }) }, 'now', CP.OPP_BACKUP_APP);
+  assert.strictEqual(bk.version, 2);
+  assert.strictEqual(bk.app, 'radars-texas');
   assert.ok(CP.parseBackup(JSON.stringify(bk), CP.OPP_BACKUP_APP).ok);
+  assert.ok(CP.parseBackup(JSON.stringify(bk), 'radars-texas').ok);
   assert.strictEqual(CP.parseBackup(JSON.stringify(bk)).ok, false, 'National Radar rejects an Texas Opportunity backup');
+  const natBk = CP.makeBackup({ a: true }, { a: CP.clean({ notes: 'x' }) }, 'now');
+  assert.strictEqual(natBk.app, 'radars-national');
+  assert.strictEqual(CP.parseBackup(JSON.stringify(natBk), 'radars-texas').ok, false, 'Texas rejects a National backup');
 }
 // Radar map is the default view on every load (not the List)
 {
