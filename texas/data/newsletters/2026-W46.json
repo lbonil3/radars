@@ -3,24 +3,24 @@
  "start": "2026-11-09",
  "end": "2026-11-15",
  "title": "Texas Intel weekly, 2026-W46 (Nov 9, 2026 to Nov 15, 2026)",
- "generatedAt": "2026-11-09T10:11:00.250Z",
+ "generatedAt": "2026-11-11T17:56:30.915Z",
  "final": false,
  "backfilled": false,
  "counts": {
-  "items": 0,
+  "items": 3,
   "houston": 0,
-  "other": 0
+  "other": 3
  },
  "stats": {
-  "items": 0,
-  "newThisWeek": 0,
+  "items": 3,
+  "newThisWeek": 3,
   "houston": 0,
-  "grant": 0,
-  "flood": 0,
+  "grant": 2,
+  "flood": 1,
   "mix": {
-   "budget": 0,
-   "bond": 0,
-   "grant": 0,
+   "budget": 1,
+   "bond": 1,
+   "grant": 1,
    "flood": 0,
    "water": 0,
    "road": 0,
@@ -29,7 +29,71 @@
   }
  },
  "houston": [],
- "texas": [],
+ "texas": [
+  {
+   "topic": "budget",
+   "label": "Budget / CIP",
+   "total": 1,
+   "items": [
+    {
+     "id": "iq1mk8f",
+     "title": "Discussion and action on a Resolution that the City Manager be authorized to sign an Agreement for Professional Services by and between the CITY OF EL PASO and PARKHILL, SMITH & COOPER, INC. D/B/A…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=8316785&GUID=D5B46301-7B2D-4294-AD58-69927685393A",
+     "source": "City of El Paso agenda items",
+     "date": "2026-11-10",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “budget”.",
+     "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+     "desc": "Other Business · City Council · 26-1287",
+     "score": 14
+    }
+   ]
+  },
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1jrbzw0",
+     "title": "An Ordinance changing the zoning of a portion of Tract 32A and all of Tracts 32C, 32D, and 32E, Block 5, Upper Valley Surveys, 250 Lindbergh Avenue, City of El Paso, El Paso County, Texas from R-1…",
+     "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=8315836&GUID=5D464C63-FB2A-4803-9489-E4D41BA3393E",
+     "source": "City of El Paso agenda items",
+     "date": "2026-11-09",
+     "place": "El Paso",
+     "region": "West Texas",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "desc": "Ordinances · City Council · 26-1277",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "topic": "grant",
+   "label": "Grant / funding",
+   "total": 1,
+   "items": [
+    {
+     "id": "i4l9bc8",
+     "title": "A public hearing to receive comments regarding a City Plan Commission authorized hearing to determine proper zoning on property zoned Planned Development District No. 621, the Old Trinity and Design…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8313498&GUID=4B652A69-97D0-4AB1-913C-51485BE0E6C6",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-09",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “flood”, “channel”, “design”, “grant”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "desc": "ZONING CASES - UNDER ADVISEMENT - INDIVIDUAL · Department of Planning and Development · 27-5A",
+     "score": 10
+    }
+   ]
+  }
+ ],
  "deadlines": [],
  "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
 }

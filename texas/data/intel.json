@@ -1,10 +1,10 @@
 {
- "generatedAt": "2026-11-08T16:43:41.361Z",
+ "generatedAt": "2026-11-11T17:56:30.915Z",
  "keepDays": 90,
  "note": "Public news and planning signals, not solicitations. Verify with the original source.",
- "count": 245,
+ "count": 251,
  "sources": {
-  "generatedAt": "2026-11-08T16:43:41.361Z",
+  "generatedAt": "2026-11-11T17:56:30.915Z",
   "group": "texas-intel",
   "counts": {
    "fresh": 41,
@@ -20,8 +20,8 @@
     "agency": "Houston Public Works",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.355Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.946Z",
     "records": 0,
     "fetched": 10,
     "error": null,
@@ -33,8 +33,8 @@
     "agency": "Texas General Land Office",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.185Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.798Z",
     "records": 0,
     "fetched": 10,
     "error": null,
@@ -46,8 +46,8 @@
     "agency": "Texas Municipal League",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.302Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.834Z",
     "records": 0,
     "fetched": 0,
     "error": null,
@@ -59,8 +59,8 @@
     "agency": "Texas Tribune",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.359Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.921Z",
     "records": 0,
     "fetched": 20,
     "error": null,
@@ -72,8 +72,8 @@
     "agency": "City of Dallas",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:45.027Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:34.909Z",
     "records": 1,
     "fetched": 12,
     "error": null,
@@ -85,10 +85,10 @@
     "agency": "City of Sugar Land",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.153Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.696Z",
     "records": 0,
-    "fetched": 5,
+    "fetched": 4,
     "error": null,
     "failingSince": null
    },
@@ -98,8 +98,8 @@
     "agency": "City of League City",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.368Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.910Z",
     "records": 1,
     "fetched": 31,
     "error": null,
@@ -111,10 +111,10 @@
     "agency": "City of Galveston",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.187Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.813Z",
     "records": 0,
-    "fetched": 4,
+    "fetched": 6,
     "error": null,
     "failingSince": null
    },
@@ -124,8 +124,8 @@
     "agency": "City of Baytown",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.347Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.924Z",
     "records": 0,
     "fetched": 8,
     "error": null,
@@ -137,8 +137,8 @@
     "agency": "City of Pasadena",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.199Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:33.132Z",
     "records": 0,
     "fetched": 1,
     "error": null,
@@ -150,8 +150,8 @@
     "agency": "City of Rosenberg",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.214Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.811Z",
     "records": 0,
     "fetched": 1,
     "error": null,
@@ -163,10 +163,10 @@
     "agency": "City of Bellaire",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.225Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.812Z",
     "records": 0,
-    "fetched": 6,
+    "fetched": 7,
     "error": null,
     "failingSince": null
    },
@@ -176,10 +176,10 @@
     "agency": "City of West University Place",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.525Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.953Z",
     "records": 0,
-    "fetched": 11,
+    "fetched": 12,
     "error": null,
     "failingSince": null
    },
@@ -189,8 +189,8 @@
     "agency": "City of Tomball",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.834Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.800Z",
     "records": 0,
     "fetched": 3,
     "error": null,
@@ -202,10 +202,10 @@
     "agency": "City of Webster",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.253Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.887Z",
     "records": 0,
-    "fetched": 3,
+    "fetched": 4,
     "error": null,
     "failingSince": null
    },
@@ -215,8 +215,8 @@
     "agency": "City of Texas City",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.223Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.772Z",
     "records": 0,
     "fetched": 4,
     "error": null,
@@ -228,8 +228,8 @@
     "agency": "City of Angleton",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.200Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.778Z",
     "records": 0,
     "fetched": 4,
     "error": null,
@@ -241,8 +241,8 @@
     "agency": "City of Deer Park",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.334Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.876Z",
     "records": 0,
     "fetched": 4,
     "error": null,
@@ -254,10 +254,10 @@
     "agency": "City of La Porte",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.298Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:33.017Z",
     "records": 0,
-    "fetched": 9,
+    "fetched": 8,
     "error": null,
     "failingSince": null
    },
@@ -267,8 +267,8 @@
     "agency": "City of Port Arthur",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.278Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.881Z",
     "records": 0,
     "fetched": 1,
     "error": null,
@@ -280,10 +280,10 @@
     "agency": "City of Frisco",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.390Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:33.072Z",
     "records": 0,
-    "fetched": 9,
+    "fetched": 10,
     "error": null,
     "failingSince": null
    },
@@ -293,10 +293,10 @@
     "agency": "City of McKinney",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.370Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:33.054Z",
     "records": 0,
-    "fetched": 11,
+    "fetched": 14,
     "error": null,
     "failingSince": null
    },
@@ -306,8 +306,8 @@
     "agency": "City of Garland",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.362Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.948Z",
     "records": 0,
     "fetched": 13,
     "error": null,
@@ -319,8 +319,8 @@
     "agency": "City of Mansfield",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.282Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.829Z",
     "records": 0,
     "fetched": 0,
     "error": null,
@@ -332,10 +332,10 @@
     "agency": "City of New Braunfels",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.198Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.875Z",
     "records": 1,
-    "fetched": 17,
+    "fetched": 21,
     "error": null,
     "failingSince": null
    },
@@ -345,8 +345,8 @@
     "agency": "Harris County Commissioners Court",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.274Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.638Z",
     "records": 48,
     "fetched": 60,
     "error": null,
@@ -358,10 +358,10 @@
     "agency": "City of Austin",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.884Z",
-    "records": 33,
-    "fetched": 53,
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:33.326Z",
+    "records": 34,
+    "fetched": 54,
     "error": null,
     "failingSince": null
    },
@@ -371,9 +371,9 @@
     "agency": "City of Dallas",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:45.174Z",
-    "records": 47,
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:34.618Z",
+    "records": 48,
     "fetched": 60,
     "error": null,
     "failingSince": null
@@ -384,9 +384,9 @@
     "agency": "City of Corpus Christi",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:46.463Z",
-    "records": 24,
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:35.843Z",
+    "records": 23,
     "fetched": 31,
     "error": null,
     "failingSince": null
@@ -397,10 +397,10 @@
     "agency": "City of El Paso",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:47.996Z",
-    "records": 21,
-    "fetched": 37,
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:37.375Z",
+    "records": 23,
+    "fetched": 40,
     "error": null,
     "failingSince": null
    },
@@ -410,8 +410,8 @@
     "agency": "City of Plano",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:49.435Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:38.796Z",
     "records": 3,
     "fetched": 8,
     "error": null,
@@ -423,8 +423,8 @@
     "agency": "TxDOT",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.281Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.591Z",
     "records": 1,
     "fetched": 15,
     "error": null,
@@ -436,8 +436,8 @@
     "agency": "TxDOT",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:44.576Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:34.088Z",
     "records": 1,
     "fetched": 4,
     "error": null,
@@ -449,8 +449,8 @@
     "agency": "Fort Bend County",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.472Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:33.088Z",
     "records": 2,
     "fetched": 21,
     "error": null,
@@ -462,8 +462,8 @@
     "agency": "City of Houston",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:43.277Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.799Z",
     "records": 1,
     "fetched": 1,
     "error": null,
@@ -475,10 +475,10 @@
     "agency": "Galveston County Commissioners Court",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:50.986Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:40.370Z",
     "records": 38,
-    "fetched": 56,
+    "fetched": 55,
     "error": null,
     "failingSince": null
    },
@@ -488,10 +488,10 @@
     "agency": "Brazoria County Commissioners Court",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:52.426Z",
-    "records": 13,
-    "fetched": 14,
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:41.808Z",
+    "records": 12,
+    "fetched": 13,
     "error": null,
     "failingSince": null
    },
@@ -501,10 +501,10 @@
     "agency": "City of League City",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:53.937Z",
-    "records": 7,
-    "fetched": 11,
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:43.309Z",
+    "records": 11,
+    "fetched": 15,
     "error": null,
     "failingSince": null
    },
@@ -514,8 +514,8 @@
     "agency": "Federal Register",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:46.099Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:35.649Z",
     "records": 1,
     "fetched": 8,
     "error": null,
@@ -527,10 +527,10 @@
     "agency": "Grants.gov",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:47.754Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:37.151Z",
     "records": 1,
-    "fetched": 64,
+    "fetched": 63,
     "error": null,
     "failingSince": null
    },
@@ -540,8 +540,8 @@
     "agency": "FEMA",
     "group": "texas-intel",
     "health": "fresh",
-    "lastAttempt": "2026-11-08T16:43:41.361Z",
-    "lastSuccess": "2026-11-08T16:43:42.886Z",
+    "lastAttempt": "2026-11-11T17:56:30.915Z",
+    "lastSuccess": "2026-11-11T17:56:32.258Z",
     "records": 1,
     "fetched": 3,
     "error": null,
@@ -550,6 +550,182 @@
   ]
  },
  "items": [
+  {
+   "id": "i1lyyreh",
+   "srcId": "cp-leaguecity",
+   "source": "City of League City",
+   "title": "Public Works Week in Review for November 5, 2026",
+   "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6459",
+   "date": "2026-11-10T21:45:00.000Z",
+   "desc": "Public Works' Crews working on Hydro Excavation to Protect Tree Roots, Wastewater Department Upgrades Lift Station Controls to Improve Reliability, Parks Department Vehicle Modification and Maintenance, and Moss on Trees.",
+   "topics": [
+    "water"
+   ],
+   "place": "League City",
+   "county": "Galveston",
+   "region": "Houston region",
+   "score": 6,
+   "why": [
+    "wastewater",
+    "lift station"
+   ],
+   "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
+   "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "iq1mk8f",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion and action on a Resolution that the City Manager be authorized to sign an Agreement for Professional Services by and between the CITY OF EL PASO and PARKHILL, SMITH & COOPER, INC. D/B/A…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=8316785&GUID=D5B46301-7B2D-4294-AD58-69927685393A",
+   "mid": 16739,
+   "date": "2026-11-10T00:00:00.000Z",
+   "desc": "Other Business · City Council · 26-1287",
+   "topics": [
+    "budget",
+    "grant",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 14,
+   "why": [
+    "engineering services",
+    "professional services",
+    "budget"
+   ],
+   "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
+   "id": "i4l9bc8",
+   "srcId": "leg-cityofdallas",
+   "source": "City of Dallas agenda items",
+   "title": "A public hearing to receive comments regarding a City Plan Commission authorized hearing to determine proper zoning on property zoned Planned Development District No. 621, the Old Trinity and Design…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8313498&GUID=4B652A69-97D0-4AB1-913C-51485BE0E6C6",
+   "mid": 26801,
+   "date": "2026-11-09T00:00:00.000Z",
+   "desc": "ZONING CASES - UNDER ADVISEMENT - INDIVIDUAL · Department of Planning and Development · 27-5A",
+   "topics": [
+    "grant",
+    "flood",
+    "road",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 10,
+   "why": [
+    "flood",
+    "channel",
+    "design",
+    "grant"
+   ],
+   "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
+   "id": "i1dozfci",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "Discussion: Presentation on All Abilities Playground Update, Capital Improvement Department.",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=8313871&GUID=E7019E15-4A80-46A5-9F99-9FF95841589C",
+   "mid": 16719,
+   "date": "2026-11-09T00:00:00.000Z",
+   "desc": "Board Agenda Items · City Accessibility Advisory Committee · BC-2718",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 6,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of El Paso agenda items",
+     "link": "https://elpasotexas.legistar.com/Gateway.aspx?M=L&ID=16119"
+    }
+   ],
+   "firstSeen": "2026-10-30T19:55:42.489Z"
+  },
+  {
+   "id": "i1jrbzw0",
+   "srcId": "leg-elpasotexas",
+   "source": "City of El Paso agenda items",
+   "title": "An Ordinance changing the zoning of a portion of Tract 32A and all of Tracts 32C, 32D, and 32E, Block 5, Upper Valley Surveys, 250 Lindbergh Avenue, City of El Paso, El Paso County, Texas from R-1…",
+   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=8315836&GUID=5D464C63-FB2A-4803-9489-E4D41BA3393E",
+   "mid": 16727,
+   "date": "2026-11-09T00:00:00.000Z",
+   "desc": "Ordinances · City Council · 26-1277",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "El Paso",
+   "county": "El Paso",
+   "region": "West Texas",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
+   "id": "i17cyjsv",
+   "srcId": "leg-austintexas",
+   "source": "City of Austin agenda items",
+   "title": "Approve a resolution canvassing the results of the November 3, 2026, General Obligation Bond Election.",
+   "link": "https://austintexas.legistar.com/LegislationDetail.aspx?ID=8316035&GUID=8AEC17DD-17F3-41C4-B3C9-77F1CE60FA79",
+   "mid": 29508,
+   "date": "2026-11-05T00:00:00.000Z",
+   "desc": "Consent · City Council · 26-3139",
+   "topics": [
+    "bond",
+    "agenda"
+   ],
+   "place": "Austin",
+   "county": "Travis",
+   "region": "Central Texas",
+   "score": 4,
+   "why": [
+    "bond"
+   ],
+   "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
+   "id": "i1xn9drc",
+   "srcId": "leg-leaguecity",
+   "source": "City of League City agenda items",
+   "title": "Consider and take action on a resolution authorizing a professional services agreement with LJA, Inc. for design work related to the Western League City Regional Master Drainage Plan (DR2701) in an…",
+   "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=8315686&GUID=584898C6-6A3E-4FF5-829B-D55E61CE8E18",
+   "mid": 14018,
+   "date": "2026-11-04T00:00:00.000Z",
+   "desc": "Agenda Item · Development Services · 26-0511",
+   "topics": [
+    "flood",
+    "agenda"
+   ],
+   "place": "League City",
+   "county": "Galveston",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "drainage",
+    "professional services",
+    "design"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
   {
    "id": "i16yuozj",
    "srcId": "leg-harriscountytx",
@@ -599,6 +775,39 @@
    "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
+   "id": "i10u3vlb",
+   "srcId": "leg-leaguecity",
+   "source": "City of League City agenda items",
+   "title": "Consider and take action on a resolution approving utility conveyance and security agreements with Galveston County Municipal Utility District No. 35 for water, sanitary sewer, drainage, and paving…",
+   "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=8315683&GUID=DD9AA088-56FE-41F9-BCFF-6406B0A254EF",
+   "mid": 14015,
+   "date": "2026-11-03T00:00:00.000Z",
+   "desc": "Agenda Item · Development Services · 26-0508",
+   "topics": [
+    "flood",
+    "water",
+    "road",
+    "agenda"
+   ],
+   "place": "Galveston",
+   "county": "Galveston",
+   "region": "Houston region",
+   "score": 14,
+   "why": [
+    "drainage",
+    "sewer",
+    "utility"
+   ],
+   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+   "also": [
+    {
+     "source": "City of League City agenda items",
+     "link": "https://leaguecity.legistar.com/Gateway.aspx?M=L&ID=14016"
+    }
+   ],
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
    "id": "i1wl5uio",
    "srcId": "leg-harriscountytx",
    "source": "Harris County Commissioners Court agenda items",
@@ -622,26 +831,81 @@
    "firstSeen": "2026-11-05T18:06:38.075Z"
   },
   {
-   "id": "i1lyyreh",
-   "srcId": "cp-leaguecity",
-   "source": "City of League City",
-   "title": "Public Works Week in Review for November 5, 2026",
-   "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6459",
-   "date": "2026-11-02T16:36:52.000Z",
-   "desc": "Public Works' Crews working on Hydro Excavation to Protect Tree Roots, Wastewater Department Upgrades Lift Station Controls to Improve Reliability, Parks Department Vehicle Modification and Maintenance, and Moss on Trees.",
+   "id": "i10f9pj5",
+   "srcId": "leg-leaguecity",
+   "source": "City of League City agenda items",
+   "title": "Consider and take action on a resolution adding the League City Parkway: 2025 HSIP Safety Improvements Project (CSJ 0912-00-761) to the City’s FY2027 Capital Improvement Program and authorizing…",
+   "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=8315643&GUID=3AA77F10-A0D2-4643-BFC6-91D7B5BEBA58",
+   "mid": 14014,
+   "date": "2026-11-03T00:00:00.000Z",
+   "desc": "Agenda Item · Development Services · 26-0507",
    "topics": [
-    "water"
+    "budget",
+    "grant",
+    "agenda"
    ],
    "place": "League City",
    "county": "Galveston",
    "region": "Houston region",
-   "score": 6,
+   "score": 8,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
+   "id": "i8nezsa",
+   "srcId": "leg-leaguecity",
+   "source": "City of League City agenda items",
+   "title": "Consider and take action on a resolution authorizing an agreement with Vapex Environmental Technologies, dba Govapex for the replacement of the odor control system at the Dallas Salmon Wastewater…",
+   "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=8315637&GUID=7C4EF35F-3AA9-4787-8F18-F1BDD7974791",
+   "mid": 14007,
+   "date": "2026-11-02T00:00:00.000Z",
+   "desc": "Agenda Item · Public Works · 26-0500",
+   "topics": [
+    "water",
+    "agenda"
+   ],
+   "place": "Dallas",
+   "county": "Dallas",
+   "region": "Dallas–Fort Worth",
+   "score": 8,
    "why": [
     "wastewater",
     "lift station"
    ],
    "hint": "Water / wastewater signal: utility capital work often needs design and permitting support.",
-   "firstSeen": "2026-11-05T18:06:38.075Z"
+   "firstSeen": "2026-11-11T17:56:30.915Z"
+  },
+  {
+   "id": "izpg62",
+   "srcId": "leg-leaguecity",
+   "source": "City of League City agenda items",
+   "title": "Consider and take action on appointments to the Capital Improvement Advisory Committee (Mayor Long)",
+   "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=8315638&GUID=8D9E38ED-9538-4BCB-A47C-3CEBB0B60B1B",
+   "mid": 14008,
+   "date": "2026-11-02T00:00:00.000Z",
+   "desc": "Agenda Item · City Council · 26-0501",
+   "topics": [
+    "budget",
+    "agenda"
+   ],
+   "place": "League City",
+   "county": "Galveston",
+   "region": "Houston region",
+   "score": 8,
+   "why": [
+    "capital improvement"
+   ],
+   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+   "also": [
+    {
+     "source": "City of League City agenda items",
+     "link": "https://leaguecity.legistar.com/Gateway.aspx?M=L&ID=13847"
+    }
+   ],
+   "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
    "id": "iop88ms",
@@ -1689,6 +1953,32 @@
    ],
    "hint": "Bond signal: bond-funded projects move to design; track the project list.",
    "firstSeen": "2026-11-05T18:06:38.075Z"
+  },
+  {
+   "id": "i1jvou5m",
+   "srcId": "leg-corpuschristi",
+   "source": "City of Corpus Christi agenda items",
+   "title": "Resolution authorizing a one-year Interlocal Agreement, with two one-year extension options, with Texas A&M University Corpus Christi for water quality monitoring, for a total amount not to exceed…",
+   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=8314393&GUID=35A3D75C-AA0F-44A8-B43B-9709B9452561",
+   "mid": 26735,
+   "date": "2026-10-28T00:00:00.000Z",
+   "desc": "Resolution · City Council · 26-1670",
+   "topics": [
+    "budget",
+    "grant",
+    "flood",
+    "agenda"
+   ],
+   "place": "Corpus Christi",
+   "county": "Nueces",
+   "region": "Coastal Bend",
+   "score": 8,
+   "why": [
+    "storm water",
+    "interlocal"
+   ],
+   "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+   "firstSeen": "2026-11-11T17:56:30.915Z"
   },
   {
    "id": "i15g3pk6",
@@ -3190,14 +3480,6 @@
     {
      "source": "City of League City agenda items",
      "link": "https://leaguecity.legistar.com/Gateway.aspx?M=L&ID=13869"
-    },
-    {
-     "source": "City of League City agenda items",
-     "link": "https://leaguecity.legistar.com/Gateway.aspx?M=L&ID=13831"
-    },
-    {
-     "source": "City of League City agenda items",
-     "link": "https://leaguecity.legistar.com/Gateway.aspx?M=L&ID=13836"
     }
    ],
    "firstSeen": "2026-10-30T20:30:14.830Z"
@@ -6718,29 +7000,6 @@
    "firstSeen": "2026-10-30T20:30:14.830Z"
   },
   {
-   "id": "i1dozfci",
-   "srcId": "leg-elpasotexas",
-   "source": "City of El Paso agenda items",
-   "title": "Discussion: Presentation on All Abilities Playground Update, Capital Improvement Department.",
-   "link": "https://elpasotexas.legistar.com/LegislationDetail.aspx?ID=8174799&GUID=5EB2612F-DDD4-4165-B0CE-31E581228258",
-   "mid": 16119,
-   "date": "2026-08-17T00:00:00.000Z",
-   "desc": "Board Agenda Items · City Accessibility Advisory Committee · BC-2405",
-   "topics": [
-    "budget",
-    "agenda"
-   ],
-   "place": "El Paso",
-   "county": "El Paso",
-   "region": "West Texas",
-   "score": 6,
-   "why": [
-    "capital improvement"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
    "id": "i1ri7szp",
    "srcId": "leg-leaguecity",
    "source": "City of League City agenda items",
@@ -6788,104 +7047,6 @@
     "hazard mitigation"
    ],
    "hint": "Planning study: follow-on design phases often go to consultants.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "izpg62",
-   "srcId": "leg-leaguecity",
-   "source": "City of League City agenda items",
-   "title": "Consider and take action on appointments to the Capital Improvement Advisory Committee (Mayor Long)",
-   "link": "https://leaguecity.legistar.com/LegislationDetail.aspx?ID=8295590&GUID=1286C79A-6E49-49D5-A1AE-2A5F1C9065B2",
-   "mid": 13847,
-   "date": "2026-08-13T00:00:00.000Z",
-   "desc": "Agenda Item · City Council · 26-0340",
-   "topics": [
-    "budget",
-    "agenda"
-   ],
-   "place": "League City",
-   "county": "Galveston",
-   "region": "Houston region",
-   "score": 8,
-   "why": [
-    "capital improvement"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T20:30:14.830Z"
-  },
-  {
-   "id": "i16k5jyf",
-   "srcId": "leg-corpuschristi",
-   "source": "City of Corpus Christi agenda items",
-   "title": "Motion authorizing a one-year supply agreement with one additional one-year option period with Southern Ionics Incorporated of West Point, Mississippi, for sodium bisulfite, for Corpus Christi Water…",
-   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=8202430&GUID=F8E21C19-BAF6-4F40-BED8-89323CE0CA2C",
-   "mid": 26387,
-   "date": "2026-08-13T00:00:00.000Z",
-   "desc": "Motion · City Council · 26-1322",
-   "topics": [
-    "budget",
-    "grant",
-    "water",
-    "agenda"
-   ],
-   "place": "Corpus Christi",
-   "county": "Nueces",
-   "region": "Coastal Bend",
-   "score": 4,
-   "why": [
-    "wastewater"
-   ],
-   "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
-   "firstSeen": "2026-10-30T19:55:42.489Z"
-  },
-  {
-   "id": "i1c35tfq",
-   "srcId": "leg-brazoriacountytx",
-   "source": "Brazoria County Commissioners Court agenda items",
-   "title": "Award ITB #26-56 Hastings Phase II Roadways and Drainage Improvements Project",
-   "link": "https://brazoriacountytx.legistar.com/LegislationDetail.aspx?ID=8183478&GUID=44015BD6-B52A-476F-94D3-BD8785A88DC3",
-   "mid": 5046,
-   "date": "2026-08-12T00:00:00.000Z",
-   "desc": "Discussion - Purchasing Department · Commissioners Court · 18743",
-   "topics": [
-    "flood",
-    "road",
-    "agenda"
-   ],
-   "place": "Brazoria",
-   "county": "Brazoria",
-   "region": "Houston region",
-   "score": 10,
-   "why": [
-    "drainage",
-    "roadway"
-   ],
-   "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
-   "firstSeen": "2026-10-30T20:30:14.830Z"
-  },
-  {
-   "id": "iu088v2",
-   "srcId": "leg-corpuschristi",
-   "source": "City of Corpus Christi agenda items",
-   "title": "Planning Commission recommendation of the Proposed FY 2027 Capital Improvement Program (CIP) Budget",
-   "link": "https://corpuschristi.legistar.com/LegislationDetail.aspx?ID=8167543&GUID=34B453E2-1BF7-4B43-8D73-E3E9CB9CE1C3",
-   "mid": 26364,
-   "date": "2026-08-11T00:00:00.000Z",
-   "desc": "Presentation · Planning Commission · 26-1299",
-   "topics": [
-    "budget",
-    "agenda"
-   ],
-   "place": "Corpus Christi",
-   "county": "Nueces",
-   "region": "Coastal Bend",
-   "score": 12,
-   "why": [
-    "capital improvement",
-    "cip",
-    "budget"
-   ],
-   "hint": "CIP / budget line: projects in a new CIP usually go to design procurement within 6–18 months.",
    "firstSeen": "2026-10-30T19:55:42.489Z"
   }
  ]
