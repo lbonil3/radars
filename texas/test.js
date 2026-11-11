@@ -234,7 +234,8 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(fs.existsSync(path.join(dir, '..', 'shared', 'capture.js')));
   ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id));
   assert.ok(html.indexOf('value="due"') > 0 && html.indexOf('value="decision"') > 0, 'sort options');
-  assert.ok(app.indexOf("'opportunityRadar.watch.v1'") > 0, 'existing watch key unchanged');
+  assert.ok(app.indexOf("'texas.watch'") > 0, 'watch list uses texas.watch');
+  assert.ok(app.indexOf('opportunityRadar.watch.v1') > 0, 'legacy watch key still migrated');
   // a version 2 Texas backup (new id radars-texas, even when made with the legacy app id) cannot be restored into National Radar, and the reverse
   const bk = CP.makeBackup({ a: true }, { a: CP.clean({ notes: 'x' }) }, 'now', CP.OPP_BACKUP_APP);
   assert.strictEqual(bk.version, 2);

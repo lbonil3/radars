@@ -37,4 +37,19 @@ const boom = {
 assert.strictEqual(S.read(boom, 'k', []), null);
 assert.strictEqual(S.write(boom, 'k', 'v'), false);
 assert.strictEqual(S.readJSON(boom, 'k', [], { z: 1 }).z, 1);
+const pairs = [
+  ['nr.watch', 'national.watch'],
+  ['nr.capture', 'national.capture'],
+  ['nr.confirmedOnly', 'national.confirmedOnly'],
+  ['nr.tab', 'national.tab'],
+  ['nr.topOpen', 'national.topOpen'],
+  ['nr.filtersets', 'national.filtersets'],
+  ['opportunityRadar.watch.v1', 'texas.watch']
+];
+pairs.forEach(function (p) {
+  const ls = mem({ [p[0]]: 'keep' });
+  assert.ok(S.migrateCopy(ls, p[0], p[1]));
+  assert.strictEqual(ls.getItem(p[0]), 'keep');
+  assert.strictEqual(ls.getItem(p[1]), 'keep');
+});
 console.log('shared storage tests passed');

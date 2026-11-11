@@ -4,14 +4,16 @@
   var M = window.RadarModel, CP = window.RadarCapture, CAP_APP = CP.OPP_BACKUP_APP;
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var WATCH_KEY = 'opportunityRadar.watch.v1';
+  var WATCH_KEY = 'texas.watch';
+  var WATCH_KEY_LEGACY = 'opportunityRadar.watch.v1';
 
   var state = {
     data: null, recs: [], byId: {}, sources: [], watch: {}, live: null,
     f: { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null },
     tab: 'radar', colorBy: 'agency', sort: 'date', rows: 100, filtered: [], today: new Date().toISOString().slice(0, 10)
   };
-  try { state.watch = JSON.parse(localStorage.getItem(WATCH_KEY) || '{}') || {}; } catch (e) { state.watch = {}; }
+  if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, WATCH_KEY_LEGACY, WATCH_KEY);
+  try { state.watch = JSON.parse((window.RadarStorage ? RadarStorage.read(localStorage, WATCH_KEY, [WATCH_KEY_LEGACY]) : localStorage.getItem(WATCH_KEY)) || '{}') || {}; } catch (e) { state.watch = {}; }
   function saveWatch() { try { localStorage.setItem(WATCH_KEY, JSON.stringify(state.watch)); } catch (e) { toast('Could not save the watchlist (browser storage is blocked).'); } }
   function toast(msg) { var t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 3500); }
 

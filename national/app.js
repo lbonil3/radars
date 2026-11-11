@@ -38,18 +38,21 @@
 
   var COMB = null, DATA = null, RECS = [], ASOF = '', LIVE = {}, DATA_W = null, DATA_R = null, DATA_P = null, PRICES = null;
   var secLabel = function (k) { return k === 'roadway' ? 'Roadway' : k === 'drainage' ? 'Drainage named in the title' : M.sectorLabel(k); };
-  var WATCH = {}; try { WATCH = JSON.parse(localStorage.getItem('nr.watch') || '{}') || {}; } catch (e) { WATCH = {}; }
-  var CAP = {}; try { CAP = JSON.parse(localStorage.getItem('nr.capture') || '{}') || {}; } catch (e) { CAP = {}; } Object.keys(CAP).forEach(function (k) { CAP[k] = CP.clean(CAP[k]); });
+  if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.watch', 'national.watch');
+  var WATCH = {}; try { WATCH = JSON.parse((window.RadarStorage ? RadarStorage.read(localStorage, 'national.watch', ['nr.watch']) : localStorage.getItem('nr.watch')) || '{}') || {}; } catch (e) { WATCH = {}; }
+  if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.capture', 'national.capture');
+  var CAP = {}; try { CAP = JSON.parse((window.RadarStorage ? RadarStorage.read(localStorage, 'national.capture', ['nr.capture']) : localStorage.getItem('nr.capture')) || '{}') || {}; } catch (e) { CAP = {}; } Object.keys(CAP).forEach(function (k) { CAP[k] = CP.clean(CAP[k]); });
   var freshF = function () { return { q: '', states: [], agencies: [], statuses: [], sectors: [], sources: [], feeMin: null, costMin: null, work: [], dueWithin: null }; }; // v4.5: no threshold by default
   try { FS = V6.load(window.localStorage); } catch (e) { FS = []; }
-  var CONF = false; try { CONF = localStorage.getItem('nr.confirmedOnly') === '1'; } catch (e) { CONF = false; } // item 5: saved Confirmed-only switch
+  if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.confirmedOnly', 'national.confirmedOnly');
+  var CONF = false; try { CONF = (window.RadarStorage ? RadarStorage.read(localStorage, 'national.confirmedOnly', ['nr.confirmedOnly']) : localStorage.getItem('nr.confirmedOnly')) === '1'; } catch (e) { CONF = false; } // item 5: saved Confirmed-only switch
   var freshF0 = freshF; freshF = function (mode) { var f = freshF0(mode); f.hideUnconfirmed = CONF; return f; };
   var S = { mode: 'all', scope: 'upcoming', tab: 'list', sort: 'soon', rows: 50, tlMonth: null, capOpen: {}, restoreMode: 'merge', f: freshF('all') };
   var SYNTH = { sectors: M.SECTORS.map(function (s) { return s.id; }) };
 
   function toast(t) { var el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { el.hidden = true; }, 3500); }
-  function saveWatch() { try { localStorage.setItem('nr.watch', JSON.stringify(WATCH)); } catch (e) { toast('Could not save the watchlist on this device.'); } }
-  function saveCap() { try { localStorage.setItem('nr.capture', JSON.stringify(CAP)); } catch (e) { toast('Could not save the capture file on this device.'); } }
+  function saveWatch() { try { localStorage.setItem('national.watch', JSON.stringify(WATCH)); } catch (e) { toast('Could not save the watchlist on this device.'); } }
+  function saveCap() { try { localStorage.setItem('national.capture', JSON.stringify(CAP)); } catch (e) { toast('Could not save the capture file on this device.'); } }
   function todayCentral() { return new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' }); }
 
   // ---------- filtering ----------
@@ -503,9 +506,10 @@
   }
   var WIDE = window.matchMedia ? matchMedia('(min-width: 1200px)') : { matches: false };
   function initTopDet() {
-    var d = $('topDet'), v = null; try { v = localStorage.getItem('nr.topOpen'); } catch (e) { v = null; }
+    if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.topOpen', 'national.topOpen');
+    var d = $('topDet'), v = null; try { v = window.RadarStorage ? RadarStorage.read(localStorage, 'national.topOpen', ['nr.topOpen']) : localStorage.getItem('nr.topOpen'); } catch (e) { v = null; }
     d.open = v === null ? WIDE.matches : v === '1';
-    d.addEventListener('toggle', function () { try { localStorage.setItem('nr.topOpen', d.open ? '1' : '0'); } catch (e) { /* private mode */ } });
+    d.addEventListener('toggle', function () { try { localStorage.setItem('national.topOpen', d.open ? '1' : '0'); } catch (e) { /* private mode */ } });
   }
   function renderHealthDot() {
     var n = HEALTH ? HEALTH.bad.length : 0, t = n ? n + ' source' + (n === 1 ? ' is' : 's are') + ' stale or failing; see Data & sources' : '';
@@ -830,7 +834,7 @@
     renderPurBadge();
   }
   function setTab(t) {
-    try { localStorage.setItem('nr.tab', t); } catch (e) { /* ignore */ } // P3: remember the last view
+    try { localStorage.setItem('national.tab', t); } catch (e) { /* ignore */ } // P3: remember the last view
     S.tab = t; ['map', 'list', 'timeline', 'break', 'pursuits', 'data'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
     document.querySelectorAll('.tabs button[data-tab]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
     document.querySelectorAll('.tabs button[data-tab]').forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-tab') === t ? 'page' : 'false'); });
@@ -936,7 +940,7 @@
   $('costIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.costMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : 0; S.rows = 50; render(); });
   $('dbIn').addEventListener('input', function () { var v = parseFloat(this.value); S.f.dbMin = isFinite(v) && v >= 0 ? Math.round(v * 1e6) : null; S.rows = 50; render(); });
   $('btnIncl').addEventListener('click', function () { S.f.inclusive = !S.f.inclusive; render(); });
-  function setConf(v) { CONF = !!v; S.f.hideUnconfirmed = CONF; try { localStorage.setItem('nr.confirmedOnly', CONF ? '1' : '0'); } catch (e) { /* ignore */ } S.rows = 50; render(); }
+  function setConf(v) { CONF = !!v; S.f.hideUnconfirmed = CONF; try { localStorage.setItem('national.confirmedOnly', CONF ? '1' : '0'); } catch (e) { /* ignore */ } S.rows = 50; render(); }
   $('btnConfOnly').addEventListener('click', function () { setConf(!CONF); });
   $('btnText').addEventListener('click', function () { S.f.noText = !S.f.noText; render(); });
 
@@ -944,7 +948,8 @@
   function loadJ(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
   Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; }), loadJ('data/source-status.json').catch(function () { return null; }), loadJ('../texas/data/source-status.json').catch(function () { return null; })]).then(function (x) {
     HEALTH = V4.health([x[4], x[5]]); renderHealthDot();
-    var lastTab = null; try { lastTab = localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab; // v6: List is the default; the full map is one tap away
+    if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.tab', 'national.tab');
+    var lastTab = null; try { lastTab = window.RadarStorage ? RadarStorage.read(localStorage, 'national.tab', ['nr.tab']) : localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab; // v6: List is the default; the full map is one tap away
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     setMode();
     setTab(S.tab);

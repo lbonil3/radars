@@ -1,5 +1,9 @@
 /* National Radar v6: quick filters (work type, due date), active-filter tags and saved filter sets. Browser + Node, no dependencies. */
-(function (root, factory) { if (typeof module === 'object' && module.exports) module.exports = factory(); else root.NRV6 = factory(); })(this, function () {
+(function (root, factory) {
+  var Storage = (typeof module === 'object' && module.exports) ? require('../shared/storage.js') : root.RadarStorage;
+  var api = factory(Storage);
+  if (typeof module === 'object' && module.exports) module.exports = api; else root.NRV6 = api;
+})(typeof self !== 'undefined' ? self : this, function (Storage) {
   'use strict';
   var WORK = [
     { id: 'water', label: 'Water', sectors: ['water'] },
@@ -8,7 +12,7 @@
     { id: 'roadway', label: 'Roadway', sectors: ['roadway'] }
   ];
   var DUE = [{ d: 7, label: 'Next 7 days' }, { d: 30, label: 'Next 30 days' }, { d: 90, label: 'Next 90 days' }];
-  var KEY = 'nr.filtersets', MAX_SETS = 30;
+  var KEY = 'national.filtersets', MAX_SETS = 30;
   function addDays(iso, n) { var d = new Date(iso + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
   function dueOf(r) { var d = r.dates || {}; return d.due || d.est || null; }
   function workOf(r, sectorsOf) { var s = sectorsOf(r) || []; return WORK.filter(function (w) { return w.sectors.some(function (x) { return s.indexOf(x) >= 0; }); }).map(function (w) { return w.id; }); }
@@ -54,7 +58,15 @@
     if (!Array.isArray(list)) return [];
     return list.filter(function (x) { return x && typeof x.name === 'string' && x.name.trim() && x.f && typeof x.f === 'object'; }).slice(0, MAX_SETS).map(function (x) { return snapshot(x.name, x.f, typeof x.scope === 'string' ? x.scope : 'upcoming', typeof x.region === 'string' ? x.region : 'all'); });
   }
-  function load(ls) { try { return clean(JSON.parse(ls.getItem(KEY) || '[]')); } catch (e) { return []; } }
+  function load(ls) {
+    try {
+      if (Storage && Storage.migrateCopy) Storage.migrateCopy(ls, 'nr.filtersets', KEY);
+      var raw = (Storage && Storage.read) ? Storage.read(ls, KEY, ['nr.filtersets']) : ls.getItem(KEY);
+      // A stand-in store may return undefined for a missing key. localStorage returns null, which Storage.read already treats as missing.
+      if (typeof raw !== 'string') { try { raw = ls.getItem('nr.filtersets'); } catch (e2) { raw = null; } }
+      return clean(JSON.parse(raw || '[]'));
+    } catch (e) { return []; }
+  }
   function save(ls, sets) { try { ls.setItem(KEY, JSON.stringify(clean(sets))); return true; } catch (e) { return false; } }
   function upsert(sets, set) { var out = sets.filter(function (x) { return x.name.toLowerCase() !== set.name.toLowerCase(); }); out.unshift(set); return out.slice(0, MAX_SETS); }
   function remove(sets, name) { return sets.filter(function (x) { return x.name !== name; }); }

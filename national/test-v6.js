@@ -12,7 +12,7 @@ const tags = V.activeTags(f, { stateName: (k) => ({ TX: 'Texas' })[k], money: (v
 assert.deepStrictEqual(tags.map((t) => t.label), ['Search: pump', 'Texas', 'Water', 'Due in 30 days', 'Amount $5M+', 'Texas + Gulf states', 'Confirmed only']);
 V.removeTag(f, 'states', 'TX'); V.removeTag(f, 'dueWithin'); V.removeTag(f, 'q'); assert.ok(!f.states.length && f.dueWithin === null && f.q === '');
 // saved sets: snapshot, upsert by name, apply, delete, storage, merge (backup)
-const mem = { v: null, getItem() { return this.v; }, setItem(k, v) { assert.strictEqual(k, 'nr.filtersets'); this.v = v; } };
+const mem = { v: null, getItem() { return this.v; }, setItem(k, v) { assert.strictEqual(k, 'national.filtersets'); this.v = v; } };
 let sets = V.upsert([], V.snapshot('Texas water', { states: ['TX'], work: ['water'], feeMin: null }, 'upcoming', 'tx'));
 sets = V.upsert(sets, V.snapshot('texas WATER', { states: ['LA'] }, 'open', 'all')); assert.strictEqual(sets.length, 1, 'same name (any case) replaces');
 sets = V.upsert(sets, V.snapshot('Due soon', { dueWithin: 7 }, 'upcoming', 'all')); assert.strictEqual(sets[0].name, 'Due soon');
@@ -20,6 +20,10 @@ assert.ok(V.save(mem, sets)); assert.deepStrictEqual(V.load(mem).map((s) => s.na
 const ap = V.applyTo({ q: 'x', states: ['NY'], work: [], dueWithin: null }, V.load(mem)[1]); assert.deepStrictEqual(ap.states, ['LA']); assert.strictEqual(ap.q, '');
 assert.strictEqual(V.remove(sets, 'Due soon').length, 1);
 mem.v = '{bad json'; assert.deepStrictEqual(V.load(mem), [], 'corrupt storage => empty, no crash');
+const legacy = { v: JSON.stringify([V.snapshot('Legacy', { states: ['TX'] }, 'upcoming', 'tx')]), getItem(k) { return k === 'nr.filtersets' ? this.v : k === 'national.filtersets' ? this.neu : null; }, setItem(k, v) { if (k === 'national.filtersets') this.neu = v; } };
+assert.strictEqual(V.load(legacy)[0].name, 'Legacy');
+assert.ok(V.save(legacy, V.load(legacy)));
+assert.ok(legacy.neu && legacy.v, 'legacy filtersets key is not deleted');
 assert.strictEqual(V.clean([{ name: '', f: {} }, null, { name: 'ok', f: { states: 'TX' } }]).length, 1, 'invalid entries dropped');
 assert.deepStrictEqual(V.merge([V.snapshot('A', {}, 'all', 'all')], [V.snapshot('a', {}, 'all', 'all'), V.snapshot('B', {}, 'all', 'all')]).map((s) => s.name), ['A', 'B'], 'backup restore merges by name');
 // wiring

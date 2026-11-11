@@ -103,7 +103,7 @@ console.log('national v2 pursuits tests passed');
   for (const f of ['pse.json', 'national.json', 'roadway.json']) { const d = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', f), 'utf8')); const g = V.groupDupes(d.records); assert.ok(g.length <= d.records.length && g.every((c) => c.id)); }
   const app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   assert.ok(html.includes('id="btnConfOnly"') && html.includes('role="switch"'), 'prominent Confirmed only switch');
-  assert.ok(/localStorage\.getItem\('nr\.confirmedOnly'\) === '1'/.test(app) && /localStorage\.setItem\('nr\.confirmedOnly'/.test(app), 'Confirmed only is persisted');
+  assert.ok(/'national\.confirmedOnly'/.test(app) && /localStorage\.setItem\('national\.confirmedOnly'/.test(app) && /'nr\.confirmedOnly'/.test(app), 'Confirmed only is persisted on the new key and the legacy key is still read');
   assert.ok(/f\.hideUnconfirmed = CONF/.test(app), 'switch survives mode changes and Clear filters');
 }
 console.log('national v2 dedupe tests passed');
