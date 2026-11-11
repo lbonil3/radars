@@ -924,18 +924,7 @@
     if (!e.target.closest('#tabMore,#tabMoreBtn')) { $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false'); }
     document.querySelectorAll('details.scmore[open]').forEach(function (d) { if (!d.contains(e.target)) d.open = false; });
   }, true);
-  // Theme: Day is the default; Night (the original dark look) or Auto only when picked. Key nr.theme is new, so everyone starts in Day.
-  function themePref() { try { return localStorage.getItem('nr.theme') || 'day'; } catch (e) { return 'day'; } }
-  function applyTheme(p) {
-    var dark = p === 'night' || (p === 'auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches), t = dark ? 'night' : 'day', d = document.documentElement;
-    d.setAttribute('data-theme', t); d.setAttribute('data-theme-pref', p); d.style.colorScheme = dark ? 'dark' : 'light';
-    var m = document.getElementById('themeColor'); if (m) m.setAttribute('content', dark ? '#0a1020' : '#f5f7fb');
-    var b = document.getElementById('sbStyle'); if (b) b.setAttribute('content', dark ? 'black-translucent' : 'default');
-    document.querySelectorAll('[data-theme-set]').forEach(function (x) { var on = x.getAttribute('data-theme-set') === p; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); });
-  }
-  document.querySelectorAll('[data-theme-set]').forEach(function (x) { x.addEventListener('click', function (e) { e.stopPropagation(); var p = x.getAttribute('data-theme-set'); try { localStorage.setItem('nr.theme', p); } catch (er) {} applyTheme(p); }); });
-  if (window.matchMedia) { var mq = matchMedia('(prefers-color-scheme: dark)'), onMq = function () { if (themePref() === 'auto') applyTheme('auto'); }; if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq); }
-  applyTheme(themePref());
+  if (window.RadarTheme) RadarTheme.bind(document, window.localStorage);
   $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; $('banner').classList.toggle('open', o); });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);

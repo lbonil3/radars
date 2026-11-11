@@ -69,10 +69,10 @@ console.log('national ui (P1 header) tests passed');
 {
   const head = html.slice(0, html.indexOf('</head>'));
   assert.ok(/<script>[\s\S]*nr\.theme[\s\S]*data-theme[\s\S]*<\/script>/.test(head) && head.indexOf('<script>') < head.indexOf('style.css'), 'theme applied in head before first paint');
-  assert.ok(/getItem\('nr\.theme'\)\|\|'day'/.test(head) && /\|\| 'day'/.test(app), 'Day is the default');
+  assert.ok(/getItem\('nr\.theme'\)\|\|'day'/.test(head) && /p='day'/.test(head) && /RadarTheme\.bind/.test(app), 'Day is the default');
   ['day', 'night', 'auto'].forEach((t) => assert.ok(html.includes('data-theme-set="' + t + '"'), 'theme option ' + t));
   assert.ok(/html\[data-theme=day\]\{--bg:/.test(css), 'Day variables');
   assert.ok(/^:root\{--bg:#0a1020/m.test(css), 'Night look unchanged');
-  assert.ok(html.includes('id="themeColor"') && /themeColor/.test(app), 'browser UI color follows the theme');
+  assert.ok(html.includes('id="themeColor"') && /themeColor/.test(head) && /RadarTheme\.bind/.test(app), 'browser UI color follows the theme');
   assert.ok(/\.tabs button\[data-tab\]/.test(app), 'tab highlighting does not touch theme buttons');
 }

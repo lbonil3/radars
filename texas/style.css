@@ -1,5 +1,17 @@
 /* Texas Opportunity: dark radar look. System fonts only. Large touch targets (44px+) for iPhone. */
 :root{--bg:#07100e;--panel:#0d1a17;--panel2:#12241f;--line:#1f3d36;--ink:#e6f1ee;--dim:#93aaa4;--acc:#5eead4;--warn:#fbbf24;--bad:#fb7185;--tabs-h:64px}
+html[data-theme=day]{--bg:#f5f7fb;--panel:#ffffff;--panel2:#eef2f8;--line:#c9d3e3;--ink:#0f1a2e;--dim:#4a5875;--acc:#0f766e;--warn:#8a5a00;--bad:#b4233a}
+html[data-theme=day] .top{background:linear-gradient(180deg,#e6f4f1,var(--bg))}
+html[data-theme=day] .tabs{background:rgba(255,255,255,.97)}
+html[data-theme=day] .chip.on{color:var(--ink)}
+html[data-theme=day] .mapbar .btn{background:rgba(255,255,255,.92);color:var(--ink)}
+html[data-theme=day] .legend{background:rgba(255,255,255,.92);color:var(--ink)}
+html[data-theme=day] .maphint{background:rgba(255,255,255,.92);color:var(--dim)}
+html[data-theme=day] .toast{background:#0f1a2e;color:#fff}
+html[data-theme=day] .btn:active{background:#dbe4f2}
+.throw{display:flex;gap:4px;align-items:center}
+.throw [data-theme-set]{min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-size:14px;font-weight:600;cursor:pointer}
+.throw [data-theme-set].on{border-color:var(--acc);color:var(--ink);background:rgba(15,118,110,.12)}
 *{box-sizing:border-box}
 html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;padding-bottom:calc(var(--tabs-h) + env(safe-area-inset-bottom) + 12px)}

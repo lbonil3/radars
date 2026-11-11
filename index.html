@@ -1,9 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme-night="#0a1020">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0a1020">
+  <meta name="theme-color" content="#0a1020" id="themeColor">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" id="sbStyle">
+  <script>
+(function(){
+  var p='day';
+  try{
+    if(window.localStorage){
+      p=localStorage.getItem('radars.theme')||localStorage.getItem('nr.theme')||'day';
+    }
+  }catch(e){}
+  if(p!=='night'&&p!=='auto'&&p!=='day')p='day';
+  var t=p==='night'?'night':(p==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'night':'day');
+  var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t==='night'?'dark':'light';
+  var dayC=d.getAttribute('data-theme-day')||'#f5f7fb', nightC=d.getAttribute('data-theme-night')||'#0a1020';
+  var m=document.getElementById('themeColor');if(m)m.setAttribute('content',t==='night'?nightC:dayC);
+  var b=document.getElementById('sbStyle');if(b)b.setAttribute('content',t==='night'?'black-translucent':'default');
+})();
+</script>
   <title>Radars – National Radar and Texas Opportunity</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png" type="image/png">
@@ -11,9 +28,25 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Radars">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     :root{color-scheme:dark}
+    html[data-theme=night]{color-scheme:dark}
+    html[data-theme=night] body{color:#e6edf7;background:radial-gradient(1200px 600px at 20% -10%,#16305a 0,transparent 60%),radial-gradient(900px 500px at 100% 110%,#0d3a2e 0,transparent 60%),#0a1020}
+    html[data-theme=night] p.lead{color:#9fb0c8}
+    html[data-theme=night] a.card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+    html[data-theme=night] a.card p{color:#a9b8cd}
+    html[data-theme=night] footer{color:#6f819b}
+    html[data-theme=day]{color-scheme:light}
+    html[data-theme=day] body{color:#0f1a2e;background:#f5f7fb}
+    html[data-theme=day] p.lead,html[data-theme=day] a.card p,html[data-theme=day] #iosHint,html[data-theme=day] footer{color:#4a5875}
+    html[data-theme=day] a.card{background:#ffffff;border-color:#c9d3e3}
+    html[data-theme=day] a.card:hover,html[data-theme=day] a.card:focus-visible{background:#eef2f8;border-color:#9aadc4}
+    html[data-theme=day] #installBtn{border-color:#c9d3e3;background:rgba(29,95,191,.12);color:#0f1a2e}
+    .throw{display:flex;gap:4px;align-items:center}
+    .throw [data-theme-set]{min-height:44px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.06);color:inherit;font:600 14px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
+    .throw [data-theme-set].on{border-color:#4f8cff;background:rgba(79,140,255,.28)}
+    html[data-theme=day] .throw [data-theme-set]{border-color:#c9d3e3;background:#fff;color:#0f1a2e}
+    html[data-theme=day] .throw [data-theme-set].on{border-color:#1d5fbf;background:rgba(29,95,191,.12);color:#0f1a2e}
     *{box-sizing:border-box}
     body{margin:0;min-height:100vh;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#e6edf7;background:radial-gradient(1200px 600px at 20% -10%,#16305a 0,transparent 60%),radial-gradient(900px 500px at 100% 110%,#0d3a2e 0,transparent 60%),#0a1020}
     main{max-width:960px;margin:0 auto;padding:max(28px,env(safe-area-inset-top)) 20px 40px}
@@ -38,6 +71,9 @@
 <main>
   <h1>Radars</h1>
   <p class="lead">Consultant pursuit radars built from public procurement feeds. Static, phone-first, work offline.</p>
+  <div class="install">
+    <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
+  </div>
   <div class="install" id="install" hidden>
     <button type="button" id="installBtn" hidden>Install app</button>
     <p id="iosHint" hidden>To install: tap Share, then Add to Home Screen.</p>
@@ -48,6 +84,9 @@
   </div>
   <footer>Data are periodic snapshots of public agency feeds; every record links its source notice.</footer>
 </main>
+<script src="shared/storage.js"></script>
+<script src="shared/theme.js"></script>
+<script>if (window.RadarTheme) RadarTheme.bind(document, window.localStorage);</script>
 <script>
 (function () {
   var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;

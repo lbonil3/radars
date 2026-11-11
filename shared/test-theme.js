@@ -57,4 +57,18 @@ assert.strictEqual(d2.documentElement.attrs['data-theme'], 'day');
 assert.strictEqual(d2.theme.content, '#f5f7fb');
 assert.ok(T.setPref(ls, 'auto') && T.readPref(ls) === 'auto');
 assert.strictEqual(T.setPref(ls, 'nope'), false);
+const fs = require('fs'), path = require('path');
+const root = path.resolve(__dirname, '..');
+for (const rel of ['national/index.html', 'texas/index.html', 'index.html']) {
+  const html = fs.readFileSync(path.join(root, rel), 'utf8');
+  assert.ok(html.includes("localStorage.getItem('radars.theme')"), rel + ' before-paint reads radars.theme');
+  assert.ok(html.includes('../shared/storage.js') || html.includes('shared/storage.js'), rel + ' loads storage.js');
+  assert.ok(html.includes('../shared/theme.js') || html.includes('shared/theme.js'), rel + ' loads theme.js');
+  assert.ok(html.includes('data-theme-set'), rel + ' has theme buttons');
+}
+const napp = fs.readFileSync(path.join(root, 'national/app.js'), 'utf8');
+assert.ok(/RadarTheme\.bind/.test(napp), 'national app binds RadarTheme');
+assert.ok(!/localStorage\.setItem\('nr\.theme'/.test(napp), 'national app no longer writes nr.theme');
+const tapp = fs.readFileSync(path.join(root, 'texas/app.js'), 'utf8');
+assert.ok(/RadarTheme\.bind/.test(tapp), 'texas app binds RadarTheme');
 console.log('shared theme tests passed');
