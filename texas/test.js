@@ -219,7 +219,7 @@ assert.ok(data.records.filter(M.isConsultant).length > 50, 'consultant-services 
 
 // ---- page wiring
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
-['style.css', 'texas-geo.js', 'model.js', 'map.js', 'app.js', 'manifest.webmanifest', 'icon-192.png', 'apple-touch-icon.png', '../home-btn.css'].forEach((f) => {
+['style.css', 'texas-geo.js', 'model.js', 'map.js', 'app.js', 'manifest.webmanifest', 'icon-192.png', 'apple-touch-icon.png', '../shared/shell.css'].forEach((f) => {
   assert.ok(html.includes(f), 'index.html references ' + f);
   assert.ok(fs.existsSync(path.join(dir, f)), 'file exists ' + f);
 });

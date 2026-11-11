@@ -4,3 +4,9 @@
 @media (max-width:700px){header{padding-left:max(12px,env(safe-area-inset-left))!important}
 .homebtn{margin:max(2px,env(safe-area-inset-top)) 0 8px 0;display:flex;width:max-content}}
 @media print{.homebtn{display:none}}
+.throw [data-theme-set]{min-height:44px;padding:0 12px}
+.throw [data-theme-set].on{font-weight:700;box-shadow:inset 0 0 0 2px currentColor}
+/* Hooks for the phase-2 two-column desktop layout. No markup changes required in this phase. */
+@media (min-width: 900px) {
+  .lgrid, .shell-lgrid { display: grid; grid-template-columns: minmax(220px, 34%) 1fr; gap: 16px; align-items: start; }
+}

@@ -29,7 +29,17 @@
   <link rel="icon" type="image/png" href="icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
   <title>Texas Opportunity – drainage PS&amp;E opportunities across agencies</title>
-  <link rel="stylesheet" href="../home-btn.css">
+  <script>
+window.RadarLoadError=function(name){
+  if(document.getElementById('radar-load-error'))return;
+  var p=document.createElement('p');
+  p.id='radar-load-error';p.setAttribute('role','alert');
+  p.textContent='This page failed to load a required file ('+name+'). Check your connection and refresh.';
+  function put(){document.body?document.body.insertBefore(p,document.body.firstChild):document.addEventListener('DOMContentLoaded',put);}
+  put();
+};
+</script>
+  <link rel="stylesheet" href="../shared/shell.css" onerror="RadarLoadError(this.src||this.href)">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="magazine.css">
 </head>
@@ -181,10 +191,10 @@
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="../shared/storage.js"></script>
-<script src="../shared/theme.js"></script>
-<script src="../shared/filters.js"></script>
-<script src="../shared/capture.js"></script>
+<script src="../shared/storage.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/theme.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/filters.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/capture.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="texas-geo.js"></script>
 <script src="model.js"></script>
 <script src="map.js"></script>
