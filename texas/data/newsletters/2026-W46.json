@@ -3,32 +3,81 @@
  "start": "2026-11-09",
  "end": "2026-11-15",
  "title": "Texas Intel weekly, 2026-W46 (Nov 9, 2026 to Nov 15, 2026)",
- "generatedAt": "2026-11-11T17:56:30.915Z",
+ "generatedAt": "2026-11-12T18:23:49.908Z",
  "final": false,
  "backfilled": false,
  "counts": {
-  "items": 3,
-  "houston": 0,
+  "items": 6,
+  "houston": 3,
   "other": 3
  },
  "stats": {
-  "items": 3,
-  "newThisWeek": 3,
-  "houston": 0,
+  "items": 6,
+  "newThisWeek": 6,
+  "houston": 3,
   "grant": 2,
-  "flood": 1,
+  "flood": 4,
   "mix": {
    "budget": 1,
    "bond": 1,
    "grant": 1,
-   "flood": 0,
+   "flood": 3,
    "water": 0,
    "road": 0,
    "policy": 0,
    "agenda": 0
   }
  },
- "houston": [],
+ "houston": [
+  {
+   "topic": "flood",
+   "label": "Flood / drainage",
+   "total": 3,
+   "items": [
+    {
+     "id": "i2e53eu",
+     "title": "Share Your Input on Flood Risk Reduction in Lower Clear Creek and Dickinson Bayou",
+     "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6483",
+     "source": "City of League City",
+     "date": "2026-11-12",
+     "place": "Dickinson",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “flood”, “bayou”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "score": 10
+    },
+    {
+     "id": "i19svlbj",
+     "title": "Public Works Week in Review for November 12, 2026",
+     "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6481",
+     "source": "City of League City",
+     "date": "2026-11-10",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “culvert”, “water line”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "desc": "Public Works' Crews working on 24-Inch Water Line Repair Completed Beneath Box Culvert and New 2026 Caterpillar 326 Long Reach Excavator.",
+     "score": 7
+    },
+    {
+     "id": "if8bkb2",
+     "title": "FEMA Adds Online Flood Insurance Purchasing Option",
+     "link": "https://www.leaguecitytx.gov/CivicAlerts.aspx?aid=6477",
+     "source": "City of League City",
+     "date": "2026-11-09",
+     "place": "League City",
+     "region": "Houston region",
+     "topic": "flood",
+     "why": "Mentions “flood”.",
+     "hint": "Flood / drainage signal: note the project or watershed and watch the owner for H&H or design procurement.",
+     "desc": "Residents can now purchase a National Flood Insurance Program (NFIP) policy online.",
+     "score": 6
+    }
+   ]
+  }
+ ],
  "texas": [
   {
    "topic": "budget",
