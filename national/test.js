@@ -215,4 +215,5 @@ require('./test-v5.js');
 require('./test-v6.js');
 require('./test-shell.js');
 require('./test-dormant.js');
+require('./test-mapview.js');
 console.log('national-radar tests passed');
