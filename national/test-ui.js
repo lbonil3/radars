@@ -57,9 +57,9 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
   assert.ok(/function renderHealth\(\)/.test(app) && /renderData\(\) \{\n    if \(!DATA\) return;\n    renderHealth\(\);/.test(app));
 }
 // P3 (trivial ones): plainer scope wording, last view remembered; closed More menu takes no space
-assert.ok(app.includes("label: 'Early notices (no fee yet)'") && app.includes("label: 'Big projects (no fee yet)'"), 'plainer wording');
+assert.ok(/var SCOPES = C\.SCOPES;/.test(app) && !/SCOPES_[WRP]/.test(app), 'one combined scope set; the old lane lists are gone (Radar 2.0)');
 assert.ok(/S\.tab = SHELL\.initial;/.test(app) && /S\.tab = SHELL\.showTab\(t\);/.test(app) && /\n    setTab\(S\.tab\);\n/.test(app) && /tab: 'list'/.test(app), 'last view remembered by the shared shell; List is the default');
-assert.ok(/id="usmini"/.test(html) && /data-tab="map">Expand map/.test(html) && /function markersHtml/.test(app) && /function renderMapV5/.test(app), 'v6.1: small map with Expand map, count markers, v5 bubbles kept dormant');
+assert.ok(/id="usmini"/.test(html) && /data-tab="map">Expand map/.test(html) && /function markersHtml/.test(app) && !/function renderMapV5/.test(app), 'v6.1: small map with Expand map, count markers; v5 bubbles removed in Radar 2.0');
 assert.ok(css.includes('.scmore:not([open]) .scmenu{display:none}'));
 module.exports = { html, app, css };
 // v6.3: card order: title, agency/state, date line with Positionable, then the amount (smaller)

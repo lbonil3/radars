@@ -92,34 +92,6 @@ window.RadarLoadError=function(name){
       <label class="region"><span class="vh">Region</span><select id="regionSel" aria-label="Region focus"></select></label>
       <a class="txlink" id="txLink" href="../texas/" hidden>Texas detail: Texas Opportunity &rarr;</a>
     </div>
-<div class="pse-ctl" id="pseCtl" aria-label="Fee and design-build controls" hidden>
-  <div class="pc" id="pcFee">
-    <label class="pcl" for="feeIn">Consultant fee threshold <span class="hint">(stated fee, in $ millions)</span></label>
-    <div class="pcrow">
-      <span class="pcop" id="feeOp" aria-hidden="true">&gt;</span><span class="pcd">$</span><input id="feeIn" type="number" inputmode="decimal" step="0.5" min="0" value="5" aria-label="Fee threshold in millions of dollars"><span class="pcd">M</span>
-      <button type="button" class="chip" id="btnIncl" aria-pressed="false">&ge; include exactly this</button>
-      <button type="button" class="chip" id="btnText" aria-pressed="false">Hide text-parsed</button>
-    </div>
-    <div class="chips" id="feePre"></div>
-    <div class="exact" id="exactNote" hidden></div>
-  </div>
-  <div class="pc" id="pcPipe" hidden>
-    <label class="pcl" for="costIn">Stated project cost greater than <span class="hint">($ millions; this is NOT a fee)</span></label>
-    <div class="pcrow"><span class="pcop" aria-hidden="true">&gt;</span><span class="pcd">$</span><input id="costIn" type="number" inputmode="decimal" step="5" min="0" value="50" aria-label="Project cost threshold in millions of dollars"><span class="pcd">M</span></div>
-    <p class="note" id="pipeNote"></p>
-  </div>
-  <div class="pc" id="pcAdv" hidden>
-    <p class="note" id="advNote"></p>
-  </div>
-  <div class="pc" id="pcDb" hidden>
-    <label class="pcl" for="dbIn">Design-build value greater than <span class="hint">($ millions; contract value / project cost, NOT a fee; blank = show all)</span></label>
-    <div class="pcrow"><span class="pcop" aria-hidden="true">&gt;</span><span class="pcd">$</span><input id="dbIn" type="number" inputmode="decimal" step="5" min="0" value="" placeholder="all" aria-label="Design-build value threshold in millions of dollars"><span class="pcd">M</span></div>
-    <h3>Your role <span class="hint">(inferred, not stated by the owner)</span></h3><div class="chips" id="dbRole"></div>
-    <h3>Procurement type</h3><div class="chips" id="dbType"></div>
-    <h3>Stage</h3><div class="chips" id="dbStage"></div>
-    <p class="note" id="dbNote"></p>
-  </div>
-</div>
     <h3>State</h3><div class="chips" id="fState"></div>
     <h3>Agency</h3><div class="chips" id="fAgency"></div>
     <h3>Status <span class="hint">(as the source states it)</span></h3><div class="chips" id="fStatus"></div>
