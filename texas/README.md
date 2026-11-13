@@ -2,6 +2,23 @@
 
 Tabs: **List** (default), Map, Pursuits, Intel; More: Timeline, Agencies, Sources. The last tab is remembered in localStorage `texas.tab`.
 
+## A/E consultant view
+
+The list opens on Consultant services, and that view opens on **Open**: solicitations that are still accepting submittals. **Forecast** (TxDOT projected contracts, and a CTRMA stage that says forthcoming) and **Past** (awarded, selected, closed, or a due date that has passed) are the chips beside it. Records stay in the snapshot either way. HCFCD RFQ rows with no future due date are Past.
+
+A row is A/E when it is an RFQ, RFP, or on-call / professional-services request and the text is engineering, architecture, surveying, or design work. Bond underwriting, web design, software, janitorial, treatment, legal, insurance, and staffing are left out even when the source called them an RFQ. TxDOT's Projected Contracts List and PEPS rows still count. A TxDOT Bonfire department named Professional Engineering (PEPS) counts; a code such as `PRO_Services` does not.
+
+The Sources view shows how many open A/E items each source contributed today, including a solicitation that was merged from two feeds.
+
+Daily public sources added in this wave (no login):
+
+- Texas SmartBuy ESBD, from the public Export to CSV button (posted solicitations; NIGP class 906, 907, and 925, plus A/E wording)
+- Bonfire portals: Arlington, Denton County, Williamson County (`wilco`), NTMWD, LCRA, San Antonio River Authority (`sara-tx`), and the University of Texas (`utexas`)
+- Texas A&M AggieBid open RFQs and RFPs
+- CTRMA engineering and construction procurements, plus awarded engineering rows
+
+Harris County Bonfire rows that name the Toll Road Authority are labeled HCTRA. HCTRA does not publish a capital plan a script can read, so none was added. The same solicitation on two feeds is one record. A failed fetch keeps that source's previous records.
+
 ## Radar 2.0 layout
 - One breakpoint at 1024px, shared with National Radar (`shared/shell.js`, `shared/shell.css`). On desktop the List shows the county map beside the list, and the Map tab shows "On the radar now" beside the map. Record details dock in the side column, and Filters is a right-hand drawer. On phones the map is a collapsible strip above the list. Day / Night / Auto is in the header.
 - Pursuits: starred records plus any record with a capture file, split into This week and Later, with a badge for overdue and due-soon records. If a capture file has no due date, a solicitation uses the closing date from the source, and the card says so. The weekly list (Print, Share, Copy, Download), CSV and calendar (.ics) export come from `shared/weekly.js`.

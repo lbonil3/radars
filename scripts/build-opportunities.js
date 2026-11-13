@@ -45,6 +45,26 @@ async function get(url, opts) {
   }
   throw lastErr;
 }
+async function postJson(url, body, opts) {
+  opts = opts || {};
+  let lastErr;
+  for (let i = 0; i < 3; i++) {
+    try {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), opts.timeout || 90000);
+      const res = await fetch(url, { method: 'POST', headers: { 'user-agent': UA, accept: 'application/json', 'content-type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal, redirect: 'follow' });
+      clearTimeout(t);
+      if (!res.ok) { const e = new Error('HTTP ' + res.status + ' for ' + url.slice(0, 120)); e.status = res.status; throw e; }
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
+      if (e.status && e.status >= 400 && e.status < 500 && e.status !== 429 && e.status !== 408) break;
+      if (i === 2) break;
+      await sleep(jitter(1500 * Math.pow(2, i)));
+    }
+  }
+  throw lastErr;
+}
 async function getJson(url) {
   const body = await get(url, { accept: 'application/json' });
   const j = JSON.parse(body);
@@ -231,14 +251,39 @@ const SOURCES = [
       const seen = {}; recs = recs.filter((r) => (seen[r.id] ? false : (seen[r.id] = 1)));
       if (!recs.length) throw new Error('no San Antonio rows parsed (page layout may have changed)');
       return { fetched: recs.length, recs, note: 'Read ' + pages + ' page(s) of the list. The list shows title, type, department and dates; solicitation documents are on SAePS/CivCast and need registration. ' + recs.filter(M.isConsultant).length + ' are in the Consultant services focus.' };
+    } },
+  { id: 'esbd', name: 'Texas SmartBuy ESBD posted solicitations (public Export to CSV; professional A/E only)', agency: 'Texas', type: 'Snapshot (CSV from the public Export to CSV button; no login)', page: M.ESBD_PAGE,
+    run: async () => {
+      const j = await postJson(M.ESBD_CSV_URL, { isCSV: true, status: '1' });
+      if (!j || typeof j.csv !== 'string' || !/^(\uFEFF)?Name,Solicitation ID/.test(j.csv)) throw new Error('ESBD export did not return the posted-solicitations CSV');
+      const recs = M.parseEsbdCsv(j.csv, j.agencies);
+      return { fetched: recs.posted || recs.length, recs, note: 'One POST of the public Export to CSV button for status Posted (including addenda): ' + (recs.posted || recs.length) + ' solicitations, of which ' + recs.length + ' are professional architecture or engineering (NIGP class 906, 907, or 925, or A/E wording). txsmartbuy.gov robots.txt disallows the host; this single daily call is that export and needs no login. The extension path can change when the Comptroller republishes the site.' };
+    } },
+  { id: 'aggiebid', name: 'Texas A&M AggieBid open bids (public list; RFQ and RFP only)', agency: 'TAMU', type: 'Snapshot (HTML of the public open-for-bid list; no login)', page: M.AGGIE_PAGE,
+    run: async () => {
+      const html = await get(M.AGGIE_PAGE);
+      const rows = (html.match(/SourcingPublicSite_LABEL_TYPE_/g) || []).length;
+      if (!rows) throw new Error('AggieBid open-bids table not found (page layout may have changed)');
+      const recs = M.parseAggieBid(html);
+      return { fetched: rows, recs, note: 'Open bids on AggieBid. Kept RFQ and RFP rows (' + recs.length + ' of ' + rows + '). Contact emails are not copied. ' + recs.filter(M.isConsultant).length + ' are in the Consultant services focus.' };
+    } },
+  { id: 'ctrma', name: 'CTRMA procurements (Engineering, Construction, and awarded engineering rows)', agency: 'CTRMA', type: 'Snapshot (HTML of the public procurements page)', page: M.CTRMA_PAGE,
+    run: async () => {
+      const html = await get(M.CTRMA_PAGE);
+      if (!/>ENGINEERING</.test(html) && !/ENGINEERING/.test(html)) throw new Error('CTRMA engineering section not found (page layout may have changed)');
+      const recs = M.parseCtrma(html);
+      if (!recs.length) throw new Error('no CTRMA rows parsed (page layout may have changed)');
+      return { fetched: recs.length, recs, note: 'Engineering and Construction tables, plus awarded rows whose type is engineering work. Awarded rows are past. A stage that says forthcoming is a forecast. ' + recs.filter(M.isConsultant).length + ' are in the Consultant services focus.' };
     } }
 ].concat(M.BONFIRE_PORTALS.map((p) => ({ id: 'bonfire-' + p.sub, name: p.agency + ' open solicitations (Bonfire portal ' + p.sub + '.bonfirehub.com, the portal\'s own public JSON list)', agency: p.agency, type: 'Snapshot (undocumented public JSON the portal page itself loads; robots.txt allows; no login)', page: 'https://' + p.sub + '.bonfirehub.com/portal/?tab=openOpportunities',
   run: async () => {
     const j = JSON.parse(await get('https://' + p.sub + '.bonfirehub.com/PublicPortal/getOpenPublicOpportunitiesSectionData', { accept: 'application/json' }));
     if (!j || !j.success || !j.payload) throw new Error('unexpected Bonfire response');
     const list = Array.isArray(j.payload.projects) ? j.payload.projects : Object.keys(j.payload.projects || {}).map((k) => j.payload.projects[k]);
-    const recs = list.map((x) => M.bonfireRecord(x, p)).filter(Boolean);
-    return { fetched: list.length, recs, note: 'All open opportunities on the portal (' + list.length + '); ' + recs.filter(M.isConsultant).length + ' are in the Consultant services focus. Close times are not labeled with a time zone by the portal, so only the date is used. Bonfire opportunity pages return HTTP 403 to scripts but open in a browser.' };
+    const recs = list.map((x) => M.bonfireRecord(x, p, j.payload.departments)).filter(Boolean);
+    const hctra = recs.filter((r) => r.agency === 'HCTRA').length;
+    const peps = recs.filter((r) => r.dept && /PEPS/i.test(r.dept)).length;
+    return { fetched: list.length, recs, note: 'All open opportunities on the portal (' + list.length + '); ' + recs.filter(M.isConsultant).length + ' are in the Consultant services focus.' + (hctra ? ' ' + hctra + ' are labeled HCTRA because the title or department names the Harris County Toll Road Authority.' : '') + (p.sub === 'txdot' ? ' Department names come from the list. A department named Professional Engineering (PEPS) is A/E; internal codes such as PRO_Services are not. This run: ' + peps + ' PEPS.' : '') + ' Close times are not labeled with a time zone by the portal, so only the date is used. Bonfire opportunity pages return HTTP 403 to scripts but open in a browser.' };
   } })));
 
 
@@ -268,6 +313,9 @@ async function main() {
   // county-centroid fallback location (inferred), only when a source names a county but gives no coordinates
   let approx = 0;
   try { const g = fs.readFileSync(GEO, 'utf8'); const geo = JSON.parse(g.slice(g.indexOf('{'), g.lastIndexOf('}') + 1)); ctx.records.forEach((r) => { delete r.alat; delete r.alon; }); approx = M.applyApprox(ctx.records, M.countyCentroids(geo)); } catch (e) { console.warn('no county centroids', e.message); }
+  // one record when the same solicitation is on two feeds; keep an id the previous snapshot already had
+  const prefer = new Set(); if (prev) (prev.records || []).forEach((r) => prefer.add(r.id));
+  ctx.records = M.mergeDuplicates(ctx.records, prefer);
   // stable ordering and id uniqueness
   const seen = {}; const records = ctx.records.filter((r) => { if (seen[r.id]) return false; seen[r.id] = 1; return true; });
   records.sort((a, b) => (a.agency < b.agency ? -1 : a.agency > b.agency ? 1 : a.id < b.id ? -1 : 1));

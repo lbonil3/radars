@@ -157,7 +157,7 @@ assert.strictEqual(bf3.svc, false, 'RFP without engineering words is out');
 const bf4 = M.bonfireRecord({ ProjectID: '3', ReferenceID: 'z', ProjectName: 'RFP - Engineering and Design Services for Roadway', DateClose: '2026-11-09 20:00:00' }, bfP);
 assert.strictEqual(bf4.svc, true, 'RFP with engineering words is in');
 const bf5 = M.bonfireRecord({ ProjectID: '4', ReferenceID: 'Q26-063', ProjectName: 'Architectural, Engineering & Environmental Review Services for Federally Funded Residential Projects', DateClose: '2026-11-17 20:00:00' }, bfP);
-assert.strictEqual(bf5.svc, true, 'untyped title with engineering/architect words is in, with the basis stated'); assert.ok(/Type not stated/.test(bf5.why));
+assert.strictEqual(bf5.svc, false, 'an untyped title is not A/E unless it is on-call, professional services, or an RFQ/RFP'); assert.ok(/Not in the Consultant services focus/.test(bf5.why));
 assert.strictEqual(M.bonfireRecord({ ProjectID: '5', ReferenceID: 'r', ProjectName: 'Central Hydraulic System Kits', DateClose: '2026-10-27 20:00:00' }, bfP).svc, false);
 assert.strictEqual(M.bonfireRecord({ ProjectID: '', ProjectName: 'x' }, bfP), null);
 assert.strictEqual(M.isoFromSerial(46322.583333), '2026-10-27'); assert.strictEqual(M.isoFromSerial('abc'), null);
@@ -179,15 +179,15 @@ const saHtml = '<table><tr><th>Description</th><th>Type</th><th>Department</th><
   '<tr><td><a href="Content.aspx?id=6246&amp;page=Default">Spay/Neuter Contract Veterinarians</a></td><td>Request for Applications</td><td>Animal Care Svcs</td><td>07/14/2026</td><td>N/A</td><td>08/25/2026Extended to 10/26/2026</td></tr>' +
   '<tr><td>1</td><td>2</td></tr></table>';
 const sa = M.parseSanAntonio(saHtml);
-assert.strictEqual(sa.length, 2); assert.strictEqual(sa[0].svc, true); assert.strictEqual(sa[1].svc, false); assert.strictEqual(sa[1].date, '2026-10-26', 'extended deadline is the last date');
+assert.strictEqual(sa.length, 2); assert.strictEqual(sa[0].svc, false, 'an RFQ for a facilities assessment has no engineering wording'); assert.strictEqual(sa[1].svc, false); assert.strictEqual(sa[1].date, '2026-10-26', 'extended deadline is the last date');
 assert.strictEqual(sa[0].url, 'https://webapp1.sanantonio.gov/BidContractOpps/Content.aspx?id=6318&page=Default');
 // focus filter
 const fr = [bf1, bf2, bf3, bf4, au[0], ac[0], { id: 'x', agency: 'TxDOT', src: 'txdot-pcl', kind: 'procurement', phase: 'procure', rel: 'none', title: 't' }, { id: 'y', agency: 'TxDOT', src: 'txdot-pi', kind: 'project', phase: 'design', rel: 'direct', title: 'drain' }];
 const fids = (f) => M.filterRecords(fr, f, {}).map((r) => r.id).join(',');
-assert.strictEqual(M.filterRecords(fr, { consult: true }, {}).length, 5, 'focus keeps qualification/engineering-RFP/Austin contract/PCL rows, drops construction and plain projects');
-assert.ok(!/(^|,)y(,|$)/.test(fids({ consult: true })));
-assert.strictEqual(M.filterRecords(fr, { consult: true, rel: 'direct' }, {}).length, 1, 'Direct narrows to the drainage-keyword consultant row');
-assert.strictEqual(M.filterRecords(fr, { consult: true, eng: true }, {}).length, 3, 'engineering/drainage word match only (PCL row has none)');
+assert.strictEqual(M.filterRecords(fr, { consult: true, ae: 'all' }, {}).length, 5, 'focus keeps qualification/engineering-RFP/Austin contract/PCL rows, drops construction and plain projects');
+assert.ok(!/(^|,)y(,|$)/.test(fids({ consult: true, ae: 'all' })));
+assert.strictEqual(M.filterRecords(fr, { consult: true, ae: 'all', rel: 'direct' }, {}).length, 1, 'Direct narrows to the drainage-keyword consultant row');
+assert.strictEqual(M.filterRecords(fr, { consult: true, ae: 'all', eng: true }, {}).length, 3, 'engineering/drainage word match only (PCL row has none)');
 assert.ok(M.filterRecords(fr, { rel: 'relevant' }, {}).some((r) => r.id === 'y'), 'without the focus the old behavior is unchanged');
 assert.ok(M.inHoustonArea({ agency: 'Harris County' }) && !M.inHoustonArea({ agency: 'City of Austin' }));
 const csvS = M.toCSV([bf1], [{ id: bf1.src, name: 'x' }]).trim().split('\r\n');
@@ -214,7 +214,7 @@ data.records.forEach((r) => {
   if (r.rel === 'none') assert.ok(r.src === 'txdot-pcl' || r.kind === 'solicitation' || r.kind === 'contract', 'only the projected-contracts list and consultant solicitations keep rows without a drainage word');
   if (r.kind === 'solicitation' || r.kind === 'contract') { assert.ok(r.status && r.solType && r.dateLabel, 'status/type/date label given ' + r.id); assert.strictEqual(r.lat, undefined, 'solicitations are not mapped'); assert.ok(r.eng === undefined || Array.isArray(r.eng), 'eng match list ' + r.id); }
 });
-['txdot-pi', 'coh-cip', 'coh-swmb', 'hcfcd-maint', 'austin-active', 'austin-contracts', 'sa-bids', 'bonfire-harriscountytx'].forEach((s) => assert.ok(data.records.some((r) => r.src === s), 'has records from ' + s));
+['txdot-pi', 'coh-cip', 'coh-swmb', 'hcfcd-maint', 'austin-active', 'austin-contracts', 'sa-bids', 'bonfire-harriscountytx', 'esbd', 'aggiebid', 'ctrma', 'bonfire-arlingtontx', 'bonfire-dentoncounty', 'bonfire-wilco', 'bonfire-ntmwd', 'bonfire-lcra', 'bonfire-sara-tx', 'bonfire-utexas'].forEach((s) => assert.ok(data.records.some((r) => r.src === s || (r.also || []).indexOf(s) >= 0), 'has records from ' + s));
 assert.ok(data.records.filter(M.isConsultant).length > 50, 'consultant-services focus is populated');
 
 // ---- page wiring
@@ -448,4 +448,5 @@ require('./test-filtersets.js');
   assert.ok(/cron: '30 2 \* \* 1'/.test(y) && /workflow_dispatch/.test(y) && /group: refresh-data/.test(y) && !/test\.js/.test(y) && /git pull --rebase origin main/.test(y) && !/--force/.test(y), 'weekly workflow: Sunday night, shared concurrency, independent of daily tests');
   assert.ok(!/build-newsletter-pdfs/.test(fs.readFileSync(path.join(dir, '..', '.github', 'workflows', 'refresh-opportunities.yml'), 'utf8')), 'daily run leaves PDFs to the weekly publish');
 }
+require('./test-wave1.js');
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');
