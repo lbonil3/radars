@@ -3,32 +3,53 @@
  "start": "2026-11-09",
  "end": "2026-11-15",
  "title": "Texas Intel weekly, 2026-W46 (Nov 9, 2026 to Nov 15, 2026)",
- "generatedAt": "2026-11-12T18:23:49.908Z",
+ "generatedAt": "2026-11-13T17:48:27.042Z",
  "final": false,
  "backfilled": false,
  "counts": {
-  "items": 6,
-  "houston": 3,
-  "other": 3
+  "items": 20,
+  "houston": 6,
+  "other": 14
  },
  "stats": {
-  "items": 6,
-  "newThisWeek": 6,
-  "houston": 3,
-  "grant": 2,
-  "flood": 4,
+  "items": 20,
+  "newThisWeek": 20,
+  "houston": 6,
+  "grant": 13,
+  "flood": 9,
   "mix": {
-   "budget": 1,
-   "bond": 1,
-   "grant": 1,
+   "budget": 5,
+   "bond": 3,
+   "grant": 7,
    "flood": 3,
    "water": 0,
-   "road": 0,
+   "road": 1,
    "policy": 0,
-   "agenda": 0
+   "agenda": 1
   }
  },
  "houston": [
+  {
+   "topic": "bond",
+   "label": "Bond program",
+   "total": 1,
+   "items": [
+    {
+     "id": "idkns39",
+     "title": "Request for approval of an award on the basis of low bid to P-ville, Incorporated (Primary) and Sago Solutions LLC (Secondary) in the amount of $1,008,860 for mowing and various maintenance services…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8320557&GUID=9E044E75-FC5D-4ADC-8C3E-B203F0D3EC45",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-11-09",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "bond",
+     "why": "Mentions “flood control”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "desc": "Contract - Award · Commissioners Court · 26-7726",
+     "score": 12
+    }
+   ]
+  },
   {
    "topic": "flood",
    "label": "Flood / drainage",
@@ -76,14 +97,70 @@
      "score": 6
     }
    ]
+  },
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 1,
+   "items": [
+    {
+     "id": "izpe77d",
+     "title": "Request for approval of a project scheduled for advertisement for professional engineering services vendor pool for traffic engineering services for the development and implementation of traffic &…",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8320554&GUID=207BB521-CA1D-4FEE-B7D0-45C420A2265A",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-11-09",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "desc": "Proposals/Bids · Commissioners Court · 26-7723",
+     "score": 10
+    }
+   ]
+  },
+  {
+   "topic": "agenda",
+   "label": "Council / commissioners action",
+   "total": 1,
+   "items": [
+    {
+     "id": "i1k7etc9",
+     "title": "Request for approval of a consent to assignment by Traffic Engineers, Inc. d/b/a TEI Planning + Design of all Engineering contracts, awards, and proposals to Alta Planning + Design, Inc.",
+     "link": "https://harriscountytx.legistar.com/LegislationDetail.aspx?ID=8320607&GUID=918B4059-04EB-4E7B-A2BA-6EA9669860AA",
+     "source": "Harris County Commissioners Court agenda items",
+     "date": "2026-11-09",
+     "place": "Harris County",
+     "region": "Houston region",
+     "topic": "agenda",
+     "why": "Mentions “engineering”, “design”.",
+     "hint": "Agenda action: read the item for scope, consultant and amount, and who the owner is buying from.",
+     "desc": "Contract - Amendment · Commissioners Court · 26-7728",
+     "score": 6
+    }
+   ]
   }
  ],
  "texas": [
   {
    "topic": "budget",
    "label": "Budget / CIP",
-   "total": 1,
+   "total": 5,
    "items": [
+    {
+     "id": "i19qmm5v",
+     "title": "(26-2840A) (Council District: 7) Authorize a professional services contract with Gresham Smith to provide engineering services for the design of Elsie Faye Heggins Transit Oriented Development (TOD)…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319706&GUID=7684E386-92E5-4A6D-941A-0D849A84FE11",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “engineering services”, “professional services”, “design”, “capital improvement”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3753A",
+     "score": 28
+    },
     {
      "id": "iq1mk8f",
      "title": "Discussion and action on a Resolution that the City Manager be authorized to sign an Agreement for Professional Services by and between the CITY OF EL PASO and PARKHILL, SMITH & COOPER, INC. D/B/A…",
@@ -97,14 +174,70 @@
      "hint": "Funding awarded: the recipient will likely procure engineering for the funded project.",
      "desc": "Other Business · City Council · 26-1287",
      "score": 14
+    },
+    {
+     "id": "imlqkry",
+     "title": "(26-3625A) (Council District: Citywide, Outside) Authorize an increase in the construction services contract with Archer Western Construction, LLC for additional work associated with major…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319698&GUID=857D2FCA-79E9-44A2-B864-A6ACAA02AE68",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”, “water treatment”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3725A",
+     "score": 10
+    },
+    {
+     "id": "i9d6vtl",
+     "title": "(26-3633A) (Council District: 2) Authorize an increase in the construction services contract with DDM Construction Corporation to (1) provide additional work items needed to complete the…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319707&GUID=1F755A9F-B795-4AE8-AED6-CD749FECD4D0",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “capital improvement”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3754A",
+     "score": 6
+    },
+    {
+     "id": "i16966rv",
+     "title": "(26-3605A) (Council District: Citywide) Authorize a twenty-four-month construction services contract for pavement repairs supporting water and wastewater repair and maintenance operations of the…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319697&GUID=23EA3C0A-A58D-46B7-B410-66F3A3797139",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "budget",
+     "why": "Mentions “wastewater”.",
+     "hint": "Budget / CIP signal: check the adopted CIP for drainage and utility lines and their design years.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3724A",
+     "score": 4
     }
    ]
   },
   {
    "topic": "bond",
    "label": "Bond program",
-   "total": 1,
+   "total": 2,
    "items": [
+    {
+     "id": "i211688",
+     "title": "(26-966A) (Council District: Citywide) Authorize an amendment to Resolution No. 26-1502, previously approved on September 23, 2026, for the 2026 On-Call Paving Contract with Grey Sky Construction…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319709&GUID=9ADB1D96-424A-40CD-A0F7-6FE9653BC0E9",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "bond",
+     "why": "Mentions “bond”.",
+     "hint": "Bond signal: bond-funded projects move to design; track the project list.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3756A",
+     "score": 4
+    },
     {
      "id": "i1jrbzw0",
      "title": "An Ordinance changing the zoning of a portion of Tract 32A and all of Tracts 32C, 32D, and 32E, Block 5, Upper Valley Surveys, 250 Lindbergh Avenue, City of El Paso, El Paso County, Texas from R-1…",
@@ -124,8 +257,50 @@
   {
    "topic": "grant",
    "label": "Grant / funding",
-   "total": 1,
+   "total": 7,
    "items": [
+    {
+     "id": "i1c3mtg9",
+     "title": "(26-3314A) (Council District: 1, 3) Authorize a professional services contract with Nathan D. Maier Consulting Engineers, Inc. to provide engineering services for storm drainage improvements at five…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319695&GUID=47DAA8EF-59A8-4E83-8EAD-810401C351C5",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-10",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “drainage”, “engineering services”, “professional services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3693A",
+     "score": 18
+    },
+    {
+     "id": "i130svh0",
+     "title": "(26-3428A) (Council District: 4) Authorize (1) deposit of the amount awarded by the Special Commissioners in the condemnation proceeding styled CITY OF DALLAS VS. JOHNIE WILSON, et al., Cause No.…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319696&GUID=C7C97BF2-EB4E-48BA-9CB8-0380D4839F09",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-10",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “flood control”, “culvert”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3694A",
+     "score": 16
+    },
+    {
+     "id": "i1c9v6cb",
+     "title": "(26-3322A) (Council District: 3,6) Authorize a three-year engineering services contract in an amount not to exceed $1,000,000.00 for the period December 9, 2026 through December 9, 2029, with two…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319715&GUID=C9BEA85D-EB25-4E6B-B436-1890CEB35227",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “engineering services”, “design”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3769A",
+     "score": 10
+    },
     {
      "id": "i4l9bc8",
      "title": "A public hearing to receive comments regarding a City Plan Commission authorized hearing to determine proper zoning on property zoned Planned Development District No. 621, the Old Trinity and Design…",
@@ -139,10 +314,55 @@
      "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
      "desc": "ZONING CASES - UNDER ADVISEMENT - INDIVIDUAL · Department of Planning and Development · 27-5A",
      "score": 10
+    },
+    {
+     "id": "i1j6p7oo",
+     "title": "(26-2728A) (Council District: 6) Authorize a three-year engineering services contract in an amount not to exceed $1,077,650.00 for the period December 9, 2026 through December 9, 2029, with two…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319714&GUID=6E9E21C5-EB62-4A68-A6F3-A2403FFF60B0",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “engineering services”.",
+     "hint": "Engineering contract action: shows who is buying and the scope; teaming or subconsulting may follow.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3764A",
+     "score": 8
+    },
+    {
+     "id": "i1txy989",
+     "title": "(26-1222A) (Council District: 8) Authorize an increase in the construction services contract with XIT Paving and Construction, Inc. to (1) provide additional work items needed to complete the…",
+     "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319704&GUID=558D658B-7C8F-43C5-99E9-1855B843C3E4",
+     "source": "City of Dallas agenda items",
+     "date": "2026-11-12",
+     "place": "Dallas",
+     "region": "Dallas–Fort Worth",
+     "topic": "grant",
+     "why": "Mentions “drainage”, “grant”.",
+     "hint": "Funding signal: grant-funded work often needs engineering for applications, BCA or design.",
+     "desc": "UPCOMING AGENDA ITEMS · Transportation and Infrastructure Committee · 26-3751A",
+     "score": 8
     }
    ]
   }
  ],
- "deadlines": [],
+ "deadlines": [
+  {
+   "date": "2029-12-09",
+   "what": "for the period December 9, 2026 through December 9, 2029",
+   "id": "i1c9v6cb",
+   "title": "(26-3322A) (Council District: 3,6) Authorize a three-year engineering services contract in an amount not to exceed $1,000,000.00 for the period December 9, 2026 through December 9, 2029, with two…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319715&GUID=C9BEA85D-EB25-4E6B-B436-1890CEB35227",
+   "source": "City of Dallas agenda items"
+  },
+  {
+   "date": "2029-12-09",
+   "what": "for the period December 9, 2026 through December 9, 2029",
+   "id": "i1j6p7oo",
+   "title": "(26-2728A) (Council District: 6) Authorize a three-year engineering services contract in an amount not to exceed $1,077,650.00 for the period December 9, 2026 through December 9, 2029, with two…",
+   "link": "https://cityofdallas.legistar.com/LegislationDetail.aspx?ID=8319714&GUID=6E9E21C5-EB62-4A68-A6F3-A2403FFF60B0",
+   "source": "City of Dallas agenda items"
+  }
+ ],
  "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
 }
