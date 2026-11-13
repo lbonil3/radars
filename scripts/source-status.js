@@ -8,6 +8,7 @@ const fs = require('fs');
 const FAIL_DAYS = 7;
 function classify(st, lastSuccess, now) {
   if (st.status === 'ok') return 'fresh';
+  if (st.status === 'blocked by site') return 'blocked by site';
   if (st.status === 'skipped' || st.status === 'disabled') return st.status;
   if (!st.kept) return 'failing';
   if (lastSuccess && (now - Date.parse(lastSuccess)) > FAIL_DAYS * 864e5) return 'failing';
@@ -23,7 +24,7 @@ function build(statuses, prev, group, nowIso) {
     const lastSuccess = off ? (p.lastSuccess || null) : s.status === 'ok' ? (s.fetchedAt || new Date(now).toISOString()) : (p.lastSuccess || s.fetchedAt || null);
     const health = classify(s, lastSuccess, now);
     return { id: s.id, name: s.name, agency: s.agency || null, group: group, health: health, lastAttempt: new Date(now).toISOString(), lastSuccess: lastSuccess, records: s.kept || 0, fetched: s.fetched || 0,
-      error: health === 'fresh' ? null : off ? (/api.?key/i.test(s.note || '') ? 'Turned off: needs an API key that is not configured' : 'Turned off for this run') : (s.error || null), failingSince: health === 'stale' || health === 'failing' ? (p.failingSince || new Date(now).toISOString()) : null };
+      error: health === 'fresh' ? null : health === 'blocked by site' ? (s.note || s.error || 'Blocked by site') : off ? (/api.?key/i.test(s.note || '') ? 'Turned off: needs an API key that is not configured' : 'Turned off for this run') : (s.error || null), failingSince: health === 'stale' || health === 'failing' ? (p.failingSince || new Date(now).toISOString()) : null };
   });
   const c = { fresh: 0, stale: 0, failing: 0, skipped: 0, disabled: 0 }; sources.forEach((s) => { c[s.health] = (c[s.health] || 0) + 1; });
   return { generatedAt: new Date(now).toISOString(), group: group, counts: c, sources: sources };

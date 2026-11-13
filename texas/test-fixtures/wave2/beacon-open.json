@@ -1,0 +1,36 @@
+{
+  "data": {
+    "solicitations": {
+      "total": 29,
+      "data": [
+        {
+          "id": "7d9c5454-1d54-4630-8649-03128f4eff91",
+          "title": "Pre-Qualification Pool for Professional Engineering Services",
+          "refnum": "RFQ-2026-0010",
+          "type": "Professional Engineering - RFQ",
+          "status": "approved",
+          "dueDate": { "utcDate": "2026-11-19T22:00:00.000Z", "specifiedZone": "America/Chicago" },
+          "issueDate": { "utcDate": "2026-10-30T15:00:00.000Z", "specifiedZone": "America/Chicago" }
+        },
+        {
+          "id": "7acd4226-8d3b-41a9-adfe-1cc17badffbb",
+          "title": "OST/Griggs Area Drainage and Paving Improvements",
+          "refnum": "PES-2026-0012",
+          "type": "Professional Engineering - RFQ",
+          "status": "approved",
+          "dueDate": { "utcDate": "2026-12-03T22:00:00.000Z", "specifiedZone": "America/Chicago" },
+          "issueDate": { "utcDate": "2026-10-30T13:00:00.000Z", "specifiedZone": "America/Chicago" }
+        },
+        {
+          "id": "3c959867-2762-47ef-a7ea-e72cb82ecae7",
+          "title": "Voluntary Dental Insurance Program",
+          "refnum": "RFP-2026-0019",
+          "type": "Request for Proposals",
+          "status": "approved",
+          "dueDate": { "utcDate": "2026-12-17T22:00:00.000Z", "specifiedZone": "America/Chicago" },
+          "issueDate": { "utcDate": "2026-11-06T14:00:00.000Z", "specifiedZone": "America/Chicago" }
+        }
+      ]
+    }
+  }
+}

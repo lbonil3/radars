@@ -4,10 +4,10 @@ const fs = require('fs'), path = require('path');
 const C = require('./cache.js');
 const root = path.resolve(__dirname, '..');
 
-assert.strictEqual(C.VERSION, 24);
-assert.strictEqual(C.name('national'), 'radars-national-v24');
-assert.strictEqual(C.name('texas'), 'radars-texas-v24');
-assert.strictEqual(C.name('home'), 'radars-home-v24');
+assert.strictEqual(C.VERSION, 25);
+assert.strictEqual(C.name('national'), 'radars-national-v25');
+assert.strictEqual(C.name('texas'), 'radars-texas-v25');
+assert.strictEqual(C.name('home'), 'radars-home-v25');
 
 function appDir(app) {
   if (app === 'national') return path.join(root, 'national');

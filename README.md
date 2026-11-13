@@ -25,7 +25,7 @@ Vanilla JS, no build step, no dependencies. The landing page is `index.html`; ea
 
 Daily refresh workflows are installed in `.github/workflows/` (refresh-national.yml, refresh-opportunities.yml; daily + manual). The original templates remain at:
 `national/workflow/refresh-national.yml` and `texas/workflow/refresh-opportunities.yml`
-(kept for reference). Optional secret `SAM_API_KEY` for the SAM.gov API path.
+(kept for reference). Optional secret `SAM_API_KEY` for the National Radar SAM.gov API path (that adapter is still not written; the public extract is used). Paid sources are not used. A free API key or login, when a source needs one, is stored as a GitHub Actions secret and is not written into the site. Texas Opportunity does not collect SAM.gov; that source was dropped by the owner.
 
 ## Tests
 

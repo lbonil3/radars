@@ -13,7 +13,7 @@ const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = 
   assert.strictEqual(by.c.health, 'fresh'); assert.strictEqual(by.c.error, null); assert.strictEqual(by.d.health, 'failing'); assert.strictEqual(by.e.health, 'disabled');
   const h = V4.health([o, { group: 'national', sources: [{ id: 'z', health: 'fresh' }] }]);
   assert.strictEqual(h.bad.length, 3); assert.strictEqual(h.counts.fresh, 2); assert.strictEqual(h.counts.off, 1);
-  ['national/data/source-status.json', 'texas/data/source-status.json'].forEach((f) => { const j = JSON.parse(fs.readFileSync(path.join(__dirname, '..', f), 'utf8')); assert.ok(Array.isArray(j.sources) && j.sources.length > 5 && j.sources.every((s) => ['fresh', 'stale', 'failing', 'disabled', 'skipped'].indexOf(s.health) >= 0 && 'lastSuccess' in s && 'records' in s), f + ' shape'); });
+  ['national/data/source-status.json', 'texas/data/source-status.json'].forEach((f) => { const j = JSON.parse(fs.readFileSync(path.join(__dirname, '..', f), 'utf8')); assert.ok(Array.isArray(j.sources) && j.sources.length > 5 && j.sources.every((s) => ['fresh', 'stale', 'failing', 'disabled', 'skipped', 'blocked by site'].indexOf(s.health) >= 0 && 'lastSuccess' in s && 'records' in s), f + ' shape'); });
   assert.ok(html.includes('id="srcHealth"') && html.includes('id="healthDot"') && html.includes('id="healthWarn"') && html.includes('src="v4.js"'), 'health view, dot and v4.js');
   assert.ok(/data\/source-status\.json/.test(app) && /\.\.\/texas\/data\/source-status\.json/.test(app), 'loads both status files');
   assert.ok(Cache.files('national').indexOf('./v4.js') >= 0 && Cache.files('national').indexOf('./data/source-status.json') >= 0, 'sw caches v4 files');

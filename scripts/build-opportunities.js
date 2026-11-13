@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-/* Builds texas/data/opportunities.json from public feeds. No API keys. Node 18+ (global fetch).
+/* Builds texas/data/opportunities.json from public feeds. Node 18+ (global fetch).
+   Paid sources are not used. A free API key, if a later source needs one, is an environment variable and is never written into the snapshot.
    Run by hand (`node scripts/build-opportunities.js`) or from the scheduled workflow.
    Each source is isolated: if one fails, its previous records are kept (status "stale") and the others still update.
    Nothing is invented: only fields the sources return are used. */
@@ -15,7 +16,7 @@ const UA = 'Mozilla/5.0 (compatible; radars-opportunity/1.1; daily public-data r
 
 // Polite fetching: requests are serialized (one at a time, sources run in order), hosts that rate-limit get a
 // jittered minimum gap between calls, and HTTP 429/503 are retried with backoff that honors Retry-After.
-const HOST_GAP_MS = { 'bonfirehub.com': 8000 }; // Bonfire answered HTTP 429 to back-to-back portal calls from shared runners
+const HOST_GAP_MS = { 'bonfirehub.com': 8000, 'bidnetdirect.com': 1500 }; // Bonfire answered HTTP 429 to back-to-back portal calls; BidNet is paged one public list at a time
 const lastHit = {};
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const jitter = (ms) => Math.round(ms * (0.75 + Math.random() * 0.5));
@@ -64,6 +65,65 @@ async function postJson(url, body, opts) {
     }
   }
   throw lastErr;
+}
+function blockedNote(who, detail) {
+  return who + ' answered with a block' + (detail ? ' (' + detail + ')' : '') + '. The adapter does not try to get around it.';
+}
+async function readPage(url) {
+  let text;
+  try { text = await get(url); }
+  catch (e) {
+    if (e && (e.status === 403 || e.status === 401)) { const err = new Error('blocked'); err.blocked = true; err.status = e.status; throw err; }
+    throw e;
+  }
+  if (M.isSiteChallenge(text)) { const err = new Error('blocked'); err.blocked = true; err.status = 403; throw err; }
+  return text;
+}
+async function beaconOpenPage(start) {
+  const query = 'query ListSolicitations($agencyTag: String, $status: String, $start: Int, $pageSize: Int) { solicitations(agencyTag: $agencyTag, status: $status, start: $start, pageSize: $pageSize) { total data { id title refnum type status dueDate issueDate } } }';
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), 90000);
+  let res, text;
+  try {
+    res = await fetch('https://www.beaconbid.com/api/gql?operation=ListSolicitations', {
+      method: 'POST',
+      headers: { 'user-agent': UA, accept: 'application/json', 'content-type': 'application/json' },
+      body: JSON.stringify({ operationName: 'ListSolicitations', query: query, variables: { agencyTag: 'city-of-houston', status: 'open', start: start, pageSize: 100 } }),
+      signal: ctl.signal, redirect: 'follow'
+    });
+    text = await res.text();
+  } finally { clearTimeout(t); }
+  if (res.status === 403 || res.status === 401 || M.isSiteChallenge(text)) return { blocked: true, status: res.status };
+  if (!res.ok) throw new Error('HTTP ' + res.status + ' for beaconbid.com open solicitations');
+  const parsed = M.parseBeaconOpen(text);
+  if (!parsed) throw new Error('Beacon open list was not the solicitations JSON');
+  return { parsed: parsed };
+}
+async function bidnetBoard(startUrl, agency, src) {
+  let first;
+  try { first = await readPage(startUrl); }
+  catch (e) { if (e.blocked) return { status: 'blocked by site', note: blockedNote(agency + ' on BidNet', 'HTTP ' + (e.status || 403)) }; throw e; }
+  if (!/sol-info-container|simpleResultsNumResults|Open Solicitations/i.test(first)) throw new Error('BidNet open list not found (page layout may have changed)');
+  const pages = [first];
+  const pageable = /\/solicitations\/open-bids\/?$/.test(startUrl.replace(/\?.*$/, ''));
+  let max = 1;
+  if (pageable) { const re = /\/solicitations\/open-bids\/page(\d+)/g; let m; while ((m = re.exec(first))) max = Math.max(max, +m[1]); max = Math.min(max, 100); }
+  const base = startUrl.replace(/\?.*$/, '').replace(/\/page\d+\/?$/, '').replace(/\/$/, '');
+  for (let n = 2; n <= max; n++) {
+    if (n === 2 || n % 10 === 0 || n === max) console.log('  bidnet', agency, 'page', n, 'of', max);
+    let html;
+    try { html = await readPage(base + '/page' + n); }
+    catch (e) { if (e.blocked) return { status: 'blocked by site', note: blockedNote(agency + ' on BidNet', 'HTTP ' + (e.status || 403) + ' on page ' + n) }; throw e; }
+    if (!/sol-info-container|simpleResultsNumResults/i.test(html)) throw new Error('BidNet page ' + n + ' had no solicitation list');
+    pages.push(html);
+  }
+  let listed = 0; const recs = []; const seen = {};
+  pages.forEach((html) => {
+    const part = M.parseBidNet(html, agency, startUrl, src);
+    listed += part.listed || 0;
+    part.forEach((r) => { if (seen[r.id]) return; seen[r.id] = 1; recs.push(r); });
+  });
+  return { fetched: listed, recs: recs, note: 'Public BidNet titles for ' + agency + ': ' + listed + ' listed across ' + pages.length + ' page(s), ' + recs.length + (recs.length === 1 ? ' is' : ' are') + ' A/E consultant work. No login.' };
 }
 async function getJson(url) {
   const body = await get(url, { accept: 'application/json' });
@@ -274,7 +334,36 @@ const SOURCES = [
       const recs = M.parseCtrma(html);
       if (!recs.length) throw new Error('no CTRMA rows parsed (page layout may have changed)');
       return { fetched: recs.length, recs, note: 'Engineering and Construction tables, plus awarded rows whose type is engineering work. Awarded rows are past. A stage that says forthcoming is a forecast. ' + recs.filter(M.isConsultant).length + ' are in the Consultant services focus.' };
-    } }
+    } },
+  { id: 'ntta', name: 'NTTA Marketplace open bids (public list; A/E consultant rows only)', agency: 'NTTA', type: 'Snapshot (HTML of the public open-bids table; no login)', page: M.NTTA_PAGE,
+    run: async () => {
+      let html;
+      try { html = await readPage(M.NTTA_PAGE); }
+      catch (e) { if (e.blocked) return { status: 'blocked by site', note: blockedNote('NTTA Marketplace', 'HTTP ' + (e.status || 403)) }; throw e; }
+      if (!/bidResultId_data/.test(html)) throw new Error('NTTA open-bids table not found (page layout may have changed)');
+      const recs = M.parseNtta(html);
+      return { fetched: recs.listed, recs, note: 'Open bids on NTTA Marketplace: ' + recs.listed + ' listed, ' + recs.length + ' are A/E consultant work. Buyer names are not copied.' };
+    } },
+  { id: 'houston-beacon', name: 'City of Houston open solicitations (Beacon Bid public list; A/E consultant rows only)', agency: 'City of Houston', type: 'Snapshot (JSON the public open-list page loads; no login)', page: 'https://www.beaconbid.com/solicitations/city-of-houston/open',
+    run: async () => {
+      let start = 0, listed = 0, total = 0; const recs = []; const seen = {};
+      for (let i = 0; i < 3; i++) {
+        const page = await beaconOpenPage(start);
+        if (page.blocked) return { status: 'blocked by site', note: blockedNote('City of Houston Beacon Bid', page.status === 403 || page.status === 401 ? 'HTTP ' + page.status : 'verification page') };
+        total = page.parsed.total;
+        listed += page.parsed.listed;
+        page.parsed.forEach((r) => { if (seen[r.id]) return; seen[r.id] = 1; recs.push(r); });
+        if (listed >= total || !page.parsed.listed) break;
+        start += page.parsed.listed;
+      }
+      return { fetched: total || listed, recs, note: 'Open solicitations on Beacon Bid for the City of Houston: ' + (total || listed) + ' listed, ' + recs.length + ' are A/E consultant work. Contacts are not requested. A verification page stops this source.' };
+    } },
+  { id: 'bidnet-travis', name: 'Travis County open solicitations (BidNet Direct public titles)', agency: 'Travis County', type: 'Snapshot (HTML of the public board; no login)', page: 'https://www.bidnetdirect.com/texas/traviscounty',
+    run: () => bidnetBoard('https://www.bidnetdirect.com/texas/traviscounty', 'Travis County', 'bidnet-travis') },
+  { id: 'bidnet-dallas', name: 'Dallas County open solicitations (BidNet Direct public titles)', agency: 'Dallas County', type: 'Snapshot (HTML of the public board; no login)', page: 'https://www.bidnetdirect.com/texas/dallas-county',
+    run: () => bidnetBoard('https://www.bidnetdirect.com/texas/dallas-county', 'Dallas County', 'bidnet-dallas') },
+  { id: 'bidnet-tpg', name: 'Texas Purchasing Group open solicitations (BidNet Direct public board)', agency: 'Texas Purchasing Group', type: 'Snapshot (HTML of the public open-bids pages; no login)', page: 'https://www.bidnetdirect.com/texas/solicitations/open-bids',
+    run: () => bidnetBoard('https://www.bidnetdirect.com/texas/solicitations/open-bids', 'Texas Purchasing Group', 'bidnet-tpg') }
 ].concat(M.BONFIRE_PORTALS.map((p) => ({ id: 'bonfire-' + p.sub, name: p.agency + ' open solicitations (Bonfire portal ' + p.sub + '.bonfirehub.com, the portal\'s own public JSON list)', agency: p.agency, type: 'Snapshot (undocumented public JSON the portal page itself loads; robots.txt allows; no login)', page: 'https://' + p.sub + '.bonfirehub.com/portal/?tab=openOpportunities',
   run: async () => {
     const j = JSON.parse(await get('https://' + p.sub + '.bonfirehub.com/PublicPortal/getOpenPublicOpportunitiesSectionData', { accept: 'application/json' }));
@@ -294,9 +383,17 @@ async function main() {
     const t0 = Date.now(); const st = { id: s.id, name: s.name, agency: s.agency, type: s.type, page: s.page };
     try {
       const r = await s.run(ctx);
+      if (r && r.status === 'blocked by site') {
+        const old = prev ? prev.records.filter((x) => x.src === s.id) : [];
+        const ost = prev ? (prev.sources || []).find((x) => x.id === s.id) : null;
+        st.status = 'blocked by site'; st.fetched = r.fetched || 0; st.kept = old.length; st.fetchedAt = ost ? ost.fetchedAt : null; st.error = null;
+        st.note = r.note + (old.length ? ' Showing records from the previous successful run.' : '');
+        ctx.records.push(...old);
+      } else {
       st.status = 'ok'; st.fetched = r.fetched; st.kept = r.recs.length; st.note = r.note; st.fetchedAt = new Date().toISOString();
       if (r.joined !== undefined) st.joined = r.joined;
       ctx.records.push(...r.recs);
+      }
     } catch (e) {
       const old = prev ? prev.records.filter((x) => x.src === s.id) : [];
       const ost = prev ? (prev.sources || []).find((x) => x.id === s.id) : null;
