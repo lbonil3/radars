@@ -5,7 +5,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
   var VERSION = 22;
-  var SHARED = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'capture.js', 'shell.css', 'cache.js'];
+  var SHARED = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'weekly.js', 'capture.js', 'shell.css', 'cache.js'];
   function shared(prefix) { return SHARED.map(function (f) { return prefix + f; }); }
   function name(app) {
     var prefix = app === 'texas' ? 'radars-texas-' : app === 'home' ? 'radars-home-' : 'radars-national-';
@@ -18,7 +18,7 @@
     if (app === 'texas') {
       return ['./', './index.html', './style.css', './magazine.css', './app.js', './model.js', './map.js', './intel.js', './intel-ui.js', './newsletter.js', './magazine.js', './texas-geo.js', './data/opportunities.json', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'].concat(shared('../shared/'));
     }
-    return ['./', './index.html', './style.css', './proj.js', './us-geo.js', './v2.js', './v4.js', './combined.js', './weekly.js', './v6.js', './model.js', './cost.js', './roadway.js', './pse.js', './sources.js', './app.js', './data/national.json', './data/roadway.json', './data/pse.json', './data/cost-prices.json', './data/source-status.json', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'].concat(shared('../shared/'));
+    return ['./', './index.html', './style.css', './proj.js', './us-geo.js', './v2.js', './v4.js', './combined.js', './v6.js', './model.js', './cost.js', './roadway.js', './pse.js', './sources.js', './app.js', './data/national.json', './data/roadway.json', './data/pse.json', './data/cost-prices.json', './data/source-status.json', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'].concat(shared('../shared/'));
   }
   return { VERSION: VERSION, name: name, files: files };
 });

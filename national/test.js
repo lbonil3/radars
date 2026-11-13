@@ -212,7 +212,6 @@ require('./test-v2.js');
 require('./test-v4.js');
 require('./test-ui.js');
 require('./test-v5.js');
-require('./test-weekly.js');
 require('./test-v6.js');
 require('./test-shell.js');
 require('./test-dormant.js');
