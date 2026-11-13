@@ -26,8 +26,8 @@ assert.deepStrictEqual(pr, V2.pursuitRows(watch, cap, (id) => snaps[id], T, CP),
 const V4 = require('../national/v4.js');
 const ev = [{ uid: 'due-x', date: '2026-11-20', title: 'Due: X, Y', desc: 'a\nb', url: 'https://example.test/x', alarms: ['P7D', 'P1D'] }];
 assert.strictEqual(W.ics(ev, '2026-10-29T12:00:00.000Z', 'National Radar: My pursuits'), V4.ics(ev, '2026-10-29T12:00:00.000Z', 'National Radar: My pursuits'), 'National .ics unchanged');
-const tx = W.ics(ev, '2026-10-29T12:00:00.000Z', 'Texas Radar: My pursuits', 'Texas Radar');
-assert.ok(tx.includes('PRODID:-//Texas Radar//Pursuits//EN') && tx.includes('UID:due-x@texas-radar') && tx.includes('X-WR-CALNAME:Texas Radar: My pursuits') && tx.includes('TRIGGER:-P7D') && tx.includes('TRIGGER:-P1D'));
+const tx = W.ics(ev, '2026-10-29T12:00:00.000Z', 'Texas Opportunity: My pursuits', 'Texas Opportunity');
+assert.ok(tx.includes('PRODID:-//Texas Opportunity//Pursuits//EN') && tx.includes('UID:due-x@texas-opportunity') && tx.includes('X-WR-CALNAME:Texas Opportunity: My pursuits') && tx.includes('TRIGGER:-P7D') && tx.includes('TRIGGER:-P1D'));
 const de = W.dueEvents([{ id: 'p', cap: { due: '2026-11-19', decision: 'Go', next: 'Call' }, snap: { title: 'Lamar', agency: 'City of Austin', url: 'https://example.test/p' }, dueFrom: 'source' }, { id: 'q', cap: { due: '' }, snap: { title: 'No date' } }]);
 assert.strictEqual(de.length, 1, 'rows without a due date make no event');
 assert.ok(de[0].uid === 'due-p' && de[0].date === '2026-11-19' && de[0].title === 'Due: Lamar' && /Next action: Call/.test(de[0].desc) && /Decision: Go/.test(de[0].desc) && /stated by the source/.test(de[0].desc));
@@ -38,13 +38,13 @@ const ids = ['weekly', 'wkBody', 'wkHint', 'wkClose', 'wkPrint', 'wkShare', 'wkC
 const docL = {}, doc = { body: el('body'), getElementById: (i) => E[i] || null, addEventListener: (t, f) => { docL[t] = f; } };
 const winL = {}, saved = [], toasts = [];
 const win = { navigator: {}, addEventListener: (t, f) => { winL[t] = f; }, setTimeout: (f) => f() };
-const sheet = W.bindSheet({ doc, win, model: () => md, fileName: (ext) => 'texas-radar-weekly-' + T + '.' + ext, back: 'btnPurPrint', toast: (x) => toasts.push(x), download: (...a) => saved.push(a) });
+const sheet = W.bindSheet({ doc, win, model: () => md, fileName: (ext) => 'texas-opportunity-weekly-' + T + '.' + ext, back: 'btnPurPrint', toast: (x) => toasts.push(x), download: (...a) => saved.push(a) });
 sheet.open();
 assert.ok(!E.weekly.hidden && doc.body.classList.contains('wk-open') && E.wkBody.innerHTML.includes('My pursuits') && E.wkShare.hidden && E.wkClose.focused, 'open: sheet shown, Share hidden without navigator.share');
 E.wkPrint.l.click();
 assert.ok(/Printing is not available here/.test(E.wkHint.textContent), 'no window.print: a plain hint, no error');
 E.wkDl.l.click();
-assert.deepStrictEqual(saved[0].slice(0, 2), ['texas-radar-weekly-2026-10-29.html', 'text/html;charset=utf-8']); assert.ok(/^<!doctype html>/.test(saved[0][2]) && saved[0][3] === false);
+assert.deepStrictEqual(saved[0].slice(0, 2), ['texas-opportunity-weekly-2026-10-29.html', 'text/html;charset=utf-8']); assert.ok(/^<!doctype html>/.test(saved[0][2]) && saved[0][3] === false);
 docL.keydown({ key: 'Escape' });
 assert.ok(E.weekly.hidden && !doc.body.classList.contains('wk-open') && E.btnPurPrint.focused, 'Escape closes and returns focus');
 let printed = 0; win.print = () => { printed++; }; sheet.print();

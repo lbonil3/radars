@@ -107,6 +107,8 @@ select{min-height:44px;border-radius:10px;border:1px solid var(--line);backgroun
 .tabs .tabmore button{flex:none;min-height:44px;text-align:left;padding:0 12px;border-radius:10px;font-size:14px}
 .tabs .tabmore button.on{background:rgba(94,234,212,.14);box-shadow:none}
 .tml{display:block;font-size:10px;font-weight:500;color:var(--acc)}.tml:empty{display:none}
+#v-pursuits .purhead,#v-pursuits>.note{padding:0 calc(14px + env(safe-area-inset-right)) 0 calc(14px + env(safe-area-inset-left))}
+#purList h3{grid-column:1 / -1;margin:10px 0 2px;font-size:14px;color:var(--dim)}
 .txminidet{margin:6px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
 .txminidet>summary{min-height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;cursor:pointer;margin:0}
 .txminidet .chips{padding:6px 12px 10px}

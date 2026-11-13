@@ -249,6 +249,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
 }
 // Radar 2.0 shell: List is the default view, Map is one tap away, the last view is remembered (texas.tab)
 require('./test-shell.js');
+require('./test-pursuits.js');
 
 // ---- Intel (news and planning signals)
 {

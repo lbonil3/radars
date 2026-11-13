@@ -151,6 +151,13 @@ window.RadarLoadError=function(name){
     </div>
   </section>
 
+  <section id="v-pursuits" class="view" hidden aria-label="My pursuits">
+    <div class="purhead"><h2>My pursuits <span class="hint" id="purWeek"></span></h2>
+      <div class="purbtns"><button type="button" class="btn small" id="btnPurPrint">Print weekly list</button><button type="button" class="btn small" id="btnPurCsv">Export CSV</button><button type="button" class="btn small" id="btnPurIcs">Add to calendar (.ics)</button></div></div>
+    <p class="note">Starred records, sorted by your due date, or by the source's closing date for a solicitation when you have not set one. Go / No-go, due date, next action and notes are your notes on this device.</p>
+    <div id="purList" class="cards"></div>
+  </section>
+
   <section id="v-intel" class="view" hidden aria-label="Intel: news and planning signals">
     <div class="idisc" role="note"><b>News and planning signals, not solicitations.</b> Items are collected automatically from public news feeds and agenda systems and tagged by keyword. They are not verified and may be incomplete; check the original source before acting.</div>
     <div class="seg imode" id="inMode" role="group" aria-label="Intel view"><button type="button" data-imode="feed" class="on">Feed</button><button type="button" data-imode="news">Weekly newsletter</button></div>
@@ -199,6 +206,7 @@ window.RadarLoadError=function(name){
 <nav class="tabs" aria-label="Views">
   <button type="button" data-tab="list" class="on">List</button>
   <button type="button" data-tab="map">Map</button>
+  <button type="button" data-tab="pursuits">Pursuits<span class="tbadge" id="purBadge" hidden></span></button>
   <button type="button" data-tab="intel">Intel<span class="tbadge" id="intelBadge" hidden></span></button>
   <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More<span id="tabMoreLbl" class="tml"></span></button>
   <div class="tabmore" id="tabMore" role="menu" hidden>
@@ -216,12 +224,19 @@ window.RadarLoadError=function(name){
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div id="weekly" class="wk-sheet" hidden role="dialog" aria-modal="true" aria-label="Weekly list">
+  <div class="wk-bar"><b class="wk-bt">Weekly list</b><button type="button" class="wk-btn" id="wkClose">Close</button>
+    <div class="wk-acts"><button type="button" class="wk-btn pri" id="wkPrint">Print / Save as PDF</button><button type="button" class="wk-btn" id="wkShare">Share</button><button type="button" class="wk-btn" id="wkCopy">Copy text</button><button type="button" class="wk-btn" id="wkDl">Download</button></div>
+    <p class="wk-hint" id="wkHint"></p></div>
+  <div id="wkBody" class="wk-doc"></div>
+</div>
 
 <script src="../shared/storage.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/theme.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/filters.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/shell.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/capture.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/weekly.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="texas-geo.js"></script>
 <script src="model.js"></script>
 <script src="map.js"></script>

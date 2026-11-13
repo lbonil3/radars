@@ -263,7 +263,7 @@
       '<li>Costs are what the agency lists (usually construction cost, not design fee). The label on each record says which.</li></ul>';
   }
   function renderAll() {
-    renderKpis(); renderFilters(); renderLegend(); renderMap(); renderAgencies(); renderTimeline(); renderList(); renderCapBar(); renderSources();
+    renderKpis(); renderFilters(); renderLegend(); renderMap(); renderAgencies(); renderTimeline(); renderList(); renderCapBar(); renderSources(); renderPursuits(); renderPurBadge();
     var fresh = state.data ? state.data.generatedAt : null;
     if (fresh) {
       var ageH = (Date.now() - Date.parse(fresh)) / 3600000;
@@ -321,6 +321,34 @@
   function capDownload(name, type, text, bom) { var blob = new Blob([(bom ? '\ufeff' : '') + text], { type: type }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
   function capRows() { return Object.keys(state.watch).map(function (id) { var sn = snapFor(id) || { title: id }; return { id: id, cap: capOf(id), snap: sn }; }); }
   function exportCapCsv() { var rows = CP.sortRows(capRows(), state.sort === 'decision' ? 'decision' : 'due'); if (!rows.length) { toast('The watchlist is empty.'); return; } capDownload('texas-opportunity-capture-' + todayCentral() + '.csv', 'text/csv;charset=utf-8', CP.toCSV(rows, todayCentral()), true); toast('Exported ' + rows.length + ' capture file(s).'); }
+  // ---------- My pursuits: starred records by due date, weekly list and calendar (shared/weekly.js) ----------
+  function purRows() { // a solicitation's closing date stands in when the capture file has no due date
+    var caps = {}; Object.keys(state.watch).forEach(function (id) { var c = capOf(id), r = state.byId[id]; if (!c.due && r && r.kind === 'solicitation' && r.date) c = Object.assign({}, c, { due: r.date }); caps[id] = c; });
+    return RadarWeekly.pursuitRows(state.watch, caps, snapFor, todayCentral(), CP).map(function (row) { if (!capOf(row.id).due && row.cap.due) row.dueFrom = 'source'; return row; });
+  }
+  function renderPurBadge() { var n = purRows().filter(function (r) { return r.flag === 'overdue' || r.flag === 'soon'; }).length, b = $('purBadge'); b.hidden = !n; b.textContent = n; }
+  function purItem(r) {
+    var c = r.cap, sn = r.snap || {}, t = todayCentral();
+    var due = c.due ? '<span class="cdue ' + r.flag + '">' + (r.flag === 'overdue' ? '&#9888; ' : r.flag === 'soon' ? '&#9873; ' : '') + esc(CP.dueText(c.due, t)) + ' &middot; ' + esc(M.fmtDate(c.due)) + (r.dueFrom === 'source' ? ' (closing date from the source)' : '') + '</span>' : '<span class="cdue none">No due date</span>';
+    return '<div class="card pur ' + r.flag + '" style="--c:' + (r.flag === 'overdue' ? 'var(--bad)' : r.flag === 'soon' ? 'var(--warn)' : 'var(--acc)') + '" data-id="' + esc(r.id) + '" role="button" tabindex="0">' +
+      '<button type="button" class="star on" data-star="' + esc(r.id) + '" aria-label="Remove from watchlist">&#9733;</button><div class="b"><div class="t">' + esc(sn.title || r.id) + '</div>' +
+      '<div class="m"><span>' + esc(sn.agency || '') + '</span></div>' +
+      '<div class="purcap"><span class="cdec ' + c.decision.replace(/[^a-z]/gi, '').toLowerCase() + '">' + esc(c.decision) + '</span>' + due + (c.next ? '<span class="cnext">Next: ' + esc(c.next) + '</span>' : '') + '</div>' +
+      (c.notes ? '<p class="note purnotes">' + esc(c.notes.length > 240 ? c.notes.slice(0, 240) + '…' : c.notes) + '</p>' : '') + '</div></div>';
+  }
+  function renderPursuits() {
+    var rows = purRows(), wk = rows.filter(function (r) { return r.week; }), rest = rows.filter(function (r) { return !r.week; });
+    $('purWeek').textContent = 'week of ' + M.fmtDate(todayCentral());
+    $('purList').innerHTML = rows.length ? (wk.length ? '<h3>This week: overdue or due within 7 days (' + wk.length + ')</h3>' + wk.map(purItem).join('') : '<p class="note">Nothing overdue or due in the next 7 days.</p>') + (rest.length ? '<h3>Later or no due date (' + rest.length + ')</h3>' + rest.map(purItem).join('') : '')
+      : '<p class="note">No pursuits yet. Star a record (&#9734;) in the List or Map to start a capture file; it shows up here with its due date, Go / No-go and next action.</p>';
+  }
+  function exportPursuitIcs() {
+    var ev = RadarWeekly.dueEvents(purRows());
+    if (!ev.length) { toast('No due dates yet: add a due date in a capture file, or star a solicitation that states a closing date.'); return; }
+    capDownload('texas-opportunity-pursuits.ics', 'text/calendar', RadarWeekly.ics(ev, new Date().toISOString(), 'Texas Opportunity: My pursuits', 'Texas Opportunity'), false);
+    toast(ev.length + ' calendar event' + (ev.length === 1 ? '' : 's') + ' saved, with reminders 1 week and 1 day before each due date.');
+  }
+  var WKS = null;
   function exportBackup() {
     var ids = Object.keys(state.watch); if (!ids.length) { toast('The watchlist is empty, nothing to back up.'); return; }
     var caps = {}; ids.forEach(function (id) { var c = capOf(id); if (!c.snap) c.snap = snapFor(id) || undefined; caps[id] = c; });
@@ -425,6 +453,7 @@
     if (t === 'intel' && window.TXIntelUI) window.TXIntelUI.onShow();
     placeMap();
     if (t === 'timeline') scrollTimeline();
+    if (t === 'pursuits') renderPursuits();
     window.scrollTo(0, 0);
   }
   function toggleIn(arr, v) { var i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); }
@@ -447,7 +476,7 @@
     if ((el = t.closest('[data-view]'))) { if (map) map.fit(el.getAttribute('data-view')); return; }
   }
   function init() {
-    SHELL = window.RadarShell.bind({ app: 'texas', doc: document, ls: window.localStorage, media: window.matchMedia ? window.matchMedia(window.RadarShell.QUERY) : null, tabs: ['list', 'map', 'intel'], more: ['timeline', 'agencies', 'sources'], labels: { timeline: 'Timeline', agencies: 'Agencies', sources: 'Sources' }, cols: { list: 'colsList', map: 'colsMap' }, onDetailClose: detailClosed });
+    SHELL = window.RadarShell.bind({ app: 'texas', doc: document, ls: window.localStorage, media: window.matchMedia ? window.matchMedia(window.RadarShell.QUERY) : null, tabs: ['list', 'map', 'pursuits', 'intel'], more: ['timeline', 'agencies', 'sources'], labels: { timeline: 'Timeline', agencies: 'Agencies', sources: 'Sources' }, cols: { list: 'colsList', map: 'colsMap' }, onDetailClose: detailClosed });
     if (SHELL.isDesktop()) $('txMiniDet').open = true;
     $('txMiniDet').addEventListener('toggle', placeMap);
     document.addEventListener('click', onClick);
@@ -458,6 +487,8 @@
     document.addEventListener('input', onCap); document.addEventListener('change', onCap);
     document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.hasAttribute && d.hasAttribute('data-capopen')) { var id = d.getAttribute('data-capopen'); if (d.open) capOpen[id] = true; else delete capOpen[id]; } }, true);
     $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnBackup').addEventListener('click', exportBackup);
+    WKS = RadarWeekly.bindSheet({ doc: document, win: window, model: function () { return RadarWeekly.model(purRows(), todayCentral(), CP, M.fmtDate); }, fileName: function (ext) { return 'texas-opportunity-weekly-' + todayCentral() + '.' + ext; }, back: 'btnPurPrint', toast: toast, download: capDownload });
+    $('btnPurPrint').addEventListener('click', WKS.open); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurIcs').addEventListener('click', exportPursuitIcs);
     $('btnRestore').addEventListener('click', function () { restoreMode = 'merge'; $('restoreFile').value = ''; $('restoreFile').click(); });
     $('btnRestoreAll').addEventListener('click', function () { restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });
     $('restoreFile').addEventListener('change', function () { var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { restoreBackup(String(rd.result), restoreMode); }; rd.onerror = function () { toast('Could not read that file.'); }; rd.readAsText(f); });

@@ -14,11 +14,11 @@ assert.ok(/tab: 'list'/.test(app) && !/'radar'/.test(app) && !/v-radar|data-tab=
 assert.ok(/<section id="v-list" class="view" aria-label="List">/.test(html) && /<section id="v-map" class="view" hidden aria-label="Radar map">/.test(html), 'List visible first, Map hidden');
 const nav = html.slice(html.indexOf('<nav class="tabs"'), html.indexOf('</nav>', html.indexOf('<nav class="tabs"')));
 const top = nav.replace(/<div class="tabmore"[\s\S]*<\/div>/, ''), menu = nav.slice(nav.indexOf('<div class="tabmore"'));
-assert.deepStrictEqual((top.match(/data-tab="(\w+)"/g) || []).map((x) => x.slice(10, -1)), ['list', 'map', 'intel'], 'List, Map, Intel, then More');
+assert.deepStrictEqual((top.match(/data-tab="(\w+)"/g) || []).map((x) => x.slice(10, -1)), ['list', 'map', 'pursuits', 'intel'], 'List, Map, Pursuits, Intel, then More');
 assert.ok(/data-tab="list" class="on"/.test(top) && top.includes('id="tabMoreBtn"') && top.includes('id="tabMoreLbl"'));
 assert.deepStrictEqual((menu.match(/data-tab="(\w+)"/g) || []).map((x) => x.slice(10, -1)), ['timeline', 'agencies', 'sources'], 'More menu');
 assert.ok(/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\(SHELL\.initial\)/.test(app), 'startup opens the remembered view (List on a first visit)');
-assert.ok(/SHELL = window\.RadarShell\.bind\(\{ app: 'texas'/.test(app) && /tabs: \['list', 'map', 'intel'\]/.test(app) && /more: \['timeline', 'agencies', 'sources'\]/.test(app) && /cols: \{ list: 'colsList', map: 'colsMap' \}/.test(app), 'Texas binds the shared shell');
+assert.ok(/SHELL = window\.RadarShell\.bind\(\{ app: 'texas'/.test(app) && /tabs: \['list', 'map', 'pursuits', 'intel'\]/.test(app) && /more: \['timeline', 'agencies', 'sources'\]/.test(app) && /cols: \{ list: 'colsList', map: 'colsMap' \}/.test(app), 'Texas binds the shared shell');
 assert.strictEqual(Shell.tabKey('texas'), 'texas.tab');
 assert.ok(!/localStorage\.setItem\('texas\.tab'/.test(app) && !/\$\('btnMore'\)\.addEventListener/.test(app), 'tab memory and the Filters toggle live in the shell');
 // Filters drawer, two columns, one canvas map moved between the List side column and the Map tab
