@@ -1,0 +1,34 @@
+{
+ "portal": "arlingtontx",
+ "project": {
+  "ProjectID": "259943",
+  "PrivateProjectID": "bc0ee74efb85cde797e21204d96d890a",
+  "ReferenceID": "27-0077",
+  "ProjectStatusID": "2",
+  "ProjectSubStatusID": "1",
+  "ProjectVisibilityID": "1",
+  "ProjectName": "Request for Qualifications for Redesign of Grace Howell 2.0 MG Elevated Storage Tank",
+  "DateClose": "2026-12-03 20:00:00",
+  "DepartmentID": "13897"
+ },
+ "departments": {
+  "13863": {
+   "DepartmentName": "Asset Management - Construction"
+  },
+  "13879": {
+   "DepartmentName": "Grants Management"
+  },
+  "13888": {
+   "DepartmentName": "Parks & Recreation - Capital"
+  },
+  "13891": {
+   "DepartmentName": "Parks & Recreation - Operations"
+  },
+  "13897": {
+   "DepartmentName": "Water Utilities - Capital"
+  },
+  "13898": {
+   "DepartmentName": "Water Utilities - Operations"
+  }
+ }
+}

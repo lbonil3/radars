@@ -31,7 +31,7 @@ const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = 
 ['qsState', 'qsWork', 'qsDue', 'ftags', 'fsets', 'fsName', 'fsSave', 'usmini'].forEach((k) => assert.ok(html.includes('id="' + k + '"'), 'html has #' + k));
 assert.ok(/bk\.filtersets = FS/.test(app) && /j6\.filtersets/.test(app), 'saved sets go into the backup and come back on restore');
 const Cache = require('../shared/cache.js');
-assert.ok(Cache.files('national').indexOf('./v6.js') >= 0 && Cache.name('national') === 'radars-national-v23', 'sw caches v6.js, cache v23');
+assert.ok(Cache.files('national').indexOf('./v6.js') >= 0 && Cache.name('national') === 'radars-national-v24', 'sw caches v6.js, cache v24');
 assert.ok(/importScripts\('\.\.\/shared\/cache\.js'\)/.test(sw) && /RadarCache\.files\('national'\)/.test(sw), 'national sw uses the shared cache list');
 assert.ok(!/github|repo\b|repository/i.test(html + fs.readFileSync(path.join(__dirname, 'v6.js'), 'utf8')), 'no repo mentions');
 console.log('national v6 tests passed');

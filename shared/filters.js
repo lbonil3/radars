@@ -40,10 +40,10 @@
     return list.filter(function (x) { return x && typeof x.name === 'string' && x.name.trim() && x.f && typeof x.f === 'object'; }).slice(0, MAX_SETS).map(function (x) { return snapshot(x.name, x.f, typeof x.scope === 'string' ? x.scope : 'upcoming', typeof x.region === 'string' ? x.region : 'all'); });
   }
   // ---- Texas Opportunity sets and tags (its filter fields differ from National's) ----
-  var TX_ARR = ['agencies', 'phases', 'kinds', 'kw'], TX_FLAGS = ['consult', 'eng', 'houston', 'located', 'watchOnly'], TX_REL = ['direct', 'relevant', 'all'];
-  var TX_DEFAULT = { q: '', rel: 'relevant', consult: true, eng: false, houston: false, located: false, watchOnly: false };
+  var TX_ARR = ['agencies', 'phases', 'kinds', 'kw'], TX_FLAGS = ['consult', 'eng', 'houston', 'located', 'watchOnly'], TX_REL = ['direct', 'relevant', 'all'], TX_AE = ['open', 'forecast', 'past'];
+  var TX_DEFAULT = { q: '', rel: 'relevant', consult: true, eng: false, houston: false, located: false, watchOnly: false, ae: 'open' };
   function snapshotTexas(name, f) {
-    f = f || {}; var o = { name: String(name || '').trim().slice(0, 60), app: 'texas', f: { q: String(f.q || '').slice(0, 120), rel: TX_REL.indexOf(f.rel) >= 0 ? f.rel : 'relevant' } };
+    f = f || {}; var o = { name: String(name || '').trim().slice(0, 60), app: 'texas', f: { q: String(f.q || '').slice(0, 120), rel: TX_REL.indexOf(f.rel) >= 0 ? f.rel : 'relevant', ae: TX_AE.indexOf(f.ae) >= 0 ? f.ae : 'open' } };
     TX_FLAGS.forEach(function (k) { o.f[k] = typeof f[k] === 'boolean' ? f[k] : TX_DEFAULT[k]; });
     TX_ARR.forEach(function (k) { o.f[k] = (Array.isArray(f[k]) ? f[k] : []).slice(0, 80).map(String); }); return o;
   }
@@ -51,12 +51,14 @@
     if (!Array.isArray(list)) return [];
     return list.filter(function (x) { return x && typeof x.name === 'string' && x.name.trim() && x.f && typeof x.f === 'object'; }).slice(0, MAX_SETS).map(function (x) { return snapshotTexas(x.name, x.f); });
   }
-  function applyTexas(fresh, set) { var f = fresh; f.q = set.f.q || ''; f.rel = set.f.rel; TX_FLAGS.forEach(function (k) { f[k] = set.f[k]; }); TX_ARR.forEach(function (k) { f[k] = (set.f[k] || []).slice(); }); f.month = null; return f; }
+  function applyTexas(fresh, set) { var f = fresh; f.q = set.f.q || ''; f.rel = set.f.rel; f.ae = TX_AE.indexOf(set.f.ae) >= 0 ? set.f.ae : 'open'; TX_FLAGS.forEach(function (k) { f[k] = set.f[k]; }); TX_ARR.forEach(function (k) { f[k] = (set.f[k] || []).slice(); }); f.month = null; return f; }
   function texasTags(f, o) {
     o = o || {}; var t = [], lab = function (m, k) { return (m && m[k]) || k; };
     if (f.q) t.push({ k: 'q', v: '', label: 'Search: ' + f.q });
     if (f.rel === 'direct') t.push({ k: 'rel', v: '', label: 'Drainage: direct only' }); else if (f.rel === 'all') t.push({ k: 'rel', v: '', label: 'Drainage: all' });
     if (f.consult === false) t.push({ k: 'consult', v: '', label: 'All records (not only consultant services)' });
+    if (f.consult !== false && f.ae === 'forecast') t.push({ k: 'ae', v: '', label: 'A/E: Forecast' });
+    else if (f.consult !== false && f.ae === 'past') t.push({ k: 'ae', v: '', label: 'A/E: Past' });
     (f.agencies || []).forEach(function (a) { t.push({ k: 'agencies', v: a, label: a }); });
     (f.phases || []).forEach(function (a) { t.push({ k: 'phases', v: a, label: lab(o.phaseLabel, a) }); });
     (f.kinds || []).forEach(function (a) { t.push({ k: 'kinds', v: a, label: lab(o.kindLabel, a) }); });
@@ -66,7 +68,7 @@
   }
   function removeTexasTag(f, k, v) {
     if (Array.isArray(f[k])) { var i = f[k].indexOf(v); if (i >= 0) f[k].splice(i, 1); }
-    else if (k === 'q') f.q = ''; else if (k === 'rel') f.rel = 'relevant'; else if (k === 'consult') f.consult = true; else if (k === 'month') f.month = null;
+    else if (k === 'q') f.q = ''; else if (k === 'rel') f.rel = 'relevant'; else if (k === 'consult') f.consult = true; else if (k === 'ae') f.ae = 'open'; else if (k === 'month') f.month = null;
     return f;
   }
   // app-aware entry points: National keeps its original format, Texas gets its own fields

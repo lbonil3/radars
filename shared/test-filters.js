@@ -64,7 +64,8 @@ assert.strictEqual(legacyTx.getItem('nr.filtersets'), JSON.stringify([F.snapshot
 // Texas sets keep Texas fields (texas.filtersets); National sets are unchanged
 const txf = { q: 'drain', rel: 'direct', consult: true, eng: true, agencies: ['HCFCD'], phases: ['design'], kinds: ['solicitation'], kw: ['drainage'], houston: true, located: false, watchOnly: false, month: '2026-11' };
 const ts = F.snapshotFor('texas', ' Houston drainage ', txf);
-assert.deepStrictEqual(ts, { name: 'Houston drainage', app: 'texas', f: { q: 'drain', rel: 'direct', consult: true, eng: true, houston: true, located: false, watchOnly: false, agencies: ['HCFCD'], phases: ['design'], kinds: ['solicitation'], kw: ['drainage'] } }, 'Texas snapshot keeps Texas fields and drops the timeline month');
+assert.deepStrictEqual(ts, { name: 'Houston drainage', app: 'texas', f: { q: 'drain', rel: 'direct', ae: 'open', consult: true, eng: true, houston: true, located: false, watchOnly: false, agencies: ['HCFCD'], phases: ['design'], kinds: ['solicitation'], kw: ['drainage'] } }, 'Texas snapshot keeps Texas fields and drops the timeline month');
+assert.strictEqual(F.snapshotFor('texas', 'old', { q: 'x', consult: true }).f.ae, 'open', 'a set saved before A/E status existed opens on Open');
 assert.deepStrictEqual(F.snapshotFor('national', 'N', { states: ['TX'] }, 'upcoming', 'tx'), F.snapshot('N', { states: ['TX'] }, 'upcoming', 'tx'), 'National snapshot unchanged');
 assert.strictEqual(F.snapshotFor('texas', 'bad', { rel: 'nope', consult: 'yes' }).f.rel, 'relevant', 'unknown relevance falls back to the default');
 assert.strictEqual(F.snapshotFor('texas', 'bad', { consult: 'yes' }).f.consult, true, 'non-boolean switches fall back to the defaults');

@@ -10,7 +10,7 @@ The live pages intentionally carry no links to this repository; data-source cita
 | App | Path | What it is |
 |---|---|---|
 | National Radar | [`national/`](national/) | PS&E / H&H consultant opportunities over $5M, all states; roadway + drainage and water presets. See `national/README.md`. |
-| Texas Opportunity | [`texas/`](texas/) | Drainage PS&E opportunities across Texas agencies on a county map (formerly "Opportunity Radar"). |
+| Texas Opportunity | [`texas/`](texas/) | Drainage and A/E consultant opportunities across Texas agencies on a county map (formerly "Opportunity Radar"). |
 
 Vanilla JS, no build step, no dependencies. The landing page is `index.html`; each app's Home button returns to it
 (`shared/shell.css`). Both apps share the layout shell (`shared/shell.js`, one 1024px breakpoint), the capture-file model (`shared/capture.js`), saved filter sets (`shared/filters.js`) and the weekly list (`shared/weekly.js`). Backups stay per app.

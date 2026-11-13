@@ -1,0 +1,36 @@
+{
+ "departments": {
+  "3753": {
+   "DepartmentName": "PRO_Equip_Gen"
+  },
+  "3754": {
+   "DepartmentName": "PRO_South_West"
+  },
+  "3755": {
+   "DepartmentName": "PRO_North_East"
+  },
+  "3756": {
+   "DepartmentName": "PRO_IT"
+  },
+  "3757": {
+   "DepartmentName": "PRO_Services"
+  },
+  "3758": {
+   "DepartmentName": "PRO_Strategic"
+  },
+  "6192": {
+   "DepartmentName": "SSD_CM"
+  }
+ },
+ "project": {
+  "ProjectID": "258083",
+  "PrivateProjectID": "0dc50ece1b55c556ab2df917f705aa78",
+  "ReferenceID": "601440000053573",
+  "ProjectStatusID": "2",
+  "ProjectSubStatusID": "1",
+  "ProjectVisibilityID": "1",
+  "ProjectName": "Statewide Generator Inspection, Repair, and Preventive Maintenance Services",
+  "DateClose": "2026-12-01 21:00:00",
+  "DepartmentID": "3757"
+ }
+}

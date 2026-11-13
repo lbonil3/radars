@@ -9,7 +9,7 @@
 
   var state = {
     data: null, recs: [], byId: {}, sources: [], watch: {}, live: null,
-    f: { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null },
+    f: { q: '', rel: 'relevant', consult: true, ae: 'open', eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null },
     tab: 'list', colorBy: 'agency', sort: 'date', rows: 100, filtered: [], today: new Date().toISOString().slice(0, 10)
   };
   if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, WATCH_KEY_LEGACY, WATCH_KEY);
@@ -19,7 +19,7 @@
 
   var KIND_LABEL = { solicitation: 'Open solicitation', contract: 'Awarded contract (incumbent info)', procurement: 'Consultant procurement signal', project: 'Project', funding: 'Funding commitment' };
   var NOT_USED = [
-    ['Texas SmartBuy ESBD (state solicitations)', 'https://www.txsmartbuy.gov/esbd', 'No machine-readable feed found. The only data route is an undocumented internal API (it returned 405 to a plain request), and txsmartbuy.gov/robots.txt says "Disallow: /". Not scraped. Search it by hand.'],
+    ['ESBD line-item JSON', 'https://www.txsmartbuy.gov/esbd', 'Not used as an API. The radar reads the CSV from the public Export to CSV button (posted solicitations only). A plain GET of that service returns HTTP 405.'],
     ['TxDOT TxDOT_Projects official ArcGIS layer', 'https://services.arcgis.com/KTcxiTD9dsQw4r7Z/ArcGIS/rest/services/TxDOT_Projects/FeatureServer', 'Now requires a token (error 499) and maps.txdot.gov MapServer reports "not started". The Project Tracker layer (TxDOT_Projects_Info) and data.texas.gov are used instead.'],
     ['H-GAC Transportation Improvement Program', 'https://www.h-gac.com/transportation-improvement-program/2027-2030', 'The only public REST layer found is a 2024 draft of the 2025-2028 TIP (superseded). The current 2027-2030 TIP is published as documents and an interactive viewer, not as a feed. Not used to avoid showing stale data.'],
     ['City of Houston open data portal (CIP)', 'https://data.houstontx.gov/dataset/city-of-houston-capital-improvement-plan', 'CKAN API works, but the CIP files there are old FY2016-2021 spreadsheets. The live Houston CIP layers (HPW ArcGIS) are used instead.'],
@@ -29,13 +29,13 @@
     ['Montgomery County (solicitations)', 'https://www.mctx.org/departments/departments_l_-_p/purchasing/bid_proposal_opening_date.php', 'mctx.org/robots.txt disallows all generic crawlers ("User-agent: *  Disallow: /"). Not scraped. Check the bid page by hand.'],
     ['Port Houston (solicitations)', 'https://porthouston.com/business/strategic-sourcing/strategic-sourcing-overview/', 'Bids are on a Workday Strategic Sourcing public portal that is built in the browser (the page the server returns is a 1.5 KB shell, no data feed). Not used.'],
     ['City of Houston solicitations (Beacon Bid)', 'https://www.beaconbid.com/solicitations/city-of-houston/open', 'Houston posts all solicitations on Beacon Bid, which answers scripts with an AWS WAF human-verification (captcha) page. Not bypassed. Houston\'s own Procurement Plan page is a stale FY25 Q2 table (2023 dates) and the open-data "Archived Solicitations" file ends December 2023. Check Beacon by hand and use the Houston engineering RFQs there.'],
-    ['HCTRA (Harris County Toll Road Authority) consultant RFQs', 'https://www.hctra.org/BusinessOpportunities', 'The page is a single-page app (5 KB shell); its data comes from an internal API that is not documented. Not used. HCTRA RFQs did not appear in the Harris County Bonfire list.'],
-    ['Texas SmartBuy / TxDOT ESBD', 'https://www.txsmartbuy.gov/esbd', 'robots.txt says "Disallow: /". Not scraped.'],
+    ['HCTRA capital improvement plan', 'https://www.hctra.org/capital-improvement-program', 'The HCTRA site returns the same small script shell for every path (about 5 KB) and publishes no project table or file. No capital-plan records were added. Solicitations whose Harris County Bonfire title or department names the Toll Road Authority are labeled HCTRA.'],
+    ['Bonfire hosts that did not answer', 'https://www.bonfirehub.com/', 'Checked and skipped because the host did not resolve: arlington, dentoncountytx, williamsoncounty, williamsoncountytx, sara, sanantonioriverauthority, utaustin, universityoftexas. utsystem.bonfirehub.com answered with zero open items and is not a second feed. Williamson County is wilco, Denton County is dentoncounty, San Antonio River Authority is sara-tx, and the University of Texas is utexas.'],
     ['TWDB Flood Infrastructure Fund (official)', 'https://www.twdb.texas.gov/financial/programs/fif/dashboard.asp', 'Official source is a dashboard. The only feed found is a table mirrored by Pape-Dawson (used, flagged as a mirror).'],
     ['GLO CDBG-MIT / Regional Mitigation awards', 'https://www.glo.texas.gov/disaster-recovery/mitigation/regional-mitigation', 'Published as PDF award tables, not a feed. Not used.'],
     ['SAM.gov opportunities', 'https://sam.gov/', 'API needs a key. Skipped as instructed.'],
     ['Bonfire portals not found', 'https://www.bonfirehub.com/', 'No Bonfire portal was found for City of Houston, Port Houston, Montgomery County or HCTRA (tested likely sub-domains). Brazoria County has a portal with zero open items at snapshot time.'],
-    ['Upcoming (pre-advertisement) lists', '', 'None of the agencies above publishes a machine-readable "upcoming consultant solicitations" list except TxDOT\'s Projected Contracts List (already used). Everything new in this view is OPEN or AWARDED, as the source states.']
+    ['Upcoming (pre-advertisement) lists', '', 'TxDOT\'s Projected Contracts List is the forecast feed. CTRMA rows whose stage says forthcoming are forecasts too. No other agency here publishes a machine-readable list of solicitations that have not yet been advertised.']
   ];
 
   // ---------- load ----------
@@ -58,6 +58,7 @@
     return out;
   }
   function apply() {
+    state.f.today = state.today;
     var base = state.recs; if (state.f.watchOnly) base = base.concat(ghosts());
     state.filtered = M.filterRecords(base, state.f, state.watch);
     sortList(state.filtered);
@@ -129,7 +130,9 @@
   }
   function renderFilters() {
     var wc = Object.keys(state.watch).length;
-    $('quick').innerHTML = chip('Consultant services', state.f.consult, 'data-q="consult"') + (state.f.consult ? chip('Engineering / drainage word match only', state.f.eng, 'data-q="eng"') : '') + chip('Houston area', state.f.houston, 'data-q="houston"') + chip('★ Watchlist (' + wc + ')', state.f.watchOnly, 'data-q="watch"') + chip('Mapped only', state.f.located, 'data-q="located"') + (state.f.month ? chip('Month: ' + M.fmtMonth(state.f.month) + ' ✕', true, 'data-q="month"') : '');
+    var aeNow = state.f.ae || 'open';
+    var aeChips = state.f.consult ? chip('Open', aeNow === 'open', 'data-q="ae" data-ae="open"') + chip('Forecast', aeNow === 'forecast', 'data-q="ae" data-ae="forecast"') + chip('Past', aeNow === 'past', 'data-q="ae" data-ae="past"') : '';
+    $('quick').innerHTML = chip('Consultant services', state.f.consult, 'data-q="consult"') + aeChips + (state.f.consult ? chip('Engineering / drainage word match only', state.f.eng, 'data-q="eng"') : '') + chip('Houston area', state.f.houston, 'data-q="houston"') + chip('★ Watchlist (' + wc + ')', state.f.watchOnly, 'data-q="watch"') + chip('Mapped only', state.f.located, 'data-q="located"') + (state.f.month ? chip('Month: ' + M.fmtMonth(state.f.month) + ' ✕', true, 'data-q="month"') : '');
     var ca = countsOf(function (r) { return r.agency; }, 'agencies');
     $('fAgency').innerHTML = Object.keys(Object.assign({}, M.AGENCIES, ca)).map(function (a) { return chip(a, state.f.agencies.indexOf(a) >= 0, 'data-agency="' + esc(a) + '"', M.agencyColor(a), ca[a] || 0); }).join('');
     var cp = countsOf(function (r) { return r.phase; }, 'phases');
@@ -146,7 +149,7 @@
   }
   // ---------- saved filter sets and removable tags (shared/filters.js, texas.filtersets) ----------
   var FS = window.RadarFilters ? RadarFilters.load(window.localStorage, 'texas') : [];
-  function freshFilters() { return { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null }; }
+  function freshFilters() { return { q: '', rel: 'relevant', consult: true, ae: 'open', eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null }; }
   function renderTags() {
     var pl = {}, kl = {}; M.PHASES.forEach(function (p) { pl[p.id] = p.label; }); M.KEYWORDS.forEach(function (k) { kl[k.id] = k.label; });
     var tags = RadarFilters.tagsFor('texas', state.f, { phaseLabel: pl, kindLabel: KIND_LABEL, kwLabel: kl, monthLabel: M.fmtMonth }), el = $('ftags'); el.hidden = !tags.length;
@@ -266,8 +269,9 @@
       '<p>The snapshot is rebuilt periodically from the public feeds above; the date at the top shows when it was built.</p>';
     $('srcList').innerHTML = state.sources.map(function (s) {
       var n = state.recs.filter(function (r) { return r.src === s.id; }).length;
+      var openAe = state.recs.filter(function (r) { return M.aeStatus(r, state.today) === 'open' && (r.src === s.id || (r.also || []).indexOf(s.id) >= 0); }).length;
       return '<div class="src" style="--c:' + M.agencyColor(s.agency) + '"><h3>' + esc(s.name) + '</h3><p><span class="st ' + esc(s.status) + '">' + esc((s.status || '').toUpperCase()) + '</span> · ' + esc(s.agency) + ' · ' + esc(s.type) + '</p>' +
-        '<p>Fetched ' + esc(fmtDT(s.fetchedAt)) + ' · rows read ' + (s.fetched || 0).toLocaleString('en-US') + ' · records on the radar ' + n.toLocaleString('en-US') + (s.joined !== undefined ? ' · joined to ' + s.joined + ' projects' : '') + '</p>' +
+        '<p>Fetched ' + esc(fmtDT(s.fetchedAt)) + ' · rows read ' + (s.fetched || 0).toLocaleString('en-US') + ' · records on the radar ' + n.toLocaleString('en-US') + ' · open A/E today ' + openAe.toLocaleString('en-US') + (s.joined !== undefined ? ' · joined to ' + s.joined + ' projects' : '') + '</p>' +
         (s.note ? '<p>' + esc(s.note) + '</p>' : '') + (s.page ? '<p><a href="' + esc(s.page) + '" target="_blank" rel="noopener noreferrer">Open the source ↗</a></p>' : '') + '</div>';
     }).join('');
     $('srcNo').innerHTML = NOT_USED.map(function (x) { return '<div class="src"><h3>' + esc(x[0]) + '</h3><p>' + esc(x[2]) + '</p>' + (x[1] ? '<p><a href="' + esc(x[1]) + '" target="_blank" rel="noopener noreferrer">Open ↗</a></p>' : '') + '</div>'; }).join('');
@@ -275,7 +279,7 @@
       '<li><b>Inferred</b> (labeled in orange): (1) "drainage: likely" means the project is roadway or bridge work whose type usually carries drainage design; (2) keyword matches on drainage words in the source text; (3) county-centroid map placement when a source names a county but no coordinates; (4) work-type codes used to flag PS&amp;E, H&amp;H or bridge-design consultant procurements.</li>' +
       '<li><b>TxDOT dates are estimated letting dates</b> (construction bids), not PS&amp;E deadlines. A project in the PS&amp;E stage is already being designed; the data does not say who the design consultant is or whether a procurement is still open.</li>' +
       '<li><b>Consultant procurement signals</b> (TxDOT PEPS list, meetings, projected contracts; HCFCD bid page) are the closest thing to an open PS&amp;E pursuit. They carry little detail: check the linked page.</li>' +
-      '<li><b>Consultant services view</b> (default). A record is included by a stated rule, not a judgment of fit: (a) a qualifications-type solicitation (RFQ, RFQS, RFSQ, SOQ), or (b) a proposal-type solicitation (RFP) with an engineering word in the title, or one whose title states no type but has engineering / architect / civil / survey / geotechnical / design words, or (c) the source itself labels it professional services / consultant procurement (Austin Contracts category, TxDOT consultant lists, HCFCD RFQ table). The orange "match" tags list the engineering and drainage words found in the title. Status, type and due date are copied as the source gives them. <b>Open solicitations</b> are open now; <b>Awarded contract</b> rows (Austin) show who holds an agreement and when it ends, which may signal a recompete (inferred). No agency here publishes a machine-readable list of solicitations that have not yet been advertised, except TxDOT\'s Projected Contracts List.</li>' +
+      '<li><b>Consultant services view</b> (default) is A/E work: an RFQ, RFP, or on-call / professional-services request whose text is engineering, architecture, surveying, or design. Bond underwriting, web design, software, janitorial, treatment, legal, insurance, and staffing stay out even if the source called them an RFQ. TxDOT\'s Projected Contracts List and PEPS rows still count, and a TxDOT Bonfire department named Professional Engineering (PEPS) counts. The view opens on <b>Open</b> (still accepting submittals). <b>Forecast</b> and <b>Past</b> are the chips beside it. Nothing is removed: a past due date or an awarded row is still in the snapshot. HCFCD RFQ rows with no future due date are Past.</li>' +
       '<li><b>Funding commitments</b> (TWDB FIF) show sponsors with flood money; no stage, date or location is given.</li>' +
       '<li>Costs are what the agency lists (usually construction cost, not design fee). The label on each record says which.</li></ul>';
   }
@@ -488,7 +492,7 @@
     if ((el = t.closest('[data-fs-apply]'))) { applySet(el.getAttribute('data-fs-apply')); return; }
     if ((el = t.closest('[data-fs-del]'))) { deleteSet(el.getAttribute('data-fs-del')); return; }
     if ((el = t.closest('[data-month]'))) { var k = el.getAttribute('data-month'); state.f.month = state.f.month === k ? null : k; apply(); return; }
-    if ((el = t.closest('[data-q]'))) { var q = el.getAttribute('data-q'); if (q === 'houston') { state.f.houston = !state.f.houston; if (map) map.fit(state.f.houston ? 'hou' : 'tx'); } else if (q === 'watch') state.f.watchOnly = !state.f.watchOnly; else if (q === 'located') state.f.located = !state.f.located; else if (q === 'consult') { state.f.consult = !state.f.consult; if (!state.f.consult) state.f.eng = false; } else if (q === 'eng') state.f.eng = !state.f.eng; else if (q === 'month') state.f.month = null; apply(); return; }
+    if ((el = t.closest('[data-q]'))) { var q = el.getAttribute('data-q'); if (q === 'houston') { state.f.houston = !state.f.houston; if (map) map.fit(state.f.houston ? 'hou' : 'tx'); } else if (q === 'watch') state.f.watchOnly = !state.f.watchOnly; else if (q === 'located') state.f.located = !state.f.located; else if (q === 'consult') { state.f.consult = !state.f.consult; if (!state.f.consult) state.f.eng = false; } else if (q === 'ae') state.f.ae = el.getAttribute('data-ae') || 'open'; else if (q === 'eng') state.f.eng = !state.f.eng; else if (q === 'month') state.f.month = null; apply(); return; }
     if ((el = t.closest('[data-agency]'))) { toggleIn(state.f.agencies, el.getAttribute('data-agency')); apply(); return; }
     if ((el = t.closest('[data-phase]'))) { toggleIn(state.f.phases, el.getAttribute('data-phase')); apply(); return; }
     if ((el = t.closest('[data-kind]'))) { toggleIn(state.f.kinds, el.getAttribute('data-kind')); apply(); return; }

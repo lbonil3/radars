@@ -463,20 +463,68 @@
   //   (b) proposal-type (RFP) solicitation whose title contains an engineering word, or a title with no stated type that has engineering/architect/civil/survey/geotech/design words, or
   //   (c) the source itself categorizes it as professional services / consultant procurement (Austin contracts "Professional Services",
   //       TxDOT Projected Contracts List, TxDOT PEPS, HCFCD "Request for Qualifications" table).
-  function isConsultant(r) {
-    if (!r) return false;
-    if (r.svc === true) return true;
-    if (r.src === 'txdot-pcl' || r.src === 'txdot-peps' || r.src === 'txdot-meetings') return true;
-    if (r.src === 'hcfcd-bids' && /Request for Qualifications/.test(r.stage || '')) return true;
+  // Clear non-engineering work stays out of the A/E view even when the source called it an RFQ or RFP.
+  var NON_ENG_RE = /\b(bond underwrit|underwriting|investment banking|financial advis|web\s*page design|website design|graphic design|logo design|software\b|janitorial|custodial|substance[- ]abuse|behavioral health|medical services|legal services|attorneys?\b|insurance brokerage|staffing services|temporary staffing|oracle\b|primavera\b|\bunifier\b|business process)\b/i;
+  function isClearNonEng(text) { return NON_ENG_RE.test(String(text || '')); }
+  function hasAeWording(text) {
+    var t = String(text || '').replace(/\bhydraulic cement\b/ig, ' ');
+    if (/\b(web\s*page design|website design|graphic design|logo design)\b/i.test(t)) return false;
+    if (/\b(engineers?|engineering|architects?|architectural|architecture|survey(?:ing|or|ors)?|\bcivil\b|drainage|hydraul(?:ic|ics)|hydrolog(?:y|ical)|wastewater|storm\s*water|stormwater|\bwater\b|transportation|roadway|\bbridges?\b|structural|geotech(?:nical)?|environmental|schematic|PS&E|flood mitigation|flood risk)\b/i.test(t)) return true;
+    if (/\belevated storage\b|\bstorage tank\b|\bMG\b/i.test(t) && /tank|reservoir|water/i.test(t)) return true;
+    if (/\bdesign\b/i.test(t) && !/\bdesign[- ]build\b/i.test(t)) return true;
+    if (/redesign/i.test(t)) return true;
     return false;
   }
-  function svcRule(type, eng, srcCat) {
-    if (srcCat) return { svc: true, basis: 'Source category: ' + srcCat };
-    if (type.cls === 'qual') return { svc: true, basis: 'Qualifications-type solicitation (' + type.code + ' in the title/type as published)' };
-    if (type.cls === 'prop' && eng.length) return { svc: true, basis: 'Proposal-type solicitation whose title has engineering words: ' + eng.map(engLabel).join(', ') };
-    var strong = eng.filter(function (e) { return ['engineering', 'architect', 'civil', 'survey', 'geotech', 'design'].indexOf(e) >= 0; });
-    if (type.cls === 'unk' && strong.length) return { svc: true, basis: 'Type not stated in the title; title has engineering words: ' + strong.map(engLabel).join(', ') };
-    return { svc: false, basis: '' };
+  function recordText(r) {
+    return [r && r.title, r && r.work, r && r.desc, r && r.solType, r && r.stage, r && r.dept].filter(Boolean).join(' ');
+  }
+  function isPepsDept(name) { return /professional engineering\s*\(\s*peps\s*\)|\bPEPS\b/i.test(String(name || '')); }
+  function isAeRequest(r, text) {
+    if (r && (r.src === 'txdot-pcl' || r.src === 'txdot-peps' || r.nigpAe)) return true;
+    if (r && isPepsDept(r.dept)) return true;
+    var type = solType((r && r.solType ? r.solType + ' ' : '') + text);
+    if (type.cls === 'qual' || type.cls === 'prop') return true;
+    if (/on[- ]call|as[- ]needed|rotation list|indefinite[- ]delivery|\bIDIQ\b|professional services/i.test(text)) return true;
+    if (r && r.src === 'hcfcd-bids' && /request for qualifications|\brfq\b/i.test(r.stage || '')) return true;
+    if (r && r.src === 'ctrma' && /engineering|PS&E|architect|survey/i.test(text)) return true;
+    return false;
+  }
+  function isConsultant(r) {
+    if (!r) return false;
+    if (r.src === 'txdot-pcl' || r.src === 'txdot-peps') return true;
+    if (isPepsDept(r.dept)) return true;
+    // Wording has to be in the title or the work type. NIGP code descriptions say "engineering" on many unrelated buys, and a TxDOT project stage of PS&E is not an open solicitation.
+    var titleBits = [r.title, r.solType, r.work].filter(Boolean).join(' ');
+    if (r.src === 'esbd' && /texas department of transportation/i.test(r.agency || '') && /notice to consultants/i.test(r.title || '')) return true;
+    if (isClearNonEng(titleBits)) return false;
+    if (!isAeRequest(r, titleBits)) return false;
+    return hasAeWording(titleBits);
+  }
+  // Open is still accepting submittals. Forecast is a plan. Past is awarded, selected, closed, or the due date has passed.
+  function aeStatus(r, today) {
+    if (!isConsultant(r)) return null;
+    today = today || new Date().toISOString().slice(0, 10);
+    var blob = ((r.stage || '') + ' ' + (r.status || ''));
+    if (r.src === 'txdot-pcl' || /\b(projected|forthcoming|forecast)\b/i.test(blob)) return 'forecast';
+    if (r.src === 'hcfcd-bids') return (r.date && r.date >= today) ? 'open' : 'past';
+    if (/\b(awarded|selected|closed|cancelled|canceled|no award)\b/i.test(blob)) return 'past';
+    if (r.date && r.date < today) return 'past';
+    if (r.date && r.date >= today) return 'open';
+    if (/^(open|posted|addendum posted|active)\b/i.test(r.status || '') || /open \(listed\)/i.test(r.status || '')) return 'open';
+    return 'past';
+  }
+  function svcRule(type, eng, srcCat, text) {
+    text = text || '';
+    if (srcCat && /projected contracts|\bpeps\b/i.test(srcCat)) return { svc: true, basis: 'Source category: ' + srcCat };
+    if (isClearNonEng(text)) return { svc: false, basis: '' };
+    var qual = type && (type.cls === 'qual' || type.cls === 'prop');
+    var onCall = /on[- ]call|as[- ]needed|rotation list|indefinite[- ]delivery|\bIDIQ\b|professional services/i.test(text);
+    if (!qual && !onCall) return { svc: false, basis: '' };
+    var strong = (eng || []).filter(function (e) { return ['engineering', 'architect', 'civil', 'survey', 'geotech', 'design'].indexOf(e) >= 0; });
+    if (!hasAeWording(text) && !strong.length) return { svc: false, basis: '' };
+    if (type && type.cls === 'qual') return { svc: true, basis: 'Qualifications-type solicitation (' + type.code + ') with engineering, architecture, surveying, or design wording' };
+    if (type && type.cls === 'prop') return { svc: true, basis: 'Proposal-type solicitation (' + type.code + ') with engineering, architecture, surveying, or design wording' };
+    return { svc: true, basis: 'On-call or professional-services request with engineering, architecture, surveying, or design wording' };
   }
   function isoFromSerial(n) { n = Number(n); if (!isFinite(n) || n < 20000) return null; var d = new Date(Math.round((Math.floor(n) - 25569) * 86400000)); return isNaN(d) ? null : d.toISOString().slice(0, 10); }
   function lastMDY(s) { var m = String(s || '').match(/\d{1,2}\/\d{1,2}\/\d{4}/g); return m ? m[m.length - 1] : null; }
@@ -492,7 +540,17 @@
     'City of Dallas': { color: '#60a5fa', full: 'City of Dallas' },
     'City of Fort Worth': { color: '#f87171', full: 'City of Fort Worth' },
     'DART': { color: '#22d3ee', full: 'Dallas Area Rapid Transit' },
-    'DFW Airport': { color: '#facc15', full: 'Dallas Fort Worth International Airport' }
+    'DFW Airport': { color: '#facc15', full: 'Dallas Fort Worth International Airport' },
+    'City of Arlington': { color: '#fb7185', full: 'City of Arlington' },
+    'Denton County': { color: '#34d399', full: 'Denton County' },
+    'Williamson County': { color: '#a78bfa', full: 'Williamson County' },
+    'NTMWD': { color: '#38bdf8', full: 'North Texas Municipal Water District' },
+    'LCRA': { color: '#fbbf24', full: 'Lower Colorado River Authority' },
+    'San Antonio River Authority': { color: '#4ade80', full: 'San Antonio River Authority' },
+    'University of Texas': { color: '#f97316', full: 'The University of Texas (utexas Bonfire portal)' },
+    'HCTRA': { color: '#f59e0b', full: 'Harris County Toll Road Authority' },
+    'CTRMA': { color: '#818cf8', full: 'Central Texas Regional Mobility Authority' },
+    'TAMU': { color: '#c4b5fd', full: 'Texas A&M University System (AggieBid)' }
   };
   Object.keys(SOL_AGENCIES).forEach(function (k) { AGENCIES[k] = SOL_AGENCIES[k]; });
 
@@ -507,22 +565,42 @@
     { sub: 'dallascityhall', agency: 'City of Dallas', county: 'Dallas' },
     { sub: 'fortworthtexas', agency: 'City of Fort Worth', county: 'Tarrant' },
     { sub: 'dart', agency: 'DART', county: 'Dallas' },
-    { sub: 'dfwairport', agency: 'DFW Airport', county: null }
+    { sub: 'dfwairport', agency: 'DFW Airport', county: null },
+    { sub: 'arlingtontx', agency: 'City of Arlington', county: 'Tarrant' },
+    { sub: 'dentoncounty', agency: 'Denton County', county: 'Denton' },
+    { sub: 'wilco', agency: 'Williamson County', county: 'Williamson' },
+    { sub: 'ntmwd', agency: 'NTMWD', county: null },
+    { sub: 'lcra', agency: 'LCRA', county: null },
+    { sub: 'sara-tx', agency: 'San Antonio River Authority', county: 'Bexar' },
+    { sub: 'utexas', agency: 'University of Texas', county: 'Travis' }
   ];
-  function bonfireRecord(p, portal) {
+  function bonfireDeptName(departments, id) {
+    if (!departments || id === null || id === undefined || id === '') return '';
+    var d = departments[id] || departments[String(id)];
+    if (!d) return '';
+    if (typeof d === 'string') return str(d) || '';
+    return str(d.DepartmentName || d.Name) || '';
+  }
+  function bonfireRecord(p, portal, departments) {
     if (!p || !p.ProjectID || !p.ProjectName) return null;
     var title = str(p.ProjectName).replace(/\s*-\s*\*\d+\s*$/, ''), ref = str(p.ReferenceID);
-    var type = solType(title + ' ' + (ref || '')), eng = matchEng(title), kw = matchKeywords(title), rule = svcRule(type, eng, null);
+    var dept = bonfireDeptName(departments, p.DepartmentID);
+    var type = solType(title + ' ' + (ref || '')), eng = matchEng(title), kw = matchKeywords(title);
+    var rule = svcRule(type, eng, isPepsDept(dept) ? 'TxDOT PEPS' : null, title + ' ' + dept);
     var close = str(p.DateClose);
     var url = 'https://' + portal.sub + '.bonfirehub.com/opportunities/' + p.ProjectID;
-    return {
-      id: 'bf:' + portal.sub + ':' + p.ProjectID, src: 'bonfire-' + portal.sub, agency: portal.agency, kind: 'solicitation', phase: 'procure',
-      title: title, stage: 'Open solicitation (as listed on the agency Bonfire portal)', status: 'Open', solType: type.label, svc: rule.svc, eng: eng, county: portal.county,
+    var agency = portal.agency;
+    if (portal.sub === 'harriscountytx' && /harris county toll road authority|\bhctra\b/i.test(dept + ' ' + title)) agency = 'HCTRA';
+    var rec = {
+      id: 'bf:' + portal.sub + ':' + p.ProjectID, src: 'bonfire-' + portal.sub, agency: agency, kind: 'solicitation', phase: 'procure',
+      title: title, stage: 'Open solicitation (as listed on the agency Bonfire portal)', status: 'Open', solType: type.label, solNum: ref, dept: dept || null, svc: rule.svc, eng: eng, county: portal.county,
       lat: null, lon: null, date: isoFromText(close), dateLabel: 'Close date (as given by portal; time zone not stated)', cost: null, costLabel: null,
       work: type.label, desc: null, url: url, rel: kw.length ? 'direct' : 'none', kw: kw,
       why: (rule.svc ? 'In the Consultant services focus: ' + rule.basis + '. ' : 'Not in the Consultant services focus (type: ' + type.label + '). ') + (kw.length ? 'Drainage keyword match in title: ' + kw.map(kwLabel).join(', ') + '.' : 'No drainage keyword in the title.'),
-      extra: [['Solicitation number', ref || 'not listed'], ['Status (as listed)', 'Open'], ['Close date/time (raw, as given)', close || 'not listed'], ['Type (read from title/number)', type.label], ['Engineering words in title', eng.length ? eng.map(engLabel).join(', ') : 'none'], ['Note', 'Bonfire pages answer scripts with HTTP 403; the link opens fine in a normal browser. The portal list gives no description.']]
+      extra: [['Solicitation number', ref || 'not listed'], ['Department', dept || 'not listed'], ['Status (as listed)', 'Open'], ['Close date/time (raw, as given)', close || 'not listed'], ['Type (read from title/number)', type.label], ['Engineering words in title', eng.length ? eng.map(engLabel).join(', ') : 'none'], ['Note', 'Bonfire pages answer scripts with HTTP 403; the link opens fine in a normal browser. The portal list gives no description.']]
     };
+    if (isPepsDept(dept)) rec.svc = true;
+    return rec;
   }
 
   // Austin Finance Online "Active Solicitations" xlsx export (Austin purchasing; no login).
@@ -535,7 +613,7 @@
     for (i = hdr + 1; i < rows.length; i++) {
       var r = rows[i], sid = str(r[0]), no = str(r[1]), desc = str(r[2]);
       if (!sid || !no || !desc) continue;
-      var type = solType(no), eng = matchEng(desc), kw = matchKeywords(desc), rule = svcRule(type, eng, null);
+      var type = solType(no), eng = matchEng(desc), kw = matchKeywords(desc), rule = svcRule(type, eng, null, desc);
       var pub = isoFromSerial(r[3]), due = isoFromSerial(r[4]);
       out.push({
         id: 'austin-sol:' + sid, src: 'austin-active', agency: 'City of Austin', kind: 'solicitation', phase: 'procure',
@@ -564,12 +642,14 @@
     return order.map(function (k) {
       var r = by[k].r, vendors = by[k].vendors, desc = str(r.doc_dscr) || k, eng = matchEng(desc), kw = matchKeywords(desc);
       var end = isoFromText(r.efend_dt), begin = isoFromText(r.efbgn_dt), lim = pos(r.ma_prch_lmt_am), so = str(r.so_doc_cd) ? str(r.so_doc_cd) + (str(r.so_doc_id) ? ' ' + str(r.so_doc_id) : '') : null;
+      var draft = { title: desc + ' (' + k + ')', work: 'Professional Services (Austin category)', src: 'austin-contracts', stage: 'Awarded: active professional-services agreement per Austin Contracts dataset', status: 'Awarded (active agreement per source)', solType: so || 'Master agreement' };
+      var svc = isConsultant(draft);
       return {
         id: 'austin-contract:' + k, src: 'austin-contracts', agency: 'City of Austin', kind: 'contract', phase: 'other',
-        title: desc + ' (' + k + ')', stage: 'Awarded: active professional-services agreement per Austin Contracts dataset', status: 'Awarded (active agreement per source)', solType: so || 'Master agreement', svc: true, eng: eng, county: 'Travis',
+        title: desc + ' (' + k + ')', stage: 'Awarded: active professional-services agreement per Austin Contracts dataset', status: 'Awarded (active agreement per source)', solType: so || 'Master agreement', svc: svc, eng: eng, county: 'Travis',
         lat: null, lon: null, date: end, dateLabel: 'Agreement end date (as given; may already have passed)', cost: lim, costLabel: 'Authorized spending limit (Austin)', work: 'Professional Services (Austin category)', desc: null,
         url: AUSTIN_CONTRACTS_URL + '?doc_id=' + encodeURIComponent(k), rel: kw.length ? 'direct' : 'none', kw: kw,
-        why: 'In the Consultant services focus: Source category: Professional Services. Awarded contract, not an open solicitation. Agreement end date can signal a future recompete (inferred).',
+        why: (svc ? 'In the Consultant services focus: professional-services agreement with engineering, architecture, surveying, or design wording. ' : 'Not in the Consultant services focus (awarded agreement without engineering wording). ') + 'Awarded contract, not an open solicitation. Agreement end date can signal a future recompete (inferred).',
         extra: [['Agreement', k], ['Original solicitation (per source)', so || 'not listed'], ['Effective', begin && end ? begin + ' to ' + end : 'not listed'], ['Vendors on agreement (' + vendors.length + ')', vendors.join('; ')], ['Engineering words in title', eng.length ? eng.map(engLabel).join(', ') : 'none']]
       };
     });
@@ -588,7 +668,7 @@
         var m = /(?:content\.aspx\?id=)(\d+)/i.exec(r.href), idn = m ? m[1] : null; if (!idn) return;
         var type = solType((typeTxt || '') + ' ' + title); if (/request for offer/i.test(typeTxt || '')) type = { code: 'Offer', label: 'Request for offer', cls: 'bid' };
         if (/competitive sealed proposals/i.test(typeTxt || '')) type = { code: 'RFCSP', label: 'Request for competitive sealed proposals', cls: 'prop' };
-        var eng = matchEng(title), kw = matchKeywords(title), rule = svcRule(type, eng, null);
+        var eng = matchEng(title), kw = matchKeywords(title), rule = svcRule(type, eng, null, (typeTxt || '') + ' ' + title);
         out.push({
           id: 'sa-sol:' + idn, src: 'sa-bids', agency: 'City of San Antonio', kind: 'solicitation', phase: 'procure',
           title: title, stage: 'Listed on City of San Antonio Bidding & Contracting', status: 'Open (listed)', solType: typeTxt || type.label, svc: rule.svc, eng: eng, county: 'Bexar',
@@ -600,6 +680,222 @@
       });
     });
     return out;
+  }
+
+  // ---- ESBD CSV (the file the public Export to CSV button returns) ----
+  var ESBD_PAGE = 'https://www.txsmartbuy.gov/esbd';
+  var ESBD_CSV_URL = 'https://www.txsmartbuy.gov/app/extensions/CPA/CPAMain/1.0.0/services/ESBD.Service.ss';
+  function parseCsv(text) {
+    var rows = [], row = [], cur = '', q = false, i, c;
+    text = String(text || '');
+    for (i = 0; i < text.length; i++) {
+      c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') { row.push(cur); cur = ''; }
+      else if (c === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+      else if (c !== '\r') cur += c;
+    }
+    if (cur.length || row.length) { row.push(cur); rows.push(row); }
+    return rows;
+  }
+  function esbdAgencyMap(agencies) {
+    var m = {};
+    (agencies || []).forEach(function (a) {
+      var name = str(a && (a.agencyname || a.name || a)) || '';
+      var mm = /-\s*([A-Za-z]?\d+)\s*$/.exec(name);
+      if (mm) m[mm[1].toUpperCase()] = name.replace(/\s*-\s*[A-Za-z]?\d+\s*$/, '').trim();
+    });
+    return m;
+  }
+  function parseEsbdCsv(csv, agencies) {
+    var rows = parseCsv(csv), out = [], map = esbdAgencyMap(agencies), i;
+    if (!rows.length || !/^name$/i.test(String(rows[0][0] || '').trim()) || !/solicitation id/i.test(rows[0][1] || '')) return out;
+    var posted = 0;
+    for (i = 1; i < rows.length; i++) {
+      var r = rows[i];
+      var title = str(r[0]), sol = str(r[1]);
+      if (!title || !sol) continue;
+      posted++;
+      var due = isoFromMDY(String(r[2] || '').trim()), postedOn = isoFromMDY(String(r[6] || '').trim());
+      var num = str(r[4]) || '', status = str(r[5]) || 'Posted', nigp = str(r[9]) || '';
+      var nigpAe = /(^|[^\d])(906|907|925)\d*/.test(nigp);
+      var agency = map[(num || '').toUpperCase()] || (num ? 'Texas agency ' + num : 'Texas agency');
+      var type = solType(title + ' ' + sol), eng = matchEng(title + ' ' + nigp), kw = matchKeywords(title + ' ' + nigp);
+      var rec = {
+        id: 'esbd:' + sol, src: 'esbd', agency: agency, kind: 'solicitation', phase: 'procure',
+        title: title, stage: 'ESBD ' + status, status: status, solType: type.label, solNum: sol, nigpAe: nigpAe, svc: false, eng: eng,
+        county: null, lat: null, lon: null, date: due, dateLabel: 'Response due (ESBD)', cost: null, costLabel: null,
+        work: type.label, desc: nigp || null, url: ESBD_PAGE + '/' + encodeURIComponent(sol), rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+        extra: [['Solicitation number', sol], ['Agency number', num || 'not listed'], ['Status (as listed)', status], ['Posted', postedOn || 'not listed'], ['NIGP', nigp || 'not listed']]
+      };
+      rec.svc = isConsultant(rec);
+      if (!rec.svc) continue;
+      rec.why = 'In the Consultant services focus: ' + (nigpAe ? 'NIGP class 906, 907, or 925 (professional architecture or engineering).' : 'Engineering, architecture, surveying, or design wording.');
+      out.push(rec);
+    }
+    out.posted = posted;
+    return out;
+  }
+
+  // ---- Texas A&M AggieBid public open-bids HTML ----
+  var AGGIE_PAGE = 'https://bids.sciquest.com/apps/Router/PublicEvent?CustomerOrg=TAMU&tab=PHX_NAV_SourcingOpenForBid';
+  function aggieField(row, label) {
+    var re = new RegExp('SourcingPublicSite_LABEL_' + label + '_\\d+[\\s\\S]*?phx data-row-content">([\\s\\S]*?)<\\/div>', 'i');
+    var m = re.exec(row);
+    return m ? decodeHtml(m[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim() : '';
+  }
+  function parseAggieBid(html) {
+    var out = [];
+    String(html || '').split(/<tr[\s>]/i).forEach(function (row) {
+      if (!/SourcingPublicSite_LABEL_TYPE_/i.test(row)) return;
+      var typeTxt = aggieField(row, 'TYPE');
+      if (!/^(RFQ|RFP)$/i.test(typeTxt)) return;
+      var titleM = /class="btn-link-header"[^>]*name="([^"]*)"/i.exec(row);
+      var title = titleM ? decodeHtml(titleM[1]).replace(/\s+/g, ' ').trim() : '';
+      var subM = /class="phx display-block phxText[^"]*"[^>]*>([\s\S]*?)<\/div>/i.exec(row);
+      var sub = subM ? decodeHtml(subM[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim() : '';
+      var hrefM = /href="(https:\/\/app01\.jaggaer\.com\/apps\/Router\/ViewSourcingEvent[^"]*)"/i.exec(row);
+      var href = hrefM ? decodeHtml(hrefM[1]) : AGGIE_PAGE;
+      var num = aggieField(row, 'NUMBER');
+      var close = aggieField(row, 'CLOSE');
+      var closeDate = isoFromMDY((String(close).match(/\d{1,2}\/\d{1,2}\/\d{4}/) || [])[0]);
+      var type = solType(typeTxt + ' ' + title + ' ' + sub), text = title + ' ' + sub, eng = matchEng(text), kw = matchKeywords(text);
+      var rec = {
+        id: 'aggie:' + (num || title).replace(/\s+/g, ''), src: 'aggiebid', agency: 'TAMU', kind: 'solicitation', phase: 'procure',
+        title: title + (sub && sub.toLowerCase() !== title.toLowerCase() ? ' — ' + sub : ''), stage: 'Open on AggieBid', status: 'Open', solType: type.label, solNum: num || null, svc: false, eng: eng,
+        county: null, lat: null, lon: null, date: closeDate, dateLabel: 'Close (AggieBid, as listed)', cost: null, costLabel: null,
+        work: typeTxt, desc: sub || null, url: href, rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+        extra: [['Event number', num || 'not listed'], ['Type (as listed)', typeTxt], ['Close (raw)', close || 'not listed']]
+      };
+      rec.svc = isConsultant(rec);
+      rec.why = (rec.svc ? 'In the Consultant services focus: RFQ or RFP with engineering, architecture, surveying, or design wording. ' : 'Not in the Consultant services focus (type: ' + typeTxt + '). ') + 'Contact email on the AggieBid page is not copied.';
+      out.push(rec);
+    });
+    return out;
+  }
+
+  // ---- CTRMA procurements page (Engineering, Construction, and awarded engineering rows) ----
+  var CTRMA_PAGE = 'https://www.mobilityauthority.com/business/opportunities/procurements/';
+  function isoFromMonthName(s) {
+    var m = /(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/i.exec(s || '');
+    if (!m) return null;
+    var mi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'].indexOf(m[1].toLowerCase()) + 1;
+    return m[3] + '-' + ('0' + mi).slice(-2) + '-' + ('0' + (+m[2])).slice(-2);
+  }
+  function ctrmaDue(text, awarded) {
+    if (awarded) return isoFromMonthName(text);
+    var due = /due[\s\S]{0,80}?((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4})/i.exec(text || '');
+    if (due) return isoFromMonthName(due[1]);
+    var all = String(text || '').match(/(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}/ig);
+    return all ? isoFromMonthName(all[all.length - 1]) : null;
+  }
+  function parseCtrma(html) {
+    html = String(html || '');
+    var marks = [], re = /<p[^>]*>\s*<strong>\s*([^<]+?)\s*<\/strong>\s*<\/p>|<h2[^>]*>\s*([^<]+?)\s*<\/h2>/gi, m;
+    while ((m = re.exec(html))) marks.push({ name: decodeHtml(m[1] || m[2] || '').replace(/\s+/g, ' ').trim(), i: m.index });
+    var out = [];
+    marks.forEach(function (mark, idx) {
+      var section = mark.name.toLowerCase();
+      if (section !== 'engineering' && section !== 'construction' && section !== 'contracts awarded') return;
+      var slice = html.slice(mark.i, marks[idx + 1] ? marks[idx + 1].i : html.length);
+      var tables = htmlTables(slice);
+      if (!tables.length || !tables[0].length) return;
+      var rows = tables[0];
+      var head = rows[0].cells.map(function (c) { return c.toLowerCase(); });
+      var iType = head.findIndex(function (h) { return h.indexOf('type') === 0; });
+      var iDate = head.findIndex(function (h) { return /date/.test(h); });
+      var iVal = head.findIndex(function (h) { return h.indexOf('value') === 0; });
+      var iStage = head.findIndex(function (h) { return h.indexOf('stage') === 0; });
+      var awarded = section === 'contracts awarded';
+      rows.slice(1).forEach(function (row, n) {
+        var title = str(row.cells[0]);
+        if (!title || /no current procurements/i.test(title)) return;
+        var typeTxt = iType >= 0 ? str(row.cells[iType]) : '';
+        var stage = awarded ? 'Awarded' : (iStage >= 0 ? str(row.cells[iStage]) : mark.name);
+        var dates = iDate >= 0 ? (row.cells[iDate] || '') : '';
+        var val = iVal >= 0 ? str(row.cells[iVal]) : '';
+        var blob = title + ' ' + (typeTxt || '') + ' ' + (stage || '');
+        var aeish = /engineering|PS&E|architect|survey|\bdesign\b/i.test(blob) && !isClearNonEng(blob);
+        if (awarded && !aeish) return;
+        var due = ctrmaDue(dates, awarded);
+        var eng = matchEng(blob), kw = matchKeywords(blob);
+        var rec = {
+          id: 'ctrma:' + section.replace(/\s+/g, '-') + ':' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80),
+          src: 'ctrma', agency: 'CTRMA', kind: awarded ? 'contract' : 'solicitation', phase: 'procure',
+          title: title, stage: stage || mark.name, status: awarded ? 'Awarded' : (/\bforthcoming\b/i.test(stage || '') ? 'Forthcoming' : (stage || 'Listed')),
+          solType: typeTxt || (awarded ? 'Awarded' : 'Listed on CTRMA procurements page'), svc: false, eng: eng, county: 'Travis',
+          lat: null, lon: null, date: due, dateLabel: awarded ? 'Award date (CTRMA)' : 'Key date (CTRMA procurements page)',
+          cost: pos(String(val || '').replace(/[$,]/g, '')), costLabel: val && val !== 'TBD' ? 'Value (CTRMA)' : null,
+          work: typeTxt, desc: dates ? String(dates).replace(/\s+/g, ' ').trim() : null,
+          url: (row.href && /^https:/.test(row.href)) ? row.href : CTRMA_PAGE, rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+          extra: [['Section', mark.name], ['Type (as listed)', typeTxt || 'not listed'], ['Stage (as listed)', stage || 'not listed'], ['Dates (raw)', dates ? String(dates).replace(/\s+/g, ' ').trim() : 'not listed'], ['Value (raw)', val || 'not listed']]
+        };
+        rec.svc = isConsultant(rec);
+        rec.why = rec.svc ? 'In the Consultant services focus: CTRMA ' + mark.name + ' row with engineering, architecture, surveying, or design wording.' : 'Not in the Consultant services focus (CTRMA ' + mark.name + ').';
+        out.push(rec);
+      });
+    });
+    return out;
+  }
+
+  // Same solicitation posted in two places becomes one record. preferIds are ids already on disk (stars keep working).
+  function solKey(r) {
+    var raw = r && r.solNum;
+    if (!raw && r && r.extra) {
+      var hit = r.extra.filter(function (e) { return e && /solicitation (number|id)/i.test(e[0] || ''); })[0];
+      if (hit) raw = hit[1];
+    }
+    return String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  }
+  function normBits(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function richness(r) {
+    var n = 0;
+    ['title', 'desc', 'date', 'url', 'status', 'solType', 'dept', 'county', 'work'].forEach(function (k) { if (r[k]) n++; });
+    if (typeof r.cost === 'number') n += 2;
+    n += (r.extra || []).length;
+    return n;
+  }
+  function mergeDuplicates(records, preferIds) {
+    var prefer = preferIds || new Set();
+    var groups = [], index = {};
+    (records || []).forEach(function (r) {
+      if (!r) return;
+      var key = solKey(r), gkey = null;
+      if (key.length >= 8) gkey = 'n:' + key;
+      else if (key.length >= 5) gkey = 's:' + key + '|' + (normBits(r.agency) || normBits(r.title));
+      else if (r.title && r.agency && r.date) gkey = 't:' + normBits(r.title) + '|' + normBits(r.agency) + '|' + r.date;
+      if (!gkey) { groups.push([r]); return; }
+      if (!index[gkey]) { index[gkey] = []; groups.push(index[gkey]); }
+      index[gkey].push(r);
+    });
+    return groups.map(function (group) {
+      if (group.length === 1) return group[0];
+      var ranked = group.slice().sort(function (a, b) {
+        var ap = prefer.has(a.id) ? 1 : 0, bp = prefer.has(b.id) ? 1 : 0;
+        if (ap !== bp) return bp - ap;
+        return richness(b) - richness(a);
+      });
+      var keep = {};
+      Object.keys(ranked[0]).forEach(function (k) { keep[k] = ranked[0][k]; });
+      if (keep.extra) keep.extra = keep.extra.slice();
+      group.forEach(function (other) {
+        if (other === ranked[0]) return;
+        Object.keys(other).forEach(function (k) {
+          if (k === 'id' || k === 'src' || k === 'also' || k === 'extra') return;
+          if (keep[k] === null || keep[k] === undefined || keep[k] === '') keep[k] = other[k];
+        });
+        if (other.agency === 'HCTRA') keep.agency = 'HCTRA';
+        keep.also = keep.also || [];
+        if (other.src && other.src !== keep.src && keep.also.indexOf(other.src) < 0) keep.also.push(other.src);
+        if (other.url && other.url !== keep.url) keep.extra = (keep.extra || []).concat([['Also listed at', other.url]]);
+      });
+      if (keep.also && keep.also.length) keep.extra = (keep.extra || []).concat([['Also listed by', keep.also.join(', ')]]);
+      else delete keep.also;
+      return keep;
+    });
   }
 
   // ---- county centroids for approximate placement (only when a source gives a county but no coordinates) ----
@@ -633,7 +929,7 @@
   // ---- filtering / aggregation ----
   var HOUSTON_AREA = ['harris', 'fort bend', 'montgomery', 'brazoria', 'galveston', 'waller']; // TxDOT Houston District counties
   function inHoustonArea(r) {
-    if (r.agency === 'City of Houston' || r.agency === 'HCFCD' || r.agency === 'Harris County' || r.agency === 'METRO') return true; // Houston / Harris County bodies
+    if (r.agency === 'City of Houston' || r.agency === 'HCFCD' || r.agency === 'Harris County' || r.agency === 'HCTRA' || r.agency === 'METRO') return true; // Houston / Harris County bodies
     if (r.county && HOUSTON_AREA.indexOf(String(r.county).toLowerCase().replace(/ county$/, '')) >= 0) return true;
     return r.district === 'Houston District' || r.district === 'Houston';
   }
@@ -642,8 +938,10 @@
     f = f || {};
     var q = f.q ? String(f.q).toLowerCase().split(/\s+/).filter(Boolean) : [];
     return recs.filter(function (r) {
-      if (f.consult) { // Consultant services focus: stated rule in isConsultant(); drainage relevance only applies if "Direct" is picked
+      if (f.consult) { // A/E focus. Default status is Open; Forecast and Past are chosen explicitly. Drainage relevance only applies if "Direct" is picked.
         if (!isConsultant(r)) return false;
+        var aePick = f.ae || 'open';
+        if (aePick !== 'all' && aeStatus(r, f.today) !== aePick) return false;
         if (f.rel === 'direct' && r.rel !== 'direct') return false;
         if (f.eng && !((r.eng && r.eng.length) || (r.kw && r.kw.length))) return false;
       } else if (f.rel === 'direct') { if (r.rel !== 'direct') return false; }
@@ -693,7 +991,7 @@
   var api = {
     KEYWORDS: KEYWORDS, PHASES: PHASES, AGENCIES: AGENCIES, HOUSTON_AREA: HOUSTON_AREA, TXDOT_KEEP_STAGES: TXDOT_KEEP_STAGES, TXDOT_SELECT: TXDOT_SELECT, TXDOT_DATASET: TXDOT_DATASET, TRACKER_FIELDS: TRACKER_FIELDS,
     COH_LAYERS: COH_LAYERS, COH_BASE: COH_BASE, COH_SWMB_BASE: COH_SWMB_BASE, HCFCD_LJA: HCFCD_LJA, HCFCD_PAGE: HCFCD_PAGE, HCFCD_BIDS_PAGE: HCFCD_BIDS_PAGE, PEPS_SELECTED_PAGE: PEPS_SELECTED_PAGE, PEPS_MEETINGS_PAGE: PEPS_MEETINGS_PAGE, FIF_URL: FIF_URL, FIF_PAGE: FIF_PAGE,
-    matchKeywords: matchKeywords, kwLabel: kwLabel, ENG_KEYWORDS: ENG_KEYWORDS, matchEng: matchEng, engLabel: engLabel, solType: solType, isConsultant: isConsultant, svcRule: svcRule, isoFromSerial: isoFromSerial, BONFIRE_PORTALS: BONFIRE_PORTALS, bonfireRecord: bonfireRecord, AUSTIN_SOL_PAGE: AUSTIN_SOL_PAGE, AUSTIN_SOL_XLSX: AUSTIN_SOL_XLSX, parseAustinActive: parseAustinActive, AUSTIN_CONTRACTS_URL: AUSTIN_CONTRACTS_URL, AUSTIN_CONTRACTS_PAGE: AUSTIN_CONTRACTS_PAGE, normAustinContracts: normAustinContracts, SA_PAGE: SA_PAGE, parseSanAntonio: parseSanAntonio, classify: classify, phaseLabel: phaseLabel, phaseColor: phaseColor, agencyColor: agencyColor,
+    matchKeywords: matchKeywords, kwLabel: kwLabel, ENG_KEYWORDS: ENG_KEYWORDS, matchEng: matchEng, engLabel: engLabel, solType: solType, isConsultant: isConsultant, aeStatus: aeStatus, hasAeWording: hasAeWording, isClearNonEng: isClearNonEng, svcRule: svcRule, isoFromSerial: isoFromSerial, BONFIRE_PORTALS: BONFIRE_PORTALS, bonfireRecord: bonfireRecord, AUSTIN_SOL_PAGE: AUSTIN_SOL_PAGE, AUSTIN_SOL_XLSX: AUSTIN_SOL_XLSX, parseAustinActive: parseAustinActive, AUSTIN_CONTRACTS_URL: AUSTIN_CONTRACTS_URL, AUSTIN_CONTRACTS_PAGE: AUSTIN_CONTRACTS_PAGE, normAustinContracts: normAustinContracts, SA_PAGE: SA_PAGE, parseSanAntonio: parseSanAntonio, ESBD_PAGE: ESBD_PAGE, ESBD_CSV_URL: ESBD_CSV_URL, parseEsbdCsv: parseEsbdCsv, AGGIE_PAGE: AGGIE_PAGE, parseAggieBid: parseAggieBid, CTRMA_PAGE: CTRMA_PAGE, parseCtrma: parseCtrma, mergeDuplicates: mergeDuplicates, classify: classify, phaseLabel: phaseLabel, phaseColor: phaseColor, agencyColor: agencyColor,
     normTxdotPI: normTxdotPI, mergeTracker: mergeTracker, normCohCip: normCohCip, normSwmb: normSwmb, normHcfcdMaint: normHcfcdMaint, normFif: normFif, geomCenter: geomCenter,
     htmlTables: htmlTables, decodeHtml: decodeHtml, parseHcfcdBids: parseHcfcdBids, parsePepsSelected: parsePepsSelected, parsePepsMeetings: parsePepsMeetings, parseProjectedContracts: parseProjectedContracts,
     countyCentroids: countyCentroids, applyApprox: applyApprox, inHoustonArea: inHoustonArea,
