@@ -4,14 +4,16 @@
   var M = window.RadarModel, CP = window.RadarCapture, CAP_APP = CP.OPP_BACKUP_APP;
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var WATCH_KEY = 'opportunityRadar.watch.v1';
+  var WATCH_KEY = 'texas.watch';
+  var WATCH_KEY_LEGACY = 'opportunityRadar.watch.v1';
 
   var state = {
     data: null, recs: [], byId: {}, sources: [], watch: {}, live: null,
     f: { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null },
-    tab: 'radar', colorBy: 'agency', sort: 'date', rows: 100, filtered: [], today: new Date().toISOString().slice(0, 10)
+    tab: 'list', colorBy: 'agency', sort: 'date', rows: 100, filtered: [], today: new Date().toISOString().slice(0, 10)
   };
-  try { state.watch = JSON.parse(localStorage.getItem(WATCH_KEY) || '{}') || {}; } catch (e) { state.watch = {}; }
+  if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, WATCH_KEY_LEGACY, WATCH_KEY);
+  try { state.watch = JSON.parse((window.RadarStorage ? RadarStorage.read(localStorage, WATCH_KEY, [WATCH_KEY_LEGACY]) : localStorage.getItem(WATCH_KEY)) || '{}') || {}; } catch (e) { state.watch = {}; }
   function saveWatch() { try { localStorage.setItem(WATCH_KEY, JSON.stringify(state.watch)); } catch (e) { toast('Could not save the watchlist (browser storage is blocked).'); } }
   function toast(msg) { var t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 3500); }
 
@@ -139,12 +141,29 @@
     var n = state.f.agencies.length + state.f.phases.length + state.f.kinds.length + state.f.kw.length;
     n += (state.f.rel !== 'relevant' ? 1 : 0) + (state.f.consult ? 0 : 1);
     $('advCount').textContent = n ? '(' + n + ')' : '';
-    var notes = [];
-    if (state.f.month) notes.push('month ' + M.fmtMonth(state.f.month));
-    if (state.f.q) notes.push('search "' + state.f.q + '"');
-    $('activeNote').hidden = !notes.length; $('activeNote').textContent = notes.length ? 'Active: ' + notes.join(', ') : '';
+    renderTags(); $('activeNote').hidden = true; // the removable tags replace the old "Active:" line
     Array.prototype.forEach.call(document.querySelectorAll('.seg button'), function (b) { b.classList.toggle('on', b.getAttribute('data-rel') === state.f.rel); });
   }
+  // ---------- saved filter sets and removable tags (shared/filters.js, texas.filtersets) ----------
+  var FS = window.RadarFilters ? RadarFilters.load(window.localStorage, 'texas') : [];
+  function freshFilters() { return { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null }; }
+  function renderTags() {
+    var pl = {}, kl = {}; M.PHASES.forEach(function (p) { pl[p.id] = p.label; }); M.KEYWORDS.forEach(function (k) { kl[k.id] = k.label; });
+    var tags = RadarFilters.tagsFor('texas', state.f, { phaseLabel: pl, kindLabel: KIND_LABEL, kwLabel: kl, monthLabel: M.fmtMonth }), el = $('ftags'); el.hidden = !tags.length;
+    el.innerHTML = tags.map(function (t) { return '<button type="button" class="ftag" data-tag-k="' + esc(t.k) + '" data-tag-v="' + esc(t.v) + '" aria-label="Remove filter ' + esc(t.label) + '">' + esc(t.label) + ' <span aria-hidden="true">&times;</span></button>'; }).join('') + (tags.length ? '<button type="button" class="ftclear" id="ftClear">Clear all</button>' : '');
+  }
+  function renderSets() {
+    $('fsets').innerHTML = FS.length ? FS.map(function (x) { return '<span class="fset"><button type="button" class="chip" data-fs-apply="' + esc(x.name) + '">' + esc(x.name) + '</button><button type="button" class="fsdel" data-fs-del="' + esc(x.name) + '" aria-label="Delete filter set ' + esc(x.name) + '">&times;</button></span>'; }).join('') : '<span class="hint">None yet. Set filters, name them and tap Save.</span>';
+  }
+  function saveSet() {
+    var name = $('fsName').value.trim(); if (!name) { toast('Type a name for this filter set first.'); $('fsName').focus(); return; }
+    FS = RadarFilters.upsert(FS, RadarFilters.snapshotFor('texas', name, state.f)); RadarFilters.save(window.localStorage, 'texas', FS); $('fsName').value = ''; renderSets(); toast('Saved filter set "' + name + '" on this device.');
+  }
+  function applySet(name) {
+    var set = FS.filter(function (x) { return x.name === name; })[0]; if (!set) return;
+    state.f = RadarFilters.applyFor('texas', freshFilters(), set); $('q').value = state.f.q || ''; if (map) map.fit(state.f.houston ? 'hou' : 'tx'); apply(); toast('Applied "' + name + '".');
+  }
+  function deleteSet(name) { FS = RadarFilters.remove(FS, name); RadarFilters.save(window.localStorage, 'texas', FS); renderSets(); toast('Deleted filter set "' + name + '".'); }
   function renderLegend() {
     var items;
     if (state.colorBy === 'phase') items = M.PHASES.map(function (p) { return [p.label, p.color]; });
@@ -163,6 +182,7 @@
   function renderMap() {
     var pts = mapPoints(); if (map) map.setPoints(pts);
     var unmapped = state.filtered.filter(function (r) { return !hasLoc(r); }).length;
+    var nl = RadarShell.noLocLabel(unmapped); $('mapNoLoc').textContent = nl; $('mapNoLoc').hidden = !unmapped; $('listNoLoc').textContent = nl; $('listNoLoc').hidden = !unmapped;
     $('unmapped').textContent = pts.length.toLocaleString('en-US') + ' of ' + state.filtered.length.toLocaleString('en-US') + ' shown records are on the map. ' + unmapped.toLocaleString('en-US') + ' have no location in their source (consultant procurements, funding lists, some projects); find them in the List and Timeline tabs. ' + pts.filter(function (p) { return p.approx; }).length + ' are placed at their county centroid (inferred, dashed ring).';
     var top = state.filtered.filter(function (r) { var d = r.date ? M.daysUntil(r.date, state.today) : null; return d !== null && d >= -30; });
     var chosen = top.slice().sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }).slice(0, 8);
@@ -260,7 +280,7 @@
       '<li>Costs are what the agency lists (usually construction cost, not design fee). The label on each record says which.</li></ul>';
   }
   function renderAll() {
-    renderKpis(); renderFilters(); renderLegend(); renderMap(); renderAgencies(); renderTimeline(); renderList(); renderCapBar(); renderSources();
+    renderKpis(); renderFilters(); renderLegend(); renderMap(); renderAgencies(); renderTimeline(); renderList(); renderCapBar(); renderSources(); renderPursuits(); renderPurBadge();
     var fresh = state.data ? state.data.generatedAt : null;
     if (fresh) {
       var ageH = (Date.now() - Date.parse(fresh)) / 3600000;
@@ -318,16 +338,46 @@
   function capDownload(name, type, text, bom) { var blob = new Blob([(bom ? '\ufeff' : '') + text], { type: type }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
   function capRows() { return Object.keys(state.watch).map(function (id) { var sn = snapFor(id) || { title: id }; return { id: id, cap: capOf(id), snap: sn }; }); }
   function exportCapCsv() { var rows = CP.sortRows(capRows(), state.sort === 'decision' ? 'decision' : 'due'); if (!rows.length) { toast('The watchlist is empty.'); return; } capDownload('texas-opportunity-capture-' + todayCentral() + '.csv', 'text/csv;charset=utf-8', CP.toCSV(rows, todayCentral()), true); toast('Exported ' + rows.length + ' capture file(s).'); }
+  // ---------- My pursuits: starred records by due date, weekly list and calendar (shared/weekly.js) ----------
+  function purRows() { // a solicitation's closing date stands in when the capture file has no due date
+    var caps = {}; Object.keys(state.watch).forEach(function (id) { var c = capOf(id), r = state.byId[id]; if (!c.due && r && r.kind === 'solicitation' && r.date) c = Object.assign({}, c, { due: r.date }); caps[id] = c; });
+    return RadarWeekly.pursuitRows(state.watch, caps, snapFor, todayCentral(), CP).map(function (row) { if (!capOf(row.id).due && row.cap.due) row.dueFrom = 'source'; return row; });
+  }
+  function renderPurBadge() { var n = purRows().filter(function (r) { return r.flag === 'overdue' || r.flag === 'soon'; }).length, b = $('purBadge'); b.hidden = !n; b.textContent = n; }
+  function purItem(r) {
+    var c = r.cap, sn = r.snap || {}, t = todayCentral();
+    var due = c.due ? '<span class="cdue ' + r.flag + '">' + (r.flag === 'overdue' ? '&#9888; ' : r.flag === 'soon' ? '&#9873; ' : '') + esc(CP.dueText(c.due, t)) + ' &middot; ' + esc(M.fmtDate(c.due)) + (r.dueFrom === 'source' ? ' (closing date from the source)' : '') + '</span>' : '<span class="cdue none">No due date</span>';
+    return '<div class="card pur ' + r.flag + '" style="--c:' + (r.flag === 'overdue' ? 'var(--bad)' : r.flag === 'soon' ? 'var(--warn)' : 'var(--acc)') + '" data-id="' + esc(r.id) + '" role="button" tabindex="0">' +
+      '<button type="button" class="star on" data-star="' + esc(r.id) + '" aria-label="Remove from watchlist">&#9733;</button><div class="b"><div class="t">' + esc(sn.title || r.id) + '</div>' +
+      '<div class="m"><span>' + esc(sn.agency || '') + '</span></div>' +
+      '<div class="purcap"><span class="cdec ' + c.decision.replace(/[^a-z]/gi, '').toLowerCase() + '">' + esc(c.decision) + '</span>' + due + (c.next ? '<span class="cnext">Next: ' + esc(c.next) + '</span>' : '') + '</div>' +
+      (c.notes ? '<p class="note purnotes">' + esc(c.notes.length > 240 ? c.notes.slice(0, 240) + '…' : c.notes) + '</p>' : '') + '</div></div>';
+  }
+  function renderPursuits() {
+    var rows = purRows(), wk = rows.filter(function (r) { return r.week; }), rest = rows.filter(function (r) { return !r.week; });
+    $('purWeek').textContent = 'week of ' + M.fmtDate(todayCentral());
+    $('purList').innerHTML = rows.length ? (wk.length ? '<h3>This week: overdue or due within 7 days (' + wk.length + ')</h3>' + wk.map(purItem).join('') : '<p class="note">Nothing overdue or due in the next 7 days.</p>') + (rest.length ? '<h3>Later or no due date (' + rest.length + ')</h3>' + rest.map(purItem).join('') : '')
+      : '<p class="note">No pursuits yet. Star a record (&#9734;) in the List or Map to start a capture file; it shows up here with its due date, Go / No-go and next action.</p>';
+  }
+  function exportPursuitIcs() {
+    var ev = RadarWeekly.dueEvents(purRows());
+    if (!ev.length) { toast('No due dates yet: add a due date in a capture file, or star a solicitation that states a closing date.'); return; }
+    capDownload('texas-opportunity-pursuits.ics', 'text/calendar', RadarWeekly.ics(ev, new Date().toISOString(), 'Texas Opportunity: My pursuits', 'Texas Opportunity'), false);
+    toast(ev.length + ' calendar event' + (ev.length === 1 ? '' : 's') + ' saved, with reminders 1 week and 1 day before each due date.');
+  }
+  var WKS = null;
   function exportBackup() {
-    var ids = Object.keys(state.watch); if (!ids.length) { toast('The watchlist is empty, nothing to back up.'); return; }
+    var ids = Object.keys(state.watch); if (!ids.length && !FS.length) { toast('The watchlist is empty, nothing to back up.'); return; }
     var caps = {}; ids.forEach(function (id) { var c = capOf(id); if (!c.snap) c.snap = snapFor(id) || undefined; caps[id] = c; });
     var bk = CP.makeBackup(state.watch, caps, new Date().toISOString(), CAP_APP); bk.meta = {}; ids.forEach(function (id) { var w = state.watch[id]; bk.meta[id] = { t: w.t || '', a: w.a || '', u: w.u || null, at: w.at || '' }; });
+    bk.filtersets = FS; // saved filter sets travel with the Texas backup (same field as National); still one file per app
     capDownload('texas-opportunity-capture-backup-' + todayCentral() + '.json', 'application/json', JSON.stringify(bk, null, 1), false); toast('Backup saved to your downloads.');
   }
   function restoreBackup(text, mode) {
     var p = CP.parseBackup(text, CAP_APP); if (!p.ok) { toast(p.error); return; }
     if (mode === 'replace' && !window.confirm('Replace the whole watchlist and every capture file on this device with the backup?')) return;
     var meta = {}; try { meta = JSON.parse(text.replace(/^\ufeff/, '')).meta || {}; } catch (e) { meta = {}; }
+    try { var j8 = JSON.parse(text.replace(/^\ufeff/, '')); if (j8 && Array.isArray(j8.filtersets)) { FS = mode === 'replace' ? RadarFilters.cleanFor('texas', j8.filtersets) : RadarFilters.mergeFor('texas', FS, j8.filtersets); RadarFilters.save(window.localStorage, 'texas', FS); renderSets(); } } catch (e) { /* parseBackup already validated */ }
     var cur = { watch: {}, capture: {} }; Object.keys(state.watch).forEach(function (id) { cur.watch[id] = true; if (state.watch[id].cap) cur.capture[id] = CP.clean(state.watch[id].cap); });
     var out = CP.applyBackup(cur, p, mode), next = {};
     Object.keys(out.watch).forEach(function (id) {
@@ -364,9 +414,10 @@
     h += '<p class="note" style="margin:6px 0 0">Source: ' + esc(s ? s.name : r.src) + (s && s.fetchedAt ? ', fetched ' + esc(fmtDT(s.fetchedAt)) : '') + '. Record ID: ' + esc(r.id) + '</p>';
     h = h.replace(/(<h2>[\s\S]*?<\/h2>)/, '$1<div id="capPanel"></div>');
     $('shBody').innerHTML = h; setStar($('shStar'), !!state.watch[id]); refreshCapPanel(id);
-    $('sheet').hidden = false; document.body.style.overflow = 'hidden';
+    SHELL.openDetail(); // shared shell: beside the list or map on a wide screen, a bottom sheet on a phone
   }
-  function closeSheet() { $('sheet').hidden = true; document.body.style.overflow = ''; curId = null; if (map) { map.focus = null; map.dirty = true; map._schedule(); } }
+  function closeSheet() { SHELL.closeDetail(); } // onDetailClose: detailClosed
+  function detailClosed() { curId = null; if (map) { map.focus = null; map.dirty = true; map._schedule(); } }
   function setStar(btn, on) { btn.classList.toggle('on', on); btn.innerHTML = on ? '&#9733;' : '&#9734;'; btn.setAttribute('aria-label', on ? 'Remove from watchlist' : 'Add to watchlist'); }
   function toggleWatch(id) {
     var r = state.byId[id] || ghosts().filter(function (g) { return g.id === id; })[0];
@@ -406,15 +457,22 @@
   }
 
   // ---------- events ----------
-  var map = null;
+  var map = null, SHELL = null;
+  // one canvas map: on the Map tab it fills the wide column; on the List tab it sits in the side column (a collapsible box on a phone)
+  function placeMap() {
+    var w = $('mapwrap'), slot = state.tab === 'list' ? $('mapSlotList') : $('mapSlotMap'), moved = w.parentNode !== slot;
+    if (moved) slot.appendChild(w);
+    if (!map) return;
+    var vis = !document.hidden && (state.tab === 'map' || (state.tab === 'list' && $('txMiniDet').open));
+    map.setVisible(vis); if (vis && moved) map.fit(state.f.houston ? 'hou' : 'tx');
+  }
   function switchTab(t) {
-    state.tab = t;
-    ['radar', 'timeline', 'agencies', 'list', 'intel', 'sources'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
+    t = SHELL.showTab(t); state.tab = t; detailClosed(); // shared shell: views, tab bar, More menu, texas.tab
     $('kpis').hidden = t === 'intel'; document.querySelector('.filters').hidden = t === 'intel'; /* Intel has its own filters */
     if (t === 'intel' && window.TXIntelUI) window.TXIntelUI.onShow();
-    Array.prototype.forEach.call(document.querySelectorAll('.tabs button'), function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
-    if (map) { map.setVisible(t === 'radar'); }
+    placeMap();
     if (t === 'timeline') scrollTimeline();
+    if (t === 'pursuits') renderPursuits();
     window.scrollTo(0, 0);
   }
   function toggleIn(arr, v) { var i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); }
@@ -425,6 +483,10 @@
     if ((el = t.closest('[data-star]'))) { e.stopPropagation(); toggleWatch(el.getAttribute('data-star')); return; }
     if ((el = t.closest('[data-open]'))) { openSheet(el.getAttribute('data-open')); return; }
     if ((el = t.closest('.card[data-id]'))) { openSheet(el.getAttribute('data-id')); return; }
+    if ((el = t.closest('[data-tag-k]'))) { var tk = el.getAttribute('data-tag-k'); RadarFilters.removeTagFor('texas', state.f, tk, el.getAttribute('data-tag-v')); if (tk === 'q') $('q').value = ''; apply(); return; }
+    if (t.closest('#ftClear')) { state.f = freshFilters(); $('q').value = ''; if (map) map.fit('tx'); apply(); return; }
+    if ((el = t.closest('[data-fs-apply]'))) { applySet(el.getAttribute('data-fs-apply')); return; }
+    if ((el = t.closest('[data-fs-del]'))) { deleteSet(el.getAttribute('data-fs-del')); return; }
     if ((el = t.closest('[data-month]'))) { var k = el.getAttribute('data-month'); state.f.month = state.f.month === k ? null : k; apply(); return; }
     if ((el = t.closest('[data-q]'))) { var q = el.getAttribute('data-q'); if (q === 'houston') { state.f.houston = !state.f.houston; if (map) map.fit(state.f.houston ? 'hou' : 'tx'); } else if (q === 'watch') state.f.watchOnly = !state.f.watchOnly; else if (q === 'located') state.f.located = !state.f.located; else if (q === 'consult') { state.f.consult = !state.f.consult; if (!state.f.consult) state.f.eng = false; } else if (q === 'eng') state.f.eng = !state.f.eng; else if (q === 'month') state.f.month = null; apply(); return; }
     if ((el = t.closest('[data-agency]'))) { toggleIn(state.f.agencies, el.getAttribute('data-agency')); apply(); return; }
@@ -433,23 +495,28 @@
     if ((el = t.closest('[data-kw]'))) { toggleIn(state.f.kw, el.getAttribute('data-kw')); apply(); return; }
     if ((el = t.closest('[data-search]'))) { state.f.q = el.getAttribute('data-search'); $('q').value = state.f.q; apply(); switchTab('list'); return; }
     if ((el = t.closest('.seg button'))) { state.f.rel = el.getAttribute('data-rel'); apply(); return; }
-    if ((el = t.closest('.tabs button'))) { switchTab(el.getAttribute('data-tab')); return; }
+    if ((el = t.closest('[data-tab]'))) { switchTab(el.getAttribute('data-tab')); return; }
     if ((el = t.closest('[data-view]'))) { if (map) map.fit(el.getAttribute('data-view')); return; }
   }
   function init() {
+    SHELL = window.RadarShell.bind({ app: 'texas', doc: document, ls: window.localStorage, media: window.matchMedia ? window.matchMedia(window.RadarShell.QUERY) : null, tabs: ['list', 'map', 'pursuits', 'intel'], more: ['timeline', 'agencies', 'sources'], labels: { timeline: 'Timeline', agencies: 'Agencies', sources: 'Sources' }, cols: { list: 'colsList', map: 'colsMap' }, onDetailClose: detailClosed });
+    if (SHELL.isDesktop()) $('txMiniDet').open = true;
+    $('txMiniDet').addEventListener('toggle', placeMap);
     document.addEventListener('click', onClick);
     document.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.card[data-id]')) { e.preventDefault(); openSheet(e.target.getAttribute('data-id')); } if (e.key === 'Escape' && !$('sheet').hidden) closeSheet(); });
     $('q').addEventListener('input', function () { clearTimeout(init._t); init._t = setTimeout(function () { state.f.q = $('q').value.trim(); apply(); }, 200); });
-    $('btnMore').addEventListener('click', function () { var o = $('adv').hidden; $('adv').hidden = !o; this.setAttribute('aria-expanded', o ? 'true' : 'false'); });
     $('btnCsv2').addEventListener('click', exportCsv);
     function onCap(e) { if (e.target.hasAttribute && e.target.hasAttribute('data-cap')) updateCapField(e.target); }
     document.addEventListener('input', onCap); document.addEventListener('change', onCap);
     document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.hasAttribute && d.hasAttribute('data-capopen')) { var id = d.getAttribute('data-capopen'); if (d.open) capOpen[id] = true; else delete capOpen[id]; } }, true);
     $('btnCapCsv').addEventListener('click', exportCapCsv); $('btnBackup').addEventListener('click', exportBackup);
+    WKS = RadarWeekly.bindSheet({ doc: document, win: window, model: function () { return RadarWeekly.model(purRows(), todayCentral(), CP, M.fmtDate); }, fileName: function (ext) { return 'texas-opportunity-weekly-' + todayCentral() + '.' + ext; }, back: 'btnPurPrint', toast: toast, download: capDownload });
+    $('btnPurPrint').addEventListener('click', WKS.open); $('btnPurCsv').addEventListener('click', exportCapCsv); $('btnPurIcs').addEventListener('click', exportPursuitIcs);
     $('btnRestore').addEventListener('click', function () { restoreMode = 'merge'; $('restoreFile').value = ''; $('restoreFile').click(); });
     $('btnRestoreAll').addEventListener('click', function () { restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });
     $('restoreFile').addEventListener('change', function () { var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { restoreBackup(String(rd.result), restoreMode); }; rd.onerror = function () { toast('Could not read that file.'); }; rd.readAsText(f); });
-    $('btnClear').addEventListener('click', function () { state.f = { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null }; $('q').value = ''; apply(); });
+    $('btnClear').addEventListener('click', function () { state.f = freshFilters(); $('q').value = ''; apply(); });
+    $('fsSave').addEventListener('click', saveSet); $('fsName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); saveSet(); } }); renderSets();
     $('btnColor').addEventListener('click', function () { state.colorBy = state.colorBy === 'agency' ? 'phase' : 'agency'; this.textContent = 'Color: ' + (state.colorBy === 'agency' ? 'agency' : 'stage'); renderLegend(); apply(); });
     $('btnSweep').addEventListener('click', function () { var on = this.getAttribute('aria-pressed') !== 'true'; this.setAttribute('aria-pressed', on ? 'true' : 'false'); this.textContent = 'Sweep: ' + (on ? 'on' : 'off'); if (map) map.setSweep(on); });
     $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
@@ -457,16 +524,21 @@
     $('btnMoreRows').addEventListener('click', function () { state.rows += 100; renderList(); });
     $('shClose').addEventListener('click', closeSheet); $('shBg').addEventListener('click', closeSheet);
     $('shStar').addEventListener('click', function () { if (curId) toggleWatch(curId); });
-    var canvas = $('map');
-    map = new window.RadarMap(canvas, window.TX_GEO, { sweep: true, onPick: function (ids, n) { if (ids.length) openSheet(ids[0], ids); }, onMove: function () { $('maphint').style.opacity = 0; } });
     var cen = M.countyCentroids(window.TX_GEO), named = {}; (window.TX_GEO.counties || []).forEach(function (c) { named[c.n] = cen[c.n.toLowerCase()]; }); window.TX_GEO._cent = named;
-    map.fit('tx'); renderLegend();
-    if (map.reduced) { $('btnSweep').setAttribute('aria-pressed', 'false'); $('btnSweep').textContent = 'Sweep: off'; }
-    document.addEventListener('visibilitychange', function () { map.setVisible(!document.hidden && state.tab === 'radar'); });
-    loadData().then(function (d) { ingest(d); apply(); switchTab('radar'); /* always open on the Radar map; other views are one tap away */ setTimeout(function () { map.resize(); map.fit('tx'); map.dirty = true; map._schedule(); }, 50); })
+    var drawn = RadarShell.guardMap(document, 'mapFail', function () { // a map that cannot draw leaves the list and details working
+      map = new window.RadarMap($('map'), window.TX_GEO, { sweep: true, onPick: function (ids, n) { if (ids.length) openSheet(ids[0], ids); }, onMove: function () { $('maphint').style.opacity = 0; } });
+      map.fit('tx');
+    }, 'mapwrap');
+    if (!drawn) { map = null; $('listMapFail').textContent = RadarShell.MAP_FAIL_TEXT; $('listMapFail').hidden = false; }
+    renderLegend();
+    if (map && map.reduced) { $('btnSweep').setAttribute('aria-pressed', 'false'); $('btnSweep').textContent = 'Sweep: off'; }
+    document.addEventListener('visibilitychange', placeMap);
+    if (window.RadarTheme) RadarTheme.bind(document, window.localStorage, { colors: { day: '#f5f7fb', night: '#07100e' } });
+    loadData().then(function (d) { ingest(d); apply(); switchTab(SHELL.initial); /* List on a first visit, then the last view (texas.tab) */ setTimeout(function () { if (!map) return; map.resize(); map.fit('tx'); map.dirty = true; map._schedule(); }, 50); })
       .catch(function (e) { $('freshDot').className = 'dot bad'; $('freshTxt').textContent = 'Could not load data/opportunities.json (' + e.message + '). Nothing is shown; no sample data is substituted.'; });
   }
   M.MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   window.RadarApp = state;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
 })();

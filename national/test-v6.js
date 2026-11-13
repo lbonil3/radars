@@ -12,7 +12,7 @@ const tags = V.activeTags(f, { stateName: (k) => ({ TX: 'Texas' })[k], money: (v
 assert.deepStrictEqual(tags.map((t) => t.label), ['Search: pump', 'Texas', 'Water', 'Due in 30 days', 'Amount $5M+', 'Texas + Gulf states', 'Confirmed only']);
 V.removeTag(f, 'states', 'TX'); V.removeTag(f, 'dueWithin'); V.removeTag(f, 'q'); assert.ok(!f.states.length && f.dueWithin === null && f.q === '');
 // saved sets: snapshot, upsert by name, apply, delete, storage, merge (backup)
-const mem = { v: null, getItem() { return this.v; }, setItem(k, v) { assert.strictEqual(k, 'nr.filtersets'); this.v = v; } };
+const mem = { v: null, getItem() { return this.v; }, setItem(k, v) { assert.strictEqual(k, 'national.filtersets'); this.v = v; } };
 let sets = V.upsert([], V.snapshot('Texas water', { states: ['TX'], work: ['water'], feeMin: null }, 'upcoming', 'tx'));
 sets = V.upsert(sets, V.snapshot('texas WATER', { states: ['LA'] }, 'open', 'all')); assert.strictEqual(sets.length, 1, 'same name (any case) replaces');
 sets = V.upsert(sets, V.snapshot('Due soon', { dueWithin: 7 }, 'upcoming', 'all')); assert.strictEqual(sets[0].name, 'Due soon');
@@ -20,12 +20,18 @@ assert.ok(V.save(mem, sets)); assert.deepStrictEqual(V.load(mem).map((s) => s.na
 const ap = V.applyTo({ q: 'x', states: ['NY'], work: [], dueWithin: null }, V.load(mem)[1]); assert.deepStrictEqual(ap.states, ['LA']); assert.strictEqual(ap.q, '');
 assert.strictEqual(V.remove(sets, 'Due soon').length, 1);
 mem.v = '{bad json'; assert.deepStrictEqual(V.load(mem), [], 'corrupt storage => empty, no crash');
+const legacy = { v: JSON.stringify([V.snapshot('Legacy', { states: ['TX'] }, 'upcoming', 'tx')]), getItem(k) { return k === 'nr.filtersets' ? this.v : k === 'national.filtersets' ? this.neu : null; }, setItem(k, v) { if (k === 'national.filtersets') this.neu = v; } };
+assert.strictEqual(V.load(legacy)[0].name, 'Legacy');
+assert.ok(V.save(legacy, V.load(legacy)));
+assert.ok(legacy.neu && legacy.v, 'legacy filtersets key is not deleted');
 assert.strictEqual(V.clean([{ name: '', f: {} }, null, { name: 'ok', f: { states: 'TX' } }]).length, 1, 'invalid entries dropped');
 assert.deepStrictEqual(V.merge([V.snapshot('A', {}, 'all', 'all')], [V.snapshot('a', {}, 'all', 'all'), V.snapshot('B', {}, 'all', 'all')]).map((s) => s.name), ['A', 'B'], 'backup restore merges by name');
 // wiring
 const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8');
 ['qsState', 'qsWork', 'qsDue', 'ftags', 'fsets', 'fsName', 'fsSave', 'usmini'].forEach((k) => assert.ok(html.includes('id="' + k + '"'), 'html has #' + k));
 assert.ok(/bk\.filtersets = FS/.test(app) && /j6\.filtersets/.test(app), 'saved sets go into the backup and come back on restore');
-assert.ok(/'\.\/v6\.js'/.test(sw) && /radars-national-v2[1-9]/.test(sw), 'sw caches v6.js, cache v21+');
+const Cache = require('../shared/cache.js');
+assert.ok(Cache.files('national').indexOf('./v6.js') >= 0 && Cache.name('national') === 'radars-national-v23', 'sw caches v6.js, cache v23');
+assert.ok(/importScripts\('\.\.\/shared\/cache\.js'\)/.test(sw) && /RadarCache\.files\('national'\)/.test(sw), 'national sw uses the shared cache list');
 assert.ok(!/github|repo\b|repository/i.test(html + fs.readFileSync(path.join(__dirname, 'v6.js'), 'utf8')), 'no repo mentions');
 console.log('national v6 tests passed');

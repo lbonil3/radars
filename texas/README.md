@@ -1,6 +1,11 @@
 # Texas Opportunity
 
-Tabs: Radar (default), Timeline, Agencies, List, **Intel**, Sources.
+Tabs: **List** (default), Map, Pursuits, Intel; More: Timeline, Agencies, Sources. The last tab is remembered in localStorage `texas.tab`.
+
+## Radar 2.0 layout
+- One breakpoint at 1024px, shared with National Radar (`shared/shell.js`, `shared/shell.css`). On desktop the List shows the county map beside the list, and the Map tab shows "On the radar now" beside the map. Record details dock in the side column, and Filters is a right-hand drawer. On phones the map is a collapsible strip above the list. Day / Night / Auto is in the header.
+- Pursuits: starred records plus any record with a capture file, split into This week and Later, with a badge for overdue and due-soon records. If a capture file has no due date, a solicitation uses the closing date from the source, and the card says so. The weekly list (Print, Share, Copy, Download), CSV and calendar (.ics) export come from `shared/weekly.js`.
+- Saved filter sets and removable filter tags (`shared/filters.js`): name and Save in the Filters drawer, apply with one tap, delete with ×. Stored on this device in localStorage `texas.filtersets` and included in the capture backup JSON (`filtersets`), merged by name on restore. Backups stay per app.
 
 ## Intel (news and planning signals)
 

@@ -46,7 +46,7 @@ for (const f of ['national.json', 'pse.json', 'roadway.json']) {
   const b = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'build-national.js'), 'utf8');
   assert.strictEqual((b.match(/V2\.carryFirstSeen\(/g) || []).length, 3, 'build carries firstSeen for national, roadway and pse outputs');
   const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), sw = fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8');
-  assert.ok(html.indexOf('v2.js') > 0 && html.indexOf('v2.js') < html.indexOf('app.js') && sw.includes("'./v2.js'") && html.includes('id="digest"'));
+  assert.ok(html.indexOf('v2.js') > 0 && html.indexOf('v2.js') < html.indexOf('app.js') && require('../shared/cache.js').files('national').indexOf('./v2.js') >= 0 && html.includes('id="digest"'));
 }
 console.log('national v2 tests passed');
 // ---- item 3: region focus ----
@@ -66,7 +66,7 @@ console.log('national v2 tests passed');
 console.log('national v2 region tests passed');
 // ---- item 4: My pursuits ----
 {
-  const CP = require('./capture.js');
+  const CP = require('../shared/capture.js');
   const today = '2026-10-29';
   const watch = { a: true, b: true, c: true };
   const cap = { a: CP.clean({ due: '2026-11-20', decision: 'Go' }), b: CP.clean({ due: '2026-10-25', next: 'call PM' }), c: CP.clean({}), d: CP.clean({ due: '2026-11-02', notes: 'not starred, has notes' }), e: CP.clean({}) };
@@ -79,7 +79,8 @@ console.log('national v2 region tests passed');
   const csv = CP.toCSV(rows, today); assert.ok(csv.split('\n')[0].includes('Due') || csv.length > 0, 'capture CSV reused');
   const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8'), app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
   assert.ok(html.includes('data-tab="pursuits"') && html.includes('id="v-pursuits"') && html.includes('id="btnPurPrint"') && html.includes('id="btnPurCsv"'));
-  assert.ok(/@media print\{[\s\S]*body\.print-weekly>\*:not\(#weekly\)\{display:none/.test(css) && !/visibility:hidden/.test(css.slice(css.indexOf('body.print-weekly'))), 'print stylesheet for the weekly list uses display:none, not visibility');
+  const scss = fs.readFileSync(path.join(__dirname, '..', 'shared', 'shell.css'), 'utf8');
+  assert.ok(/@media print\{[\s\S]*body\.print-weekly>\*:not\(#weekly\)\{display:none/.test(scss) && !/visibility:hidden/.test(scss.slice(scss.indexOf('body.print-weekly'))), 'print stylesheet for the weekly list uses display:none, not visibility');
   assert.ok(html.includes('id="weekly"') && ['wkPrint', 'wkShare', 'wkCopy', 'wkDl', 'wkClose'].every((k) => html.includes('id="' + k + '"')), 'weekly list sheet with its buttons');
   assert.ok(/btnPurCsv'\)\.addEventListener\('click', exportCapCsv\)/.test(app), 'pursuits CSV reuses the capture CSV export');
 }
@@ -103,7 +104,7 @@ console.log('national v2 pursuits tests passed');
   for (const f of ['pse.json', 'national.json', 'roadway.json']) { const d = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', f), 'utf8')); const g = V.groupDupes(d.records); assert.ok(g.length <= d.records.length && g.every((c) => c.id)); }
   const app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8'), html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   assert.ok(html.includes('id="btnConfOnly"') && html.includes('role="switch"'), 'prominent Confirmed only switch');
-  assert.ok(/localStorage\.getItem\('nr\.confirmedOnly'\) === '1'/.test(app) && /localStorage\.setItem\('nr\.confirmedOnly'/.test(app), 'Confirmed only is persisted');
+  assert.ok(/'national\.confirmedOnly'/.test(app) && /localStorage\.setItem\('national\.confirmedOnly'/.test(app) && /'nr\.confirmedOnly'/.test(app), 'Confirmed only is persisted on the new key and the legacy key is still read');
   assert.ok(/f\.hideUnconfirmed = CONF/.test(app), 'switch survives mode changes and Clear filters');
 }
 console.log('national v2 dedupe tests passed');

@@ -219,36 +219,38 @@ assert.ok(data.records.filter(M.isConsultant).length > 50, 'consultant-services 
 
 // ---- page wiring
 const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
-['style.css', 'texas-geo.js', 'model.js', 'map.js', 'app.js', 'manifest.webmanifest', 'icon-192.png', 'apple-touch-icon.png', '../home-btn.css'].forEach((f) => {
+['style.css', 'texas-geo.js', 'model.js', 'map.js', 'app.js', 'manifest.webmanifest', 'icon-192.png', 'apple-touch-icon.png', '../shared/shell.css'].forEach((f) => {
   assert.ok(html.includes(f), 'index.html references ' + f);
   assert.ok(fs.existsSync(path.join(dir, f)), 'file exists ' + f);
 });
 assert.ok(html.includes('width=device-width') && html.includes('href="../"'));
 JSON.parse(fs.readFileSync(path.join(dir, 'manifest.webmanifest'), 'utf8')).icons.forEach((i) => assert.ok(fs.existsSync(path.join(dir, i.src)), 'manifest icon ' + i.src));
 assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, 'app.js'), 'utf8').replace(/no sample data is substituted/g, '')), 'no sample data in the app');
-// capture files on the watchlist (shared model: national/capture.js)
+// capture files on the watchlist (shared model: shared/capture.js)
 {
-  const CP = require('../national/capture.js');
+  const CP = require('../shared/capture.js');
   const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8'), app = fs.readFileSync(path.join(dir, 'app.js'), 'utf8');
-  assert.ok(html.indexOf('../national/capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
-  assert.ok(fs.existsSync(path.join(dir, '..', 'national', 'capture.js')));
+  assert.ok(html.indexOf('../shared/capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
+  assert.ok(fs.existsSync(path.join(dir, '..', 'shared', 'capture.js')));
   ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id));
   assert.ok(html.indexOf('value="due"') > 0 && html.indexOf('value="decision"') > 0, 'sort options');
-  assert.ok(app.indexOf("'opportunityRadar.watch.v1'") > 0, 'existing watch key unchanged');
-  // a backup from this page cannot be restored into the National Radar, and the reverse
+  assert.ok(app.indexOf("'texas.watch'") > 0, 'watch list uses texas.watch');
+  assert.ok(app.indexOf('opportunityRadar.watch.v1') > 0, 'legacy watch key still migrated');
+  // a version 2 Texas backup (new id radars-texas, even when made with the legacy app id) cannot be restored into National Radar, and the reverse
   const bk = CP.makeBackup({ a: true }, { a: CP.clean({ notes: 'x' }) }, 'now', CP.OPP_BACKUP_APP);
+  assert.strictEqual(bk.version, 2);
+  assert.strictEqual(bk.app, 'radars-texas');
   assert.ok(CP.parseBackup(JSON.stringify(bk), CP.OPP_BACKUP_APP).ok);
+  assert.ok(CP.parseBackup(JSON.stringify(bk), 'radars-texas').ok);
   assert.strictEqual(CP.parseBackup(JSON.stringify(bk)).ok, false, 'National Radar rejects an Texas Opportunity backup');
+  const natBk = CP.makeBackup({ a: true }, { a: CP.clean({ notes: 'x' }) }, 'now');
+  assert.strictEqual(natBk.app, 'radars-national');
+  assert.strictEqual(CP.parseBackup(JSON.stringify(natBk), 'radars-texas').ok, false, 'Texas rejects a National backup');
 }
-// Radar map is the default view on every load (not the List)
-{
-  const appSrc = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
-  const ih = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-  assert.ok(/tab: 'radar'/.test(appSrc), 'initial state.tab is radar');
-  assert.ok(/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('radar'\)/.test(appSrc), 'startup switches to the radar view');
-  assert.ok(!/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('list'\)/.test(appSrc), 'startup must not jump to the List view');
-  assert.ok(/<section id="v-radar" class="view"(?![^>]*hidden)/.test(ih) && /data-tab="radar" class="on"/.test(ih), 'radar view visible and its tab active in the HTML');
-}
+// Radar 2.0 shell: List is the default view, Map is one tap away, the last view is remembered (texas.tab)
+require('./test-shell.js');
+require('./test-pursuits.js');
+require('./test-filtersets.js');
 
 // ---- Intel (news and planning signals)
 {
@@ -299,7 +301,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(/continue-on-error: true\s+timeout-minutes: \d+\s+run: node scripts\/build-intel\.js/.test(wf), 'intel step cannot fail the job');
 }
 
-// Intel tab wiring: same-site data only, radar stays the default, own storage keys
+// Intel tab wiring: same-site data only, List stays the default, own storage keys
 {
   const ih = fs.readFileSync(path.join(dir, 'index.html'), 'utf8'), ui = fs.readFileSync(path.join(dir, 'intel-ui.js'), 'utf8'), appSrc = fs.readFileSync(path.join(dir, 'app.js'), 'utf8');
   assert.ok(/data-tab="intel"/.test(ih) && /id="v-intel" class="view" hidden/.test(ih) && /id="intelBadge"/.test(ih) && /id="srcIntel"/.test(ih));
@@ -307,7 +309,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(ih.indexOf('src="intel.js"') > ih.indexOf('src="app.js"') && ih.indexOf('src="intel-ui.js"') > ih.indexOf('src="intel.js"'));
   assert.ok(!/fetch\(\s*['"]https?:/.test(ui), 'no external requests from the browser'); assert.ok(/fetch\('data\/intel\.json'/.test(ui));
   ['opportunityRadar.intelWatch.v1', 'opportunityRadar.intelRead.v1', 'opportunityRadar.intelSeen.v1'].forEach((k) => assert.ok(ui.indexOf(k) > 0, k));
-  assert.ok(/'intel', 'sources'\]\.forEach/.test(appSrc));
+  assert.ok(/tabs: \[[^\]]*'intel'\]/.test(appSrc) && /more: \['timeline', 'agencies', 'sources'\]/.test(appSrc), 'Intel is a tab, Sources is in More');
   assert.ok(!/github|repository/i.test(ih + ui), 'no repo mentions on the page');
 }
 

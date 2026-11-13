@@ -1,0 +1,72 @@
+/* Home / back-to-main button (all tool pages) */
+.homebtn{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 14px;margin:0 12px 6px 0;border-radius:22px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:inherit;font:600 15px/1 system-ui,-apple-system,sans-serif;text-decoration:none;vertical-align:middle;-webkit-tap-highlight-color:transparent}
+.homebtn:hover,.homebtn:focus-visible{background:rgba(255,255,255,.26);outline:none}
+@media (max-width:700px){header{padding-left:max(12px,env(safe-area-inset-left))!important}
+.homebtn{margin:max(2px,env(safe-area-inset-top)) 0 8px 0;display:flex;width:max-content}}
+@media print{.homebtn{display:none}}
+.throw [data-theme-set]{min-height:44px;padding:0 12px}
+.throw [data-theme-set].on{font-weight:700;box-shadow:inset 0 0 0 2px currentColor}
+
+/* ===== Radar 2.0 shell (shared/shell.js). Layout only: each app's style.css sets its own colors and accent. ===== */
+/* Slim header: Home, app name, freshness, Day / Night / Auto */
+.shell-head{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px}
+.shell-head h1{margin:0}
+.shell-head .throw{display:flex;gap:4px;align-items:center;margin:0 0 0 auto;padding:0;border:0}
+.shell-head .throw [data-theme-set]{border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:13px;font-weight:600;cursor:pointer}
+.shell-head .throw [data-theme-set].on{border-color:var(--acc);color:var(--acc);box-shadow:none}
+/* Filters drawer from the right, at every width */
+.shell .shell-scrim{position:fixed;inset:0;z-index:44;background:rgba(0,0,0,.45)}
+.shell .shell-drawer{position:fixed;top:0;right:0;bottom:0;z-index:45;width:min(480px,92vw);margin:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) 14px;background:var(--panel);border:0;border-left:1px solid var(--line);border-radius:0;box-shadow:-8px 0 24px rgba(0,0,0,.25)}
+.shell .shell-drawer .drawhead{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:-10px;z-index:1;background:var(--panel);padding:4px 0}
+/* Two columns on desktop (primary ~60%, side ~40%); stacked on a phone in source order */
+.shell-cols{display:flex;flex-direction:column;gap:8px}
+.shell-primary{min-width:0}
+.shell-noloc{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:15px;border:1px dashed var(--line);color:var(--dim);font-size:12.5px}
+.shell-noloc[hidden]{display:none}
+.shell-mapfail{margin:8px 0;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;color:var(--dim);font-size:14px}
+@media (min-width: 1024px) {
+  .shell-head .throw [data-theme-set]{min-height:36px;padding:0 10px}
+  .shell-cols{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;align-items:start}
+  .shell-cols > .shell-primary{grid-column:1;grid-row:1}
+  .shell-cols > .shell-side{grid-column:2;grid-row:1;position:sticky;top:8px;max-height:calc(100vh - var(--tabs-h, 64px) - 24px);overflow-y:auto;min-width:0}
+  .shell-cols.shell-has-detail > .shell-side{display:none}
+  .shell-cols > .sheet.shell-docked{grid-column:2;grid-row:1;position:sticky;inset:auto;top:8px;display:block;z-index:auto;max-height:calc(100vh - var(--tabs-h, 64px) - 24px);overflow-y:auto;min-width:0}
+  .shell-cols > .sheet.shell-docked .sheet-bg{display:none}
+  .shell-cols > .sheet.shell-docked .sheet-card{position:static;width:auto;max-width:none;max-height:none;margin:0;border:1px solid var(--line);border-radius:12px;box-shadow:none}
+}
+
+/* Pursuits header and the Weekly list sheet (shared/weekly.js), moved from national/style.css */
+.purhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}.purhead h2{margin:8px 0;font-size:20px}
+.purbtns{display:flex;gap:8px;flex-wrap:wrap}
+.purcap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.purnotes{margin:6px 0 0;white-space:pre-wrap}
+.tabs button{position:relative}.tabbadge{position:absolute;top:6px;right:calc(50% - 40px);min-width:16px;padding:0 4px;border-radius:999px;background:#fbbf24;color:#111;font-size:10px;line-height:16px}.tabbadge[hidden]{display:none}
+.purlink{display:inline-flex;align-items:center;min-height:36px;font-size:13px;color:var(--acc);margin-top:4px}
+/* v5.4 Weekly list sheet: always white and readable, whatever the app theme */
+.wk-sheet{position:fixed;inset:0;z-index:1000;background:#fff;color:#111;overflow-y:auto;-webkit-overflow-scrolling:touch;color-scheme:light}
+.wk-sheet[hidden]{display:none}
+.wk-bar{position:sticky;top:0;background:#f3f4f6;border-bottom:1px solid #d1d5db;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.wk-bt{flex:1;font-size:17px;color:#111}.wk-acts{display:flex;flex-wrap:wrap;gap:8px;width:100%}
+.wk-btn{min-height:44px;padding:0 14px;border-radius:10px;border:1px solid #9ca3af;background:#fff;color:#111;font:600 15px/1 -apple-system,system-ui,sans-serif;cursor:pointer}
+.wk-btn.pri{background:#1d4ed8;border-color:#1d4ed8;color:#fff}.wk-hint{margin:0;width:100%;font-size:13px;color:#374151}.wk-hint:empty{display:none}
+.wk-doc{padding:12px 16px calc(24px + env(safe-area-inset-bottom));max-width:820px;margin:0 auto}
+.wk-doc .wk-title{font-size:20px;margin:0 0 8px;color:#111}.wk-doc .wk-h{font-size:16px;margin:16px 0 6px;border-bottom:2px solid #111;padding-bottom:2px;color:#111}
+.wk-doc .wk-l{margin:0;padding-left:22px}.wk-doc .wk-i{margin:0 0 10px;padding:6px 8px;border:1px solid #999;border-left:4px solid #111;break-inside:avoid;page-break-inside:avoid;color:#111}
+.wk-doc .wk-i.overdue{border-left-color:#b91c1c}.wk-doc .wk-i.soon{border-left-color:#b45309}.wk-doc .wk-t{font-weight:700}.wk-doc .wk-w,.wk-doc .wk-u{color:#333;font-size:13px}.wk-doc .wk-u{word-break:break-all}
+.wk-doc .wk-m{display:flex;flex-wrap:wrap;gap:4px 16px}.wk-doc .wk-notes{white-space:pre-wrap}.wk-doc .wk-e{color:#333}
+body.wk-open{overflow:hidden}
+@media print{
+  body.print-weekly>*:not(#weekly){display:none!important}
+  body.print-weekly{background:#fff!important;color:#000!important;overflow:visible!important}
+  body.print-weekly #weekly{position:static!important;display:block!important;overflow:visible!important;inset:auto;height:auto}
+  body.print-weekly .wk-bar{display:none!important}
+  body.print-weekly .wk-doc{padding:0;max-width:none}
+}
+
+/* Removable filter tags and saved filter sets (shared/filters.js), moved from national/style.css */
+.ftags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 8px}.ftags[hidden]{display:none}
+.ftag{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border-radius:15px;border:1px solid var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--panel));color:var(--ink);font-size:12.5px;cursor:pointer}
+.ftag span{font-size:15px;line-height:1;color:var(--dim)}.ftclear{min-height:30px;font-size:12.5px}
+.fsets{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}.fset{display:inline-flex;align-items:center}
+.fsdel{min-width:32px;min-height:34px;border:1px solid var(--line);border-left:0;border-radius:0 17px 17px 0;background:var(--panel2);color:var(--dim);font-size:16px;cursor:pointer}
+.fset .chip{border-top-right-radius:0;border-bottom-right-radius:0}
+.fsrow{display:flex;gap:6px;margin-bottom:10px}.fsrow input{flex:1;min-width:0;min-height:38px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:14px}

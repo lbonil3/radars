@@ -40,6 +40,7 @@ Uncertain records go to **Needs review**; open or upcoming water-sector engineer
 | model.js | rules, normalizers, dedupe, filters, CSV (shared by the browser, the build script and the tests) |
 | app.js, index.html, style.css | the UI |
 | proj.js, us-geo.js | map projection and state outlines (US Census TIGERweb, public domain) |
+| mapview.js, test-mapview.js, test-maptools.js | Map tab helpers (aggregation, count-marker sizes, shading, zoom, Northeast callouts, selection) and their tests |
 | sources.js | text for sources tested but not used, and the rules in plain words |
 | data/national.json | the snapshot, written by scripts/build-national.js |
 | pse.js, test-pse.js | PS&E / H&H lens, design-build and pipeline evaluator, filters, CSV; tests |
@@ -98,9 +99,14 @@ Bottom tab "Pursuits": every starred record plus any record with a non-empty cap
 - **One card per opportunity across sources** (`v2.js` `groupDupes`, applied on screen after the build's own `M.dedupe`). Records merge only when they share a solicitation / award number, or have the identical normalized title (20+ chars) + same agency or stated state + overlapping posted/due/award dates, and no contradicting notice numbers; PS&E lenses never merge with each other. The card is the highest-confidence record and shows its amount; the others are listed under "Also listed in" with their own links and amounts, and an "Amounts differ" tag appears when they disagree (nothing is averaged or combined). Fixtures: `test-fixtures/dedupe.json`.
 
 ## v6: list-first layout (`v6.js`)
-- Opens on the List. A small map (count markers per state; dollar value in the tooltip and on tap) sits beside the list at 1200px and wider, and is a collapsible strip above the list on phones. Tapping a state filters the list; **Expand map** or the Map tab opens the full map. The legend is collapsed.
+- Opens on the List. A small map (count markers per state; dollar value in the tooltip and on tap) sits beside the list at 1024px and wider (shared shell, `shared/shell.js`), and is a collapsible strip above the list on phones. Tapping a state filters the list; **Expand map** or the Map tab opens the full map. The legend is collapsed.
 - One slim header row: status, Closing / Changed, What counts (on phones What counts is in More). One control row: search, Filters (with active count and live result count), Confirmed only.
 - Quick chips above the list: State, Work type (Water, Wastewater, Drainage / flood, Roadway; inferred from words), Due date (7 / 30 / 90 days; the Sort menu is inside). Stage is the scope tabs (Upcoming, All, Open, Forecast, More > Awarded).
 - Active filters show as removable tags with Clear all. Agency, amount, source, status, sector, region focus (and the Texas prompt) are in the Filters drawer.
 - Saved filter sets: name + Save in the drawer, apply in one tap, delete with ×. Stored on this device in localStorage `nr.filtersets` and included in the capture backup JSON (`filtersets`), merged by name on restore.
+
+## Radar 2.0: shared shell and map tools
+- Layout: one breakpoint at 1024px (`shared/shell.js`, `shared/shell.css`). Phones get one column, bottom tabs and full-screen sheets. Desktop gets two columns on List (small map beside the list) and Map (Top of this view beside the map), with the record detail docked in the side column and Filters as a right-hand drawer. The last tab is remembered in localStorage `national.tab` (the old `nr.tab` is read once). Day / Night / Auto is in the header.
+- Map tab (`mapview.js`): click a state to select it; Ctrl- or Shift-click, or Multi-select, adds states. Unselected states are dimmed, and the selection bar has Clear plus a "Nationwide / no state" chip. Zoom with the wheel or + / -, drag to pan when zoomed, and Reset. Map as table shows the same counts as a table. Shade by count tints states by record count. Tooltips show on hover and on keyboard focus. While Northeast callouts are on (under 1.8x zoom) the view widens to 1040 x 610. Colors come from the `--map-*` theme tokens. The List tab mini map has no tools.
+- The weekly list (Print, Share, Copy, Download) is `shared/weekly.js`, used by both apps.
 - Cards lead with project name, agency / state, the date line with Positionable, then a smaller dollar box that keeps its basis label. No headline sum of amounts (it mixed fees and project costs).

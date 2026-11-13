@@ -80,16 +80,43 @@
 
   // ---- backup / restore. The backup holds the star list and every capture file.
   var BACKUP_APP = 'hydraulics-tools-radar-capture';
+  var OPP_BACKUP_APP = 'hydraulics-tools-opportunity-radar-capture';
+  var BACKUP_VERSION = 2;
+  var APPS = {
+    national: { id: 'radars-national', legacy: [BACKUP_APP] },
+    texas: { id: 'radars-texas', legacy: [OPP_BACKUP_APP] }
+  };
+  function familyOf(appId) {
+    var fams = [APPS.national, APPS.texas];
+    if (!appId) return APPS.national;
+    for (var i = 0; i < fams.length; i++) {
+      if (fams[i].id === appId || fams[i].legacy.indexOf(appId) !== -1) return fams[i];
+    }
+    return null;
+  }
+  function familyIds(appId) {
+    var fam = familyOf(appId);
+    if (!fam) return null;
+    var ids = {};
+    ids[fam.id] = true;
+    for (var i = 0; i < fam.legacy.length; i++) ids[fam.legacy[i]] = true;
+    return ids;
+  }
+  function canonicalApp(appId) {
+    var fam = familyOf(appId);
+    return fam ? fam.id : (appId || APPS.national.id);
+  }
   function makeBackup(watch, caps, nowIso, appId) {
     var w = {}, c = {}; Object.keys(watch || {}).forEach(function (id) { w[id] = true; });
     Object.keys(caps || {}).forEach(function (id) { c[id] = clean(caps[id]); });
-    return { app: appId || BACKUP_APP, version: 1, exportedAt: nowIso || '', watch: w, capture: c };
+    return { app: canonicalApp(appId), version: BACKUP_VERSION, exportedAt: nowIso || '', watch: w, capture: c };
   }
   // Returns { ok, error, watch, capture, skipped } without touching storage.
   function parseBackup(text, appId) {
     var j; try { j = JSON.parse(String(text).replace(/^\ufeff/, '')); } catch (e) { return { ok: false, error: 'That file is not valid JSON.' }; }
-    if (!j || typeof j !== 'object' || Array.isArray(j) || j.app !== (appId || BACKUP_APP)) return { ok: false, error: 'That is not a Radar capture backup file.' };
-    if (j.version !== 1) return { ok: false, error: 'This backup is version ' + j.version + ', which this page does not understand.' };
+    var ids = familyIds(appId);
+    if (!j || typeof j !== 'object' || Array.isArray(j) || !ids || !ids[j.app]) return { ok: false, error: 'That is not a Radar capture backup file.' };
+    if (j.version !== 1 && j.version !== 2) return { ok: false, error: 'This backup is version ' + j.version + ', which this page does not understand.' };
     var w = {}, c = {}, skipped = 0, wi = j.watch && typeof j.watch === 'object' ? j.watch : {}, ci = j.capture && typeof j.capture === 'object' ? j.capture : {};
     Object.keys(wi).forEach(function (id) { if (id && id.length <= 200 && id !== '__proto__') w[id] = true; else skipped++; });
     Object.keys(ci).forEach(function (id) { if (id && id.length <= 200 && id !== '__proto__' && ci[id] && typeof ci[id] === 'object') { c[id] = clean(ci[id]); w[id] = true; } else skipped++; });
@@ -104,5 +131,5 @@
     return { watch: w, capture: c };
   }
 
-  return { DECISIONS: DECISIONS, SOON_DAYS: SOON_DAYS, TEXT_FIELDS: TEXT_FIELDS, CSV_COLS: CSV_COLS, BACKUP_APP: BACKUP_APP, OPP_BACKUP_APP: 'hydraulics-tools-opportunity-radar-capture', blank: blank, clean: clean, snapOf: snapOf, isEmpty: isEmpty, validDate: validDate, dueInfo: dueInfo, dueText: dueText, sortRows: sortRows, toCSV: toCSV, makeBackup: makeBackup, parseBackup: parseBackup, applyBackup: applyBackup };
+  return { DECISIONS: DECISIONS, SOON_DAYS: SOON_DAYS, TEXT_FIELDS: TEXT_FIELDS, CSV_COLS: CSV_COLS, BACKUP_APP: BACKUP_APP, OPP_BACKUP_APP: OPP_BACKUP_APP, BACKUP_VERSION: BACKUP_VERSION, APPS: APPS, blank: blank, clean: clean, snapOf: snapOf, isEmpty: isEmpty, validDate: validDate, dueInfo: dueInfo, dueText: dueText, sortRows: sortRows, toCSV: toCSV, makeBackup: makeBackup, parseBackup: parseBackup, applyBackup: applyBackup };
 });

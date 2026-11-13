@@ -1,29 +1,56 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme-night="#07100e">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" id="sbStyle">
   <meta name="apple-mobile-web-app-title" content="Radar">
-  <meta name="theme-color" content="#07100e">
+  <meta name="theme-color" content="#07100e" id="themeColor">
+  <script>
+(function(){
+  var p='day';
+  try{
+    if(window.localStorage){
+      p=localStorage.getItem('radars.theme')||localStorage.getItem('nr.theme')||'day';
+    }
+  }catch(e){}
+  if(p!=='night'&&p!=='auto'&&p!=='day')p='day';
+  var t=p==='night'?'night':(p==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'night':'day');
+  var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-theme-pref',p);d.style.colorScheme=t==='night'?'dark':'light';
+  var dayC=d.getAttribute('data-theme-day')||'#f5f7fb', nightC=d.getAttribute('data-theme-night')||'#0a1020';
+  var m=document.getElementById('themeColor');if(m)m.setAttribute('content',t==='night'?nightC:dayC);
+  var b=document.getElementById('sbStyle');if(b)b.setAttribute('content',t==='night'?'black-translucent':'default');
+})();
+</script>
   <meta name="format-detection" content="telephone=no">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" href="icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
   <title>Texas Opportunity – drainage PS&amp;E opportunities across agencies</title>
-  <link rel="stylesheet" href="../home-btn.css">
+  <script>
+window.RadarLoadError=function(name){
+  if(document.getElementById('radar-load-error'))return;
+  var p=document.createElement('p');
+  p.id='radar-load-error';p.setAttribute('role','alert');
+  p.textContent='This page failed to load a required file ('+name+'). Check your connection and refresh.';
+  function put(){document.body?document.body.insertBefore(p,document.body.firstChild):document.addEventListener('DOMContentLoaded',put);}
+  put();
+};
+</script>
+  <link rel="stylesheet" href="../shared/shell.css" onerror="RadarLoadError(this.src||this.href)">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="magazine.css">
 </head>
-<body>
-<header class="top">
+<body class="shell" data-app="texas">
+<header class="top shell-head">
   <div class="top-l">
     <a class="homebtn" href="../" aria-label="Back to Radars home">&#8592; Home</a>
     <h1>Texas Opportunity</h1>
   </div>
   <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span></div>
+  <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
 </header>
 
 <section class="kpis" id="kpis" aria-label="Summary"></section>
@@ -34,7 +61,12 @@
     <button type="button" class="btn" id="btnMore" aria-expanded="false" aria-controls="adv">Filters <span id="advCount"></span></button>
   </div>
   <div class="chips" id="quick" aria-label="Quick filters"></div>
-  <div id="adv" hidden>
+  <div class="ftags" id="ftags" aria-label="Active filters" hidden></div>
+  <div id="adv" class="shell-drawer" hidden role="dialog" aria-label="Filters">
+    <div class="drawhead"><h3>Filters</h3><button type="button" class="btn small" id="advClose">Close</button></div>
+    <h3>Saved filter sets <span class="hint">(this device)</span></h3>
+    <div class="fsets" id="fsets"></div>
+    <div class="fsrow"><input id="fsName" type="text" maxlength="60" placeholder="Name the current filters" aria-label="Name for this filter set" autocomplete="off"><button type="button" class="btn small" id="fsSave">Save</button></div>
     <h3>Drainage relevance <span class="hint">("likely" is inferred from type of work). In the Consultant services view only "Direct" narrows the list.</span></h3>
     <div class="seg" role="group" aria-label="Drainage relevance">
       <button type="button" data-rel="direct">Direct</button>
@@ -51,8 +83,12 @@
   <div class="active" id="activeNote" hidden></div>
 </section>
 
+<div class="shell-scrim" id="advBg" hidden></div>
 <main id="main">
-  <section id="v-radar" class="view" aria-label="Radar map">
+  <section id="v-map" class="view" hidden aria-label="Radar map">
+    <div class="shell-cols" id="colsMap">
+      <div class="shell-primary">
+    <div class="mapslot" id="mapSlotMap">
     <div class="mapwrap" id="mapwrap">
       <canvas id="map" aria-label="Map of Texas with opportunity pins. Use the List tab for an accessible list."></canvas>
       <div class="mapbar">
@@ -64,9 +100,16 @@
       <div class="legend" id="legend"></div>
       <div class="maphint" id="maphint">Drag to pan, pinch to zoom, tap a pin.</div>
     </div>
+    </div>
+    <p class="shell-mapfail" id="mapFail" hidden></p>
     <p class="note" id="unmapped"></p>
+    <div class="chips"><span class="shell-noloc" id="mapNoLoc" hidden></span></div>
+      </div>
+      <aside class="shell-side" aria-label="On the radar now">
     <h2 class="sec">On the radar now <span class="hint" id="nearHint"></span></h2>
     <div id="mapTop" class="cards"></div>
+      </aside>
+    </div>
   </section>
 
   <section id="v-timeline" class="view" hidden aria-label="Timeline">
@@ -86,7 +129,16 @@
     <h2 class="sec">Local sponsors named in TxDOT data</h2><div id="bSponsor" class="bars"></div>
   </section>
 
-  <section id="v-list" class="view" hidden aria-label="List">
+  <section id="v-list" class="view" aria-label="List">
+    <div class="shell-cols" id="colsList">
+      <aside class="shell-side txmini" id="txMini" aria-label="Map">
+        <details class="txminidet" id="txMiniDet"><summary class="sec">Map <span class="hint">records with a location</span></summary>
+          <div class="mapslot" id="mapSlotList"></div>
+          <p class="shell-mapfail" id="listMapFail" hidden></p>
+          <div class="chips"><button type="button" class="btn small" data-tab="map">Expand map</button><span class="shell-noloc" id="listNoLoc" hidden></span></div>
+        </details>
+      </aside>
+      <div class="shell-primary">
     <div class="listbar">
       <label class="sortl">Sort <select id="sort"><option value="date">Upcoming first</option><option value="dateDesc">Date, latest first</option><option value="dateAsc">Date, oldest first</option><option value="cost">Cost, high to low</option><option value="agency">Agency</option><option value="title">Title</option><option value="due">My due date (watchlist)</option><option value="decision">My Go / No-go (watchlist)</option></select></label>
       <span id="listCount" class="hint"></span><button type="button" class="btn small" id="btnCsv2">Export CSV</button>
@@ -99,6 +151,15 @@
     </div>
     <div id="list" class="cards"></div>
     <button type="button" class="btn wide" id="btnMoreRows" hidden>Show 100 more</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-pursuits" class="view" hidden aria-label="My pursuits">
+    <div class="purhead"><h2>My pursuits <span class="hint" id="purWeek"></span></h2>
+      <div class="purbtns"><button type="button" class="btn small" id="btnPurPrint">Print weekly list</button><button type="button" class="btn small" id="btnPurCsv">Export CSV</button><button type="button" class="btn small" id="btnPurIcs">Add to calendar (.ics)</button></div></div>
+    <p class="note">Starred records, sorted by your due date, or by the source's closing date for a solicitation when you have not set one. Go / No-go, due date, next action and notes are your notes on this device.</p>
+    <div id="purList" class="cards"></div>
   </section>
 
   <section id="v-intel" class="view" hidden aria-label="Intel: news and planning signals">
@@ -147,12 +208,16 @@
 </main>
 
 <nav class="tabs" aria-label="Views">
-  <button type="button" data-tab="radar" class="on">Radar</button>
-  <button type="button" data-tab="timeline">Timeline</button>
-  <button type="button" data-tab="agencies">Agencies</button>
-  <button type="button" data-tab="list">List</button>
+  <button type="button" data-tab="list" class="on">List</button>
+  <button type="button" data-tab="map">Map</button>
+  <button type="button" data-tab="pursuits">Pursuits<span class="tbadge" id="purBadge" hidden></span></button>
   <button type="button" data-tab="intel">Intel<span class="tbadge" id="intelBadge" hidden></span></button>
-  <button type="button" data-tab="sources">Sources</button>
+  <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More<span id="tabMoreLbl" class="tml"></span></button>
+  <div class="tabmore" id="tabMore" role="menu" hidden>
+    <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
+    <button type="button" data-tab="agencies" role="menuitem">Agencies</button>
+    <button type="button" data-tab="sources" role="menuitem">Sources</button>
+  </div>
 </nav>
 
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shTitle">
@@ -163,8 +228,19 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div id="weekly" class="wk-sheet" hidden role="dialog" aria-modal="true" aria-label="Weekly list">
+  <div class="wk-bar"><b class="wk-bt">Weekly list</b><button type="button" class="wk-btn" id="wkClose">Close</button>
+    <div class="wk-acts"><button type="button" class="wk-btn pri" id="wkPrint">Print / Save as PDF</button><button type="button" class="wk-btn" id="wkShare">Share</button><button type="button" class="wk-btn" id="wkCopy">Copy text</button><button type="button" class="wk-btn" id="wkDl">Download</button></div>
+    <p class="wk-hint" id="wkHint"></p></div>
+  <div id="wkBody" class="wk-doc"></div>
+</div>
 
-<script src="../national/capture.js"></script>
+<script src="../shared/storage.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/theme.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/filters.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/shell.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/capture.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/weekly.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="texas-geo.js"></script>
 <script src="model.js"></script>
 <script src="map.js"></script>
