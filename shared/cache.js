@@ -4,7 +4,7 @@
   if (typeof module === 'object' && module.exports) module.exports = api; else root.RadarCache = api;
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-  var VERSION = 22;
+  var VERSION = 23;
   var SHARED = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'weekly.js', 'capture.js', 'shell.css', 'cache.js'];
   function shared(prefix) { return SHARED.map(function (f) { return prefix + f; }); }
   function name(app) {
