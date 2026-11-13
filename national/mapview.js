@@ -66,6 +66,12 @@
     a.forEach(function (it, i) { out[it.st] = { x: ca.x, y: ca.ys[i] }; }); b.forEach(function (it, i) { out[it.st] = { x: cb.x, y: cb.ys[i] }; });
     return out;
   }
+  // click selects one state (clicking the only selected state clears); add (Ctrl / Shift / Multi-select) toggles it in the set
+  function nextSelection(sel, k, add) {
+    sel = sel || []; var i = sel.indexOf(k);
+    if (add) return i >= 0 ? sel.filter(function (x) { return x !== k; }) : sel.concat([k]);
+    return sel.length === 1 && i === 0 ? [] : [k];
+  }
   // legend entries [{ cls, text }]; info: { hasValue, hasCount, shade, callouts, pinned }
   function legendFor(info) {
     info = info || {}; var e = [];
@@ -82,5 +88,5 @@
     lines.push(o.nv ? money(o.v) + ' stated by ' + o.nv + ' of them (fees, design-build values and project costs as the sources state them)' : 'Count only, no stated value');
     return lines;
   }
-  return { LAND: LAND, VIEW: VIEW, CALLOUT: CALLOUT, CALLOUT_IF_NEEDED: CALLOUT_IF_NEEDED, CALLOUT_MAX_ZOOM: CALLOUT_MAX_ZOOM, ZOOM_MAX: ZOOM_MAX, aggregate: aggregate, markerRadius: markerRadius, shade: shade, shadeAlpha: shadeAlpha, calloutsOn: calloutsOn, frameFor: frameFor, clampZoom: clampZoom, viewBoxFor: viewBoxFor, zoomAt: zoomAt, toMapUnits: toMapUnits, layoutCallouts: layoutCallouts, legendFor: legendFor, tooltipLines: tooltipLines };
+  return { LAND: LAND, VIEW: VIEW, CALLOUT: CALLOUT, CALLOUT_IF_NEEDED: CALLOUT_IF_NEEDED, CALLOUT_MAX_ZOOM: CALLOUT_MAX_ZOOM, ZOOM_MAX: ZOOM_MAX, aggregate: aggregate, markerRadius: markerRadius, shade: shade, shadeAlpha: shadeAlpha, calloutsOn: calloutsOn, frameFor: frameFor, clampZoom: clampZoom, viewBoxFor: viewBoxFor, zoomAt: zoomAt, toMapUnits: toMapUnits, layoutCallouts: layoutCallouts, nextSelection: nextSelection, legendFor: legendFor, tooltipLines: tooltipLines };
 });

@@ -114,10 +114,20 @@ window.RadarLoadError=function(name){
   <section id="v-map" class="view" hidden aria-label="US map">
     <div class="shell-cols" id="colsMap">
       <div class="shell-primary">
+        <div class="maptools" role="toolbar" aria-label="Map tools">
+          <button type="button" class="chip" id="btnMulti" aria-pressed="false">Multi-select</button>
+          <button type="button" class="chip on" id="btnShade" aria-pressed="true">Shade by count</button>
+          <button type="button" class="chip" id="btnTable" aria-pressed="false">Map as table</button>
+          <span class="zbtns"><button type="button" class="chip" id="zIn" aria-label="Zoom in">+</button><button type="button" class="chip" id="zOut" aria-label="Zoom out">&minus;</button><button type="button" class="chip" id="zReset">Reset</button></span>
+        </div>
+        <div class="selbar" id="selBar" aria-live="polite"></div>
+        <div class="chips nonechip" id="noneChip"></div>
         <div class="mapwrap" id="mapWrap">
-          <svg id="usmap" viewBox="0 0 975 610" role="img" aria-label="Map of the United States. Numbers show record counts per state. Use the List tab for an accessible list."></svg>
+          <svg id="usmap" viewBox="0 0 975 610" role="group" aria-label="Map of the United States. Numbers show record counts per state; each count is a button. Map as table shows the same numbers as a table."></svg>
+          <div class="maptip" id="mapTip" role="tooltip" hidden></div>
           <details class="legd"><summary>Legend</summary><div class="legend" id="legend"></div></details>
         </div>
+        <div class="maptable" id="mapTable" hidden></div>
         <p class="shell-mapfail" id="mapFail" hidden></p>
         <p class="note" id="mapNote"></p>
       </div>

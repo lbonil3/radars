@@ -286,8 +286,8 @@
   var mapBuilt = false, project = null;
   function buildMap() {
     if (mapBuilt || !G) return; mapBuilt = true; project = window.NationalProj.make(G.proj);
-    var html = '<g id="gSt">'; Object.keys(G.states).forEach(function (k) { html += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"><title>' + esc(G.states[k].n) + '</title></path>'; });
-    $('usmap').innerHTML = html + '</g><g id="gBub"></g><g id="gPin"></g>';
+    var html = '<g id="gSt">'; Object.keys(G.states).forEach(function (k) { html += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"></path>'; }); // Map tab: custom tooltip instead of <title>
+    $('usmap').innerHTML = html + '</g><g id="gLead"></g><g id="gBub"></g><g id="gPin"></g>';
   }
   // v6: count markers (no dollar-sized bubbles); dollar value in the tooltip and on tap. Shared by the full map and the small map.
   function stateTotals(list) { var by = {}; list.forEach(function (r) { if (!r.state) return; var o = by[r.state] = by[r.state] || { n: 0, v: 0, nv: 0 }; o.n++; var v = fee(r); if (v) { o.v += v; o.nv++; } }); return by; }
@@ -306,15 +306,107 @@
     var sel = S.f.states; $('miniSel').textContent = sel.length ? 'showing ' + sel.join(', ') + ' (tap again to remove)' : 'tap a state to filter the list'; $('miniSel2').textContent = $('miniSel').textContent; if (SHELL.isDesktop()) $('miniDet').open = true;
     var nost = list.filter(function (r) { return !r.state; }).length, nl = $('miniNoLoc'); $('miniNote').textContent = Object.keys(by).length + ' states'; nl.textContent = RadarShell.noLocLabel(nost); nl.hidden = !nost;
   }
+  // Radar 2.0 Map tab: click / Ctrl-Shift-click / Multi-select, dimmed unselected states, shading by count, zoom and pan,
+  // Northeast callouts in a 1040-wide view (off from 1.8x), tooltips on hover and keyboard focus, and Map as table. Helpers: mapview.js
+  var MV = window.NationalMapView, MAPSEL = { multi: false, shade: true, table: false, zoom: { k: 1, x: 0, y: 0 }, drag: null, moved: false }, MAPDATA = null;
+  function stName(k) { return k === '??' ? 'Nationwide / no state' : (M.STATE_NAMES[k] || (G && G.states[k] && G.states[k].n) || k); }
+  function stLines(k) { var o = MAPDATA && (k === '??' ? MAPDATA.agg.none : MAPDATA.agg.by[k]); return MV.tooltipLines(stName(k), o || { n: 0, nv: 0, v: 0 }, M.fmtMoney); }
   function renderMap(list) {
     buildMap(); if (!G) throw new Error('us-geo.js did not load');
-    var by = stateTotals(list); document.querySelectorAll('#gSt .st').forEach(function (p) { var k = p.getAttribute('data-st'); p.classList.toggle('sel', S.f.states.indexOf(k) >= 0); p.classList.toggle('has', !!by[k]); });
-    $('gBub').innerHTML = markersHtml(by, false);
-    var pins = ''; list.forEach(function (r) { if (r.lat && r.lon) { var xy = project(r.lon, r.lat, r.state); pins += '<circle class="pin" data-open="' + esc(r.id) + '" cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="5"><title>' + esc(r.title) + '</title></circle>'; } });
+    // counts for every state in this view, so unselected states keep their numbers (dimmed) while a selection filters the list
+    MAPDATA = { list: list, agg: MV.aggregate(scoped(S.scope, ['states']), fee), pinned: list.filter(function (r) { return r.lat && r.lon; }).length };
+    var tb = MAPSEL.table;
+    $('mapWrap').classList.toggle('astable', tb); $('mapTable').hidden = !tb;
+    [['btnMulti', MAPSEL.multi], ['btnShade', MAPSEL.shade], ['btnTable', tb]].forEach(function (x) { $(x[0]).classList.toggle('on', x[1]); $(x[0]).setAttribute('aria-pressed', String(x[1])); });
+    ['zIn', 'zOut', 'zReset', 'btnShade'].forEach(function (id) { $(id).disabled = tb; });
+    renderSelBar(list); renderMapTable(); drawMapLayers();
+  }
+  function drawMapLayers() {
+    var d = MAPDATA; if (!d || !G) return;
+    var sel = S.f.states, z = MAPSEL.zoom, co = MV.calloutsOn(z.k), svg = $('usmap');
+    svg.setAttribute('viewBox', MV.viewBoxFor(z)); svg.classList.toggle('zoomed', z.k > 1);
+    document.querySelectorAll('#gSt .st').forEach(function (p) {
+      var k = p.getAttribute('data-st'), o = d.agg.by[k], t = MAPSEL.shade && o ? MV.shade(o.n, d.agg.maxN) : 0;
+      p.classList.toggle('shd', t > 0); if (t > 0) p.style.setProperty('--shade-a', MV.shadeAlpha(t).toFixed(3)); else p.style.removeProperty('--shade-a');
+      p.classList.toggle('sel', sel.indexOf(k) >= 0); p.classList.toggle('dim', sel.length > 0 && sel.indexOf(k) < 0); p.classList.toggle('has', !!o);
+    });
+    var items = Object.keys(d.agg.by).filter(function (k) { return G.states[k]; }).map(function (k) { return { st: k, cx: G.states[k].cx, cy: G.states[k].cy, r: MV.markerRadius(d.agg.by[k].n, false, z.k), o: d.agg.by[k] }; });
+    var place = co ? MV.layoutCallouts(items, { right: MV.VIEW.w - 3, gap: 3 }) : {}, fs = 13 / Math.max(1, z.k), lead = '', mk = '';
+    items.forEach(function (it) {
+      var c = place[it.st], x = c ? c.x : it.cx, y = c ? c.y : it.cy, on = sel.indexOf(it.st) >= 0, dim = sel.length > 0 && !on;
+      if (c) lead += '<g class="lead' + (dim ? ' dim' : '') + '"><line x1="' + it.cx + '" y1="' + it.cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '"></line><circle cx="' + it.cx + '" cy="' + it.cy + '" r="2.5"></circle></g>';
+      var aria = stLines(it.st).join(', ') + (on ? ', selected' : '') + '. Enter selects; Shift+Enter adds to the selection.';
+      mk += '<g class="mkg' + (on ? ' sel' : '') + (dim ? ' dim' : '') + '" data-mst="' + it.st + '" tabindex="0" role="button" aria-pressed="' + on + '" aria-label="' + esc(aria) + '"><circle class="mk' + (it.o.nv ? '' : ' cnt') + '" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + it.r.toFixed(2) + '"></circle><text class="mkt" x="' + x.toFixed(1) + '" y="' + (y + fs * 0.42).toFixed(1) + '" style="font-size:' + fs.toFixed(2) + 'px">' + it.o.n + '</text>' + (c ? '<text class="cot" x="' + (x - it.r - 4).toFixed(1) + '" y="' + (y + 4).toFixed(1) + '">' + it.st + '</text>' : '') + '</g>';
+    });
+    $('gLead').innerHTML = lead; $('gBub').innerHTML = mk;
+    var pins = '', pr = 5 / Math.max(1, z.k); d.list.forEach(function (r) { if (r.lat && r.lon) { var xy = project(r.lon, r.lat, r.state); pins += '<circle class="pin" data-open="' + esc(r.id) + '" cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="' + pr.toFixed(2) + '"><title>' + esc(r.title) + '</title></circle>'; } });
     $('gPin').innerHTML = pins;
-    var nostate = list.filter(function (r) { return !r.state; }).length, pinned = list.filter(function (r) { return r.lat; }).length;
-    $('legend').innerHTML = '<span><i class="lg-v"></i>Number = records in the state; blue = some records state a dollar value (hover or tap for the total)</span><span><i class="lg-c"></i>Amber = count only (no stated value)</span><span><i class="lg-p"></i>Pin = city named in the source (' + pinned + ')</span>';
-    $('mapNote').textContent = (list.length ? 'Tap a state to filter the list by it. ' : '') + (nostate ? nostate + ' record(s) name no state (for example nationwide contracts) and are not on the map; they are in the List. ' : '');
+    var ks = Object.keys(d.agg.by);
+    $('legend').innerHTML = MV.legendFor({ hasValue: ks.some(function (k) { return d.agg.by[k].nv; }), hasCount: ks.some(function (k) { return !d.agg.by[k].nv; }), shade: MAPSEL.shade, callouts: co && Object.keys(place).length > 0, pinned: d.pinned }).map(function (e) { return '<span><i class="lg-' + e.cls + '"></i>' + esc(e.text) + '</span>'; }).join('');
+  }
+  function renderSelBar(list) {
+    var sel = S.f.states, none = MAPDATA.agg.none.n, onN = sel.indexOf('??') >= 0;
+    $('noneChip').innerHTML = none || onN ? '<button type="button" class="chip' + (onN ? ' on' : '') + '" data-mst="??" aria-pressed="' + onN + '">Nationwide / no state (' + none + ')</button>' : '';
+    $('selBar').innerHTML = sel.length ? '<span><b>Selected:</b> ' + esc(sel.map(stName).join(', ')) + ' &middot; ' + list.length + ' record' + (list.length === 1 ? '' : 's') + '</span><button type="button" class="chip" id="selClear">Clear</button>'
+      : '<span class="hint">' + (SHELL.isDesktop() ? 'Hover a state for its numbers. Click to select; Ctrl- or Shift-click adds. Scroll to zoom, drag to pan.' : 'Tap a state to select it. Turn on Multi-select to pick several.') + '</span>';
+    $('mapNote').textContent = (MAPDATA.pinned ? 'Pins appear only where the source names a city. ' : '') + 'Counts are as each source states them; nothing is estimated.';
+  }
+  function renderMapTable() {
+    if (!MAPSEL.table || !MAPDATA) return; var d = MAPDATA, sel = S.f.states;
+    var ks = Object.keys(d.agg.by).sort(function (a, b) { return (d.agg.by[b].n - d.agg.by[a].n) || (a < b ? -1 : 1); }); if (d.agg.none.n) ks.push('??');
+    var row = function (k) { var o = k === '??' ? d.agg.none : d.agg.by[k], on = sel.indexOf(k) >= 0; return '<tr class="' + (on ? 'on' : '') + '"><td><button type="button" class="tsel" data-mst="' + k + '" aria-pressed="' + on + '">' + esc(stName(k)) + '</button></td><td>' + o.n + '</td><td>' + (o.nv ? esc(M.fmtMoney(o.v)) + ' (' + o.nv + ' of ' + o.n + ')' : 'none stated') + '</td></tr>'; };
+    $('mapTable').innerHTML = ks.length ? '<table><caption class="hint">Records per state in this view. Select a state to filter the list.</caption><thead><tr><th scope="col">State</th><th scope="col">Records</th><th scope="col">Stated value</th></tr></thead><tbody>' + ks.map(row).join('') + '</tbody></table>' : '<p class="note">No records in this view.</p>';
+  }
+  function selectState(k, add, refocus) {
+    var nx = MV.nextSelection(S.f.states, k, add || MAPSEL.multi); S.f.states.length = 0; Array.prototype.push.apply(S.f.states, nx); S.rows = 50; hideTip(); render();
+    toast(S.f.states.indexOf(k) >= 0 ? stLines(k).join(' · ') : 'Removed ' + stName(k) + ' from the selection.');
+    if (refocus) { var g = document.querySelector('#v-map [data-mst="' + k + '"]'); if (g) g.focus(); }
+  }
+  function showTip(k, x, y) {
+    var tip = $('mapTip'), box = $('mapWrap').getBoundingClientRect();
+    tip.innerHTML = stLines(k).map(function (l, i) { return i ? '<span>' + esc(l) + '</span>' : '<b>' + esc(l) + '</b>'; }).join(''); tip.hidden = false;
+    var w = tip.offsetWidth, h = tip.offsetHeight, lx = Math.min(Math.max(4, x - box.left + 12), box.width - w - 4), ly = y - box.top - h - 12;
+    tip.style.left = lx + 'px'; tip.style.top = (ly < 4 ? y - box.top + 16 : ly) + 'px';
+  }
+  function hideTip() { $('mapTip').hidden = true; }
+  function zoomBy(f, ux, uy) {
+    var z = MAPSEL.zoom, fr = MV.frameFor(z.k);
+    if (ux === undefined) { ux = z.x + fr.w / z.k / 2; uy = z.y + fr.h / z.k / 2; }
+    MAPSEL.zoom = MV.zoomAt(z, ux, uy, f); hideTip(); drawMapLayers();
+  }
+  function bindMapTools() {
+    var svg = $('usmap');
+    $('v-map').addEventListener('click', function (e) {
+      var t = e.target.closest('[data-mst],#v-map [data-st],#selClear'); if (!t) return;
+      e.stopPropagation(); // the document handler keeps [data-st] for the small map on the List tab
+      if (MAPSEL.moved) { MAPSEL.moved = false; return; }
+      if (t.id === 'selClear') { S.f.states.length = 0; S.rows = 50; render(); return; }
+      selectState(t.getAttribute('data-mst') || t.getAttribute('data-st'), e.ctrlKey || e.metaKey || e.shiftKey, false);
+    });
+    svg.addEventListener('keydown', function (e) { var g = e.target.closest('[data-mst]'); if (!g || (e.key !== 'Enter' && e.key !== ' ')) return; e.preventDefault(); selectState(g.getAttribute('data-mst'), e.shiftKey || e.ctrlKey || e.metaKey, true); });
+    svg.addEventListener('focusin', function (e) { var g = e.target.closest('[data-mst]'); if (!g) return; var b = g.getBoundingClientRect(); showTip(g.getAttribute('data-mst'), b.left + b.width / 2, b.top); });
+    svg.addEventListener('focusout', hideTip);
+    svg.addEventListener('pointermove', function (e) {
+      var dr = MAPSEL.drag;
+      if (dr) { var dx = (e.clientX - dr.sx) / dr.ppu, dy = (e.clientY - dr.sy) / dr.ppu; if (Math.abs(e.clientX - dr.sx) + Math.abs(e.clientY - dr.sy) > 4) MAPSEL.moved = true; MAPSEL.zoom = MV.clampZoom({ k: MAPSEL.zoom.k, x: dr.zx - dx, y: dr.zy - dy }); svg.setAttribute('viewBox', MV.viewBoxFor(MAPSEL.zoom)); hideTip(); return; }
+      if (e.pointerType !== 'mouse') return;
+      var t = e.target.closest('[data-mst],[data-st]'); if (t) showTip(t.getAttribute('data-mst') || t.getAttribute('data-st'), e.clientX, e.clientY); else hideTip();
+    });
+    svg.addEventListener('pointerleave', function () { if (!MAPSEL.drag) hideTip(); });
+    svg.addEventListener('pointerdown', function (e) {
+      MAPSEL.moved = false; if (MAPSEL.zoom.k <= 1 || e.button) return;
+      var p = MV.toMapUnits(svg.getBoundingClientRect(), MAPSEL.zoom, e.clientX, e.clientY);
+      MAPSEL.drag = { sx: e.clientX, sy: e.clientY, zx: MAPSEL.zoom.x, zy: MAPSEL.zoom.y, ppu: p.ppu }; svg.classList.add('dragging');
+    });
+    var endDrag = function () { MAPSEL.drag = null; svg.classList.remove('dragging'); };
+    svg.addEventListener('pointerup', endDrag); svg.addEventListener('pointercancel', endDrag);
+    svg.addEventListener('wheel', function (e) { e.preventDefault(); var p = MV.toMapUnits(svg.getBoundingClientRect(), MAPSEL.zoom, e.clientX, e.clientY); zoomBy(e.deltaY < 0 ? 1.25 : 0.8, p.x, p.y); }, { passive: false });
+    $('zIn').addEventListener('click', function () { zoomBy(1.5); });
+    $('zOut').addEventListener('click', function () { zoomBy(1 / 1.5); });
+    $('zReset').addEventListener('click', function () { MAPSEL.zoom = { k: 1, x: 0, y: 0 }; hideTip(); drawMapLayers(); });
+    $('btnMulti').addEventListener('click', function () { MAPSEL.multi = !MAPSEL.multi; render(); });
+    $('btnShade').addEventListener('click', function () { MAPSEL.shade = !MAPSEL.shade; render(); });
+    $('btnTable').addEventListener('click', function () { MAPSEL.table = !MAPSEL.table; hideTip(); render(); });
   }
   function renderMapTop(list) {
     var top = sortFor(list, S.sort).slice(0, 5);
@@ -804,6 +896,7 @@
   });
   $('shClose').addEventListener('click', closeSheet); $('shBg').addEventListener('click', closeSheet);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('sheet').hidden) closeSheet(); });
+  bindMapTools();
   $('shStar').addEventListener('click', function () { var id = $('sheet').getAttribute('data-id'); if (!toggleStar(id)) return; $('shStar').className = 'star big' + (WATCH[id] ? ' on' : ''); $('shStar').innerHTML = WATCH[id] ? '&#9733;' : '&#9734;'; refreshCapPanel(id); render(); });
   function onCapInput(e) { if (e.target.hasAttribute && e.target.hasAttribute('data-cap')) updateCapField(e.target); }
   document.addEventListener('input', onCapInput); document.addEventListener('change', onCapInput);

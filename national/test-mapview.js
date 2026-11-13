@@ -50,6 +50,15 @@ ks.forEach((k, i) => { const p = co[k]; assert.ok(p.y - 45 >= 0 && p.y + 45 <= V
 assert.ok(!Object.keys(V.layoutCallouts([it('VT', 8), it('NH', 8), it('NY', 10), it('MA', 10)], {})).some((k) => k === 'VT' || k === 'NH'), 'small VT / NH stay on the map');
 co = V.layoutCallouts([it('VT', 30), it('NH', 30), it('MA', 20)], {}); assert.ok(co.VT && co.NH, 'VT / NH move out when they collide');
 assert.deepStrictEqual(V.layoutCallouts([it('TX', 30)], {}), {});
+// selection: click picks one state (click it again to clear); Ctrl / Shift / Multi-select toggles it in the set
+assert.deepStrictEqual(V.nextSelection([], 'TX', false), ['TX']);
+assert.deepStrictEqual(V.nextSelection(['TX'], 'TX', false), []);
+assert.deepStrictEqual(V.nextSelection(['TX', 'CA'], 'TX', false), ['TX'], 'plain click on a selected state in a set keeps only it');
+assert.deepStrictEqual(V.nextSelection(['TX'], 'CA', false), ['CA']);
+assert.deepStrictEqual(V.nextSelection(['TX'], 'CA', true), ['TX', 'CA']);
+assert.deepStrictEqual(V.nextSelection(['TX', 'CA'], 'TX', true), ['CA']);
+assert.deepStrictEqual(V.nextSelection(undefined, '??', true), ['??'], 'Nationwide / no state works like a state');
+const before = ['TX']; V.nextSelection(before, 'CA', true); assert.deepStrictEqual(before, ['TX'], 'does not change its input');
 // legend and tooltip copy
 assert.deepStrictEqual(V.legendFor({ hasValue: true, hasCount: true, shade: true, callouts: true, pinned: 0 }).map((x) => x.cls), ['v', 'c', 'shd', 'co'], 'no pin entry with 0 pins');
 assert.ok(V.legendFor({ pinned: 3 })[0].text.includes('(3)'));
