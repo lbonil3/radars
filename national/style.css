@@ -298,11 +298,6 @@ html[data-theme=day] .switch.on .knob{background:rgba(15,122,74,.18)}
 html[data-theme=day] .fbadge{color:#fff}
 html[data-theme=day] .pill.hot{border-color:#1d5fbf;background:rgba(29,95,191,.12)}
 html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
-/* Theme picker (More menu) */
-.throw{display:flex;gap:4px;padding:6px 4px 2px;border-top:1px solid var(--line);margin-top:4px}
-.tabs .tabmore .throw button{flex:1;min-height:40px;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:0 6px}
-.tabs .tabmore .throw button.on{border-color:var(--acc);color:var(--acc);background:rgba(124,183,255,.16)}
-.thlbl{font-size:11px;color:var(--dim);padding:6px 6px 0}
 /* v4.1 source health */
 .hdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn);margin-left:4px;vertical-align:middle}
 .hwarn{display:inline-block;margin-left:6px;padding:0 6px;border-radius:999px;font-size:11px;line-height:18px;border:1px solid var(--warn);color:var(--warn)}
@@ -331,17 +326,9 @@ html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
 .topdet>summary::after{content:'\25BE';margin-left:auto;margin-right:calc(14px + env(safe-area-inset-right));color:var(--dim);font-size:14px}
 .topdet[open]>summary::after{content:'\25B4'}
 .ways{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
-@media (min-width:1200px){
-  #v-map:not([hidden]){display:grid;grid-template-columns:minmax(0,1fr) 440px;grid-template-areas:'map top' 'note top';align-items:start;column-gap:0}
-  #v-map .mapwrap{grid-area:map}#v-map #mapNote{grid-area:note}
-  #v-map .topdet{grid-area:top;max-height:calc(100vh - var(--tabs-h) - 40px);overflow-y:auto;position:sticky;top:0;border-left:1px solid var(--line);padding-left:4px}
-  #v-map .topdet .cards{grid-template-columns:minmax(0,1fr)}
-  body.docked{padding-right:490px}
-  body.docked .sheet{left:auto;right:0;top:0;bottom:calc(var(--tabs-h) + env(safe-area-inset-bottom));width:480px;align-items:stretch;z-index:35}
-  body.docked .sheet-bg{display:none}
-  body.docked .sheet-card{max-width:none;max-height:none;height:100%;margin:0;border-radius:0;border-top:0;border-left:1px solid var(--line);box-shadow:-6px 0 18px rgba(0,0,0,.18)}
-  body.docked #v-map:not([hidden]){grid-template-columns:minmax(0,1fr)}
-  body.docked #v-map .topdet{display:none}
+@media (min-width:1024px){
+  .shell-side .cards{grid-template-columns:minmax(0,1fr)}
+  #v-map .topdet{border-left:1px solid var(--line);padding-left:4px}
 }
 
 /* v5: future preference */
@@ -351,7 +338,6 @@ html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
 .card.past{opacity:.72}
 
 /* ===== v6.1: list first, small map beside / above the list; count markers ===== */
-.lgrid{display:flex;flex-direction:column;gap:8px}
 .mini{margin:0 0 4px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.mini[hidden]{display:none}
 .minisum{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);list-style:none}
 .minisum::-webkit-details-marker{display:none}.minisum::after{content:"\25BE";margin-left:auto;color:var(--dim)}details[open]>.minisum::after{content:"\25B4"}
@@ -368,10 +354,6 @@ html[data-theme=day] .card{box-shadow:0 1px 2px rgba(15,26,46,.06)}
 .legend i.lg-v,.legend i.lg-c,.legend i.lg-p{border-radius:50%}.lg-v{background:#1d4ed8}.lg-c{background:#b45309}.lg-p{background:#fb7185}
 html[data-theme=day] .miniwrap{background:#dfe8f3}
 #usmap{max-height:62vh}
-@media (min-width:1200px){
-  .lgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
-  .lgrid .mini{grid-column:2;grid-row:1;position:sticky;top:8px}.lgrid .lmain{grid-column:1;grid-row:1;min-width:0}
-}
 
 /* ===== v6.2: slim header, one control row, count-only KPI, phone tidy ===== */
 .top{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding-bottom:4px}
@@ -400,7 +382,6 @@ html[data-theme=day] .miniwrap{background:#dfe8f3}
   .chip{min-height:34px;padding:0 10px;font-size:12.5px}
   .kline{font-size:12.5px;padding-bottom:4px}.kline .hint{display:none}
 }
-#listCount{display:none}
 @media (max-width:520px){.top .fresh .upd{display:none}}
 
 /* ===== v6.3: cards lead with name, agency/state, due date, Positionable; amount smaller ===== */
@@ -437,7 +418,6 @@ html[data-theme=day] .miniwrap{background:#dfe8f3}
   .top .fresh .wc{display:none}.tmwhat{display:block}
 }
 .minihead{display:none;align-items:center;gap:8px;min-height:36px;padding:0 12px;font-size:14px}.minihead .hint{font-size:12px}
-@media (min-width:1200px){.minisum{display:none}.minihead{display:flex}}
+@media (min-width:1024px){.minisum{display:none}.minihead{display:flex}}
 .qf:not([open]) .qpop{display:none}
-#listCount{display:none}
 @media (max-width:520px){.fres{display:none}}

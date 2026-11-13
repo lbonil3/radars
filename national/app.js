@@ -351,15 +351,15 @@
   }
   var miniBuilt = false;
   function renderMini(list) {
-    if (!G) { $('mini').hidden = true; return; }
+    if (!G) throw new Error('us-geo.js did not load');
     if (!miniBuilt) { miniBuilt = true; var h = '<g class="gSt">'; Object.keys(G.states).forEach(function (k) { h += '<path class="st" data-st="' + k + '" d="' + G.states[k].d + '"><title>' + esc(G.states[k].n) + '</title></path>'; }); $('usmini').innerHTML = h + '</g><g class="gMk"></g>'; }
     var by = stateTotals(list); $('usmini').querySelectorAll('.st').forEach(function (p) { var k = p.getAttribute('data-st'); p.classList.toggle('sel', S.f.states.indexOf(k) >= 0); p.classList.toggle('has', !!by[k]); });
     $('usmini').querySelector('.gMk').innerHTML = markersHtml(by, true);
-    var sel = S.f.states; $('miniSel').textContent = sel.length ? 'showing ' + sel.join(', ') + ' (tap again to remove)' : 'tap a state to filter the list'; $('miniSel2').textContent = $('miniSel').textContent; if (WIDE.matches) $('miniDet').open = true;
-    var nost = list.filter(function (r) { return !r.state; }).length; $('miniNote').textContent = Object.keys(by).length + ' states' + (nost ? ' · ' + nost + ' with no state' : '');
+    var sel = S.f.states; $('miniSel').textContent = sel.length ? 'showing ' + sel.join(', ') + ' (tap again to remove)' : 'tap a state to filter the list'; $('miniSel2').textContent = $('miniSel').textContent; if (SHELL.isDesktop()) $('miniDet').open = true;
+    var nost = list.filter(function (r) { return !r.state; }).length, nl = $('miniNoLoc'); $('miniNote').textContent = Object.keys(by).length + ' states'; nl.textContent = RadarShell.noLocLabel(nost); nl.hidden = !nost;
   }
   function renderMap(list) {
-    buildMap(); if (!G) { $('usmap').innerHTML = ''; return; }
+    buildMap(); if (!G) throw new Error('us-geo.js did not load');
     var by = stateTotals(list); document.querySelectorAll('#gSt .st').forEach(function (p) { var k = p.getAttribute('data-st'); p.classList.toggle('sel', S.f.states.indexOf(k) >= 0); p.classList.toggle('has', !!by[k]); });
     $('gBub').innerHTML = markersHtml(by, false);
     var pins = ''; list.forEach(function (r) { if (r.lat && r.lon) { var xy = project(r.lon, r.lat, r.state); pins += '<circle class="pin" data-open="' + esc(r.id) + '" cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) + '" r="5"><title>' + esc(r.title) + '</title></circle>'; } });
@@ -367,6 +367,8 @@
     var nostate = list.filter(function (r) { return !r.state; }).length, pinned = list.filter(function (r) { return r.lat; }).length;
     $('legend').innerHTML = '<span><i class="lg-v"></i>Number = records in the state; blue = some records state a dollar value (hover or tap for the total)</span><span><i class="lg-c"></i>Amber = count only (no stated value)</span><span><i class="lg-p"></i>Pin = city named in the source (' + pinned + ')</span>';
     $('mapNote').textContent = (list.length ? 'Tap a state to filter the list by it. ' : '') + (nostate ? nostate + ' record(s) name no state (for example nationwide contracts) and are not on the map; they are in the List. ' : '');
+  }
+  function renderMapTop(list) {
     var top = sortFor(list, S.sort).slice(0, 5);
     $('topHint').textContent = list.length > 5 ? '(5 of ' + list.length + ')' : '';
     cardsInto($('mapTop'), top, emptyScopeHtml());
@@ -504,11 +506,11 @@
     else if (k === 'scope') S.scope = 'all';
     S.rows = 50; render();
   }
-  var WIDE = window.matchMedia ? matchMedia('(min-width: 1200px)') : { matches: false };
+  var SHELL = window.RadarShell.bind({ app: 'national', doc: document, ls: window.localStorage, media: window.matchMedia ? window.matchMedia(window.RadarShell.QUERY) : null, tabs: ['list', 'map', 'pursuits'], more: ['timeline', 'break', 'data'], labels: { timeline: 'Timeline', break: 'Breakdown', data: 'Data' }, cols: { list: 'colsList', map: 'colsMap' }, legacyTabKeys: ['nr.tab'], onDetailClose: function () { render(); } });
   function initTopDet() {
     if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.topOpen', 'national.topOpen');
     var d = $('topDet'), v = null; try { v = window.RadarStorage ? RadarStorage.read(localStorage, 'national.topOpen', ['nr.topOpen']) : localStorage.getItem('nr.topOpen'); } catch (e) { v = null; }
-    d.open = v === null ? WIDE.matches : v === '1';
+    d.open = v === null ? SHELL.isDesktop() : v === '1';
     d.addEventListener('toggle', function () { try { localStorage.setItem('national.topOpen', d.open ? '1' : '0'); } catch (e) { /* private mode */ } });
   }
   function renderHealthDot() {
@@ -747,7 +749,7 @@
     if (r.bucket === 'nofee') h += '<h3>Why it is under "Fee not stated"</h3><p class="note" style="margin:0">Engineering notice with a water-sector title that is open or upcoming, but the source states no fee. It is not counted as over $20M.</p>';
     h += '</details>';
     $('shBody').innerHTML = h; $('sheet').hidden = false; $('sheet').setAttribute('data-id', id); $('shStar').className = 'star big' + (WATCH[id] ? ' on' : ''); $('shStar').innerHTML = WATCH[id] ? '&#9733;' : '&#9734;';
-    refreshCapPanel(id); var dock = WIDE.matches; document.body.classList.toggle('docked', dock); $('sheet').setAttribute('aria-modal', String(!dock)); if (!dock) document.body.style.overflow = 'hidden'; $('shClose').focus();
+    refreshCapPanel(id); SHELL.openDetail(); $('shClose').focus();
     if (r._ln === 'road') initWhatIf(r);
   }
   function sheetMoneyPse(r) {
@@ -766,7 +768,7 @@
     }
     return h;
   }
-  function closeSheet() { var was = !$('sheet').hidden; $('sheet').hidden = true; document.body.style.overflow = ''; document.body.classList.remove('docked'); if (was) render(); }
+  function closeSheet() { SHELL.closeDetail(); } // shared shell: the map / records column comes back; onDetailClose re-renders
 
 
   // ---------- roadway: construction cost base + what-if ----------
@@ -830,15 +832,11 @@
   function render() {
     var list = scoped();
     renderModes(); renderScopes(); renderDigest(); renderSince(); renderCapBar(); renderKpis(list); renderFilters();
-    if (S.tab === 'map') renderMap(list); else if (S.tab === 'list') { renderList(list); renderMini(list); } else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else if (S.tab === 'pursuits') renderPursuits(); else renderData();
+    if (S.tab === 'map') { RadarShell.guardMap(document, 'mapFail', function () { renderMap(list); }, 'mapWrap'); renderMapTop(list); } else if (S.tab === 'list') { renderList(list); RadarShell.guardMap(document, 'miniFail', function () { renderMini(list); }, 'usmini'); } else if (S.tab === 'timeline') renderTimeline(list); else if (S.tab === 'break') renderBreak(list); else if (S.tab === 'pursuits') renderPursuits(); else renderData();
     renderPurBadge();
   }
   function setTab(t) {
-    try { localStorage.setItem('national.tab', t); } catch (e) { /* ignore */ } // P3: remember the last view
-    S.tab = t; ['map', 'list', 'timeline', 'break', 'pursuits', 'data'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
-    document.querySelectorAll('.tabs button[data-tab]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
-    document.querySelectorAll('.tabs button[data-tab]').forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-tab') === t ? 'page' : 'false'); });
-    var inMore = ['timeline', 'break', 'data'].indexOf(t) >= 0; $('tabMoreBtn').classList.toggle('on', inMore); $('tabMoreLbl').textContent = inMore ? ({ timeline: 'Timeline', break: 'Breakdown', data: 'Data' })[t] : ''; $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false');
+    S.tab = SHELL.showTab(t); // shared shell: views, tab bar, More menu and the last view (national.tab)
     render(); window.scrollTo(0, 0);
   }
   function toggle(arr, k) { var i = arr.indexOf(k); if (i >= 0) arr.splice(i, 1); else arr.push(k); }
@@ -878,7 +876,7 @@
     var q6 = e.target.closest('[data-wt],[data-due],[data-tag-k],[data-fs-apply],[data-fs-del],#ftClear,#tmWhat');
     if (q6) {
       if (q6.id === 'ftClear') { resetFilters(); return; }
-      if (q6.id === 'tmWhat') { $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false'); if ($('bannerMore').hidden) $('btnBanner').click(); $('banner').scrollIntoView({ block: 'start' }); return; }
+      if (q6.id === 'tmWhat') { SHELL.setMore(false); if ($('bannerMore').hidden) $('btnBanner').click(); $('banner').scrollIntoView({ block: 'start' }); return; }
       if (q6.hasAttribute('data-wt')) { toggle(S.f.work, q6.getAttribute('data-wt')); S.rows = 50; render(); return; }
       if (q6.hasAttribute('data-due')) { var dv = q6.getAttribute('data-due'); S.f.dueWithin = dv ? +dv : null; S.rows = 50; render(); return; }
       if (q6.hasAttribute('data-tag-k')) { removeTagK(q6.getAttribute('data-tag-k'), q6.getAttribute('data-tag-v')); return; }
@@ -921,11 +919,8 @@
   $('q').addEventListener('input', function () { S.f.q = this.value.trim(); S.rows = 50; render(); });
   $('sort').addEventListener('change', function () { S.sort = this.value; render(); });
   $('btnMoreRows').addEventListener('click', function () { S.rows += 50; render(); });
-  $('btnMore').addEventListener('click', function () { var o = $('adv').hidden; $('adv').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('digestPill').addEventListener('click', function (e) { e.stopPropagation(); if (S.digest) { S.digest = null; $('digest').hidden = true; this.setAttribute('aria-expanded', 'false'); render(); return; } var o = $('digest').hidden; $('digest').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
-  $('tabMoreBtn').addEventListener('click', function (e) { e.stopPropagation(); var o = $('tabMore').hidden; $('tabMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   document.addEventListener('click', function (e) { // close popovers on outside click
-    if (!e.target.closest('#tabMore,#tabMoreBtn')) { $('tabMore').hidden = true; $('tabMoreBtn').setAttribute('aria-expanded', 'false'); }
     document.querySelectorAll('details.scmore[open]').forEach(function (d) { if (!d.contains(e.target)) d.open = false; });
   }, true);
   if (window.RadarTheme) RadarTheme.bind(document, window.localStorage);
@@ -948,8 +943,7 @@
   function loadJ(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
   Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; }), loadJ('data/source-status.json').catch(function () { return null; }), loadJ('../texas/data/source-status.json').catch(function () { return null; })]).then(function (x) {
     HEALTH = V4.health([x[4], x[5]]); renderHealthDot();
-    if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.tab', 'national.tab');
-    var lastTab = null; try { lastTab = window.RadarStorage ? RadarStorage.read(localStorage, 'national.tab', ['nr.tab']) : localStorage.getItem('nr.tab'); } catch (e) { lastTab = null; } if (['map', 'list', 'timeline', 'break', 'pursuits', 'data'].indexOf(lastTab) >= 0 && lastTab !== 'map') S.tab = lastTab; // v6: List is the default; the full map is one tap away
+    S.tab = SHELL.initial; // shared shell: List on a first visit, then the last view (Map included)
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     setMode();
     setTab(S.tab);

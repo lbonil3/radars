@@ -42,13 +42,14 @@ window.RadarLoadError=function(name){
   <link rel="stylesheet" href="../shared/shell.css" onerror="RadarLoadError(this.src||this.href)">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<header class="top">
+<body class="shell" data-app="national">
+<header class="top shell-head">
   <div class="top-l">
     <a class="homebtn" href="../" aria-label="Back to Radars home">&#8592; Home</a>
     <h1>National Radar</h1>
   </div>
   <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span><button type="button" class="pill" id="digestPill" aria-expanded="false" aria-controls="digest" hidden></button><button type="button" class="linkbtn wc" id="btnBanner" aria-expanded="false" aria-controls="bannerMore">What counts &rsaquo;</button></div>
+  <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
 </header>
 <section class="since" id="since" aria-label="Since you last visited" hidden></section>
 
@@ -80,8 +81,8 @@ window.RadarLoadError=function(name){
     <button type="button" class="btn" id="btnMore" aria-expanded="false" aria-controls="adv"><span id="fLbl">Filters</span> <b class="fbadge" id="advCount" hidden></b></button>
     <button type="button" class="switch" id="btnConfOnly" role="switch" aria-checked="false"><span class="knob" aria-hidden="true"></span><span class="swl">Confirmed only</span></button>
   </div>
-  <div id="adv" class="drawer" hidden>
-    <div class="drawhead"><h3>Filters</h3><button type="button" class="btn small" id="btnReset">Reset filters</button></div>
+  <div id="adv" class="drawer shell-drawer" hidden role="dialog" aria-label="Filters">
+    <div class="drawhead"><h3>Filters</h3><button type="button" class="btn small" id="btnReset">Reset filters</button><button type="button" class="btn small" id="advClose">Close</button></div>
     <h3>Saved filter sets <span class="hint">on this device; included in the capture backup</span></h3>
     <div class="fsets" id="fsets"></div>
     <div class="fsrow"><input id="fsName" type="text" maxlength="60" placeholder="Name the current filters" aria-label="Name for this filter set" autocomplete="off"><button type="button" class="btn small" id="fsSave">Save</button></div>
@@ -136,25 +137,32 @@ window.RadarLoadError=function(name){
   <div class="active" id="activeNote" hidden></div>
 </section>
 
+<div class="shell-scrim" id="advBg" hidden></div>
 <main id="main">
   <section id="v-map" class="view" hidden aria-label="US map">
-    <div class="mapwrap">
-      <svg id="usmap" viewBox="0 0 975 610" role="img" aria-label="Map of the United States. Numbers show record counts per state. Use the List tab for an accessible list."></svg>
-      <details class="legd"><summary>Legend</summary><div class="legend" id="legend"></div></details>
+    <div class="shell-cols" id="colsMap">
+      <div class="shell-primary">
+        <div class="mapwrap" id="mapWrap">
+          <svg id="usmap" viewBox="0 0 975 610" role="img" aria-label="Map of the United States. Numbers show record counts per state. Use the List tab for an accessible list."></svg>
+          <details class="legd"><summary>Legend</summary><div class="legend" id="legend"></div></details>
+        </div>
+        <p class="shell-mapfail" id="mapFail" hidden></p>
+        <p class="note" id="mapNote"></p>
+      </div>
+      <details class="topdet shell-side" id="topDet"><summary class="sec">Top of this view <span class="hint" id="topHint"></span></summary>
+      <div id="mapTop" class="cards"></div></details>
     </div>
-    <p class="note" id="mapNote"></p>
-    <details class="topdet" id="topDet"><summary class="sec">Top of this view <span class="hint" id="topHint"></span></summary>
-    <div id="mapTop" class="cards"></div></details>
   </section>
 
   <section id="v-list" class="view" aria-label="List">
-    <div class="lgrid"><aside class="mini" id="mini" aria-label="Small map">
+    <div class="shell-cols" id="colsList"><aside class="mini shell-side" id="mini" aria-label="Small map">
       <details id="miniDet"><summary class="minisum"><span>Map</span> <span class="hint" id="miniSel">tap a state to filter the list</span></summary>
         <div class="minihead"><b>Map</b> <span class="hint" id="miniSel2">tap a state to filter the list</span></div>
         <div class="miniwrap"><svg id="usmini" viewBox="0 0 975 610" role="img" aria-label="Small US map. Numbers are record counts per state. Tap a state to filter the list."></svg></div>
-        <div class="minibar"><span class="hint" id="miniNote"></span><button type="button" class="linkbtn" data-tab="map">Expand map &rsaquo;</button></div>
+        <p class="shell-mapfail" id="miniFail" hidden></p>
+        <div class="minibar"><span class="hint" id="miniNote"></span><span class="shell-noloc" id="miniNoLoc" hidden></span><button type="button" class="linkbtn" data-tab="map">Expand map &rsaquo;</button></div>
       </details></aside>
-    <div class="lmain">
+    <div class="lmain shell-primary">
     <div class="qrow" id="qrow" aria-label="Quick filters">
       <details class="qf" id="qfState"><summary class="qchip" id="qsState">State</summary><div class="qpop" id="qpState"></div></details>
       <details class="qf" id="qfWork"><summary class="qchip" id="qsWork">Work type</summary><div class="qpop" id="qpWork"></div></details>
@@ -210,8 +218,6 @@ window.RadarLoadError=function(name){
     <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
     <button type="button" data-tab="break" role="menuitem">Breakdown</button>
     <button type="button" data-tab="data" role="menuitem">Data &amp; sources <b class="hwarn" id="healthWarn" hidden></b></button>
-    <div class="thlbl" id="thLbl">Theme</div>
-    <div class="throw" role="group" aria-labelledby="thLbl"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
   </div>
 </nav>
 
@@ -233,6 +239,7 @@ window.RadarLoadError=function(name){
 <script src="../shared/storage.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/theme.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/filters.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/shell.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="proj.js"></script>
 <script src="us-geo.js"></script>
 <script src="../shared/capture.js" onerror="RadarLoadError(this.src||this.href)"></script>

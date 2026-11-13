@@ -58,7 +58,7 @@ assert.ok(/class="scmore/.test(app) && /More &#9662;/.test(app), 'other scopes b
 }
 // P3 (trivial ones): plainer scope wording, last view remembered; closed More menu takes no space
 assert.ok(app.includes("label: 'Early notices (no fee yet)'") && app.includes("label: 'Big projects (no fee yet)'"), 'plainer wording');
-assert.ok(/localStorage\.setItem\('national\.tab', t\)/.test(app) && /\n    setTab\(S\.tab\);\n/.test(app) && /tab: 'list'/.test(app), 'last view remembered; List is the default (v6)');
+assert.ok(/S\.tab = SHELL\.initial;/.test(app) && /S\.tab = SHELL\.showTab\(t\);/.test(app) && /\n    setTab\(S\.tab\);\n/.test(app) && /tab: 'list'/.test(app), 'last view remembered by the shared shell; List is the default');
 assert.ok(/id="usmini"/.test(html) && /data-tab="map">Expand map/.test(html) && /function markersHtml/.test(app) && /function renderMapV5/.test(app), 'v6.1: small map with Expand map, count markers, v5 bubbles kept dormant');
 assert.ok(css.includes('.scmore:not([open]) .scmenu{display:none}'));
 module.exports = { html, app, css };
@@ -74,5 +74,6 @@ console.log('national ui (P1 header) tests passed');
   assert.ok(/html\[data-theme=day\]\{--bg:/.test(css), 'Day variables');
   assert.ok(/^:root\{--bg:#0a1020/m.test(css), 'Night look unchanged');
   assert.ok(html.includes('id="themeColor"') && /themeColor/.test(head) && /RadarTheme\.bind/.test(app), 'browser UI color follows the theme');
-  assert.ok(/\.tabs button\[data-tab\]/.test(app), 'tab highlighting does not touch theme buttons');
+  const nav = html.slice(html.indexOf('<nav class="tabs"'), html.indexOf('</nav>', html.indexOf('<nav class="tabs"')));
+  assert.ok(!/data-theme-set/.test(nav) && /<header[\s\S]*data-theme-set="auto"[\s\S]*<\/header>/.test(html), 'theme buttons live in the header, outside the tab bar');
 }
