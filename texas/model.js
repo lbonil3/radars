@@ -485,6 +485,7 @@
     var type = solType((r && r.solType ? r.solType + ' ' : '') + text);
     if (type.cls === 'qual' || type.cls === 'prop') return true;
     if (/on[- ]call|as[- ]needed|rotation list|indefinite[- ]delivery|\bIDIQ\b|professional services/i.test(text)) return true;
+    if (/pre[- ]?qualif/i.test(text)) return true;
     if (r && r.src === 'hcfcd-bids' && /request for qualifications|\brfq\b/i.test(r.stage || '')) return true;
     if (r && r.src === 'ctrma' && /engineering|PS&E|architect|survey/i.test(text)) return true;
     return false;
@@ -550,7 +551,11 @@
     'University of Texas': { color: '#f97316', full: 'The University of Texas (utexas Bonfire portal)' },
     'HCTRA': { color: '#f59e0b', full: 'Harris County Toll Road Authority' },
     'CTRMA': { color: '#818cf8', full: 'Central Texas Regional Mobility Authority' },
-    'TAMU': { color: '#c4b5fd', full: 'Texas A&M University System (AggieBid)' }
+    'TAMU': { color: '#c4b5fd', full: 'Texas A&M University System (AggieBid)' },
+    'NTTA': { color: '#0ea5e9', full: 'North Texas Tollway Authority' },
+    'Travis County': { color: '#14b8a6', full: 'Travis County' },
+    'Dallas County': { color: '#6366f1', full: 'Dallas County' },
+    'Texas Purchasing Group': { color: '#94a3b8', full: 'Texas Purchasing Group (BidNet Direct public board)' }
   };
   Object.keys(SOL_AGENCIES).forEach(function (k) { AGENCIES[k] = SOL_AGENCIES[k]; });
 
@@ -841,6 +846,128 @@
     return out;
   }
 
+  // A short verification page is a block. A real results page is not, even if some later word would match.
+  function isSiteChallenge(text) {
+    var t = String(text || '');
+    var head = t.slice(0, 5000).toLowerCase();
+    if (head.indexOf('aws waf') >= 0 || head.indexOf('awswaf') >= 0 || head.indexOf('human verification') >= 0) return true;
+    if (t.length < 20000 && head.indexOf('captcha') >= 0 && t.indexOf('sol-info-container') < 0 && t.indexOf('bidResultId_data') < 0) return true;
+    return false;
+  }
+
+  // NTTA Marketplace public open-bids table (Periscope). Buyer names are not stored.
+  var NTTA_PAGE = 'https://www.nttamarketplace.org/bso/view/search/external/advancedSearchBid.xhtml?openBids=true';
+  var NTTA_ORIGIN = 'https://www.nttamarketplace.org';
+  function parseNtta(html) {
+    var out = [], rows = String(html || '').match(/<tr\b[^>]*data-ri="\d+"[\s\S]*?<\/tr>/gi) || [];
+    out.listed = rows.length;
+    rows.forEach(function (row) {
+      var cells = [], href = null, cm, cre = /<td([^>]*)>([\s\S]*?)<\/td>/gi;
+      while ((cm = cre.exec(row))) {
+        if (/display\s*:\s*none/i.test(cm[1])) continue;
+        if (!href) { var h = /href="([^"]+)"/i.exec(cm[2]); if (h) href = decodeHtml(h[1]); }
+        cells.push(decodeHtml(cm[2].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim());
+      }
+      var num = cells[0], desc = cells[4], openRaw = cells[5];
+      if (!num || !desc) return;
+      var open = (String(openRaw || '').match(/\d{1,2}\/\d{1,2}\/\d{4}/) || [])[0];
+      var type = solType(desc), eng = matchEng(desc), kw = matchKeywords(desc);
+      var url = NTTA_PAGE;
+      if (href) url = /^https?:/i.test(href) ? href : NTTA_ORIGIN + (href.charAt(0) === '/' ? href : '/' + href);
+      var rec = {
+        id: 'ntta:' + num.replace(/\s+/g, ''), src: 'ntta', agency: 'NTTA', kind: 'solicitation', phase: 'procure',
+        title: desc, stage: 'Open on NTTA Marketplace', status: 'Open', solType: type.label, solNum: num, svc: false, eng: eng,
+        county: null, lat: null, lon: null, date: open ? isoFromMDY(open) : null, dateLabel: 'Bid opening date (NTTA)',
+        cost: null, costLabel: null, work: type.label, desc: null, url: url, rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+        extra: [['Bid number', num], ['Opening (raw)', openRaw || 'not listed'], ['Status (as listed)', cells[7] || 'not listed']]
+      };
+      rec.svc = isConsultant(rec);
+      if (!rec.svc) return;
+      rec.why = 'In the Consultant services focus: NTTA open bid with engineering, architecture, surveying, or design wording.';
+      out.push(rec);
+    });
+    return out;
+  }
+
+  // City of Houston open list. The public page is a script shell; this is the JSON that shell requests.
+  function beaconDay(v) {
+    if (!v) return null;
+    if (typeof v === 'string') return isoFromText(v);
+    var utc = v.utcDate || v.date;
+    if (!utc) return null;
+    var zone = v.specifiedZone || 'UTC', d = new Date(utc);
+    if (isNaN(d.getTime())) return isoFromText(String(utc));
+    try { return new Intl.DateTimeFormat('en-CA', { timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); }
+    catch (e) { return isoFromText(String(utc)); }
+  }
+  function parseBeaconOpen(body) {
+    var j;
+    try { j = typeof body === 'string' ? JSON.parse(body) : body; } catch (e) { return null; }
+    var block = j && j.data && j.data.solicitations;
+    if (!block || !Array.isArray(block.data)) return null;
+    var out = [];
+    out.listed = block.data.length;
+    out.total = typeof block.total === 'number' ? block.total : block.data.length;
+    block.data.forEach(function (row) {
+      if (!row || !row.id || !row.title) return;
+      var typeTxt = str(row.type) || '', title = str(row.title), ref = str(row.refnum), text = (typeTxt ? typeTxt + ' ' : '') + title;
+      var type = solType(text), eng = matchEng(text), kw = matchKeywords(text);
+      var rec = {
+        id: 'beacon:' + row.id, src: 'houston-beacon', agency: 'City of Houston', kind: 'solicitation', phase: 'procure',
+        title: title, stage: 'Open solicitation (City of Houston Beacon Bid)', status: 'Open', solType: typeTxt || type.label, solNum: ref, svc: false, eng: eng,
+        county: 'Harris', lat: null, lon: null, date: beaconDay(row.dueDate), dateLabel: 'Due (Beacon Bid)',
+        cost: null, costLabel: null, work: typeTxt || type.label, desc: null,
+        url: 'https://www.beaconbid.com/solicitations/city-of-houston/' + encodeURIComponent(row.id),
+        rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+        extra: [['Reference number', ref || 'not listed'], ['Type (as listed)', typeTxt || 'not listed'], ['Posted', beaconDay(row.issueDate) || 'not listed']]
+      };
+      rec.svc = isConsultant(rec);
+      if (!rec.svc) return;
+      rec.why = 'In the Consultant services focus: City of Houston open solicitation with engineering, architecture, surveying, or design wording.';
+      out.push(rec);
+    });
+    return out;
+  }
+
+  // BidNet Direct public solicitation cards (title, number, published date, closing date). No login.
+  function parseBidNet(html, agency, pageUrl, src) {
+    var origin = 'https://www.bidnetdirect.com';
+    try { origin = new URL(pageUrl || origin).origin; } catch (e) { /* keep the default origin */ }
+    var out = [], blocks = String(html || '').split(/class="sol-info-container"/i).slice(1);
+    out.listed = blocks.length;
+    blocks.forEach(function (block) {
+      var numM = /class="sol-num"[^>]*>([\s\S]*?)<\/div>/i.exec(block);
+      var num = numM ? decodeHtml(numM[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim() : '';
+      var titleM = /<a[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i.exec(block);
+      if (!titleM) return;
+      var href = decodeHtml(titleM[1]);
+      var title = decodeHtml(titleM[2].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+      if (!title) return;
+      var pubM = /sol-publication-date[\s\S]*?date-value">\s*([^<]+)/i.exec(block);
+      var closeM = /sol-closing-date[\s\S]*?date-value">\s*([^<]+)/i.exec(block);
+      var pubRaw = pubM ? (pubM[1].match(/\d{1,2}\/\d{1,2}\/\d{4}/) || [])[0] : null;
+      var closeRaw = closeM ? (closeM[1].match(/\d{1,2}\/\d{1,2}\/\d{4}/) || [])[0] : null;
+      var doc = (/\/(\d{6,})(?:\/|\?|$)/.exec(href) || [])[1];
+      var url = pageUrl || origin;
+      try { url = new URL(href, origin + '/').href; } catch (e2) { /* keep the board URL */ }
+      var type = solType(title), eng = matchEng(title), kw = matchKeywords(title);
+      var rec = {
+        id: 'bidnet:' + (doc || String(agency || 'board').replace(/\s+/g, '') + ':' + (num || title).replace(/\s+/g, '')),
+        src: src || null, agency: agency || 'BidNet', kind: 'solicitation', phase: 'procure',
+        title: title, stage: 'Open solicitation (BidNet Direct public list)', status: 'Open', solType: type.label, solNum: num || null, svc: false, eng: eng,
+        county: agency === 'Travis County' ? 'Travis' : agency === 'Dallas County' ? 'Dallas' : null,
+        lat: null, lon: null, date: closeRaw ? isoFromMDY(closeRaw) : null, dateLabel: 'Closing date (BidNet)',
+        cost: null, costLabel: null, work: type.label, desc: null, url: url, rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+        extra: (num ? [['Solicitation number', num]] : []).concat([['Published', pubRaw ? isoFromMDY(pubRaw) : 'not listed'], ['Type (read from title)', type.label]])
+      };
+      rec.svc = isConsultant(rec);
+      if (!rec.svc) return;
+      rec.why = 'In the Consultant services focus: BidNet public title with engineering, architecture, surveying, or design wording.';
+      out.push(rec);
+    });
+    return out;
+  }
+
   // Same solicitation posted in two places becomes one record. preferIds are ids already on disk (stars keep working).
   function solKey(r) {
     var raw = r && r.solNum;
@@ -848,7 +975,9 @@
       var hit = r.extra.filter(function (e) { return e && /solicitation (number|id)/i.test(e[0] || ''); })[0];
       if (hit) raw = hit[1];
     }
-    return String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    raw = String(raw || '').trim();
+    if (/^(not listed|none|n\/a|unknown|-+)$/i.test(raw)) raw = '';
+    return raw.toUpperCase().replace(/[^A-Z0-9]/g, '');
   }
   function normBits(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
   function richness(r) {
@@ -991,7 +1120,7 @@
   var api = {
     KEYWORDS: KEYWORDS, PHASES: PHASES, AGENCIES: AGENCIES, HOUSTON_AREA: HOUSTON_AREA, TXDOT_KEEP_STAGES: TXDOT_KEEP_STAGES, TXDOT_SELECT: TXDOT_SELECT, TXDOT_DATASET: TXDOT_DATASET, TRACKER_FIELDS: TRACKER_FIELDS,
     COH_LAYERS: COH_LAYERS, COH_BASE: COH_BASE, COH_SWMB_BASE: COH_SWMB_BASE, HCFCD_LJA: HCFCD_LJA, HCFCD_PAGE: HCFCD_PAGE, HCFCD_BIDS_PAGE: HCFCD_BIDS_PAGE, PEPS_SELECTED_PAGE: PEPS_SELECTED_PAGE, PEPS_MEETINGS_PAGE: PEPS_MEETINGS_PAGE, FIF_URL: FIF_URL, FIF_PAGE: FIF_PAGE,
-    matchKeywords: matchKeywords, kwLabel: kwLabel, ENG_KEYWORDS: ENG_KEYWORDS, matchEng: matchEng, engLabel: engLabel, solType: solType, isConsultant: isConsultant, aeStatus: aeStatus, hasAeWording: hasAeWording, isClearNonEng: isClearNonEng, svcRule: svcRule, isoFromSerial: isoFromSerial, BONFIRE_PORTALS: BONFIRE_PORTALS, bonfireRecord: bonfireRecord, AUSTIN_SOL_PAGE: AUSTIN_SOL_PAGE, AUSTIN_SOL_XLSX: AUSTIN_SOL_XLSX, parseAustinActive: parseAustinActive, AUSTIN_CONTRACTS_URL: AUSTIN_CONTRACTS_URL, AUSTIN_CONTRACTS_PAGE: AUSTIN_CONTRACTS_PAGE, normAustinContracts: normAustinContracts, SA_PAGE: SA_PAGE, parseSanAntonio: parseSanAntonio, ESBD_PAGE: ESBD_PAGE, ESBD_CSV_URL: ESBD_CSV_URL, parseEsbdCsv: parseEsbdCsv, AGGIE_PAGE: AGGIE_PAGE, parseAggieBid: parseAggieBid, CTRMA_PAGE: CTRMA_PAGE, parseCtrma: parseCtrma, mergeDuplicates: mergeDuplicates, classify: classify, phaseLabel: phaseLabel, phaseColor: phaseColor, agencyColor: agencyColor,
+    matchKeywords: matchKeywords, kwLabel: kwLabel, ENG_KEYWORDS: ENG_KEYWORDS, matchEng: matchEng, engLabel: engLabel, solType: solType, isConsultant: isConsultant, aeStatus: aeStatus, hasAeWording: hasAeWording, isClearNonEng: isClearNonEng, svcRule: svcRule, isoFromSerial: isoFromSerial, BONFIRE_PORTALS: BONFIRE_PORTALS, bonfireRecord: bonfireRecord, AUSTIN_SOL_PAGE: AUSTIN_SOL_PAGE, AUSTIN_SOL_XLSX: AUSTIN_SOL_XLSX, parseAustinActive: parseAustinActive, AUSTIN_CONTRACTS_URL: AUSTIN_CONTRACTS_URL, AUSTIN_CONTRACTS_PAGE: AUSTIN_CONTRACTS_PAGE, normAustinContracts: normAustinContracts, SA_PAGE: SA_PAGE, parseSanAntonio: parseSanAntonio, ESBD_PAGE: ESBD_PAGE, ESBD_CSV_URL: ESBD_CSV_URL, parseEsbdCsv: parseEsbdCsv, AGGIE_PAGE: AGGIE_PAGE, parseAggieBid: parseAggieBid, CTRMA_PAGE: CTRMA_PAGE, parseCtrma: parseCtrma, isSiteChallenge: isSiteChallenge, NTTA_PAGE: NTTA_PAGE, parseNtta: parseNtta, parseBeaconOpen: parseBeaconOpen, parseBidNet: parseBidNet, mergeDuplicates: mergeDuplicates, classify: classify, phaseLabel: phaseLabel, phaseColor: phaseColor, agencyColor: agencyColor,
     normTxdotPI: normTxdotPI, mergeTracker: mergeTracker, normCohCip: normCohCip, normSwmb: normSwmb, normHcfcdMaint: normHcfcdMaint, normFif: normFif, geomCenter: geomCenter,
     htmlTables: htmlTables, decodeHtml: decodeHtml, parseHcfcdBids: parseHcfcdBids, parsePepsSelected: parsePepsSelected, parsePepsMeetings: parsePepsMeetings, parseProjectedContracts: parseProjectedContracts,
     countyCentroids: countyCentroids, applyApprox: applyApprox, inHoustonArea: inHoustonArea,

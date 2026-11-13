@@ -214,7 +214,7 @@ data.records.forEach((r) => {
   if (r.rel === 'none') assert.ok(r.src === 'txdot-pcl' || r.kind === 'solicitation' || r.kind === 'contract', 'only the projected-contracts list and consultant solicitations keep rows without a drainage word');
   if (r.kind === 'solicitation' || r.kind === 'contract') { assert.ok(r.status && r.solType && r.dateLabel, 'status/type/date label given ' + r.id); assert.strictEqual(r.lat, undefined, 'solicitations are not mapped'); assert.ok(r.eng === undefined || Array.isArray(r.eng), 'eng match list ' + r.id); }
 });
-['txdot-pi', 'coh-cip', 'coh-swmb', 'hcfcd-maint', 'austin-active', 'austin-contracts', 'sa-bids', 'bonfire-harriscountytx', 'esbd', 'aggiebid', 'ctrma', 'bonfire-arlingtontx', 'bonfire-dentoncounty', 'bonfire-wilco', 'bonfire-ntmwd', 'bonfire-lcra', 'bonfire-sara-tx', 'bonfire-utexas'].forEach((s) => assert.ok(data.records.some((r) => r.src === s || (r.also || []).indexOf(s) >= 0), 'has records from ' + s));
+['txdot-pi', 'coh-cip', 'coh-swmb', 'hcfcd-maint', 'austin-active', 'austin-contracts', 'sa-bids', 'bonfire-harriscountytx', 'esbd', 'aggiebid', 'ctrma', 'bonfire-arlingtontx', 'bonfire-dentoncounty', 'bonfire-wilco', 'bonfire-ntmwd', 'bonfire-lcra', 'bonfire-sara-tx', 'bonfire-utexas', 'houston-beacon', 'bidnet-travis', 'bidnet-tpg'].forEach((s) => assert.ok(data.records.some((r) => r.src === s || (r.also || []).indexOf(s) >= 0), 'has records from ' + s));
 assert.ok(data.records.filter(M.isConsultant).length > 50, 'consultant-services focus is populated');
 
 // ---- page wiring
@@ -449,4 +449,5 @@ require('./test-filtersets.js');
   assert.ok(!/build-newsletter-pdfs/.test(fs.readFileSync(path.join(dir, '..', '.github', 'workflows', 'refresh-opportunities.yml'), 'utf8')), 'daily run leaves PDFs to the weekly publish');
 }
 require('./test-wave1.js');
+require('./test-wave2.js');
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');

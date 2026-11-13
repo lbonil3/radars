@@ -8,9 +8,11 @@ The list opens on Consultant services, and that view opens on **Open**: solicita
 
 A row is A/E when it is an RFQ, RFP, or on-call / professional-services request and the text is engineering, architecture, surveying, or design work. Bond underwriting, web design, software, janitorial, treatment, legal, insurance, and staffing are left out even when the source called them an RFQ. TxDOT's Projected Contracts List and PEPS rows still count. A TxDOT Bonfire department named Professional Engineering (PEPS) counts; a code such as `PRO_Services` does not.
 
-The Sources view shows how many open A/E items each source contributed today, including a solicitation that was merged from two feeds.
+The Sources view shows how many open A/E items each source contributed today, including a solicitation that was merged from two feeds. A source that answers with HTTP 403 or a human-verification page is marked `blocked by site`. That is not a failure, and the previous records for that source stay. The collector does not try to get around the block.
 
-Daily public sources added in this wave (no login):
+Paid sources are not used. A free API key or login, when a source needs one, may be stored as a GitHub Actions secret and is not written into the site. SAM.gov was dropped by the owner and is not collected. None of the sources below need a key or a login.
+
+Daily public sources added in wave 1 (no login):
 
 - Texas SmartBuy ESBD, from the public Export to CSV button (posted solicitations; NIGP class 906, 907, and 925, plus A/E wording)
 - Bonfire portals: Arlington, Denton County, Williamson County (`wilco`), NTMWD, LCRA, San Antonio River Authority (`sara-tx`), and the University of Texas (`utexas`)
@@ -18,6 +20,12 @@ Daily public sources added in this wave (no login):
 - CTRMA engineering and construction procurements, plus awarded engineering rows
 
 Harris County Bonfire rows that name the Toll Road Authority are labeled HCTRA. HCTRA does not publish a capital plan a script can read, so none was added. The same solicitation on two feeds is one record. A failed fetch keeps that source's previous records.
+
+Daily public sources added in wave 2 (no login). Only engineering and A/E consultant rows are kept, under the same rule as wave 1. A pre-qualified list counts as a qualifications request.
+
+- NTTA Marketplace open bids (bid number, description, opening date). Buyer names are not stored.
+- City of Houston open solicitations on Beacon Bid, from the JSON the public page loads (title, reference number, due date). Contacts are not stored.
+- BidNet Direct public titles for Travis County, Dallas County, and the Texas Purchasing Group open-bids board (title, published date, closing date).
 
 ## Radar 2.0 layout
 - One breakpoint at 1024px, shared with National Radar (`shared/shell.js`, `shared/shell.css`). On desktop the List shows the county map beside the list, and the Map tab shows "On the radar now" beside the map. Record details dock in the side column, and Filters is a right-hand drawer. On phones the map is a collapsible strip above the list. Day / Night / Auto is in the header.
@@ -31,7 +39,7 @@ The Intel tab is a feed of public news and planning signals: CIP and budget item
 - **Collection.** `scripts/build-intel.js` runs in the daily refresh after the opportunity snapshot and writes `texas/data/intel.json`. The browser only reads that file from the same site.
   - The step is `continue-on-error`, and each source runs in its own try/catch. A failed source keeps its previous items, which are marked stale.
   - Requests are polite: one request at a time per host, a 1.5 s gap between them, and backoff on 429/503 with Retry-After. robots.txt is checked before any site feed is fetched.
-  - No API keys, logins or paid sources are used.
+  - The Intel collector does not use API keys, logins, or paid sources.
 - **Stored per item.** Title, source, link, date, an excerpt of at most 280 characters (media feeds: headline only), topic tags, place, county and region, a score, "why this matters" phrases and a positioning hint. Items are kept for 90 days, and `firstSeen` drives the "New" marks.
 - **Classification** (`texas/intel.js`, deterministic, with no AI):
   - Topics and places come from regular expressions, and the score comes from keyword weights.

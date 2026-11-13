@@ -1,4 +1,5 @@
-# Daily refresh of texas/data/opportunities.json from public feeds (no API keys).
+# Daily refresh of texas/data/opportunities.json.
+# Paid sources are not used. A free API key or login, if a source needs one, is a GitHub Actions secret and is not written into the repo.
 # INSTALL: copy this file to .github/workflows/refresh-opportunities.yml.
 # It could not be pushed with the PR because the GitHub token used to open the PR has no "workflow" scope.
 name: Refresh Texas Opportunity data

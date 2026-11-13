@@ -28,12 +28,11 @@
     ['Fort Bend County Drainage District', 'https://gisportal.fortbendcountytx.gov/arcgis/rest/services/Drainage/Drainage_Public/FeatureServer', 'ArcGIS service responds but holds gauges, dams, rivers, levees and floodplains: no project list.'],
     ['Montgomery County (solicitations)', 'https://www.mctx.org/departments/departments_l_-_p/purchasing/bid_proposal_opening_date.php', 'mctx.org/robots.txt disallows all generic crawlers ("User-agent: *  Disallow: /"). Not scraped. Check the bid page by hand.'],
     ['Port Houston (solicitations)', 'https://porthouston.com/business/strategic-sourcing/strategic-sourcing-overview/', 'Bids are on a Workday Strategic Sourcing public portal that is built in the browser (the page the server returns is a 1.5 KB shell, no data feed). Not used.'],
-    ['City of Houston solicitations (Beacon Bid)', 'https://www.beaconbid.com/solicitations/city-of-houston/open', 'Houston posts all solicitations on Beacon Bid, which answers scripts with an AWS WAF human-verification (captcha) page. Not bypassed. Houston\'s own Procurement Plan page is a stale FY25 Q2 table (2023 dates) and the open-data "Archived Solicitations" file ends December 2023. Check Beacon by hand and use the Houston engineering RFQs there.'],
+    ['City of Houston Procurement Plan page', '', 'Not used. Open solicitations come from the public Beacon Bid list. The Procurement Plan page is a stale FY25 Q2 table, and the open-data Archived Solicitations file ends December 2023.'],
     ['HCTRA capital improvement plan', 'https://www.hctra.org/capital-improvement-program', 'The HCTRA site returns the same small script shell for every path (about 5 KB) and publishes no project table or file. No capital-plan records were added. Solicitations whose Harris County Bonfire title or department names the Toll Road Authority are labeled HCTRA.'],
     ['Bonfire hosts that did not answer', 'https://www.bonfirehub.com/', 'Checked and skipped because the host did not resolve: arlington, dentoncountytx, williamsoncounty, williamsoncountytx, sara, sanantonioriverauthority, utaustin, universityoftexas. utsystem.bonfirehub.com answered with zero open items and is not a second feed. Williamson County is wilco, Denton County is dentoncounty, San Antonio River Authority is sara-tx, and the University of Texas is utexas.'],
     ['TWDB Flood Infrastructure Fund (official)', 'https://www.twdb.texas.gov/financial/programs/fif/dashboard.asp', 'Official source is a dashboard. The only feed found is a table mirrored by Pape-Dawson (used, flagged as a mirror).'],
     ['GLO CDBG-MIT / Regional Mitigation awards', 'https://www.glo.texas.gov/disaster-recovery/mitigation/regional-mitigation', 'Published as PDF award tables, not a feed. Not used.'],
-    ['SAM.gov opportunities', 'https://sam.gov/', 'API needs a key. Skipped as instructed.'],
     ['Bonfire portals not found', 'https://www.bonfirehub.com/', 'No Bonfire portal was found for City of Houston, Port Houston, Montgomery County or HCTRA (tested likely sub-domains). Brazoria County has a portal with zero open items at snapshot time.'],
     ['Upcoming (pre-advertisement) lists', '', 'TxDOT\'s Projected Contracts List is the forecast feed. CTRMA rows whose stage says forthcoming are forecasts too. No other agency here publishes a machine-readable list of solicitations that have not yet been advertised.']
   ];
@@ -270,7 +269,8 @@
     $('srcList').innerHTML = state.sources.map(function (s) {
       var n = state.recs.filter(function (r) { return r.src === s.id; }).length;
       var openAe = state.recs.filter(function (r) { return M.aeStatus(r, state.today) === 'open' && (r.src === s.id || (r.also || []).indexOf(s.id) >= 0); }).length;
-      return '<div class="src" style="--c:' + M.agencyColor(s.agency) + '"><h3>' + esc(s.name) + '</h3><p><span class="st ' + esc(s.status) + '">' + esc((s.status || '').toUpperCase()) + '</span> · ' + esc(s.agency) + ' · ' + esc(s.type) + '</p>' +
+      var statusClass = String(s.status || '').split(' ')[0];
+      return '<div class="src" style="--c:' + M.agencyColor(s.agency) + '"><h3>' + esc(s.name) + '</h3><p><span class="st ' + esc(statusClass) + '">' + esc((s.status || '').toUpperCase()) + '</span> · ' + esc(s.agency) + ' · ' + esc(s.type) + '</p>' +
         '<p>Fetched ' + esc(fmtDT(s.fetchedAt)) + ' · rows read ' + (s.fetched || 0).toLocaleString('en-US') + ' · records on the radar ' + n.toLocaleString('en-US') + ' · open A/E today ' + openAe.toLocaleString('en-US') + (s.joined !== undefined ? ' · joined to ' + s.joined + ' projects' : '') + '</p>' +
         (s.note ? '<p>' + esc(s.note) + '</p>' : '') + (s.page ? '<p><a href="' + esc(s.page) + '" target="_blank" rel="noopener noreferrer">Open the source ↗</a></p>' : '') + '</div>';
     }).join('');
@@ -289,7 +289,7 @@
     if (fresh) {
       var ageH = (Date.now() - Date.parse(fresh)) / 3600000;
       $('freshDot').className = 'dot ' + (state.live ? 'ok' : ageH < 48 ? 'ok' : ageH < 24 * 7 ? 'warn' : 'bad');
-      var bad = state.sources.filter(function (s) { return s.status !== 'ok'; }).length;
+      var bad = state.sources.filter(function (s) { return s.status !== 'ok' && s.status !== 'blocked by site'; }).length;
       $('freshTxt').innerHTML = 'Data updated ' + esc(fmtDT(fresh)) + ' (' + (ageH < 48 ? Math.round(ageH) + ' h old' : Math.round(ageH / 24) + ' days old') + ')' + (state.live ? ' · TxDOT live ' + esc(fmtDT(state.live.at)) : '') + ' · ' + state.recs.length.toLocaleString('en-US') + ' records from ' + (state.sources.length - bad) + '/' + state.sources.length + ' feeds' + (bad ? ' · <b>' + bad + ' feed(s) stale or failed (see Sources)</b>' : '') + (ageH > 24 * 7 ? ' · <b>snapshot is old: the daily refresh may not be running</b>' : '');
     }
   }
