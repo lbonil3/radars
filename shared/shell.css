@@ -61,3 +61,12 @@ body.wk-open{overflow:hidden}
   body.print-weekly .wk-bar{display:none!important}
   body.print-weekly .wk-doc{padding:0;max-width:none}
 }
+
+/* Removable filter tags and saved filter sets (shared/filters.js), moved from national/style.css */
+.ftags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 8px}.ftags[hidden]{display:none}
+.ftag{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border-radius:15px;border:1px solid var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--panel));color:var(--ink);font-size:12.5px;cursor:pointer}
+.ftag span{font-size:15px;line-height:1;color:var(--dim)}.ftclear{min-height:30px;font-size:12.5px}
+.fsets{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}.fset{display:inline-flex;align-items:center}
+.fsdel{min-width:32px;min-height:34px;border:1px solid var(--line);border-left:0;border-radius:0 17px 17px 0;background:var(--panel2);color:var(--dim);font-size:16px;cursor:pointer}
+.fset .chip{border-top-right-radius:0;border-bottom-right-radius:0}
+.fsrow{display:flex;gap:6px;margin-bottom:10px}.fsrow input{flex:1;min-width:0;min-height:38px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:14px}

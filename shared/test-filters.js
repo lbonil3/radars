@@ -61,4 +61,27 @@ assert.deepStrictEqual(F.load(legacyTx, 'texas'), [], 'texas does not read the n
 assert.strictEqual(legacyTx.getItem('texas.filtersets'), null);
 assert.strictEqual(legacyTx.getItem('nr.filtersets'), JSON.stringify([F.snapshot('Legacy', { states: ['TX'] }, 'upcoming', 'tx')]));
 
+// Texas sets keep Texas fields (texas.filtersets); National sets are unchanged
+const txf = { q: 'drain', rel: 'direct', consult: true, eng: true, agencies: ['HCFCD'], phases: ['design'], kinds: ['solicitation'], kw: ['drainage'], houston: true, located: false, watchOnly: false, month: '2026-11' };
+const ts = F.snapshotFor('texas', ' Houston drainage ', txf);
+assert.deepStrictEqual(ts, { name: 'Houston drainage', app: 'texas', f: { q: 'drain', rel: 'direct', consult: true, eng: true, houston: true, located: false, watchOnly: false, agencies: ['HCFCD'], phases: ['design'], kinds: ['solicitation'], kw: ['drainage'] } }, 'Texas snapshot keeps Texas fields and drops the timeline month');
+assert.deepStrictEqual(F.snapshotFor('national', 'N', { states: ['TX'] }, 'upcoming', 'tx'), F.snapshot('N', { states: ['TX'] }, 'upcoming', 'tx'), 'National snapshot unchanged');
+assert.strictEqual(F.snapshotFor('texas', 'bad', { rel: 'nope', consult: 'yes' }).f.rel, 'relevant', 'unknown relevance falls back to the default');
+assert.strictEqual(F.snapshotFor('texas', 'bad', { consult: 'yes' }).f.consult, true, 'non-boolean switches fall back to the defaults');
+const txls = mem({});
+assert.ok(F.save(txls, 'texas', F.upsert([], ts)));
+assert.deepStrictEqual(F.load(txls, 'texas'), [ts], 'Texas round trip through texas.filtersets');
+assert.strictEqual(txls.getItem('national.filtersets'), null, 'Texas save never writes the National key');
+const fresh = { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: '2026-12' };
+const ap2 = F.applyFor('texas', fresh, ts);
+assert.deepStrictEqual([ap2.q, ap2.rel, ap2.eng, ap2.houston, ap2.agencies, ap2.kw, ap2.month], ['drain', 'direct', true, true, ['HCFCD'], ['drainage'], null]);
+ap2.agencies.push('X'); assert.deepStrictEqual(ts.f.agencies, ['HCFCD'], 'apply copies arrays');
+const ttags = F.tagsFor('texas', Object.assign({}, txf, { consult: false }), { phaseLabel: { design: 'Design' }, kindLabel: { solicitation: 'Open solicitation' }, kwLabel: { drainage: 'Drainage' }, monthLabel: (m) => 'Nov 2026' });
+assert.deepStrictEqual(ttags.map((t) => t.label), ['Search: drain', 'Drainage: direct only', 'All records (not only consultant services)', 'HCFCD', 'Design', 'Open solicitation', 'Drainage', 'Month: Nov 2026']);
+const rt = Object.assign({}, txf, { agencies: ['HCFCD'], consult: false });
+['q', 'rel', 'consult', 'month'].forEach((k) => F.removeTagFor('texas', rt, k)); F.removeTagFor('texas', rt, 'agencies', 'HCFCD');
+assert.deepStrictEqual([rt.q, rt.rel, rt.consult, rt.month, rt.agencies], ['', 'relevant', true, null, []], 'removing a Texas tag restores the default');
+assert.deepStrictEqual(F.tagsFor('national', f, {}), F.activeTags(f, {}), 'National tags unchanged');
+assert.deepStrictEqual(F.mergeFor('texas', [ts], [F.snapshotFor('texas', 'HOUSTON DRAINAGE', {}), F.snapshotFor('texas', 'Austin', {})]).map((s) => s.name), ['Houston drainage', 'Austin'], 'Texas backup restore merges by name');
+
 console.log('shared filter tests passed');

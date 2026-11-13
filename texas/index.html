@@ -61,8 +61,12 @@ window.RadarLoadError=function(name){
     <button type="button" class="btn" id="btnMore" aria-expanded="false" aria-controls="adv">Filters <span id="advCount"></span></button>
   </div>
   <div class="chips" id="quick" aria-label="Quick filters"></div>
+  <div class="ftags" id="ftags" aria-label="Active filters" hidden></div>
   <div id="adv" class="shell-drawer" hidden role="dialog" aria-label="Filters">
     <div class="drawhead"><h3>Filters</h3><button type="button" class="btn small" id="advClose">Close</button></div>
+    <h3>Saved filter sets <span class="hint">(this device)</span></h3>
+    <div class="fsets" id="fsets"></div>
+    <div class="fsrow"><input id="fsName" type="text" maxlength="60" placeholder="Name the current filters" aria-label="Name for this filter set" autocomplete="off"><button type="button" class="btn small" id="fsSave">Save</button></div>
     <h3>Drainage relevance <span class="hint">("likely" is inferred from type of work). In the Consultant services view only "Direct" narrows the list.</span></h3>
     <div class="seg" role="group" aria-label="Drainage relevance">
       <button type="button" data-rel="direct">Direct</button>

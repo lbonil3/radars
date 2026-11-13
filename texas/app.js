@@ -141,12 +141,29 @@
     var n = state.f.agencies.length + state.f.phases.length + state.f.kinds.length + state.f.kw.length;
     n += (state.f.rel !== 'relevant' ? 1 : 0) + (state.f.consult ? 0 : 1);
     $('advCount').textContent = n ? '(' + n + ')' : '';
-    var notes = [];
-    if (state.f.month) notes.push('month ' + M.fmtMonth(state.f.month));
-    if (state.f.q) notes.push('search "' + state.f.q + '"');
-    $('activeNote').hidden = !notes.length; $('activeNote').textContent = notes.length ? 'Active: ' + notes.join(', ') : '';
+    renderTags(); $('activeNote').hidden = true; // the removable tags replace the old "Active:" line
     Array.prototype.forEach.call(document.querySelectorAll('.seg button'), function (b) { b.classList.toggle('on', b.getAttribute('data-rel') === state.f.rel); });
   }
+  // ---------- saved filter sets and removable tags (shared/filters.js, texas.filtersets) ----------
+  var FS = window.RadarFilters ? RadarFilters.load(window.localStorage, 'texas') : [];
+  function freshFilters() { return { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null }; }
+  function renderTags() {
+    var pl = {}, kl = {}; M.PHASES.forEach(function (p) { pl[p.id] = p.label; }); M.KEYWORDS.forEach(function (k) { kl[k.id] = k.label; });
+    var tags = RadarFilters.tagsFor('texas', state.f, { phaseLabel: pl, kindLabel: KIND_LABEL, kwLabel: kl, monthLabel: M.fmtMonth }), el = $('ftags'); el.hidden = !tags.length;
+    el.innerHTML = tags.map(function (t) { return '<button type="button" class="ftag" data-tag-k="' + esc(t.k) + '" data-tag-v="' + esc(t.v) + '" aria-label="Remove filter ' + esc(t.label) + '">' + esc(t.label) + ' <span aria-hidden="true">&times;</span></button>'; }).join('') + (tags.length ? '<button type="button" class="ftclear" id="ftClear">Clear all</button>' : '');
+  }
+  function renderSets() {
+    $('fsets').innerHTML = FS.length ? FS.map(function (x) { return '<span class="fset"><button type="button" class="chip" data-fs-apply="' + esc(x.name) + '">' + esc(x.name) + '</button><button type="button" class="fsdel" data-fs-del="' + esc(x.name) + '" aria-label="Delete filter set ' + esc(x.name) + '">&times;</button></span>'; }).join('') : '<span class="hint">None yet. Set filters, name them and tap Save.</span>';
+  }
+  function saveSet() {
+    var name = $('fsName').value.trim(); if (!name) { toast('Type a name for this filter set first.'); $('fsName').focus(); return; }
+    FS = RadarFilters.upsert(FS, RadarFilters.snapshotFor('texas', name, state.f)); RadarFilters.save(window.localStorage, 'texas', FS); $('fsName').value = ''; renderSets(); toast('Saved filter set "' + name + '" on this device.');
+  }
+  function applySet(name) {
+    var set = FS.filter(function (x) { return x.name === name; })[0]; if (!set) return;
+    state.f = RadarFilters.applyFor('texas', freshFilters(), set); $('q').value = state.f.q || ''; if (map) map.fit(state.f.houston ? 'hou' : 'tx'); apply(); toast('Applied "' + name + '".');
+  }
+  function deleteSet(name) { FS = RadarFilters.remove(FS, name); RadarFilters.save(window.localStorage, 'texas', FS); renderSets(); toast('Deleted filter set "' + name + '".'); }
   function renderLegend() {
     var items;
     if (state.colorBy === 'phase') items = M.PHASES.map(function (p) { return [p.label, p.color]; });
@@ -350,15 +367,17 @@
   }
   var WKS = null;
   function exportBackup() {
-    var ids = Object.keys(state.watch); if (!ids.length) { toast('The watchlist is empty, nothing to back up.'); return; }
+    var ids = Object.keys(state.watch); if (!ids.length && !FS.length) { toast('The watchlist is empty, nothing to back up.'); return; }
     var caps = {}; ids.forEach(function (id) { var c = capOf(id); if (!c.snap) c.snap = snapFor(id) || undefined; caps[id] = c; });
     var bk = CP.makeBackup(state.watch, caps, new Date().toISOString(), CAP_APP); bk.meta = {}; ids.forEach(function (id) { var w = state.watch[id]; bk.meta[id] = { t: w.t || '', a: w.a || '', u: w.u || null, at: w.at || '' }; });
+    bk.filtersets = FS; // saved filter sets travel with the Texas backup (same field as National); still one file per app
     capDownload('texas-opportunity-capture-backup-' + todayCentral() + '.json', 'application/json', JSON.stringify(bk, null, 1), false); toast('Backup saved to your downloads.');
   }
   function restoreBackup(text, mode) {
     var p = CP.parseBackup(text, CAP_APP); if (!p.ok) { toast(p.error); return; }
     if (mode === 'replace' && !window.confirm('Replace the whole watchlist and every capture file on this device with the backup?')) return;
     var meta = {}; try { meta = JSON.parse(text.replace(/^\ufeff/, '')).meta || {}; } catch (e) { meta = {}; }
+    try { var j8 = JSON.parse(text.replace(/^\ufeff/, '')); if (j8 && Array.isArray(j8.filtersets)) { FS = mode === 'replace' ? RadarFilters.cleanFor('texas', j8.filtersets) : RadarFilters.mergeFor('texas', FS, j8.filtersets); RadarFilters.save(window.localStorage, 'texas', FS); renderSets(); } } catch (e) { /* parseBackup already validated */ }
     var cur = { watch: {}, capture: {} }; Object.keys(state.watch).forEach(function (id) { cur.watch[id] = true; if (state.watch[id].cap) cur.capture[id] = CP.clean(state.watch[id].cap); });
     var out = CP.applyBackup(cur, p, mode), next = {};
     Object.keys(out.watch).forEach(function (id) {
@@ -464,6 +483,10 @@
     if ((el = t.closest('[data-star]'))) { e.stopPropagation(); toggleWatch(el.getAttribute('data-star')); return; }
     if ((el = t.closest('[data-open]'))) { openSheet(el.getAttribute('data-open')); return; }
     if ((el = t.closest('.card[data-id]'))) { openSheet(el.getAttribute('data-id')); return; }
+    if ((el = t.closest('[data-tag-k]'))) { var tk = el.getAttribute('data-tag-k'); RadarFilters.removeTagFor('texas', state.f, tk, el.getAttribute('data-tag-v')); if (tk === 'q') $('q').value = ''; apply(); return; }
+    if (t.closest('#ftClear')) { state.f = freshFilters(); $('q').value = ''; if (map) map.fit('tx'); apply(); return; }
+    if ((el = t.closest('[data-fs-apply]'))) { applySet(el.getAttribute('data-fs-apply')); return; }
+    if ((el = t.closest('[data-fs-del]'))) { deleteSet(el.getAttribute('data-fs-del')); return; }
     if ((el = t.closest('[data-month]'))) { var k = el.getAttribute('data-month'); state.f.month = state.f.month === k ? null : k; apply(); return; }
     if ((el = t.closest('[data-q]'))) { var q = el.getAttribute('data-q'); if (q === 'houston') { state.f.houston = !state.f.houston; if (map) map.fit(state.f.houston ? 'hou' : 'tx'); } else if (q === 'watch') state.f.watchOnly = !state.f.watchOnly; else if (q === 'located') state.f.located = !state.f.located; else if (q === 'consult') { state.f.consult = !state.f.consult; if (!state.f.consult) state.f.eng = false; } else if (q === 'eng') state.f.eng = !state.f.eng; else if (q === 'month') state.f.month = null; apply(); return; }
     if ((el = t.closest('[data-agency]'))) { toggleIn(state.f.agencies, el.getAttribute('data-agency')); apply(); return; }
@@ -492,7 +515,8 @@
     $('btnRestore').addEventListener('click', function () { restoreMode = 'merge'; $('restoreFile').value = ''; $('restoreFile').click(); });
     $('btnRestoreAll').addEventListener('click', function () { restoreMode = 'replace'; $('restoreFile').value = ''; $('restoreFile').click(); });
     $('restoreFile').addEventListener('change', function () { var f = this.files && this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { restoreBackup(String(rd.result), restoreMode); }; rd.onerror = function () { toast('Could not read that file.'); }; rd.readAsText(f); });
-    $('btnClear').addEventListener('click', function () { state.f = { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null }; $('q').value = ''; apply(); });
+    $('btnClear').addEventListener('click', function () { state.f = freshFilters(); $('q').value = ''; apply(); });
+    $('fsSave').addEventListener('click', saveSet); $('fsName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); saveSet(); } }); renderSets();
     $('btnColor').addEventListener('click', function () { state.colorBy = state.colorBy === 'agency' ? 'phase' : 'agency'; this.textContent = 'Color: ' + (state.colorBy === 'agency' ? 'agency' : 'stage'); renderLegend(); apply(); });
     $('btnSweep').addEventListener('click', function () { var on = this.getAttribute('aria-pressed') !== 'true'; this.setAttribute('aria-pressed', on ? 'true' : 'false'); this.textContent = 'Sweep: ' + (on ? 'on' : 'off'); if (map) map.setSweep(on); });
     $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
