@@ -247,15 +247,8 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.strictEqual(natBk.app, 'radars-national');
   assert.strictEqual(CP.parseBackup(JSON.stringify(natBk), 'radars-texas').ok, false, 'Texas rejects a National backup');
 }
-// Radar map is the default view on every load (not the List)
-{
-  const appSrc = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
-  const ih = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-  assert.ok(/tab: 'radar'/.test(appSrc), 'initial state.tab is radar');
-  assert.ok(/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('radar'\)/.test(appSrc), 'startup switches to the radar view');
-  assert.ok(!/loadData\(\)\.then\(function \(d\) \{[^\n]*switchTab\('list'\)/.test(appSrc), 'startup must not jump to the List view');
-  assert.ok(/<section id="v-radar" class="view"(?![^>]*hidden)/.test(ih) && /data-tab="radar" class="on"/.test(ih), 'radar view visible and its tab active in the HTML');
-}
+// Radar 2.0 shell: List is the default view, Map is one tap away, the last view is remembered (texas.tab)
+require('./test-shell.js');
 
 // ---- Intel (news and planning signals)
 {
@@ -306,7 +299,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(/continue-on-error: true\s+timeout-minutes: \d+\s+run: node scripts\/build-intel\.js/.test(wf), 'intel step cannot fail the job');
 }
 
-// Intel tab wiring: same-site data only, radar stays the default, own storage keys
+// Intel tab wiring: same-site data only, List stays the default, own storage keys
 {
   const ih = fs.readFileSync(path.join(dir, 'index.html'), 'utf8'), ui = fs.readFileSync(path.join(dir, 'intel-ui.js'), 'utf8'), appSrc = fs.readFileSync(path.join(dir, 'app.js'), 'utf8');
   assert.ok(/data-tab="intel"/.test(ih) && /id="v-intel" class="view" hidden/.test(ih) && /id="intelBadge"/.test(ih) && /id="srcIntel"/.test(ih));
@@ -314,7 +307,7 @@ assert.ok(!/sample data|fake|dummy|lorem/i.test(fs.readFileSync(path.join(dir, '
   assert.ok(ih.indexOf('src="intel.js"') > ih.indexOf('src="app.js"') && ih.indexOf('src="intel-ui.js"') > ih.indexOf('src="intel.js"'));
   assert.ok(!/fetch\(\s*['"]https?:/.test(ui), 'no external requests from the browser'); assert.ok(/fetch\('data\/intel\.json'/.test(ui));
   ['opportunityRadar.intelWatch.v1', 'opportunityRadar.intelRead.v1', 'opportunityRadar.intelSeen.v1'].forEach((k) => assert.ok(ui.indexOf(k) > 0, k));
-  assert.ok(/'intel', 'sources'\]\.forEach/.test(appSrc));
+  assert.ok(/tabs: \[[^\]]*'intel'\]/.test(appSrc) && /more: \['timeline', 'agencies', 'sources'\]/.test(appSrc), 'Intel is a tab, Sources is in More');
   assert.ok(!/github|repository/i.test(ih + ui), 'no repo mentions on the page');
 }
 

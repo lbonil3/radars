@@ -10,7 +10,7 @@
   var state = {
     data: null, recs: [], byId: {}, sources: [], watch: {}, live: null,
     f: { q: '', rel: 'relevant', consult: true, eng: false, agencies: [], phases: [], kinds: [], kw: [], houston: false, located: false, watchOnly: false, month: null },
-    tab: 'radar', colorBy: 'agency', sort: 'date', rows: 100, filtered: [], today: new Date().toISOString().slice(0, 10)
+    tab: 'list', colorBy: 'agency', sort: 'date', rows: 100, filtered: [], today: new Date().toISOString().slice(0, 10)
   };
   if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, WATCH_KEY_LEGACY, WATCH_KEY);
   try { state.watch = JSON.parse((window.RadarStorage ? RadarStorage.read(localStorage, WATCH_KEY, [WATCH_KEY_LEGACY]) : localStorage.getItem(WATCH_KEY)) || '{}') || {}; } catch (e) { state.watch = {}; }
@@ -165,6 +165,7 @@
   function renderMap() {
     var pts = mapPoints(); if (map) map.setPoints(pts);
     var unmapped = state.filtered.filter(function (r) { return !hasLoc(r); }).length;
+    var nl = RadarShell.noLocLabel(unmapped); $('mapNoLoc').textContent = nl; $('mapNoLoc').hidden = !unmapped; $('listNoLoc').textContent = nl; $('listNoLoc').hidden = !unmapped;
     $('unmapped').textContent = pts.length.toLocaleString('en-US') + ' of ' + state.filtered.length.toLocaleString('en-US') + ' shown records are on the map. ' + unmapped.toLocaleString('en-US') + ' have no location in their source (consultant procurements, funding lists, some projects); find them in the List and Timeline tabs. ' + pts.filter(function (p) { return p.approx; }).length + ' are placed at their county centroid (inferred, dashed ring).';
     var top = state.filtered.filter(function (r) { var d = r.date ? M.daysUntil(r.date, state.today) : null; return d !== null && d >= -30; });
     var chosen = top.slice().sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }).slice(0, 8);
@@ -366,9 +367,10 @@
     h += '<p class="note" style="margin:6px 0 0">Source: ' + esc(s ? s.name : r.src) + (s && s.fetchedAt ? ', fetched ' + esc(fmtDT(s.fetchedAt)) : '') + '. Record ID: ' + esc(r.id) + '</p>';
     h = h.replace(/(<h2>[\s\S]*?<\/h2>)/, '$1<div id="capPanel"></div>');
     $('shBody').innerHTML = h; setStar($('shStar'), !!state.watch[id]); refreshCapPanel(id);
-    $('sheet').hidden = false; document.body.style.overflow = 'hidden';
+    SHELL.openDetail(); // shared shell: beside the list or map on a wide screen, a bottom sheet on a phone
   }
-  function closeSheet() { $('sheet').hidden = true; document.body.style.overflow = ''; curId = null; if (map) { map.focus = null; map.dirty = true; map._schedule(); } }
+  function closeSheet() { SHELL.closeDetail(); } // onDetailClose: detailClosed
+  function detailClosed() { curId = null; if (map) { map.focus = null; map.dirty = true; map._schedule(); } }
   function setStar(btn, on) { btn.classList.toggle('on', on); btn.innerHTML = on ? '&#9733;' : '&#9734;'; btn.setAttribute('aria-label', on ? 'Remove from watchlist' : 'Add to watchlist'); }
   function toggleWatch(id) {
     var r = state.byId[id] || ghosts().filter(function (g) { return g.id === id; })[0];
@@ -408,14 +410,20 @@
   }
 
   // ---------- events ----------
-  var map = null;
+  var map = null, SHELL = null;
+  // one canvas map: on the Map tab it fills the wide column; on the List tab it sits in the side column (a collapsible box on a phone)
+  function placeMap() {
+    var w = $('mapwrap'), slot = state.tab === 'list' ? $('mapSlotList') : $('mapSlotMap'), moved = w.parentNode !== slot;
+    if (moved) slot.appendChild(w);
+    if (!map) return;
+    var vis = !document.hidden && (state.tab === 'map' || (state.tab === 'list' && $('txMiniDet').open));
+    map.setVisible(vis); if (vis && moved) map.fit(state.f.houston ? 'hou' : 'tx');
+  }
   function switchTab(t) {
-    state.tab = t;
-    ['radar', 'timeline', 'agencies', 'list', 'intel', 'sources'].forEach(function (k) { $('v-' + k).hidden = k !== t; });
+    t = SHELL.showTab(t); state.tab = t; detailClosed(); // shared shell: views, tab bar, More menu, texas.tab
     $('kpis').hidden = t === 'intel'; document.querySelector('.filters').hidden = t === 'intel'; /* Intel has its own filters */
     if (t === 'intel' && window.TXIntelUI) window.TXIntelUI.onShow();
-    Array.prototype.forEach.call(document.querySelectorAll('.tabs button'), function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === t); });
-    if (map) { map.setVisible(t === 'radar'); }
+    placeMap();
     if (t === 'timeline') scrollTimeline();
     window.scrollTo(0, 0);
   }
@@ -435,14 +443,16 @@
     if ((el = t.closest('[data-kw]'))) { toggleIn(state.f.kw, el.getAttribute('data-kw')); apply(); return; }
     if ((el = t.closest('[data-search]'))) { state.f.q = el.getAttribute('data-search'); $('q').value = state.f.q; apply(); switchTab('list'); return; }
     if ((el = t.closest('.seg button'))) { state.f.rel = el.getAttribute('data-rel'); apply(); return; }
-    if ((el = t.closest('.tabs button'))) { switchTab(el.getAttribute('data-tab')); return; }
+    if ((el = t.closest('[data-tab]'))) { switchTab(el.getAttribute('data-tab')); return; }
     if ((el = t.closest('[data-view]'))) { if (map) map.fit(el.getAttribute('data-view')); return; }
   }
   function init() {
+    SHELL = window.RadarShell.bind({ app: 'texas', doc: document, ls: window.localStorage, media: window.matchMedia ? window.matchMedia(window.RadarShell.QUERY) : null, tabs: ['list', 'map', 'intel'], more: ['timeline', 'agencies', 'sources'], labels: { timeline: 'Timeline', agencies: 'Agencies', sources: 'Sources' }, cols: { list: 'colsList', map: 'colsMap' }, onDetailClose: detailClosed });
+    if (SHELL.isDesktop()) $('txMiniDet').open = true;
+    $('txMiniDet').addEventListener('toggle', placeMap);
     document.addEventListener('click', onClick);
     document.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.card[data-id]')) { e.preventDefault(); openSheet(e.target.getAttribute('data-id')); } if (e.key === 'Escape' && !$('sheet').hidden) closeSheet(); });
     $('q').addEventListener('input', function () { clearTimeout(init._t); init._t = setTimeout(function () { state.f.q = $('q').value.trim(); apply(); }, 200); });
-    $('btnMore').addEventListener('click', function () { var o = $('adv').hidden; $('adv').hidden = !o; this.setAttribute('aria-expanded', o ? 'true' : 'false'); });
     $('btnCsv2').addEventListener('click', exportCsv);
     function onCap(e) { if (e.target.hasAttribute && e.target.hasAttribute('data-cap')) updateCapField(e.target); }
     document.addEventListener('input', onCap); document.addEventListener('change', onCap);
@@ -459,14 +469,17 @@
     $('btnMoreRows').addEventListener('click', function () { state.rows += 100; renderList(); });
     $('shClose').addEventListener('click', closeSheet); $('shBg').addEventListener('click', closeSheet);
     $('shStar').addEventListener('click', function () { if (curId) toggleWatch(curId); });
-    var canvas = $('map');
-    map = new window.RadarMap(canvas, window.TX_GEO, { sweep: true, onPick: function (ids, n) { if (ids.length) openSheet(ids[0], ids); }, onMove: function () { $('maphint').style.opacity = 0; } });
     var cen = M.countyCentroids(window.TX_GEO), named = {}; (window.TX_GEO.counties || []).forEach(function (c) { named[c.n] = cen[c.n.toLowerCase()]; }); window.TX_GEO._cent = named;
-    map.fit('tx'); renderLegend();
-    if (map.reduced) { $('btnSweep').setAttribute('aria-pressed', 'false'); $('btnSweep').textContent = 'Sweep: off'; }
-    document.addEventListener('visibilitychange', function () { map.setVisible(!document.hidden && state.tab === 'radar'); });
+    var drawn = RadarShell.guardMap(document, 'mapFail', function () { // a map that cannot draw leaves the list and details working
+      map = new window.RadarMap($('map'), window.TX_GEO, { sweep: true, onPick: function (ids, n) { if (ids.length) openSheet(ids[0], ids); }, onMove: function () { $('maphint').style.opacity = 0; } });
+      map.fit('tx');
+    }, 'mapwrap');
+    if (!drawn) { map = null; $('listMapFail').textContent = RadarShell.MAP_FAIL_TEXT; $('listMapFail').hidden = false; }
+    renderLegend();
+    if (map && map.reduced) { $('btnSweep').setAttribute('aria-pressed', 'false'); $('btnSweep').textContent = 'Sweep: off'; }
+    document.addEventListener('visibilitychange', placeMap);
     if (window.RadarTheme) RadarTheme.bind(document, window.localStorage, { colors: { day: '#f5f7fb', night: '#07100e' } });
-    loadData().then(function (d) { ingest(d); apply(); switchTab('radar'); /* always open on the Radar map; other views are one tap away */ setTimeout(function () { map.resize(); map.fit('tx'); map.dirty = true; map._schedule(); }, 50); })
+    loadData().then(function (d) { ingest(d); apply(); switchTab(SHELL.initial); /* List on a first visit, then the last view (texas.tab) */ setTimeout(function () { if (!map) return; map.resize(); map.fit('tx'); map.dirty = true; map._schedule(); }, 50); })
       .catch(function (e) { $('freshDot').className = 'dot bad'; $('freshTxt').textContent = 'Could not load data/opportunities.json (' + e.message + '). Nothing is shown; no sample data is substituted.'; });
   }
   M.MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

@@ -101,7 +101,17 @@ select{min-height:44px;border-radius:10px;border:1px solid var(--line);backgroun
 .linkbtn.alt{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
 .pick{display:grid;gap:6px;margin:8px 0}
 .toast{position:fixed;left:50%;bottom:calc(var(--tabs-h) + env(safe-area-inset-bottom) + 14px);transform:translateX(-50%);background:#0f2a24;border:1px solid var(--acc);padding:10px 16px;border-radius:12px;z-index:60;max-width:90vw;font-size:14px}
-@media (min-width:900px){body{max-width:1100px;margin:0 auto}.cards{grid-template-columns:1fr 1fr}.tabs{left:50%;right:auto;width:1100px;transform:translateX(-50%)}.sheet-card{border-radius:18px}.sheet{align-items:center}}
+/* Radar 2.0 shell: More menu, map slots and the wide layout (breakpoint shared with shared/shell.css) */
+.tabmore{position:absolute;right:8px;bottom:calc(100% + 6px);display:flex;flex-direction:column;min-width:190px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.tabmore[hidden]{display:none}
+.tabs .tabmore button{flex:none;min-height:44px;text-align:left;padding:0 12px;border-radius:10px;font-size:14px}
+.tabs .tabmore button.on{background:rgba(94,234,212,.14);box-shadow:none}
+.tml{display:block;font-size:10px;font-weight:500;color:var(--acc)}.tml:empty{display:none}
+.txminidet{margin:6px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.txminidet>summary{min-height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;cursor:pointer;margin:0}
+.txminidet .chips{padding:6px 12px 10px}
+#mapSlotList .mapwrap{height:clamp(240px,38vh,420px)}
+@media (min-width:1024px){.shell-cols{padding:0 calc(14px + env(safe-area-inset-right)) 0 calc(14px + env(safe-area-inset-left))}.shell-primary .cards{grid-template-columns:1fr 1fr}.shell-side .cards{grid-template-columns:minmax(0,1fr)}.txminidet{margin:6px 0}#mapSlotList .mapwrap{height:clamp(300px,52vh,560px)}.sheet-card{border-radius:18px}.sheet{align-items:center}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
 /* ---- capture files (watchlist) ---- */

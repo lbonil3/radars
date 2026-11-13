@@ -43,14 +43,14 @@ window.RadarLoadError=function(name){
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="magazine.css">
 </head>
-<body>
-<header class="top">
+<body class="shell" data-app="texas">
+<header class="top shell-head">
   <div class="top-l">
     <a class="homebtn" href="../" aria-label="Back to Radars home">&#8592; Home</a>
-    <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
     <h1>Texas Opportunity</h1>
   </div>
   <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span></div>
+  <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
 </header>
 
 <section class="kpis" id="kpis" aria-label="Summary"></section>
@@ -61,7 +61,8 @@ window.RadarLoadError=function(name){
     <button type="button" class="btn" id="btnMore" aria-expanded="false" aria-controls="adv">Filters <span id="advCount"></span></button>
   </div>
   <div class="chips" id="quick" aria-label="Quick filters"></div>
-  <div id="adv" hidden>
+  <div id="adv" class="shell-drawer" hidden role="dialog" aria-label="Filters">
+    <div class="drawhead"><h3>Filters</h3><button type="button" class="btn small" id="advClose">Close</button></div>
     <h3>Drainage relevance <span class="hint">("likely" is inferred from type of work). In the Consultant services view only "Direct" narrows the list.</span></h3>
     <div class="seg" role="group" aria-label="Drainage relevance">
       <button type="button" data-rel="direct">Direct</button>
@@ -78,8 +79,12 @@ window.RadarLoadError=function(name){
   <div class="active" id="activeNote" hidden></div>
 </section>
 
+<div class="shell-scrim" id="advBg" hidden></div>
 <main id="main">
-  <section id="v-radar" class="view" aria-label="Radar map">
+  <section id="v-map" class="view" hidden aria-label="Radar map">
+    <div class="shell-cols" id="colsMap">
+      <div class="shell-primary">
+    <div class="mapslot" id="mapSlotMap">
     <div class="mapwrap" id="mapwrap">
       <canvas id="map" aria-label="Map of Texas with opportunity pins. Use the List tab for an accessible list."></canvas>
       <div class="mapbar">
@@ -91,9 +96,16 @@ window.RadarLoadError=function(name){
       <div class="legend" id="legend"></div>
       <div class="maphint" id="maphint">Drag to pan, pinch to zoom, tap a pin.</div>
     </div>
+    </div>
+    <p class="shell-mapfail" id="mapFail" hidden></p>
     <p class="note" id="unmapped"></p>
+    <div class="chips"><span class="shell-noloc" id="mapNoLoc" hidden></span></div>
+      </div>
+      <aside class="shell-side" aria-label="On the radar now">
     <h2 class="sec">On the radar now <span class="hint" id="nearHint"></span></h2>
     <div id="mapTop" class="cards"></div>
+      </aside>
+    </div>
   </section>
 
   <section id="v-timeline" class="view" hidden aria-label="Timeline">
@@ -113,7 +125,16 @@ window.RadarLoadError=function(name){
     <h2 class="sec">Local sponsors named in TxDOT data</h2><div id="bSponsor" class="bars"></div>
   </section>
 
-  <section id="v-list" class="view" hidden aria-label="List">
+  <section id="v-list" class="view" aria-label="List">
+    <div class="shell-cols" id="colsList">
+      <aside class="shell-side txmini" id="txMini" aria-label="Map">
+        <details class="txminidet" id="txMiniDet"><summary class="sec">Map <span class="hint">records with a location</span></summary>
+          <div class="mapslot" id="mapSlotList"></div>
+          <p class="shell-mapfail" id="listMapFail" hidden></p>
+          <div class="chips"><button type="button" class="btn small" data-tab="map">Expand map</button><span class="shell-noloc" id="listNoLoc" hidden></span></div>
+        </details>
+      </aside>
+      <div class="shell-primary">
     <div class="listbar">
       <label class="sortl">Sort <select id="sort"><option value="date">Upcoming first</option><option value="dateDesc">Date, latest first</option><option value="dateAsc">Date, oldest first</option><option value="cost">Cost, high to low</option><option value="agency">Agency</option><option value="title">Title</option><option value="due">My due date (watchlist)</option><option value="decision">My Go / No-go (watchlist)</option></select></label>
       <span id="listCount" class="hint"></span><button type="button" class="btn small" id="btnCsv2">Export CSV</button>
@@ -126,6 +147,8 @@ window.RadarLoadError=function(name){
     </div>
     <div id="list" class="cards"></div>
     <button type="button" class="btn wide" id="btnMoreRows" hidden>Show 100 more</button>
+      </div>
+    </div>
   </section>
 
   <section id="v-intel" class="view" hidden aria-label="Intel: news and planning signals">
@@ -174,12 +197,15 @@ window.RadarLoadError=function(name){
 </main>
 
 <nav class="tabs" aria-label="Views">
-  <button type="button" data-tab="radar" class="on">Radar</button>
-  <button type="button" data-tab="timeline">Timeline</button>
-  <button type="button" data-tab="agencies">Agencies</button>
-  <button type="button" data-tab="list">List</button>
+  <button type="button" data-tab="list" class="on">List</button>
+  <button type="button" data-tab="map">Map</button>
   <button type="button" data-tab="intel">Intel<span class="tbadge" id="intelBadge" hidden></span></button>
-  <button type="button" data-tab="sources">Sources</button>
+  <button type="button" id="tabMoreBtn" aria-expanded="false" aria-controls="tabMore">More<span id="tabMoreLbl" class="tml"></span></button>
+  <div class="tabmore" id="tabMore" role="menu" hidden>
+    <button type="button" data-tab="timeline" role="menuitem">Timeline</button>
+    <button type="button" data-tab="agencies" role="menuitem">Agencies</button>
+    <button type="button" data-tab="sources" role="menuitem">Sources</button>
+  </div>
 </nav>
 
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shTitle">
@@ -194,6 +220,7 @@ window.RadarLoadError=function(name){
 <script src="../shared/storage.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/theme.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/filters.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../shared/shell.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="../shared/capture.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="texas-geo.js"></script>
 <script src="model.js"></script>
