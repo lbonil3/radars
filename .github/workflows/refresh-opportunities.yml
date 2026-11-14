@@ -1,5 +1,6 @@
 # Daily refresh of texas/data/opportunities.json.
 # Paid sources are not used. A free API key or login, if a source needs one, is a GitHub Actions secret and is not written into the repo.
+# A robots.txt Disallow for every crawler, HTTP 401 or 403, or a human-verification page is status "blocked by site" and is not retried.
 name: Refresh Texas Opportunity data
 on:
   schedule:
