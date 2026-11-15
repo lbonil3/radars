@@ -69,6 +69,24 @@ async function postJson(url, body, opts) {
 function blockedNote(who, detail) {
   return who + ' answered with a block' + (detail ? ' (' + detail + ')' : '') + '. The adapter does not try to get around it.';
 }
+async function readResponse(url, opts) {
+  opts = opts || {};
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), opts.timeout || 90000);
+  try {
+    const res = await fetch(url, {
+      method: opts.method || 'GET',
+      headers: Object.assign({ 'user-agent': UA, accept: opts.accept || '*/*', 'accept-language': 'en-US,en;q=0.8' }, opts.headers || {}),
+      body: opts.body,
+      signal: ctl.signal,
+      redirect: 'follow'
+    });
+    return { status: res.status, text: await res.text() };
+  } finally { clearTimeout(t); }
+}
+function responseBlocked(res) {
+  return !!(res && (res.status === 401 || res.status === 403 || M.isSiteChallenge(res.text)));
+}
 async function readPage(url) {
   let text;
   try { text = await get(url); }
@@ -124,6 +142,45 @@ async function bidnetBoard(startUrl, agency, src) {
     part.forEach((r) => { if (seen[r.id]) return; seen[r.id] = 1; recs.push(r); });
   });
   return { fetched: listed, recs: recs, note: 'Public BidNet titles for ' + agency + ': ' + listed + ' listed across ' + pages.length + ' page(s), ' + recs.length + (recs.length === 1 ? ' is' : ' are') + ' A/E consultant work. No login.' };
+}
+async function civcastBoard() {
+  const page = await readResponse('https://app.civcast.com/');
+  if (responseBlocked(page)) return { status: 'blocked by site', note: blockedNote('CivCast', page.status === 405 || M.isSiteChallenge(page.text) ? 'HTTP ' + page.status + ' AWS WAF human verification' : 'HTTP ' + page.status) + ' api-prod-app.civcast.com was not called.' };
+  if (page.status !== 200) throw new Error('HTTP ' + page.status + ' for CivCast');
+  throw new Error('CivCast returned a page that is not the human-verification block, and this wave has no parser for it');
+}
+async function openGovBoard(code, agency, src, county) {
+  const statuses = ['open', 'pending', 'evaluation'];
+  const recs = []; const seen = {}; let fetched = 0;
+  for (const status of statuses) {
+    let count = null, got = 0;
+    for (let page = 1; page <= 10; page++) {
+      const res = await readResponse('https://api.procurement.opengov.com/api/v1/government/' + code + '/project/public', {
+        method: 'POST', accept: 'application/json', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ filters: [{ type: 'status', value: status }], limit: 100, page: page })
+      });
+      if (responseBlocked(res)) return { status: 'blocked by site', note: blockedNote(agency + ' on OpenGov', M.isSiteChallenge(res.text) ? 'verification page' : 'HTTP ' + res.status) };
+      if (res.status !== 200) throw new Error('HTTP ' + res.status + ' for OpenGov ' + code + ' ' + status);
+      const parsed = M.parseOpenGovPublic(res.text, agency, code, src, county);
+      if (!parsed) throw new Error('OpenGov public list was not the projects JSON (' + code + ' ' + status + ')');
+      if (count === null) count = parsed.total;
+      fetched += parsed.listed;
+      got += parsed.listed;
+      parsed.forEach((r) => { if (seen[r.id]) return; seen[r.id] = 1; recs.push(r); });
+      if (!parsed.listed || got >= count) break;
+      if (page === 10) throw new Error('OpenGov ' + code + ' ' + status + ' list was longer than 10 pages');
+    }
+  }
+  return { fetched: fetched, recs: recs, note: 'OpenGov public list for ' + agency + ' (open, pending, and evaluation): ' + fetched + ' listed, ' + recs.length + (recs.length === 1 ? ' is' : ' are') + ' A/E consultant work. Closed and award-pending rows are not read. Summaries are not stored.' };
+}
+async function ionwaveBoard(origin, agency) {
+  const robotsUrl = origin.replace(/\/$/, '') + '/robots.txt';
+  let page;
+  try { page = await readResponse(robotsUrl); }
+  catch (e) { throw new Error('Could not read ' + robotsUrl + '. The bid list was not requested. ' + String(e.message || e).slice(0, 160)); }
+  if (responseBlocked(page)) return { status: 'blocked by site', note: blockedNote(agency + ' IonWave', M.isSiteChallenge(page.text) ? 'verification page' : 'HTTP ' + page.status) + ' The bid list was not requested.' };
+  if (M.robotsDisallowAll(page.text)) return { status: 'blocked by site', note: agency + ' IonWave robots.txt is User-agent: * / Disallow: /. The bid list was not requested.' };
+  throw new Error(agency + ' IonWave robots.txt does not disallow the host. The bid list was not requested.');
 }
 async function getJson(url) {
   const body = await get(url, { accept: 'application/json' });
@@ -363,7 +420,19 @@ const SOURCES = [
   { id: 'bidnet-dallas', name: 'Dallas County open solicitations (BidNet Direct public titles)', agency: 'Dallas County', type: 'Snapshot (HTML of the public board; no login)', page: 'https://www.bidnetdirect.com/texas/dallas-county',
     run: () => bidnetBoard('https://www.bidnetdirect.com/texas/dallas-county', 'Dallas County', 'bidnet-dallas') },
   { id: 'bidnet-tpg', name: 'Texas Purchasing Group open solicitations (BidNet Direct public board)', agency: 'Texas Purchasing Group', type: 'Snapshot (HTML of the public open-bids pages; no login)', page: 'https://www.bidnetdirect.com/texas/solicitations/open-bids',
-    run: () => bidnetBoard('https://www.bidnetdirect.com/texas/solicitations/open-bids', 'Texas Purchasing Group', 'bidnet-tpg') }
+    run: () => bidnetBoard('https://www.bidnetdirect.com/texas/solicitations/open-bids', 'Texas Purchasing Group', 'bidnet-tpg') },
+  { id: 'civcast', name: 'CivCast public project listings (Texas agencies; A/E consultant rows only)', agency: 'CivCast', type: 'Snapshot (public project board; no login). robots.txt allows the host. A human-verification page stops this source.', page: 'https://app.civcast.com/',
+    run: () => civcastBoard() },
+  { id: 'opengov-hidalgo', name: 'Hidalgo County solicitations (OpenGov Procurement public list; A/E consultant rows only)', agency: 'Hidalgo County', type: 'Snapshot (JSON the public portal script posts; no login). Open, pending, and evaluation only.', page: 'https://procurement.opengov.com/portal/co-hidalgo-tx',
+    run: () => openGovBoard('co-hidalgo-tx', 'Hidalgo County', 'opengov-hidalgo', 'Hidalgo') },
+  { id: 'opengov-hgac', name: 'H-GAC solicitations (OpenGov Procurement public list; A/E consultant rows only)', agency: 'H-GAC', type: 'Snapshot (JSON the public portal script posts; no login). Open, pending, and evaluation only.', page: 'https://procurement.opengov.com/portal/h-gac',
+    run: () => openGovBoard('h-gac', 'H-GAC', 'opengov-hgac', null) },
+  { id: 'ionwave-plano', name: 'City of Plano current bids (IonWave). robots.txt disallows every crawler, so the bid list is not read.', agency: 'City of Plano', type: 'Not fetched (robots.txt Disallow: /)', page: 'https://planotx.ionwave.net/',
+    run: () => ionwaveBoard('https://planotx.ionwave.net', 'City of Plano') },
+  { id: 'ionwave-tarrant', name: 'Tarrant County current bids (IonWave). robots.txt disallows every crawler, so the bid list is not read.', agency: 'Tarrant County', type: 'Not fetched (robots.txt Disallow: /)', page: 'https://tarrantcountytx.ionwave.net/',
+    run: () => ionwaveBoard('https://tarrantcountytx.ionwave.net', 'Tarrant County') },
+  { id: 'ionwave-elpaso', name: 'City of El Paso current bids (IonWave). robots.txt disallows every crawler, so the bid list is not read.', agency: 'City of El Paso', type: 'Not fetched (robots.txt Disallow: /)', page: 'https://elpasotexas.ionwave.net/',
+    run: () => ionwaveBoard('https://elpasotexas.ionwave.net', 'City of El Paso') }
 ].concat(M.BONFIRE_PORTALS.map((p) => ({ id: 'bonfire-' + p.sub, name: p.agency + ' open solicitations (Bonfire portal ' + p.sub + '.bonfirehub.com, the portal\'s own public JSON list)', agency: p.agency, type: 'Snapshot (undocumented public JSON the portal page itself loads; robots.txt allows; no login)', page: 'https://' + p.sub + '.bonfirehub.com/portal/?tab=openOpportunities',
   run: async () => {
     const j = JSON.parse(await get('https://' + p.sub + '.bonfirehub.com/PublicPortal/getOpenPublicOpportunitiesSectionData', { accept: 'application/json' }));

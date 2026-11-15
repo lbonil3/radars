@@ -105,7 +105,7 @@ const html = fs.readFileSync(path.join(nat, 'index.html'), 'utf8'), sw = fs.read
 assert.ok(html.indexOf('../shared/capture.js') > 0 && html.indexOf('capture.js') < html.indexOf('app.js'), 'capture.js loads before app.js');
 const Cache = require('./cache.js');
 assert.ok(Cache.files('national').indexOf('../shared/capture.js') >= 0 && /RadarCache\.files\('national'\)/.test(sw), 'service worker caches capture.js');
-assert.ok(Cache.name('national') === 'radars-national-v25', 'service worker cache version was bumped past v3');
+assert.ok(Cache.name('national') === 'radars-national-v26', 'service worker cache version was bumped past v3');
 assert.ok(app.indexOf("'nr.watch'") > 0, 'existing nr.watch key is still read'); assert.ok(app.indexOf("'nr.capture'") > 0);
 ['capBar', 'btnCapCsv', 'btnBackup', 'btnRestore', 'btnRestoreAll', 'restoreFile', 'capSort'].forEach((id) => assert.ok(html.indexOf('id="' + id + '"') > 0, id + ' exists in the page'));
 

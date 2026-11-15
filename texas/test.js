@@ -197,7 +197,7 @@ assert.ok(csvS[0].indexOf('consultant_focus') > 0 && csvS[1].indexOf('Open') > 0
 const data = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'opportunities.json'), 'utf8'));
 assert.ok(!isNaN(Date.parse(data.generatedAt)), 'generatedAt');
 assert.ok(data.records.length > 500, 'snapshot has real records');
-const srcIds = {}; data.sources.forEach((s) => { srcIds[s.id] = s; assert.ok(['ok', 'stale', 'failed'].includes(s.status), 'status ' + s.id); assert.ok(s.name && s.page && s.type, 'source meta ' + s.id); });
+const srcIds = {}; data.sources.forEach((s) => { srcIds[s.id] = s; assert.ok(['ok', 'stale', 'failed', 'blocked by site'].includes(s.status), 'status ' + s.id); assert.ok(s.name && s.page && s.type, 'source meta ' + s.id); });
 const seen = {};
 data.records.forEach((r) => {
   assert.ok(r.id && r.src && r.agency && r.title && r.phase && r.kind, 'required fields ' + r.id);
@@ -450,4 +450,5 @@ require('./test-filtersets.js');
 }
 require('./test-wave1.js');
 require('./test-wave2.js');
+require('./test-wave3.js');
 console.log('ok ' + data.records.length + ' records, ' + data.sources.length + ' sources');

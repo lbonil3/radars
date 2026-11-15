@@ -27,6 +27,12 @@ Daily public sources added in wave 2 (no login). Only engineering and A/E consul
 - City of Houston open solicitations on Beacon Bid, from the JSON the public page loads (title, reference number, due date). Contacts are not stored.
 - BidNet Direct public titles for Travis County, Dallas County, and the Texas Purchasing Group open-bids board (title, published date, closing date).
 
+Daily public sources added in wave 3. The same A/E rule applies. A robots.txt file that disallows every crawler, and a human-verification page, are `blocked by site`. The collector does not try to get around either one.
+
+- CivCast public project board (`app.civcast.com`). robots.txt allows the host. The app answered with an AWS WAF human-verification page, so the source is blocked and the API host behind that wall is not called.
+- Hidalgo County and H-GAC on OpenGov Procurement, from the JSON the public portal script posts (open, pending, and evaluation). Closed and award-pending lists are not read. Summaries are not stored. The portal HTML shell can answer scripts with a Cloudflare check; that page is not retried.
+- City of Plano, Tarrant County, and City of El Paso on IonWave. Each host's robots.txt is `User-agent: *` / `Disallow: /`, so the bid list is not requested.
+
 ## Radar 2.0 layout
 - One breakpoint at 1024px, shared with National Radar (`shared/shell.js`, `shared/shell.css`). On desktop the List shows the county map beside the list, and the Map tab shows "On the radar now" beside the map. Record details dock in the side column, and Filters is a right-hand drawer. On phones the map is a collapsible strip above the list. Day / Night / Auto is in the header.
 - Pursuits: starred records plus any record with a capture file, split into This week and Later, with a badge for overdue and due-soon records. If a capture file has no due date, a solicitation uses the closing date from the source, and the card says so. The weekly list (Print, Share, Copy, Download), CSV and calendar (.ics) export come from `shared/weekly.js`.

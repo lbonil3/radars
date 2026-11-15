@@ -555,7 +555,13 @@
     'NTTA': { color: '#0ea5e9', full: 'North Texas Tollway Authority' },
     'Travis County': { color: '#14b8a6', full: 'Travis County' },
     'Dallas County': { color: '#6366f1', full: 'Dallas County' },
-    'Texas Purchasing Group': { color: '#94a3b8', full: 'Texas Purchasing Group (BidNet Direct public board)' }
+    'Texas Purchasing Group': { color: '#94a3b8', full: 'Texas Purchasing Group (BidNet Direct public board)' },
+    'Hidalgo County': { color: '#84cc16', full: 'Hidalgo County' },
+    'H-GAC': { color: '#e11d48', full: 'Houston-Galveston Area Council' },
+    'CivCast': { color: '#0ea5e9', full: 'CivCast public project listings' },
+    'City of Plano': { color: '#0284c7', full: 'City of Plano' },
+    'Tarrant County': { color: '#7c3aed', full: 'Tarrant County' },
+    'City of El Paso': { color: '#b45309', full: 'City of El Paso' }
   };
   Object.keys(SOL_AGENCIES).forEach(function (k) { AGENCIES[k] = SOL_AGENCIES[k]; });
 
@@ -851,8 +857,27 @@
     var t = String(text || '');
     var head = t.slice(0, 5000).toLowerCase();
     if (head.indexOf('aws waf') >= 0 || head.indexOf('awswaf') >= 0 || head.indexOf('human verification') >= 0) return true;
+    if (head.indexOf('just a moment') >= 0 && head.indexOf('challenges.cloudflare.com') >= 0) return true;
     if (t.length < 20000 && head.indexOf('captcha') >= 0 && t.indexOf('sol-info-container') < 0 && t.indexOf('bidResultId_data') < 0) return true;
     return false;
+  }
+
+  // True when User-agent: * is told Disallow: / and is not also told Allow: /.
+  function robotsDisallowAll(text) {
+    return String(text || '').split(/\n\s*\n/).some(function (group) {
+      var agents = [], disallowRoot = false, allowRoot = false;
+      group.split(/\r?\n/).forEach(function (line) {
+        var raw = line.replace(/#.*$/, '').trim();
+        if (!raw) return;
+        var m = /^([^:]+):\s*(.*)$/.exec(raw);
+        if (!m) return;
+        var key = m[1].trim().toLowerCase(), val = m[2].trim();
+        if (key === 'user-agent') agents.push(val.toLowerCase());
+        else if (key === 'disallow' && val === '/') disallowRoot = true;
+        else if (key === 'allow' && val === '/') allowRoot = true;
+      });
+      return agents.indexOf('*') >= 0 && disallowRoot && !allowRoot;
+    });
   }
 
   // NTTA Marketplace public open-bids table (Periscope). Buyer names are not stored.
@@ -963,6 +988,55 @@
       rec.svc = isConsultant(rec);
       if (!rec.svc) return;
       rec.why = 'In the Consultant services focus: BidNet public title with engineering, architecture, surveying, or design wording.';
+      out.push(rec);
+    });
+    return out;
+  }
+
+  // OpenGov Procurement public project JSON (the POST the portal page already makes). Summaries are not stored.
+  function openGovDay(v, zone) {
+    if (!v) return null;
+    var d = new Date(v);
+    if (isNaN(d.getTime())) return isoFromText(String(v));
+    zone = zone || 'America/Chicago';
+    try { return new Intl.DateTimeFormat('en-CA', { timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); }
+    catch (e) { return isoFromText(String(v)); }
+  }
+  function parseOpenGovPublic(body, agency, code, src, county) {
+    var j;
+    try { j = typeof body === 'string' ? JSON.parse(body) : body; } catch (e) { return null; }
+    if (!j || typeof j.count !== 'number' || !Array.isArray(j.rows)) return null;
+    var out = [];
+    out.listed = j.rows.length;
+    out.total = j.count;
+    j.rows.forEach(function (row) {
+      if (!row || row.id === undefined || row.id === null || !str(row.title)) return;
+      if (row.isPrivate) return;
+      var typeTxt = str(row.template && row.template.title) || '';
+      var title = str(row.title);
+      var ref = str(row.financialId);
+      var zone = row.government && row.government.organization && row.government.organization.timezone;
+      if (!zone || String(zone).indexOf('/') < 0) zone = 'America/Chicago';
+      var due = openGovDay(row.proposalDeadline, zone);
+      var posted = openGovDay(row.releaseProjectDate, zone);
+      var soon = row.comingSoon === true;
+      var listedStatus = soon ? 'Forthcoming' : (String(row.status) === 'evaluation' ? 'Evaluation' : String(row.status) === 'pending' ? 'Pending' : String(row.status) === 'open' ? 'Open' : (str(row.status) || 'Listed'));
+      var stage = soon ? 'Forthcoming' : (listedStatus === 'Open' ? 'Open solicitation (OpenGov)' : listedStatus + ' (OpenGov public list)');
+      var text = (typeTxt ? typeTxt + ' ' : '') + title;
+      var type = solType(text), eng = matchEng(text), kw = matchKeywords(text);
+      var dept = str(row.department && row.department.name);
+      var rec = {
+        id: 'opengov:' + code + ':' + row.id, src: src || null, agency: agency || 'OpenGov', kind: 'solicitation', phase: 'procure',
+        title: title, stage: stage, status: listedStatus, solType: typeTxt || type.label, solNum: ref, svc: false, eng: eng,
+        county: county || null, lat: null, lon: null, date: due, dateLabel: 'Due (OpenGov, ' + zone + ')',
+        cost: null, costLabel: null, work: typeTxt || type.label, desc: null,
+        url: 'https://procurement.opengov.com/portal/' + code + '/projects/' + row.id,
+        rel: kw.length ? 'direct' : 'none', kw: kw, why: '',
+        extra: [['Solicitation number', ref || 'not listed'], ['Type (as listed)', typeTxt || 'not listed'], ['Status (as listed)', str(row.status) || 'not listed'], ['Posted', posted || 'not listed']].concat(dept ? [['Department', dept]] : [])
+      };
+      rec.svc = isConsultant(rec);
+      if (!rec.svc) return;
+      rec.why = 'In the Consultant services focus: OpenGov public solicitation with engineering, architecture, surveying, or design wording.';
       out.push(rec);
     });
     return out;
@@ -1120,7 +1194,7 @@
   var api = {
     KEYWORDS: KEYWORDS, PHASES: PHASES, AGENCIES: AGENCIES, HOUSTON_AREA: HOUSTON_AREA, TXDOT_KEEP_STAGES: TXDOT_KEEP_STAGES, TXDOT_SELECT: TXDOT_SELECT, TXDOT_DATASET: TXDOT_DATASET, TRACKER_FIELDS: TRACKER_FIELDS,
     COH_LAYERS: COH_LAYERS, COH_BASE: COH_BASE, COH_SWMB_BASE: COH_SWMB_BASE, HCFCD_LJA: HCFCD_LJA, HCFCD_PAGE: HCFCD_PAGE, HCFCD_BIDS_PAGE: HCFCD_BIDS_PAGE, PEPS_SELECTED_PAGE: PEPS_SELECTED_PAGE, PEPS_MEETINGS_PAGE: PEPS_MEETINGS_PAGE, FIF_URL: FIF_URL, FIF_PAGE: FIF_PAGE,
-    matchKeywords: matchKeywords, kwLabel: kwLabel, ENG_KEYWORDS: ENG_KEYWORDS, matchEng: matchEng, engLabel: engLabel, solType: solType, isConsultant: isConsultant, aeStatus: aeStatus, hasAeWording: hasAeWording, isClearNonEng: isClearNonEng, svcRule: svcRule, isoFromSerial: isoFromSerial, BONFIRE_PORTALS: BONFIRE_PORTALS, bonfireRecord: bonfireRecord, AUSTIN_SOL_PAGE: AUSTIN_SOL_PAGE, AUSTIN_SOL_XLSX: AUSTIN_SOL_XLSX, parseAustinActive: parseAustinActive, AUSTIN_CONTRACTS_URL: AUSTIN_CONTRACTS_URL, AUSTIN_CONTRACTS_PAGE: AUSTIN_CONTRACTS_PAGE, normAustinContracts: normAustinContracts, SA_PAGE: SA_PAGE, parseSanAntonio: parseSanAntonio, ESBD_PAGE: ESBD_PAGE, ESBD_CSV_URL: ESBD_CSV_URL, parseEsbdCsv: parseEsbdCsv, AGGIE_PAGE: AGGIE_PAGE, parseAggieBid: parseAggieBid, CTRMA_PAGE: CTRMA_PAGE, parseCtrma: parseCtrma, isSiteChallenge: isSiteChallenge, NTTA_PAGE: NTTA_PAGE, parseNtta: parseNtta, parseBeaconOpen: parseBeaconOpen, parseBidNet: parseBidNet, mergeDuplicates: mergeDuplicates, classify: classify, phaseLabel: phaseLabel, phaseColor: phaseColor, agencyColor: agencyColor,
+    matchKeywords: matchKeywords, kwLabel: kwLabel, ENG_KEYWORDS: ENG_KEYWORDS, matchEng: matchEng, engLabel: engLabel, solType: solType, isConsultant: isConsultant, aeStatus: aeStatus, hasAeWording: hasAeWording, isClearNonEng: isClearNonEng, svcRule: svcRule, isoFromSerial: isoFromSerial, BONFIRE_PORTALS: BONFIRE_PORTALS, bonfireRecord: bonfireRecord, AUSTIN_SOL_PAGE: AUSTIN_SOL_PAGE, AUSTIN_SOL_XLSX: AUSTIN_SOL_XLSX, parseAustinActive: parseAustinActive, AUSTIN_CONTRACTS_URL: AUSTIN_CONTRACTS_URL, AUSTIN_CONTRACTS_PAGE: AUSTIN_CONTRACTS_PAGE, normAustinContracts: normAustinContracts, SA_PAGE: SA_PAGE, parseSanAntonio: parseSanAntonio, ESBD_PAGE: ESBD_PAGE, ESBD_CSV_URL: ESBD_CSV_URL, parseEsbdCsv: parseEsbdCsv, AGGIE_PAGE: AGGIE_PAGE, parseAggieBid: parseAggieBid, CTRMA_PAGE: CTRMA_PAGE, parseCtrma: parseCtrma, isSiteChallenge: isSiteChallenge, robotsDisallowAll: robotsDisallowAll, NTTA_PAGE: NTTA_PAGE, parseNtta: parseNtta, parseBeaconOpen: parseBeaconOpen, parseBidNet: parseBidNet, parseOpenGovPublic: parseOpenGovPublic, mergeDuplicates: mergeDuplicates, classify: classify, phaseLabel: phaseLabel, phaseColor: phaseColor, agencyColor: agencyColor,
     normTxdotPI: normTxdotPI, mergeTracker: mergeTracker, normCohCip: normCohCip, normSwmb: normSwmb, normHcfcdMaint: normHcfcdMaint, normFif: normFif, geomCenter: geomCenter,
     htmlTables: htmlTables, decodeHtml: decodeHtml, parseHcfcdBids: parseHcfcdBids, parsePepsSelected: parsePepsSelected, parsePepsMeetings: parsePepsMeetings, parseProjectedContracts: parseProjectedContracts,
     countyCentroids: countyCentroids, applyApprox: applyApprox, inHoustonArea: inHoustonArea,

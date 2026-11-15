@@ -1,0 +1,110 @@
+{
+  "count": 8,
+  "rows": [
+    {
+      "id": 272539,
+      "title": "Transportation Project Delivery Plan Consultant Services",
+      "status": "open",
+      "financialId": "RFQ-TRN26-07",
+      "proposalDeadline": "2026-12-03T18:00:00.000Z",
+      "releaseProjectDate": "2026-10-07T05:00:00.000Z",
+      "comingSoon": false,
+      "isPrivate": false,
+      "template": { "title": "RFP - Request for Proposal TR MPO Study Template" },
+      "department": { "name": "Transportation" },
+      "government": { "code": "h-gac", "organization": { "timezone": "America/Chicago", "name": "Houston-Galveston Area Council" } },
+      "summary": "<p>Questions: buyer@example.test</p>"
+    },
+    {
+      "id": 306573,
+      "title": "Computer Technology and Related Solutions",
+      "status": "open",
+      "financialId": "CT04-27",
+      "proposalDeadline": "2026-12-10T18:00:37.385Z",
+      "releaseProjectDate": "2026-10-28T19:08:32.635Z",
+      "comingSoon": false,
+      "isPrivate": false,
+      "template": { "title": "RFP - Request for Proposal HGACBuy Template" },
+      "department": { "name": "Enterprise Solutions - HGACBuy/Cooperative Purchasing Program" },
+      "government": { "code": "h-gac", "organization": { "timezone": "America/Chicago" } },
+      "summary": "<p>Questions: buyer@example.test</p>"
+    },
+    {
+      "id": 265600,
+      "title": "Expansion of the Professional Engineering Services Pool",
+      "status": "evaluation",
+      "financialId": "26-0307-06-03-09",
+      "proposalDeadline": "2026-06-10T20:00:00.000Z",
+      "releaseProjectDate": "2026-05-16T05:00:00.000Z",
+      "comingSoon": false,
+      "isPrivate": false,
+      "template": { "title": "Request for Qualifications (Professional Services Pools)" },
+      "department": { "name": "Hidalgo County" },
+      "government": { "code": "co-hidalgo-tx", "organization": { "timezone": "America/Chicago" } },
+      "summary": "<p>Contact engineer@example.test</p>"
+    },
+    {
+      "id": 313859,
+      "title": "Wellness Center, Pct.3",
+      "status": "open",
+      "financialId": "26-0632-11-18-12",
+      "proposalDeadline": "2026-11-18T21:00:00.000Z",
+      "releaseProjectDate": "2026-10-17T05:00:00.000Z",
+      "comingSoon": false,
+      "isPrivate": false,
+      "template": { "title": "Request For Competitive Sealed Proposals (Const. Div.)" },
+      "department": { "name": "Precinct No.3" },
+      "government": { "code": "co-hidalgo-tx", "organization": { "timezone": "America/Chicago" } }
+    },
+    {
+      "id": 280191,
+      "title": "CDBG - Colonia Fund - Construction - 2024, D.T. Villareal Lift Station and Wastewater Infrastructure Improvements",
+      "status": "pending",
+      "financialId": "6560-94-0310-5000-0000-00-UCP LB01",
+      "proposalDeadline": "2026-07-29T20:00:00.000Z",
+      "releaseProjectDate": "2026-07-01T05:00:00.000Z",
+      "comingSoon": null,
+      "isPrivate": false,
+      "template": { "title": "Urban County (Hybrid Template)" },
+      "department": { "name": "Urban County Program" },
+      "government": { "code": "co-hidalgo-tx", "organization": { "timezone": "America/Chicago" } }
+    },
+    {
+      "id": 302457,
+      "title": "Turnkey Water Extraction and Related Services",
+      "status": "evaluation",
+      "financialId": "26-0569-11-04-03",
+      "proposalDeadline": "2026-11-04T21:00:00.000Z",
+      "releaseProjectDate": "2026-10-21T05:00:00.000Z",
+      "comingSoon": false,
+      "isPrivate": false,
+      "template": { "title": "Request for Proposals" },
+      "department": { "name": "Hidalgo County" },
+      "government": { "code": "co-hidalgo-tx", "organization": { "timezone": "America/Chicago" } }
+    },
+    {
+      "id": 900001,
+      "title": "RFQ On-Call Civil Engineering Services",
+      "status": "open",
+      "financialId": "RFQ-PRIVATE-1",
+      "proposalDeadline": "2026-12-01T18:00:00.000Z",
+      "comingSoon": false,
+      "isPrivate": true,
+      "template": { "title": "Request for Qualifications" },
+      "government": { "organization": { "timezone": "America/Chicago" } },
+      "summary": "<p>hidden@example.test</p>"
+    },
+    {
+      "id": 900002,
+      "title": "RFQ On-Call Drainage Design",
+      "status": "open",
+      "financialId": "RFQ-ZONE-1",
+      "proposalDeadline": "2026-11-19T04:30:00.000Z",
+      "releaseProjectDate": "2026-11-01T05:00:00.000Z",
+      "comingSoon": true,
+      "isPrivate": false,
+      "template": { "title": "Request for Qualifications" },
+      "government": { "organization": { "timezone": "America/Chicago" } }
+    }
+  ]
+}
