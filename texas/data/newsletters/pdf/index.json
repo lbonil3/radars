@@ -1,6 +1,15 @@
 {
- "generatedAt": "2026-11-09T10:11:09.969Z",
+ "generatedAt": "2026-11-16T10:05:31.127Z",
  "issues": [
+  {
+   "week": "2026-W46",
+   "hash": "ecb118ba61694e94",
+   "bytes": 256548,
+   "generatedAt": "2026-11-16T10:05:31.064Z",
+   "final": true,
+   "edition": "published",
+   "publishedAt": "2026-11-16T10:05:20.986Z"
+  },
   {
    "week": "2026-W45",
    "hash": "03bbb85ecc2426ef",
@@ -83,15 +92,7 @@
    "generatedAt": "2026-10-31T00:17:41.748Z",
    "final": true,
    "edition": "final"
-  },
-  {
-   "week": "2026-W35",
-   "hash": "e699a2d1b5fc5ff3",
-   "bytes": 193822,
-   "generatedAt": "2026-10-31T00:17:41.950Z",
-   "final": true,
-   "edition": "final"
   }
  ],
- "totalBytes": 2479203
+ "totalBytes": 2541929
 }
