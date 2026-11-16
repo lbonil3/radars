@@ -3,18 +3,18 @@
  "start": "2026-11-16",
  "end": "2026-11-22",
  "title": "Texas Intel weekly, 2026-W47 (Nov 16, 2026 to Nov 22, 2026)",
- "generatedAt": "2026-11-16T10:05:20.986Z",
+ "generatedAt": "2026-11-16T20:36:05.843Z",
  "final": false,
  "backfilled": false,
  "counts": {
-  "items": 0,
-  "houston": 0,
+  "items": 2,
+  "houston": 2,
   "other": 0
  },
  "stats": {
-  "items": 0,
-  "newThisWeek": 0,
-  "houston": 0,
+  "items": 2,
+  "newThisWeek": 2,
+  "houston": 2,
   "grant": 0,
   "flood": 0,
   "mix": {
@@ -23,12 +23,48 @@
    "grant": 0,
    "flood": 0,
    "water": 0,
-   "road": 0,
+   "road": 2,
    "policy": 0,
    "agenda": 0
   }
  },
- "houston": [],
+ "houston": [
+  {
+   "topic": "road",
+   "label": "Roadway / TxDOT",
+   "total": 2,
+   "items": [
+    {
+     "id": "i19i6jy8",
+     "title": "MSD 2026-183-AFT",
+     "link": "https://www.houstonpublicworks.org/msd-2026-183-aft",
+     "source": "Houston Public Works news",
+     "date": "2026-11-16",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "desc": "MSD 2026-183-AFT thoang Mon, 11/16/2026 - 14:01 MSD 2026-183-AFT 75 Ave F LLC 2748 Bingle Road Houston, TX 77055 File Full Application msd@houstontx.gov",
+     "score": 2
+    },
+    {
+     "id": "i1jgkpfk",
+     "title": "MSD 2026-182-ALU",
+     "link": "https://www.houstonpublicworks.org/msd-2026-182-alu",
+     "source": "Houston Public Works news",
+     "date": "2026-11-16",
+     "place": "Houston",
+     "region": "Houston region",
+     "topic": "road",
+     "why": "",
+     "hint": "Roadway signal: drainage and utility relocations ride along with road projects.",
+     "desc": "MSD 2026-182-ALU thoang Mon, 11/16/2026 - 13:54 MSD 2026-182-ALU Former Admiral Linen and Uniform Service 3520 Center Street Houston, Texas 77007 File Full Application msd@houstontx.gov",
+     "score": 2
+    }
+   ]
+  }
+ ],
  "texas": [],
  "deadlines": [],
  "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
