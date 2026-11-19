@@ -41,6 +41,7 @@ window.RadarLoadError=function(name){
 </script>
   <link rel="stylesheet" href="../shared/shell.css" onerror="RadarLoadError(this.src||this.href)">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../shared/deck.css" onerror="RadarLoadError(this.src||this.href)">
   <link rel="stylesheet" href="magazine.css">
 </head>
 <body class="shell" data-app="texas">
@@ -50,7 +51,7 @@ window.RadarLoadError=function(name){
     <h1>Texas Opportunity</h1>
   </div>
   <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span></div>
-  <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
+  <div class="throw" role="group" aria-label="Deck and theme"><button type="button" class="deckbtn" id="btnDeck">Deck</button><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
 </header>
 
 <section class="kpis" id="kpis" aria-label="Summary"></section>
@@ -243,6 +244,7 @@ window.RadarLoadError=function(name){
 <script src="../shared/weekly.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="texas-geo.js"></script>
 <script src="model.js"></script>
+<script src="../shared/deck.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="map.js"></script>
 <script src="app.js"></script>
 <script src="intel.js"></script>

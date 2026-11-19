@@ -37,6 +37,21 @@
     ['Upcoming (pre-advertisement) lists', '', 'TxDOT\'s Projected Contracts List is the forecast feed. CTRMA rows whose stage says forthcoming are forecasts too. No other agency here publishes a machine-readable list of solicitations that have not yet been advertised.']
   ];
 
+  function openDeck() {
+    if (!state.data) { toast('Data is still loading.'); return; }
+    var marks = {};
+    Object.keys(state.watch).forEach(function (id) {
+      var w = state.watch[id];
+      marks[id] = { starred: true, note: w && w.cap && w.cap.notes ? w.cap.notes : '' };
+    });
+    window.RadarDeck.open(document, {
+      kicker: 'Texas Opportunity', today: todayCentral(), lockedState: 'TX', accent: '#0f766e',
+      stateNames: { TX: 'Texas' },
+      items: window.RadarDeck.fromTexas(state.recs, todayCentral(), M, marks),
+      sources: state.sources || []
+    });
+  }
+
   // ---------- load ----------
   function loadData() {
     return fetch('data/opportunities.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
@@ -524,6 +539,7 @@
     $('btnColor').addEventListener('click', function () { state.colorBy = state.colorBy === 'agency' ? 'phase' : 'agency'; this.textContent = 'Color: ' + (state.colorBy === 'agency' ? 'agency' : 'stage'); renderLegend(); apply(); });
     $('btnSweep').addEventListener('click', function () { var on = this.getAttribute('aria-pressed') !== 'true'; this.setAttribute('aria-pressed', on ? 'true' : 'false'); this.textContent = 'Sweep: ' + (on ? 'on' : 'off'); if (map) map.setSweep(on); });
     $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
+    $('btnDeck').addEventListener('click', openDeck);
     $('sort').addEventListener('change', function () { state.sort = this.value; apply(); });
     $('btnMoreRows').addEventListener('click', function () { state.rows += 100; renderList(); });
     $('shClose').addEventListener('click', closeSheet); $('shBg').addEventListener('click', closeSheet);

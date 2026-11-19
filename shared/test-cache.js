@@ -4,17 +4,17 @@ const fs = require('fs'), path = require('path');
 const C = require('./cache.js');
 const root = path.resolve(__dirname, '..');
 
-assert.strictEqual(C.VERSION, 26);
-assert.strictEqual(C.name('national'), 'radars-national-v26');
-assert.strictEqual(C.name('texas'), 'radars-texas-v26');
-assert.strictEqual(C.name('home'), 'radars-home-v26');
+assert.strictEqual(C.VERSION, 27);
+assert.strictEqual(C.name('national'), 'radars-national-v27');
+assert.strictEqual(C.name('texas'), 'radars-texas-v27');
+assert.strictEqual(C.name('home'), 'radars-home-v27');
 
 function appDir(app) {
   if (app === 'national') return path.join(root, 'national');
   if (app === 'texas') return path.join(root, 'texas');
   return root;
 }
-const sharedNames = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'weekly.js', 'capture.js', 'shell.css', 'cache.js'];
+const sharedNames = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'weekly.js', 'capture.js', 'shell.css', 'cache.js', 'deck.js', 'deck.css'];
 for (const app of ['national', 'texas', 'home']) {
   const list = C.files(app);
   assert.ok(Array.isArray(list) && list.length, app + ' file list');

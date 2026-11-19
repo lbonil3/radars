@@ -41,6 +41,7 @@ window.RadarLoadError=function(name){
 </script>
   <link rel="stylesheet" href="../shared/shell.css" onerror="RadarLoadError(this.src||this.href)">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../shared/deck.css" onerror="RadarLoadError(this.src||this.href)">
 </head>
 <body class="shell" data-app="national">
 <header class="top shell-head">
@@ -49,7 +50,7 @@ window.RadarLoadError=function(name){
     <h1>National Radar</h1>
   </div>
   <div class="fresh" id="fresh" role="status" aria-live="polite"><span class="dot" id="freshDot"></span><span id="freshTxt">Loading data…</span><button type="button" class="pill" id="digestPill" aria-expanded="false" aria-controls="digest" hidden></button><button type="button" class="linkbtn wc" id="btnBanner" aria-expanded="false" aria-controls="bannerMore">What counts &rsaquo;</button></div>
-  <div class="throw" role="group" aria-label="Theme"><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
+  <div class="throw" role="group" aria-label="Deck and theme"><button type="button" class="deckbtn" id="btnDeck">Deck</button><button type="button" data-theme-set="day">Day</button><button type="button" data-theme-set="night">Night</button><button type="button" data-theme-set="auto">Auto</button></div>
 </header>
 <section class="since" id="since" aria-label="Since you last visited" hidden></section>
 
@@ -235,6 +236,8 @@ window.RadarLoadError=function(name){
 <script src="pse.js"></script>
 <script src="sources.js"></script>
 <script src="../shared/weekly.js" onerror="RadarLoadError(this.src||this.href)"></script>
+<script src="../texas/model.js"></script>
+<script src="../shared/deck.js" onerror="RadarLoadError(this.src||this.href)"></script>
 <script src="v6.js"></script>
 <script src="app.js"></script>
 </body>

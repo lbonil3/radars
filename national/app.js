@@ -11,7 +11,7 @@
   var STATUS_LABEL = { open: 'Open', upcoming: 'Upcoming', awarded: 'Awarded' };
   var EXCL_LABEL = { 'not-engineering': 'Not an engineering-services notice (NAICS / PSC)', 'construction-naics': 'Construction NAICS (23xxxx)', 'construction-title': 'Title reads as a construction contract', 'no-sector': 'No drainage / water / wastewater / flood / coastal wording', 'no-stated-fee': 'No fee stated by the source', 'project-cost-only': 'Only a project or construction cost stated (never counts as a fee)', 'fee-not-above-20m': 'Stated fee is $20,000,000 or less', 'deadline-passed': 'Response date already passed', 'outside-us': 'Place of performance outside the US', 'non-civil-context': 'Title looks non-civil (vessel, ESPC, cyber and similar)', 'stale-no-deadline': 'No deadline and posted over 12 months ago', 'award-older-than-24-months': 'Award older than 24 months', 'closed-older-than-12-months': 'Closed more than 12 months ago', 'notice-type-not-used': 'Notice type not used (justification, amendment only, etc.)', 'not-active-status': 'Not an active status', 'status-unknown': 'Status unknown', 'no-roadway-context': 'No roadway / highway / bridge / corridor wording', 'non-roadway-title': 'Title names a dam, canal, trail, airport, rail, vessel or similar, not a road', 'drain-fee-not-above-5m': 'Drainage-specific fee is $5,000,000 or less', 'total-fee-not-above-20m': 'Total fee is $20,000,000 or less', 'scope-does-not-name-drainage': 'Total fee above $20M but the scope does not name drainage / hydraulics / stormwater / culvert / flood' };
 
-  var COMB = null, DATA = null, RECS = [], ASOF = '', LIVE = {}, DATA_W = null, DATA_R = null, DATA_P = null, PRICES = null;
+  var COMB = null, DATA = null, RECS = [], ASOF = '', LIVE = {}, DATA_W = null, DATA_R = null, DATA_P = null, PRICES = null, SOURCE_HEALTH = null;
   var secLabel = function (k) { return k === 'roadway' ? 'Roadway' : k === 'drainage' ? 'Drainage named in the title' : M.sectorLabel(k); };
   if (window.RadarStorage) RadarStorage.migrateCopy(localStorage, 'nr.watch', 'national.watch');
   var WATCH = {}; try { WATCH = JSON.parse((window.RadarStorage ? RadarStorage.read(localStorage, 'national.watch', ['nr.watch']) : localStorage.getItem('nr.watch')) || '{}') || {}; } catch (e) { WATCH = {}; }
@@ -924,6 +924,20 @@
   $('btnBanner').addEventListener('click', function () { var o = $('bannerMore').hidden; $('bannerMore').hidden = !o; this.setAttribute('aria-expanded', String(o)); this.innerHTML = o ? 'Less &lsaquo;' : 'What counts &rsaquo;'; $('banner').classList.toggle('open', o); });
   $('btnHow').addEventListener('click', function () { var o = $('how').hidden; $('how').hidden = !o; this.setAttribute('aria-expanded', String(o)); });
   $('btnCsv').addEventListener('click', exportCsv); $('btnLive').addEventListener('click', liveRefresh);
+  $('btnDeck').addEventListener('click', openDeck);
+  function openDeck() {
+    if (!DATA) { toast('Data is still loading.'); return; }
+    var marks = {};
+    Object.keys(WATCH).forEach(function (id) {
+      marks[id] = { starred: true, note: CAP[id] && CAP[id].notes ? CAP[id].notes : '' };
+    });
+    var feeds = SOURCE_HEALTH && SOURCE_HEALTH.sources ? SOURCE_HEALTH.sources : (DATA.sources || []);
+    window.RadarDeck.open(document, {
+      kicker: 'National Radar', today: todayCentral(), accent: '#1d5fbf', stateNames: M.STATE_NAMES,
+      items: window.RadarDeck.fromNational(RECS, todayCentral(), window.RadarModel, C.stageOf, marks),
+      sources: feeds
+    });
+  }
   function resetFilters() { S.f = freshF(); $('q').value = ''; S.region = 'all'; V2.saveRegion(lsx, 'all'); S.rows = 50; render(); toast('Filters reset (Confirmed only and your watchlist are unchanged).'); }
   $('fsSave').addEventListener('click', saveSet); $('fsName').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); saveSet(); } });
   document.querySelectorAll('.qf').forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) document.querySelectorAll('.qf[open]').forEach(function (o) { if (o !== d) o.open = false; }); }); });
@@ -934,7 +948,7 @@
   // ---------- start ----------
   function loadJ(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
   Promise.all([loadJ('data/national.json'), loadJ('data/roadway.json').catch(function () { return null; }), loadJ('data/cost-prices.json').catch(function () { return null; }), loadJ('data/pse.json').catch(function () { return null; }), loadJ('data/source-status.json').catch(function () { return null; }), loadJ('../texas/data/source-status.json').catch(function () { return null; })]).then(function (x) {
-    HEALTH = V4.health([x[4], x[5]]); renderHealthDot();
+    HEALTH = V4.health([x[4], x[5]]); SOURCE_HEALTH = x[4]; renderHealthDot();
     S.tab = SHELL.initial; // shared shell: List on a first visit, then the last view (Map included)
     DATA_W = x[0]; DATA_R = x[1]; PRICES = x[2]; DATA_P = x[3]; migrateWatch(); NEWBASE = V2.baseline(lsx, ssn, latestAsOf());
     setMode();
