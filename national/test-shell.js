@@ -8,7 +8,7 @@ assert.ok(iShell > html.indexOf('../shared/filters.js') && iShell < html.indexOf
 assert.ok(/<body class="shell" data-app="national">/.test(html) && /<header class="top shell-head">/.test(html), 'shell body and slim header');
 // header: Home, name, freshness, theme; the theme left the More menu
 const head = html.slice(html.indexOf('<header'), html.indexOf('</header>'));
-assert.ok(/class="homebtn"/.test(head) && /<h1>/.test(head) && /id="fresh"/.test(head) && /class="throw"[^>]*aria-label="Theme"/.test(head), 'header holds Home, name, freshness and Day / Night / Auto');
+assert.ok(/class="homebtn"/.test(head) && /<h1>/.test(head) && /id="fresh"/.test(head) && /id="btnDeck"/.test(head) && /class="throw"[^>]*aria-label="Deck and theme"/.test(head), 'header holds Home, name, freshness, Deck, and Day / Night / Auto');
 assert.ok(!/id="thLbl"/.test(html), 'no Theme block in More');
 // tab bar unchanged: List, Map, Pursuits, More (Timeline, Breakdown, Data)
 const nav = html.slice(html.indexOf('<nav class="tabs"'), html.indexOf('</nav>', html.indexOf('<nav class="tabs"')));

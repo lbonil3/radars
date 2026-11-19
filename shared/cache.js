@@ -4,8 +4,8 @@
   if (typeof module === 'object' && module.exports) module.exports = api; else root.RadarCache = api;
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-  var VERSION = 26;
-  var SHARED = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'weekly.js', 'capture.js', 'shell.css', 'cache.js'];
+  var VERSION = 27;
+  var SHARED = ['storage.js', 'theme.js', 'filters.js', 'shell.js', 'weekly.js', 'capture.js', 'shell.css', 'cache.js', 'deck.js', 'deck.css'];
   function shared(prefix) { return SHARED.map(function (f) { return prefix + f; }); }
   function name(app) {
     var prefix = app === 'texas' ? 'radars-texas-' : app === 'home' ? 'radars-home-' : 'radars-national-';

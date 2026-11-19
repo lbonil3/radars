@@ -1,0 +1,67 @@
+/* Client deck viewer and 16:9 slides. Accent on the paper comes from --deck-acc. The header button uses the app's --acc. */
+.deckbtn{min-height:36px;margin-right:6px;padding:0 12px;border-radius:10px;border:1px solid var(--acc);background:transparent;color:var(--acc);font:600 13px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
+.deckbtn:hover,.deckbtn:focus-visible{background:color-mix(in srgb, var(--acc) 14%, transparent);outline:none}
+@media (max-width:700px){.deckbtn{min-height:44px}}
+
+body.deck-open{overflow:hidden}
+.deck-root{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;background:#141311;color:#f4f1ea}
+.deck-root[hidden]{display:none}
+.deck-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;background:#1d1b19}
+.deck-count{margin:0;min-width:4.5em;font:600 14px/1 system-ui,-apple-system,sans-serif;color:#f4f1ea}
+.deck-grow{flex:1}
+.deck-nav{min-height:40px;padding:0 12px;border-radius:10px;border:1px solid #4a453e;background:#262420;color:#f4f1ea;font:600 14px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
+.deck-nav:disabled{opacity:.35;cursor:default}
+.deck-nav:focus-visible{outline:2px solid #f4f1ea;outline-offset:2px}
+.deck-stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:8px 16px calc(12px + env(safe-area-inset-bottom));outline:none}
+.deck-frame{overflow:hidden;flex:none}
+.deck-scale{width:1280px;height:720px;transform-origin:top left}
+
+.deck-pick{width:min(440px,100%);padding:28px 28px 24px;border-radius:18px;background:#f6f3ec;color:#1c1917}
+.deck-pick h2{margin:0 0 8px;font:500 36px/1.1 Georgia,"Iowan Old Style",serif}
+.deck-pick .dlead{margin:0 0 18px;color:#5e584f;font:16px/1.45 system-ui,-apple-system,sans-serif}
+.deck-pick label{display:block;margin:0 0 12px;font:600 13px/1.2 system-ui,-apple-system,sans-serif;color:#5e584f}
+.deck-pick select{display:block;width:100%;margin-top:6px;min-height:44px;padding:0 10px;border-radius:10px;border:1px solid #d9d0c3;background:#fff;color:#1c1917;font:16px/1 system-ui,-apple-system,sans-serif}
+.deck-go{margin-top:6px;min-height:44px;padding:0 18px;border:0;border-radius:10px;background:#1c1917;color:#f6f3ec;font:600 15px/1 system-ui,-apple-system,sans-serif;cursor:pointer}
+
+.dslide{--deck-acc:#1c1917;box-sizing:border-box;width:1280px;height:720px;display:flex;background:#f6f3ec;color:#1c1917;position:relative}
+.dbar{width:14px;flex:none;background:var(--deck-acc)}
+.dbody{flex:1;min-width:0;padding:40px 56px 68px;display:flex;flex-direction:column}
+.dkick{margin:0 0 10px;color:var(--deck-acc);font:600 13px/1 system-ui,-apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.dstate{margin:0;font:500 76px/1 Georgia,"Iowan Old Style",serif;letter-spacing:-.02em}
+.dslide h2{margin:0 0 8px;font:500 40px/1.15 Georgia,"Iowan Old Style",serif;letter-spacing:-.02em}
+.dcont{font:500 18px/1 system-ui,-apple-system,sans-serif;color:#5e584f;letter-spacing:0}
+.ddate{margin:14px 0 0;font:20px/1.3 Georgia,"Iowan Old Style",serif;color:#3f3a34}
+.dscope{margin:6px 0 0;font:16px/1.3 system-ui,-apple-system,sans-serif;color:#5e584f}
+.dlead{margin:28px 0 0;max-width:720px;font:18px/1.45 system-ui,-apple-system,sans-serif;color:#3f3a34}
+.dsub{margin:0 0 16px;font:16px/1.4 system-ui,-apple-system,sans-serif;color:#5e584f}
+.dempty{margin:24px 0 0;font:20px/1.4 Georgia,"Iowan Old Style",serif;color:#3f3a34}
+.dstats{display:flex;gap:28px;margin:36px 0 0;padding:0;list-style:none}
+.dstats li{min-width:180px;padding-top:14px;border-top:2px solid var(--deck-acc)}
+.dstats b{display:block;font:500 56px/1 Georgia,"Iowan Old Style",serif;color:var(--deck-acc)}
+.dstats span{display:block;margin-top:6px;font:15px/1.3 system-ui,-apple-system,sans-serif;color:#5e584f}
+.dfoot{position:absolute;left:70px;right:56px;bottom:26px;display:flex;justify-content:space-between;gap:16px;color:#8a8175;font:13px/1 system-ui,-apple-system,sans-serif}
+
+.dtable{width:100%;border-collapse:collapse;margin-top:18px;font:16px/1.35 system-ui,-apple-system,sans-serif}
+.dtable th{padding:0 12px 8px 0;border-bottom:2px solid var(--deck-acc);text-align:left;font:600 12px/1 system-ui,-apple-system,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#5e584f}
+.dtable td{padding:11px 12px 11px 0;border-bottom:1px solid #e4dcd0;vertical-align:top}
+.dtable .dwhen{white-space:nowrap;width:7.5em;color:#3f3a34}
+.dslide h3{margin:16px 0 6px;font:600 14px/1 system-ui,-apple-system,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--deck-acc)}
+.dcounts{display:flex;gap:28px;margin:12px 0 0;padding:0;list-style:none}
+.dcounts b{display:block;font:500 28px/1 Georgia,"Iowan Old Style",serif}
+.dcounts span{font:13px/1.2 system-ui,-apple-system,sans-serif;color:#5e584f}
+.snames{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 22px;margin:0;padding:0;list-style:none;font:14px/1.35 system-ui,-apple-system,sans-serif;color:#3f3a34}
+.snames li{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+.dblocks{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
+.dblocks li{padding-bottom:4px}
+.dmeta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font:14px/1.2 system-ui,-apple-system,sans-serif;color:#5e584f}
+.dpill{padding:3px 8px;border-radius:999px;background:var(--deck-acc);color:#f6f3ec;font:700 11px/1 system-ui,-apple-system,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.dnum{font-weight:600}
+.ditemt{margin:4px 0 0;font:20px/1.3 Georgia,"Iowan Old Style",serif}
+.dnote{margin:4px 0 0;font:14px/1.35 system-ui,-apple-system,sans-serif;color:#3f3a34}
+.dnote-in{display:block;margin-top:2px;color:#5e584f;font-size:13px}
+.dmeta a{color:var(--deck-acc);font-weight:600}
+.dnext{display:flex;align-items:baseline;gap:12px;margin:8px 0 0;color:#8a8175;font:13px/1 system-ui,-apple-system,sans-serif}
+.dnext i{flex:1;border-bottom:1px solid #b7ad9e}
+.dstar{color:#a16207;font-size:16px}
+.dstar-off{display:inline-block;width:0}
