@@ -1,16 +1,29 @@
 {
- "generatedAt": "2026-11-16T20:36:05.843Z",
+ "generatedAt": "2026-11-23T11:06:48.511Z",
  "keepWeeks": 12,
  "weeks": [
+  {
+   "week": "2026-W48",
+   "start": "2026-11-23",
+   "end": "2026-11-29",
+   "final": false,
+   "backfilled": false,
+   "items": 0,
+   "houston": 0,
+   "generatedAt": "2026-11-23T11:06:48.511Z",
+   "edition": "preview"
+  },
   {
    "week": "2026-W47",
    "start": "2026-11-16",
    "end": "2026-11-22",
-   "final": false,
+   "final": true,
    "backfilled": false,
    "items": 2,
    "houston": 2,
-   "generatedAt": "2026-11-16T20:36:05.843Z"
+   "generatedAt": "2026-11-23T11:06:48.511Z",
+   "publishedAt": "2026-11-23T11:06:48.511Z",
+   "edition": "published"
   },
   {
    "week": "2026-W46",
@@ -20,7 +33,9 @@
    "backfilled": false,
    "items": 20,
    "houston": 6,
-   "generatedAt": "2026-11-16T10:05:20.986Z"
+   "generatedAt": "2026-11-16T10:05:20.986Z",
+   "publishedAt": "2026-11-16T10:05:20.986Z",
+   "edition": "published"
   },
   {
    "week": "2026-W45",
@@ -30,7 +45,9 @@
    "backfilled": false,
    "items": 4,
    "houston": 4,
-   "generatedAt": "2026-11-09T10:11:00.250Z"
+   "generatedAt": "2026-11-09T10:11:00.250Z",
+   "publishedAt": "2026-11-09T10:11:00.250Z",
+   "edition": "published"
   },
   {
    "week": "2026-W44",
@@ -40,7 +57,9 @@
    "backfilled": false,
    "items": 6,
    "houston": 1,
-   "generatedAt": "2026-11-02T09:51:51.905Z"
+   "generatedAt": "2026-11-02T09:51:51.905Z",
+   "publishedAt": "2026-11-02T09:51:51.905Z",
+   "edition": "published"
   },
   {
    "week": "2026-W43",
@@ -50,7 +69,9 @@
    "backfilled": true,
    "items": 14,
    "houston": 8,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "publishedAt": "2026-10-31T00:16:35.006Z",
+   "edition": "published"
   },
   {
    "week": "2026-W42",
@@ -60,7 +81,8 @@
    "backfilled": true,
    "items": 45,
    "houston": 30,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "edition": "final"
   },
   {
    "week": "2026-W41",
@@ -70,7 +92,8 @@
    "backfilled": true,
    "items": 27,
    "houston": 19,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "edition": "final"
   },
   {
    "week": "2026-W40",
@@ -80,7 +103,8 @@
    "backfilled": true,
    "items": 18,
    "houston": 3,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "edition": "final"
   },
   {
    "week": "2026-W39",
@@ -90,7 +114,8 @@
    "backfilled": true,
    "items": 12,
    "houston": 5,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "edition": "final"
   },
   {
    "week": "2026-W38",
@@ -100,7 +125,8 @@
    "backfilled": true,
    "items": 20,
    "houston": 9,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "edition": "final"
   },
   {
    "week": "2026-W37",
@@ -110,17 +136,8 @@
    "backfilled": true,
    "items": 18,
    "houston": 11,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
-  },
-  {
-   "week": "2026-W36",
-   "start": "2026-08-31",
-   "end": "2026-09-06",
-   "final": true,
-   "backfilled": true,
-   "items": 36,
-   "houston": 6,
-   "generatedAt": "2026-10-30T20:13:17.939Z"
+   "generatedAt": "2026-10-30T20:13:17.939Z",
+   "edition": "final"
   }
  ]
 }

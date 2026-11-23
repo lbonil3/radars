@@ -3,8 +3,8 @@
  "start": "2026-11-16",
  "end": "2026-11-22",
  "title": "Texas Intel weekly, 2026-W47 (Nov 16, 2026 to Nov 22, 2026)",
- "generatedAt": "2026-11-16T20:36:05.843Z",
- "final": false,
+ "generatedAt": "2026-11-23T11:06:48.511Z",
+ "final": true,
  "backfilled": false,
  "counts": {
   "items": 2,
@@ -67,5 +67,6 @@
  ],
  "texas": [],
  "deadlines": [],
- "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source."
+ "note": "News and planning signals collected automatically from public sources and tagged by keyword. Not solicitations and not verified; check each original source.",
+ "publishedAt": "2026-11-23T11:06:48.511Z"
 }
